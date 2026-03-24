@@ -1,612 +1,905 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISO 17025 Master — Sesión 1</title>
-    <link href="https://fonts.googleapis.com/css2?family=Salsa&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-pastel: #fdfcf0; /* Crema muy suave */
-            --primary-pastel: #a2d2ff; /* Azul pastel */
-            --secondary-pastel: #ffafcc; /* Rosa pastel */
-            --accent-pastel: #b9fbc0; /* Verde pastel */
-            --warning-pastel: #ffecb3; /* Amarillo pastel */
-            --text-main: #2d3436; /* Gris muy oscuro, casi negro */
-            --text-secondary: #636e72;
-            --white-card: #ffffff;
-            --shadow: 0 10px 25px rgba(0,0,0,0.08);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Autoevaluación ISO/IEC 17025:2017 — SAE Ecuador</title>
+<link href="https://fonts.googleapis.com/css2?family=Salsa&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p900:#2d1259;--p800:#4a1d96;--p700:#5b21b6;--p600:#7c3aed;--p500:#8b5cf6;--p400:#a78bfa;--p300:#c4b5fd;--p200:#ddd6fe;--p100:#ede9fe;--p50:#f5f3ff;
+  --mint:#10b981;--mint-l:#d1fae5;--mint-d:#064e3b;--mint-m:#34d399;
+  --sky:#3b82f6;--sky-l:#dbeafe;--sky-d:#1e3a8a;--sky-m:#60a5fa;
+  --rose:#ec4899;--rose-l:#fce7f3;--rose-d:#831843;--rose-m:#f472b6;
+  --amber:#f59e0b;--amber-l:#fef3c7;--amber-d:#78350f;--amber-m:#fbbf24;
+  --red:#ef4444;--red-l:#fee2e2;--red-d:#7f1d1d;--red-m:#f87171;
+  --teal:#14b8a6;--teal-l:#ccfbf1;--teal-d:#134e4a;
+  --page:#f8f6ff;
+  --gray900:#1c1626;--gray800:#2d2540;--gray700:#3d3358;--gray600:#5c5278;--gray500:#7a6f98;--gray400:#9d94be;--gray300:#c0b9d8;--gray200:#ddd9ef;--gray100:#edeaf7;--gray50:#f5f3fc;
+  --font-h:'Salsa',cursive;
+  --font-b:'Nunito',sans-serif;
+  --r8:8px;--r12:12px;--r16:16px;--r20:20px;--r24:24px;
+  --sh:0 2px 14px rgba(109,40,217,.09),0 1px 4px rgba(109,40,217,.06);
+  --sh-md:0 6px 28px rgba(109,40,217,.14),0 2px 8px rgba(109,40,217,.08);
+  --sh-lg:0 12px 48px rgba(109,40,217,.18),0 4px 16px rgba(109,40,217,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0;min-width:0}
+body{font-family:var(--font-b);background:var(--page);color:var(--gray900);line-height:1.55;-webkit-print-color-adjust:exact;print-color-adjust:exact;overflow-x:hidden}
 
-        body {
-            font-family: 'Salsa', cursive;
-            background-color: var(--bg-pastel);
-            color: var(--text-main);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
+/* ─── NOISE BG TEXTURE ─── */
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5}
 
-        #quiz-app {
-            background: var(--white-card);
-            max-width: 750px;
-            width: 100%;
-            border-radius: 40px;
-            box-shadow: var(--shadow);
-            padding: 40px;
-            border: 6px solid var(--primary-pastel);
-            position: relative;
-            text-align: center;
-        }
+/* ─── STICKY HEADER ─── */
+.hdr{background:linear-gradient(135deg,var(--p800) 0%,var(--p600) 60%,#a855f7 100%);padding:0;position:sticky;top:0;z-index:999;box-shadow:0 4px 24px rgba(109,40,217,.4)}
+.hdr-main{padding:18px 32px 14px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.hdr-left{display:flex;align-items:center;gap:14px}
+.hdr-badge{background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.35);border-radius:10px;padding:5px 13px;font-size:11.5px;font-weight:800;color:#e9d5ff;letter-spacing:.06em;font-family:var(--font-b)}
+.hdr-txt h1{font-family:var(--font-h);font-size:19px;color:#fff;line-height:1.2;text-shadow:0 2px 8px rgba(0,0,0,.25)}
+.hdr-txt p{font-size:11.5px;color:var(--p300);margin-top:2px;font-weight:600}
+.hdr-btns{display:flex;gap:8px;flex-wrap:wrap}
+.hbtn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;border-radius:30px;font-size:12.5px;font-weight:800;cursor:pointer;border:none;font-family:var(--font-b);transition:all .15s;white-space:nowrap}
+.hbtn-white{background:#fff;color:var(--p700)}
+.hbtn-white:hover{background:var(--p100);transform:translateY(-1px)}
+.hbtn-ghost{background:rgba(255,255,255,.12);color:var(--p200);border:1.5px solid rgba(255,255,255,.25)}
+.hbtn-ghost:hover{background:rgba(255,255,255,.22)}
+.hbtn-danger{background:rgba(239,68,68,.18);color:#fca5a5;border:1.5px solid rgba(239,68,68,.3)}
+.hbtn-danger:hover{background:rgba(239,68,68,.3)}
 
-        .header-session {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
+/* ─── PROGRESS BAR ─── */
+.prog-bar{background:var(--p900);padding:10px 32px;display:flex;align-items:center;gap:14px}
+.prog-track{flex:1;height:7px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--p400),var(--rose-m));border-radius:4px;transition:width .4s ease}
+.prog-label{font-size:12px;color:var(--p300);white-space:nowrap;font-weight:800;min-width:130px;text-align:right}
 
-        .badge {
-            background: var(--secondary-pastel);
-            padding: 8px 15px;
-            border-radius: 15px;
-            font-size: 0.9rem;
-            color: var(--text-main);
-        }
+/* ─── MAIN ─── */
+.main{max-width:940px;margin:28px auto 0;padding:0 20px 72px;position:relative;z-index:1}
 
-        h1 { color: var(--text-main); font-size: 1.8rem; margin: 20px 0; }
-        
-        .question-text {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 25px;
-            line-height: 1.4;
-        }
+/* ─── SCORE CARD ─── */
+.score-card{background:var(--white,#fff);border-radius:var(--r24);padding:24px 28px;margin-bottom:22px;border:2px solid var(--p100);box-shadow:var(--sh-md);position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,var(--p100) 0%,transparent 70%);pointer-events:none}
+.score-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.score-top h2{font-family:var(--font-h);font-size:17px;color:var(--p800)}
+.score-top p{font-size:12px;color:var(--gray500);font-weight:600;margin-top:2px}
+.score-pct{font-family:var(--font-h);font-size:36px;color:var(--gray300);transition:color .4s}
+.score-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.smet{border-radius:var(--r16);padding:14px 10px;text-align:center;border:2px solid transparent}
+.smet .v{font-family:var(--font-h);font-size:28px;line-height:1}
+.smet .l{font-size:10.5px;font-weight:800;margin-top:4px;text-transform:uppercase;letter-spacing:.04em}
+.smet-c{background:var(--mint-l);border-color:var(--mint-m)}.smet-c .v{color:var(--mint-d)}
+.smet-p{background:var(--amber-l);border-color:var(--amber-m)}.smet-p .v{color:var(--amber-d)}
+.smet-nc{background:var(--red-l);border-color:var(--red-m)}.smet-nc .v{color:var(--red-d)}
+.smet-na{background:var(--gray100);border-color:var(--gray300)}.smet-na .v{color:var(--gray600)}
+.bars{display:flex;flex-direction:column;gap:9px}
+.bar-row{display:flex;align-items:center;gap:10px}
+.bar-lbl{font-size:12px;color:var(--gray600);width:140px;flex-shrink:0;display:flex;align-items:center;gap:7px;font-weight:700}
+.bar-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.bar-track{flex:1;height:10px;background:var(--gray100);border-radius:6px;overflow:hidden}
+.bar-fill{height:100%;border-radius:6px;transition:width .5s ease}
+.bf-c{background:linear-gradient(90deg,var(--mint-m),var(--mint))}
+.bf-p{background:linear-gradient(90deg,var(--amber-m),var(--amber))}
+.bf-nc{background:linear-gradient(90deg,var(--red-m),var(--red))}
+.bar-pct{font-size:12px;font-weight:800;color:var(--gray600);width:36px;text-align:right}
 
-        .options-grid {
-            display: grid;
-            gap: 15px;
-        }
+/* ─── LEGEND ─── */
+.legend{background:#fff;border-radius:var(--r16);padding:14px 20px;margin-bottom:20px;border:2px solid var(--p100);display:flex;gap:10px;flex-wrap:wrap;align-items:center;box-shadow:var(--sh)}
+.legend strong{font-family:var(--font-h);font-size:13px;color:var(--p700);margin-right:6px}
+.leg-item{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--gray600)}
+.leg-dot{width:11px;height:11px;border-radius:50%;flex-shrink:0}
 
-        .option-btn {
-            background: var(--bg-pastel);
-            border: 2px solid var(--primary-pastel);
-            padding: 18px 25px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: 'Salsa', cursive;
-            font-size: 1.1rem;
-            color: var(--text-main);
-            transition: all 0.3s;
-            text-align: left;
-        }
+/* ─── RESULTS PANEL ─── */
+#results-panel{display:none;background:#fff;border-radius:var(--r24);margin-bottom:22px;border:2px solid var(--p200);box-shadow:var(--sh-lg);overflow:hidden}
+.res-hdr{background:linear-gradient(135deg,var(--p800),var(--p600));padding:22px 28px}
+.res-hdr h2{font-family:var(--font-h);font-size:20px;color:#fff}
+.res-hdr p{font-size:12px;color:var(--p300);margin-top:3px;font-weight:600}
+.res-body{padding:22px 28px}
+.res-section-title{font-family:var(--font-h);font-size:14px;margin-bottom:12px}
+.res-row{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;border-radius:var(--r12);margin-bottom:8px;font-size:13px}
+.res-row-c{background:var(--mint-l);border:1.5px solid var(--mint-m)}
+.res-row-p{background:var(--amber-l);border:1.5px solid var(--amber-m)}
+.res-row-nc{background:var(--red-l);border:1.5px solid var(--red-m)}
+.res-icon{font-size:17px;flex-shrink:0;margin-top:1px}
+.res-num{font-size:10.5px;font-weight:800;color:var(--gray500);margin-bottom:2px;text-transform:uppercase;letter-spacing:.05em}
+.res-q{font-size:13px;color:var(--gray900);line-height:1.45;font-weight:700;margin-bottom:3px}
+.res-note{font-size:11.5px;color:var(--gray600);font-style:italic;font-weight:600}
 
-        .option-btn:hover {
-            background: var(--primary-pastel);
-            transform: translateY(-3px);
-        }
+/* ─── SECTION ─── */
+.section{background:#fff;border-radius:var(--r20);margin-bottom:18px;border:2px solid var(--p100);overflow:hidden;box-shadow:var(--sh);transition:box-shadow .2s}
+.section:hover{box-shadow:var(--sh-md)}
+.sec-hdr{padding:16px 22px;display:flex;align-items:center;gap:13px;cursor:pointer;user-select:none;transition:background .15s}
+.sec-hdr:hover{background:var(--p50)}
+.sec-icon{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.sec-title{flex:1}
+.sec-title h2{font-family:var(--font-h);font-size:15px;color:var(--gray900);line-height:1.3}
+.sec-title p{font-size:11.5px;color:var(--gray500);margin-top:2px;font-weight:600}
+.sec-badge{font-size:11px;padding:4px 12px;border-radius:20px;font-weight:800;white-space:nowrap;font-family:var(--font-b)}
+.sec-chevron{width:26px;height:26px;border-radius:50%;background:var(--p100);display:flex;align-items:center;justify-content:center;transition:transform .25s,background .15s;flex-shrink:0}
+.sec-chevron svg{width:13px;height:13px;stroke:var(--p600);transition:transform .25s}
+.sec-chevron.open svg{transform:rotate(180deg)}
+.sec-hdr:hover .sec-chevron{background:var(--p200)}
+.sec-body{display:none;padding:4px 22px 20px}
+.sec-body.open{display:block}
+.sec-progress{height:3px;background:var(--gray100);margin-bottom:14px;border-radius:2px;overflow:hidden}
+.sec-prog-fill{height:100%;border-radius:2px;transition:width .4s ease}
 
-        /* Feedback Styles */
-        .feedback-area {
-            margin-top: 30px;
-            padding: 25px;
-            border-radius: 25px;
-            display: none;
-            animation: bounceIn 0.5s;
-        }
-        .correct-box { background: var(--accent-pastel); border: 3px solid #78e08f; }
-        .wrong-box { background: var(--secondary-pastel); border: 3px solid #ff8da1; }
+/* ─── QUESTION CARD ─── */
+.qcard{border:2px solid var(--p100);border-radius:var(--r16);padding:16px 18px;margin-bottom:12px;transition:border-color .2s,box-shadow .2s,transform .1s;background:#fff}
+.qcard:hover{box-shadow:var(--sh);transform:translateY(-1px)}
+.qcard.st-c{border-left:5px solid var(--mint);border-color:var(--mint-l);background:linear-gradient(90deg,rgba(209,250,229,.2),#fff 35%)}
+.qcard.st-p{border-left:5px solid var(--amber);border-color:var(--amber-l);background:linear-gradient(90deg,rgba(254,243,199,.2),#fff 35%)}
+.qcard.st-nc{border-left:5px solid var(--red);border-color:var(--red-l);background:linear-gradient(90deg,rgba(254,226,226,.2),#fff 35%)}
+.qcard.st-na{border-left:5px solid var(--gray300);border-color:var(--gray200);background:var(--gray50)}
+.q-hdr{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+.q-num{font-family:var(--font-h);font-size:11px;color:var(--p600);background:var(--p50);border:1.5px solid var(--p200);border-radius:6px;padding:3px 8px;flex-shrink:0;margin-top:1px;white-space:nowrap}
+.q-ico{font-size:20px;flex-shrink:0;margin-top:0}
+.q-txt{font-size:13.5px;color:var(--gray900);line-height:1.55;font-weight:700}
+.q-hint{font-size:11.5px;color:var(--gray500);margin-top:5px;font-style:italic;font-weight:600;padding:6px 10px;background:var(--gray50);border-radius:8px;border-left:3px solid var(--p200)}
+.q-body{display:flex;flex-direction:column;gap:10px}
+.rg{display:flex;gap:8px;flex-wrap:wrap}
+.ropt{display:flex;align-items:center;gap:6px;padding:8px 15px;border-radius:30px;border:2px solid var(--p200);cursor:pointer;font-size:12.5px;font-weight:800;color:var(--p600);transition:all .15s;user-select:none;font-family:var(--font-b);background:var(--p50)}
+.ropt:hover{background:var(--p100);border-color:var(--p400);transform:translateY(-1px)}
+.ropt input{display:none}
+.ropt.sel-C{background:var(--mint-l);border-color:var(--mint);color:var(--mint-d)}
+.ropt.sel-P{background:var(--amber-l);border-color:var(--amber);color:var(--amber-d)}
+.ropt.sel-NC{background:var(--red-l);border-color:var(--red);color:var(--red-d)}
+.ropt.sel-NA{background:var(--gray100);border-color:var(--gray400);color:var(--gray700)}
+.qnote{width:100%;min-height:58px;border:2px solid var(--p100);border-radius:var(--r12);padding:9px 13px;font-size:12.5px;font-family:var(--font-b);color:var(--gray800);resize:vertical;outline:none;transition:border-color .15s,box-shadow .15s;background:var(--p50);font-weight:600}
+.qnote:focus{border-color:var(--p400);box-shadow:0 0 0 3px rgba(139,92,246,.12)}
+.qnote::placeholder{color:var(--gray300);font-weight:500}
 
-        .btn-next {
-            background: var(--text-main);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-family: 'Salsa', cursive;
-            font-size: 1.2rem;
-            margin-top: 20px;
-            cursor: pointer;
-        }
+/* ─── SECTION COLOR THEMES ─── */
+.theme-cl4 .sec-icon{background:#ede9fe}.theme-cl4 .sec-badge{background:var(--p100);color:var(--p800);border:1.5px solid var(--p300)}
+.theme-cl4 .sec-prog-fill{background:linear-gradient(90deg,var(--p400),var(--p600))}
+.theme-cl5 .sec-icon{background:var(--sky-l)}.theme-cl5 .sec-badge{background:var(--sky-l);color:var(--sky-d);border:1.5px solid var(--sky-m)}
+.theme-cl5 .sec-prog-fill{background:linear-gradient(90deg,var(--sky-m),var(--sky))}
+.theme-cl6 .sec-icon{background:var(--mint-l)}.theme-cl6 .sec-badge{background:var(--mint-l);color:var(--mint-d);border:1.5px solid var(--mint-m)}
+.theme-cl6 .sec-prog-fill{background:linear-gradient(90deg,var(--mint-m),var(--mint))}
+.theme-cl7 .sec-icon{background:var(--rose-l)}.theme-cl7 .sec-badge{background:var(--rose-l);color:var(--rose-d);border:1.5px solid var(--rose-m)}
+.theme-cl7 .sec-prog-fill{background:linear-gradient(90deg,var(--rose-m),var(--rose))}
+.theme-cl8 .sec-icon{background:var(--amber-l)}.theme-cl8 .sec-badge{background:var(--amber-l);color:var(--amber-d);border:1.5px solid var(--amber-m)}
+.theme-cl8 .sec-prog-fill{background:linear-gradient(90deg,var(--amber-m),var(--amber))}
+.theme-clA .sec-icon{background:var(--teal-l)}.theme-clA .sec-badge{background:var(--teal-l);color:var(--teal-d);border:1.5px solid var(--teal)}
+.theme-clA .sec-prog-fill{background:linear-gradient(90deg,var(--teal),var(--teal-d))}
 
-        .progress-container {
-            width: 100%;
-            height: 12px;
-            background: #eee;
-            border-radius: 10px;
-            margin-top: 40px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: var(--primary-pastel);
-            width: 0%;
-            transition: width 0.4s;
-        }
+/* ─── FOOTER ─── */
+.footer{text-align:center;padding:22px 0 8px;font-size:11.5px;color:var(--gray400);border-top:2px dashed var(--p100);line-height:1.8;font-weight:700}
+.footer span{color:var(--p500)}
 
-        @keyframes bounceIn {
-            0% { transform: scale(0.9); opacity: 0; }
-            70% { transform: scale(1.05); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-    </style>
+/* ─── PRINT ─── */
+@media print{
+  .hdr,.prog-bar{display:none}
+  body{background:#fff}
+  .section{page-break-inside:avoid}
+  #results-panel{display:block!important}
+}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:860px){
+  .hdr-main{padding:12px 16px}
+  .hdr-btns{width:100%;display:flex;gap:6px}
+  .hbtn{flex:1;justify-content:center;padding:8px 10px;font-size:12px}
+  .hdr-txt h1{font-size:16px}
+  .prog-bar{padding:8px 16px}
+  .main{padding:0 12px 52px}
+  .score-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .smet .v{font-size:22px}
+  .rg{flex-wrap:wrap}
+  .ropt{flex:1;min-width:calc(50% - 4px);justify-content:center}
+  .sec-hdr{padding:12px 14px;gap:10px}
+  .sec-body{padding:4px 14px 16px}
+  .score-card,.sec-body,.legend{padding:16px}
+}
+@media(max-width:480px){
+  .hdr-badge{display:none}
+  .score-pct{font-size:28px}
+  .ropt{min-width:calc(50% - 4px);font-size:12px;padding:7px 10px}
+  .qcard{padding:13px 13px}
+}
+</style>
 </head>
 <body>
 
-<div id="quiz-app">
-    <div class="header-session">
-        <span class="badge" id="session-title">Sesión 1: Cláusulas 4 y 5</span>
-        <span id="question-counter">1/10</span>
+<!-- ─── STICKY HEADER ─── -->
+<div class="hdr">
+  <div class="hdr-main">
+    <div class="hdr-left">
+      <div class="hdr-badge">ISO/IEC 17025:2017 · SAE Ecuador</div>
+      <div class="hdr-txt">
+        <h1>Cuestionario de Autoevaluación — Laboratorios</h1>
+        <p>Requisitos generales para la competencia de laboratorios de ensayo y de calibración · Acreditación SAE</p>
+      </div>
     </div>
-
-    <div id="game-zone">
-        <div id="img-placeholder" style="font-size: 4rem; margin-bottom: 20px;">⚖️</div>
-        <div class="question-text" id="q-text">Cargando pregunta...</div>
-        <div class="options-grid" id="options-container"></div>
+    <div class="hdr-btns">
+      <button class="hbtn hbtn-danger" onclick="resetAll()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+        Reiniciar
+      </button>
+      <button class="hbtn hbtn-ghost" onclick="generateResults()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 17H5a2 2 0 00-2 2"/><path d="M11 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v5"/><polyline points="17 21 17 13 21 13 21 21"/><polyline points="13 21 13 17"/></svg>
+        Ver resultados
+      </button>
+      <button class="hbtn hbtn-white" onclick="window.print()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        Imprimir / PDF
+      </button>
     </div>
-
-    <div id="feedback" class="feedback-area">
-        <h2 id="feedback-title"></h2>
-        <p id="feedback-info" style="font-family: 'Inter', sans-serif;"></p>
-        <button class="btn-next" onclick="nextQuestion()">Continuar ➔</button>
-    </div>
-
-    <div class="progress-container">
-        <div class="progress-fill" id="prog-bar"></div>
-    </div>
+  </div>
+  <div class="prog-bar">
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div class="prog-label" id="prog-label">0 / 65 respondidas</div>
+  </div>
 </div>
 
-<script>
-    const sessionData = [
-        {
-            q: "¿Con qué frecuencia debe el laboratorio identificar los riesgos para su imparcialidad?",
-            options: ["Una vez al año", "Solo cuando hay cambios de personal", "De forma continua", "Cada vez que lo solicite el cliente"],
-            correct: 2,
-            icon: "🔄",
-            info: "Según la Cláusula 4.1.4, el laboratorio debe identificar riesgos a la imparcialidad de forma continua, incluyendo riesgos por sus actividades y relaciones."
-        },
-        {
-            q: "Si el laboratorio debe divulgar información confidencial por ley, ¿qué debe hacer?",
-            options: ["Divulgarla sin avisar", "Notificar al cliente por adelantado, a menos que esté prohibido por ley", "Negarse a entregar la información", "Cobrar un recargo por el trámite"],
-            correct: 1,
-            icon: "📜",
-            info: "La norma exige transparencia. Si la ley obliga a revelar datos, el cliente debe ser informado de qué información se proporcionará."
-        },
-        {
-            q: "¿Qué se considera información confidencial por defecto según la norma?",
-            options: ["Solo los resultados de los ensayos", "Toda la información obtenida o creada durante las actividades del laboratorio", "Solo la dirección del cliente", "Únicamente las fórmulas de cálculo"],
-            correct: 1,
-            icon: "🤫",
-            info: "Toda información generada durante la actividad para el cliente es propiedad exclusiva y debe ser tratada como confidencial."
-        },
-        {
-            q: "¿Qué tipo de organización puede ser un laboratorio según la ISO 17025?",
-            options: ["Solo laboratorios independientes", "Solo laboratorios gubernamentales", "Cualquier entidad con personalidad jurídica", "Solo empresas con más de 100 empleados"],
-            correct: 2,
-            icon: "🏢",
-            info: "La Cláusula 5.1 establece que el laboratorio debe ser una entidad legal o una parte definida de una entidad legal responsable de sus actividades."
-        },
-        {
-            q: "¿Está permitida la subcontratación permanente de actividades para las que el laboratorio afirma estar conforme?",
-            options: ["Sí, si el subcontratista es barato", "No, está explícitamente prohibida", "Solo en días feriados", "Sí, sin necesidad de informar al cliente"],
-            correct: 1,
-            icon: "🚫",
-            info: "Se prohíbe la subcontratación permanente para evitar que laboratorios sin competencia técnica actúen como simples intermediarios."
-        },
-        {
-            q: "¿Qué actividad NO forma parte de las 'actividades de laboratorio' definidas en 2017?",
-            options: ["Ensayo", "Calibración", "Muestreo asociado a ensayos/calibraciones", "Venta de reactivos químicos"],
-            correct: 3,
-            icon: "🧪",
-            info: "Las tres actividades de laboratorio reconocidas son ensayo, calibración y muestreo (siempre que esté asociado a un ensayo o calibración posterior)."
-        },
-        {
-            q: "¿Qué debe definir el laboratorio sobre su estructura de gestión?",
-            options: ["Solo el nombre del director", "Su lugar en la organización matriz y las relaciones entre dirección y servicios de soporte", "El color de los uniformes", "Únicamente el horario de almuerzo"],
-            correct: 1,
-            icon: "🖇️",
-            info: "Es vital definir las relaciones jerárquicas y operativas para asegurar que el sistema de gestión funcione correctamente."
-        },
-        {
-            q: "¿Qué responsabilidad tiene el personal encargado del sistema de gestión?",
-            options: ["Solo archivar documentos", "Asegurar que se mantiene la integridad del sistema ante cambios", "Limpiar los equipos de medición", "Atender el teléfono"],
-            correct: 1,
-            icon: "🛡️",
-            info: "El personal de gestión debe garantizar que los cambios no afecten la integridad del sistema y asegurar la efectividad de las actividades."
-        },
-        {
-            q: "El personal que influye en los resultados debe actuar de forma...",
-            options: ["Rápida y eficiente", "Imparcial, competente y de acuerdo al sistema de gestión", "Independiente de las normas", "Autoritaria"],
-            correct: 1,
-            icon: "👩‍🔬",
-            info: "La Cláusula 6.2.1 exige que todo el personal (interno o externo) sea imparcial y competente."
-        },
-        {
-            q: "¿A qué debe tener acceso todo el personal involucrado en actividades de laboratorio?",
-            options: ["A la cuenta bancaria del laboratorio", "A las partes de la documentación del sistema de gestión aplicables a sus responsabilidades", "Solo a los manuales de los equipos", "A la oficina del director general"],
-            correct: 1,
-            icon: "📖",
-            info: "Para trabajar conforme a la norma, el personal debe conocer y tener acceso a los documentos de gestión que regulan su labor."
-        }
-    ];
+<div class="main">
 
-    let currentIdx = 0;
-
-    function renderQuestion() {
-        const qData = sessionData[currentIdx];
-        document.getElementById('question-counter').innerText = `${currentIdx + 1}/${sessionData.length}`;
-        document.getElementById('prog-bar').style.width = `${((currentIdx) / sessionData.length) * 100}%`;
-        document.getElementById('q-text').innerText = qData.q;
-        document.getElementById('img-placeholder').innerText = qData.icon;
-        
-        const container = document.getElementById('options-container');
-        container.innerHTML = '';
-        qData.options.forEach((opt, i) => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerText = opt;
-            btn.onclick = () => checkAnswer(i);
-            container.appendChild(btn);
-        });
-
-        document.getElementById('feedback').style.display = 'none';
-        document.getElementById('game-zone').style.display = 'block';
-    }
-
-    function checkAnswer(idx) {
-        const qData = sessionData[currentIdx];
-        const feedback = document.getElementById('feedback');
-        document.getElementById('game-zone').style.display = 'none';
-        feedback.style.display = 'block';
-
-        if(idx === qData.correct) {
-            feedback.className = "feedback-area correct-box";
-            document.getElementById('feedback-title').innerText = "🌟 ¡Excelente trabajo!";
-            document.getElementById('feedback-info').innerText = qData.info;
-        } else {
-            feedback.className = "feedback-area wrong-box";
-            document.getElementById('feedback-title').innerText = "❌ Necesitas revisar...";
-            document.getElementById('feedback-info').innerText = "Respuesta incorrecta. Recuerda: " + qData.info;
-        }
-    }
-
-    function nextQuestion() {
-        currentIdx++;
-        if(currentIdx < sessionData.length) {
-            renderQuestion();
-        } else {
-            showFinal();
-        }
-    }
-
-    function showFinal() {
-        document.getElementById('prog-bar').style.width = "100%";
-        document.getElementById('quiz-app').innerHTML = `
-            <div style="font-size: 5rem;">🏆</div>
-            <h1>¡Sesión 1 Completada!</h1>
-            <p style="font-family: 'Inter', sans-serif;">Has dominado los Requisitos Generales y Estructurales de la ISO 17025.</p>
-            <p style="color: var(--text-secondary);">¿Listo para la Sesión 2 (Recursos y Procesos)?</p>
-            <button class="btn-next" onclick="location.reload()">Reiniciar Sesión 1</button>
-        `;
-    }
-
-    renderQuestion();
-</script>
-
-</body>
-</html>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISO 17025 Master — Sesión 2</title>
-    <link href="https://fonts.googleapis.com/css2?family=Salsa&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-pastel: #f0f9ff; /* Azul muy pálido */
-            --primary-pastel: #b9fbc0; /* Verde pastel */
-            --secondary-pastel: #ffecb3; /* Amarillo pastel */
-            --accent-pastel: #ffafcc; /* Rosa pastel */
-            --text-main: #2c3e50;
-            --white-card: #ffffff;
-            --shadow: 0 12px 30px rgba(0,0,0,0.07);
-        }
-
-        body {
-            font-family: 'Salsa', cursive;
-            background-color: var(--bg-pastel);
-            color: var(--text-main);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        #quiz-app {
-            background: var(--white-card);
-            max-width: 800px;
-            width: 100%;
-            border-radius: 40px;
-            box-shadow: var(--shadow);
-            padding: 40px;
-            border: 6px solid var(--secondary-pastel);
-            position: relative;
-            text-align: center;
-        }
-
-        .header-session {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .badge {
-            background: var(--primary-pastel);
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 1rem;
-            color: #27500a;
-        }
-
-        h1 { font-size: 1.7rem; margin: 15px 0; color: #ba7517; }
-        
-        .question-text {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 30px;
-            color: #2d3436;
-        }
-
-        .options-grid {
-            display: grid;
-            gap: 12px;
-        }
-
-        .option-btn {
-            background: #fff;
-            border: 2px solid #eee;
-            padding: 18px 25px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-family: 'Salsa', cursive;
-            font-size: 1.1rem;
-            color: var(--text-main);
-            transition: all 0.3s;
-            text-align: left;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-        }
-
-        .option-btn:hover {
-            border-color: var(--accent-pastel);
-            background: #fffdfd;
-            transform: scale(1.01);
-        }
-
-        /* Feedback */
-        .feedback-area {
-            margin-top: 25px;
-            padding: 25px;
-            border-radius: 25px;
-            display: none;
-            text-align: left;
-        }
-        .correct-box { background: #e1f5ee; border: 3px solid #1d9e75; }
-        .wrong-box { background: #fcebeb; border: 3px solid #e24b4a; }
-
-        .btn-next {
-            background: #378add;
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-family: 'Salsa', cursive;
-            font-size: 1.2rem;
-            margin-top: 20px;
-            cursor: pointer;
-            width: 100%;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background: #eee;
-            border-radius: 10px;
-            margin-top: 35px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: #1d9e75;
-            width: 0%;
-            transition: width 0.4s;
-        }
-    </style>
-</head>
-<body>
-
-<div id="quiz-app">
-    <div class="header-session">
-        <span class="badge" id="session-title">Sesión 2: Cláusula 6 y 7.6</span>
-        <span id="question-counter">1/12</span>
+<!-- ─── SCORE CARD ─── -->
+<div class="score-card">
+  <div class="score-top">
+    <div>
+      <h2>Resumen de cumplimiento</h2>
+      <p>Se actualiza automáticamente al seleccionar cada respuesta</p>
     </div>
-
-    <div id="game-zone">
-        <div id="icon-box" style="font-size: 4.5rem; margin-bottom: 15px;">🔬</div>
-        <div class="question-text" id="q-text">Preparando reactivos...</div>
-        <div class="options-grid" id="options-container"></div>
-    </div>
-
-    <div id="feedback" class="feedback-area">
-        <h2 id="feedback-title" style="margin-top:0"></h2>
-        <p id="feedback-info" style="font-family: 'Inter', sans-serif; font-size: 1.1rem;"></p>
-        <button class="btn-next" onclick="nextQuestion()">Siguiente paso ➔</button>
-    </div>
-
-    <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+    <div class="score-pct" id="score-pct">—</div>
+  </div>
+  <div class="score-grid">
+    <div class="smet smet-c"><div class="v" id="cnt-c">0</div><div class="l">✅ Conforme</div></div>
+    <div class="smet smet-p"><div class="v" id="cnt-p">0</div><div class="l">⚠️ Parcialmente</div></div>
+    <div class="smet smet-nc"><div class="v" id="cnt-nc">0</div><div class="l">❌ No conforme</div></div>
+    <div class="smet smet-na"><div class="v" id="cnt-na">0</div><div class="l">— No aplica</div></div>
+  </div>
+  <div class="bars" id="chart-bars" style="display:none">
+    <div class="bar-row"><div class="bar-lbl"><div class="bar-dot" style="background:var(--mint)"></div>Conforme</div><div class="bar-track"><div class="bar-fill bf-c" id="bar-c" style="width:0%"></div></div><div class="bar-pct" id="bpct-c">0%</div></div>
+    <div class="bar-row"><div class="bar-lbl"><div class="bar-dot" style="background:var(--amber)"></div>Parcialmente</div><div class="bar-track"><div class="bar-fill bf-p" id="bar-p" style="width:0%"></div></div><div class="bar-pct" id="bpct-p">0%</div></div>
+    <div class="bar-row"><div class="bar-lbl"><div class="bar-dot" style="background:var(--red)"></div>No conforme</div><div class="bar-track"><div class="bar-fill bf-nc" id="bar-nc" style="width:0%"></div></div><div class="bar-pct" id="bpct-nc">0%</div></div>
+  </div>
 </div>
 
+<!-- ─── LEYENDA ─── -->
+<div class="legend">
+  <strong>Leyenda:</strong>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--mint)"></div>C — Conforme: evidencia documentada y verificada</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--amber)"></div>PC — Parcialmente conforme: implementado pero incompleto</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--red)"></div>NC — No conforme: ausente o no implementado</div>
+  <div class="leg-item"><div class="leg-dot" style="background:var(--gray400)"></div>NA — No aplica a esta organización</div>
+</div>
+
+<!-- ─── PANEL DE RESULTADOS ─── -->
+<div id="results-panel">
+  <div class="res-hdr">
+    <h2>🔬 Informe de Resultados — ISO/IEC 17025:2017</h2>
+    <p id="res-date"></p>
+  </div>
+  <div class="res-body" id="res-body"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SECCIONES GENERADAS POR JS
+═══════════════════════════════════════════════════ -->
+<div id="sections-container"></div>
+
+<div class="footer">
+  Norma ISO/IEC 17025:2017 — Requisitos generales para la competencia de laboratorios de ensayo y de calibración<br>
+  <span>Estilo SAE Ecuador · Servicio de Acreditación Ecuatoriano</span> · Para uso interno de autoevaluación y auditoría preparatoria<br>
+  Para guardar como PDF → Imprimir / PDF → A4 · Vertical · Márgenes mínimos · Activar gráficos de fondo
+</div>
+
+</div><!-- /main -->
+
 <script>
-    const session2Data = [
-        {
-            q: "¿Qué debe asegurar el laboratorio cuando usa equipamiento que está fuera de su control permanente?",
-            options: ["Nada, la responsabilidad es del dueño", "Que se cumplan los requisitos de la norma para ese equipo", "Solo que el equipo encienda correctamente", "Que el equipo sea de una marca reconocida"],
-            correct: 1,
-            icon: "🏗️",
-            info: "Cláusula 6.4.2: El laboratorio debe asegurar que el equipamiento fuera de su control cumpla con los requisitos de la norma antes de ser utilizado."
-        },
-        {
-            q: "Si un equipo da resultados cuestionables o está defectuoso, ¿cuál es el primer paso?",
-            options: ["Seguir usándolo con cuidado", "Ponerlo fuera de servicio, aislarlo o rotularlo claramente", "Calibrarlo inmediatamente sin detener el trabajo", "Venderlo a otro laboratorio"],
-            correct: 1,
-            icon: "🚫",
-            info: "Cláusula 6.4.9: El equipo defectuoso debe ponerse fuera de servicio y marcarse claramente hasta que se verifique su correcto funcionamiento."
-        },
-        {
-            q: "¿Para qué sirven las 'comprobaciones intermedias' en los equipos?",
-            options: ["Para que el personal no se olvide de usarlos", "Para mantener la confianza en el desempeño del equipo entre calibraciones", "Para evitar pagar la calibración anual", "Para limpiar el equipo profundamente"],
-            correct: 1,
-            icon: "⏲️",
-            info: "Cláusula 6.4.10: Se realizan de acuerdo con un procedimiento para mantener la confianza en el desempeño del equipo en intervalos definidos."
-        },
-        {
-            q: "¿Cómo se define la Trazabilidad Metrológica?",
-            options: ["Es el camino que recorre el analista al laboratorio", "Propiedad de un resultado relacionada a una referencia mediante una cadena ininterrumpida de calibraciones", "Es el manual de usuario de un equipo", "La lista de proveedores del laboratorio"],
-            correct: 1,
-            icon: "🔗",
-            info: "Cláusula 6.5.1: Es una cadena ininterrumpida y documentada de calibraciones, donde cada una contribuye a la incertidumbre de medición."
-        },
-        {
-            q: "¿Cuál de estas es una forma de lograr trazabilidad al Sistema Internacional de Unidades (SI)?",
-            options: ["Usar un equipo nuevo de paquete", "Calibración por un laboratorio competente o el uso de Materiales de Referencia Certificados (MRC)", "Pedirle al fabricante una carta de garantía", "Comparar el resultado con Wikipedia"],
-            correct: 1,
-            icon: "🌍",
-            info: "Cláusula 6.5.2: Se logra mediante laboratorios competentes, MRC de productores que cumplan ISO 17034 o realización directa de unidades SI."
-        },
-        {
-            q: "¿Qué es la Incertidumbre de Medición?",
-            options: ["Un error que cometió el analista", "Un parámetro asociado al resultado que caracteriza la dispersión de los valores", "La duda de si el laboratorio abrirá mañana", "El precio total del ensayo"],
-            correct: 1,
-            icon: "📊",
-            info: "Fundamentos técnicos: Es el parámetro que caracteriza la dispersión de los valores que podrían ser atribuidos a la magnitud medida."
-        },
-        {
-            q: "Un laboratorio que realiza calibraciones debe evaluar la incertidumbre para:",
-            options: ["Solo los equipos más caros", "Todas las calibraciones, incluidas las de sus propios equipos", "Solo si el cliente lo pide", "Una vez cada cinco años"],
-            correct: 1,
-            icon: "⚖️",
-            info: "Cláusula 7.6.2: El laboratorio que realiza calibraciones DEBE evaluar la incertidumbre para todas las calibraciones sin excepción."
-        },
-        {
-            q: "¿Qué debe incluirse al evaluar las contribuciones a la incertidumbre?",
-            options: ["Solo el error del equipo", "Todas las contribuciones significativas, incluidas las del muestreo", "Únicamente la temperatura ambiental", "Nada, se usa un valor estándar de internet"],
-            correct: 1,
-            icon: "🧩",
-            info: "Cláusula 7.6.1: Deben identificarse todas las contribuciones significativas, utilizando métodos apropiados de análisis."
-        },
-        {
-            q: "¿Cómo se llama la incertidumbre que resulta de multiplicar la combinada por un factor de cobertura 'k'?",
-            options: ["Incertidumbre Gigante", "Incertidumbre Expandida", "Incertidumbre Relativa", "Incertidumbre de Error"],
-            correct: 1,
-            icon: "📈",
-            info: "Técnicamente, la Incertidumbre Expandida (U) se obtiene al multiplicar la incertidumbre estándar combinada (uc) por un factor k (usualmente k=2 para 95% de confianza)."
-        },
-        {
-            q: "¿Qué debe hacer el laboratorio con los factores de corrección obtenidos en una calibración?",
-            options: ["Archivarlos y no usarlos", "Asegurar que se actualicen e implementen adecuadamente", "Sumarlos siempre al resultado sin importar el signo", "Borrarlos del certificado"],
-            correct: 1,
-            icon: "📝",
-            info: "Cláusula 6.4.11: Los valores de referencia y factores de corrección deben actualizarse e implementarse para cumplir con los requisitos."
-        },
-        {
-            q: "El personal que influye en las actividades del laboratorio debe actuar de forma:",
-            options: ["Amigable y social", "Imparcial y competente", "Independiente de los procedimientos", "Rápida aunque haya errores"],
-            correct: 1,
-            icon: "👩‍🔬",
-            info: "Cláusula 6.2.1: Todo el personal (interno o externo) que pueda influir en los resultados debe actuar imparcialmente y ser competente."
-        },
-        {
-            q: "Las instalaciones y condiciones ambientales deben ser adecuadas para:",
-            options: ["Que el personal esté cómodo", "No afectar negativamente la validez de los resultados", "Ahorrar energía eléctrica", "Que el laboratorio se vea moderno"],
-            correct: 1,
-            icon: "🌡️",
-            info: "Cláusula 6.3.1: Las condiciones ambientales deben ser adecuadas para las actividades y no afectar la validez de los resultados."
-        }
-    ];
+// ══════════════════════════════════════════════════════
+//  DATOS COMPLETOS — 65 PREGUNTAS / 6 SECCIONES
+// ══════════════════════════════════════════════════════
+const SECCIONES = [
+  {
+    id:'cl4', theme:'theme-cl4', emoji:'⚖️',
+    titulo:'Cláusula 4 — Requisitos Generales',
+    subtitulo:'Imparcialidad y confidencialidad como pilares del laboratorio',
+    preguntas:[
+      {
+        id:'4.1.1', emoji:'⚖️',
+        texto:'¿El laboratorio tiene una declaración de imparcialidad publicada y accesible que cubra todos sus servicios de ensayo y/o calibración?',
+        hint:'Verifique que la declaración sea accesible al público (web, recepción). Debe abordar explícitamente todos los factores que podrían comprometer la imparcialidad: financieros, comerciales, personales, organizacionales.',
+      },
+      {
+        id:'4.1.2', emoji:'🔎',
+        texto:'¿Existe un mecanismo sistemático para identificar, evaluar y gestionar los riesgos de imparcialidad de forma continua y documentada?',
+        hint:'No es suficiente identificarlos una vez. Busque evidencia de revisiones periódicas (al menos anual) de los riesgos. ¿Hay un registro de riesgos actualizado? ¿Se documentan las acciones tomadas ante nuevas amenazas a la imparcialidad?',
+      },
+      {
+        id:'4.1.3', emoji:'🏛️',
+        texto:'¿Puede demostrar que la alta dirección no ejerce presión comercial, financiera o de otra índole que comprometa la imparcialidad de los ensayos?',
+        hint:'Solicite evidencia concreta: ¿Existen actas de reunión donde se discuta la independencia de los resultados? ¿Hay algún caso documentado donde se haya rechazado presión de un cliente para modificar resultados? ¿El personal puede reportar este tipo de situaciones de forma anónima?',
+      },
+      {
+        id:'4.2.1', emoji:'🔒',
+        texto:'¿El laboratorio cuenta con acuerdos de confidencialidad vigentes con su personal y compromisos equivalentes con clientes y proveedores?',
+        hint:'Revise contratos de trabajo y/o acuerdos de confidencialidad firmados. ¿Cubren datos de clientes, resultados, métodos propietarios? ¿Existe un registro de quién tiene acceso a información confidencial? ¿El personal contratado temporalmente también los firma?',
+      },
+      {
+        id:'4.2.2', emoji:'📜',
+        texto:'Cuando una autoridad legal o regulatoria exige revelar información confidencial de un cliente, ¿el laboratorio notifica al cliente antes de divulgarla (salvo prohibición legal)?',
+        hint:'Revise el procedimiento documentado. ¿Está claro quién toma la decisión de notificar? ¿Existe un registro de casos donde se haya aplicado este procedimiento? ¿Se especifica el tiempo máximo para notificar al cliente?',
+      },
+      {
+        id:'4.2.3', emoji:'🛡️',
+        texto:'¿La información aportada por fuentes externas (clientes, entes reguladores, subcontratistas) está clasificada, protegida y se mantiene el anonimato cuando corresponde?',
+        hint:'Verifique si existe un sistema de clasificación de información. ¿Los datos de clientes están separados entre sí para evitar divulgaciones cruzadas? ¿Hay controles de acceso físico y digital para proteger esta información?',
+      },
+    ]
+  },
+  {
+    id:'cl5', theme:'theme-cl5', emoji:'🏢',
+    titulo:'Cláusula 5 — Requisitos de Estructura',
+    subtitulo:'Identidad legal, organización y alcance del laboratorio',
+    preguntas:[
+      {
+        id:'5.1', emoji:'📋',
+        texto:'¿El laboratorio es una entidad legalmente identificable con documentación que demuestre su responsabilidad ante sus actividades de ensayo/calibración?',
+        hint:'Solicite el RUC, estatutos, resoluciones de creación o equivalente. Si el laboratorio es parte de una organización mayor, ¿están definidas claramente las responsabilidades del laboratorio frente a las de la organización madre?',
+      },
+      {
+        id:'5.2', emoji:'🗺️',
+        texto:'¿El alcance de las actividades del laboratorio está definido con precisión, incluyendo actividades en instalaciones permanentes, temporales y sitios de cliente?',
+        hint:'Revise el documento de alcance. ¿Especifica las matrices ensayadas (agua, suelo, alimentos…), los parámetros medidos, los métodos aplicados y los rangos de medición? ¿El alcance real coincide con lo que el laboratorio practica cotidianamente?',
+      },
+      {
+        id:'5.3', emoji:'👔',
+        texto:'¿El organigrama refleja fielmente las líneas de autoridad actuales, con los roles de gestión de calidad y dirección técnica asignados a personas competentes e identificables?',
+        hint:'Compare el organigrama con los nombres reales del personal. ¿Las personas asignadas a roles clave cuentan con evidencia de su competencia (títulos, certificaciones, experiencia)? ¿El organigrama tiene fecha de revisión reciente?',
+      },
+      {
+        id:'5.4', emoji:'🔄',
+        texto:'¿Existe un proceso formal de gestión del cambio que garantice la integridad del sistema de gestión cuando se planifican modificaciones estructurales, de personal o de proceso?',
+        hint:'Busque evidencia de cambios recientes (nuevos equipos, cambio de director técnico, ampliación de alcance). ¿Se documentó el proceso de gestión del cambio? ¿Se evaluó el impacto en el sistema antes de implementar el cambio?',
+      },
+      {
+        id:'5.5', emoji:'📣',
+        texto:'¿Los objetivos del laboratorio, la política de calidad y las metas estratégicas son comunicados efectivamente a todo el personal, incluyendo el contratado temporalmente?',
+        hint:'No basta con tener un manual en la intranet. Verifique: ¿Se realizan reuniones de difusión? ¿El personal puede describir los objetivos del laboratorio sin consultar documentos? ¿Hay evidencia de comunicaciones internas (correos, actas)?',
+      },
+    ]
+  },
+  {
+    id:'cl6', theme:'theme-cl6', emoji:'🌐',
+    titulo:'Cláusula 6 — Requisitos de Recursos',
+    subtitulo:'Personal, instalaciones, equipamiento y trazabilidad metrológica',
+    preguntas:[
+      {
+        id:'6.1', emoji:'🌐',
+        texto:'¿El laboratorio ha realizado un análisis documentado de los recursos necesarios (personal, equipos, instalaciones, sistemas) y puede demostrar que los tiene asignados y disponibles?',
+        hint:'Revise el plan de recursos. ¿Hay una lista de equipos críticos con estado de disponibilidad? ¿El personal asignado es suficiente para la carga de trabajo sin comprometer la calidad? ¿Existe evidencia de que se rechazan trabajos cuando los recursos son insuficientes?',
+      },
+      {
+        id:'6.2.1', emoji:'👩‍🔬',
+        texto:'¿Todo el personal que influye en los resultados de ensayo/calibración cuenta con registros de competencia actualizados que incluyan educación, formación específica, experiencia técnica y habilidades demostradas?',
+        hint:'Solicite los expedientes de 2-3 técnicos al azar. ¿Tienen título o certificación verificable? ¿La experiencia documentada es coherente con las actividades que realizan? ¿Cuándo fue la última evaluación de competencia? Verifique que el personal contratado o temporal también tenga registros.',
+      },
+      {
+        id:'6.2.2', emoji:'📑',
+        texto:'¿Existen descripciones de cargo actualizadas con los requisitos de competencia específicos para cada función que afecta los resultados del laboratorio?',
+        hint:'Revise perfiles de puesto para: técnico de ensayos, metróloga/o, responsable de calidad y director técnico. ¿Especifican formación mínima, experiencia requerida, habilidades técnicas y responsabilidades? ¿Están diferenciados según el área técnica (biología, química, metrología física…)?',
+      },
+      {
+        id:'6.2.3', emoji:'🎓',
+        texto:'¿El programa de formación continua del laboratorio incluye evaluación de eficacia posterior, y existe evidencia de que las brechas de competencia identificadas se cierran efectivamente?',
+        hint:'Revise el plan de formación del año en curso. ¿Hay un mecanismo para evaluar si la formación fue efectiva (prueba práctica, observación directa, comparación interlaboratorio)? ¿Se documentaron los resultados de las evaluaciones? ¿Alguna formación fue repetida por baja eficacia?',
+      },
+      {
+        id:'6.2.4', emoji:'🖊️',
+        texto:'¿Las autorizaciones del personal para actividades críticas (operar equipos de alta precisión, firmar informes, declarar conformidad, validar métodos) son explícitas, actualizadas y basadas en competencia demostrada?',
+        hint:'Solicite el registro de autorizaciones vigentes. ¿Hay personal que firme informes o declare conformidad sin autorización explícita documentada? ¿Las autorizaciones se revisan cuando cambia el personal o sus competencias? ¿Qué pasa si el técnico autorizado se ausenta?',
+      },
+      {
+        id:'6.3.1', emoji:'🏗️',
+        texto:'¿Las instalaciones del laboratorio garantizan condiciones ambientales apropiadas para la validez de los resultados, con separación adecuada entre áreas incompatibles?',
+        hint:'Realice una recorrida por las instalaciones. ¿Hay separación física entre áreas que podrían generar interferencias (química vs microbiología, calibración vs producción)? ¿Las condiciones de temperatura, humedad e iluminación son adecuadas para cada tipo de ensayo? ¿Existen evidencias de que las instalaciones han causado resultados dudosos en el pasado?',
+      },
+      {
+        id:'6.3.2', emoji:'🌡️',
+        texto:'¿Los parámetros ambientales críticos están monitoreados con equipos calibrados, con registros continuos que incluyan acciones tomadas cuando se exceden los límites definidos?',
+        hint:'Revise los registros de temperatura y humedad de los últimos 3 meses. ¿Hay registros de excedencia de límites? ¿Qué acciones se tomaron? ¿Se suspendió algún ensayo por condiciones ambientales fuera de especificación? ¿Los termómetros e higrómetros tienen trazabilidad metrológica?',
+      },
+      {
+        id:'6.3.3', emoji:'🚧',
+        texto:'¿El control de acceso a las áreas del laboratorio es efectivo, con registros de visitantes y personal autorizado, y existen controles para prevenir contaminación cruzada?',
+        hint:'Verifique el sistema de control de acceso (llaves, tarjetas, registro). ¿Los visitantes son acompañados siempre? ¿Hay zonas de paso que puedan generar contaminación entre áreas? ¿El personal de mantenimiento tiene acceso controlado? ¿Se han registrado incidentes de contaminación cruzada?',
+      },
+      {
+        id:'6.4.1', emoji:'🔬',
+        texto:'¿El equipamiento del laboratorio está documentado con especificaciones que confirmen su aptitud para los métodos aplicados, con exactitud y rango de medición suficientes?',
+        hint:'Seleccione 2-3 equipos críticos al azar. ¿La especificación del equipo (resolución, rango, exactitud) es compatible con los requisitos del método de ensayo? ¿Hay equipos en uso cuyas especificaciones no han sido comparadas con los requisitos del método?',
+      },
+      {
+        id:'6.4.2', emoji:'📅',
+        texto:'¿El programa de calibración/verificación está basado en criterios técnicos documentados, con todos los equipos en estado conocido y etiquetado visible de la fecha de próxima calibración?',
+        hint:'Revise el programa de calibración. ¿Algún equipo está operando con calibración vencida? ¿Los intervalos de calibración se basan en la estabilidad del equipo o simplemente en un período arbitrario? ¿Los equipos fuera de servicio están claramente etiquetados y separados físicamente?',
+      },
+      {
+        id:'6.4.3', emoji:'🗂️',
+        texto:'¿Los registros de cada equipo son completos e incluyen: identificación única, historial de calibraciones, mantenimientos, daños, reparaciones y cualquier anomalía relevante?',
+        hint:'Revise el expediente de un equipo seleccionado al azar. ¿Tiene toda la historia desde su adquisición? ¿Los daños o reparaciones están documentados junto con la evaluación de impacto en resultados previos? ¿Hay equipos sin número de serie registrado o sin historial completo?',
+      },
+      {
+        id:'6.4.4', emoji:'⚠️',
+        texto:'¿Existe un procedimiento robusto para gestionar equipos que producen resultados dudosos, que incluya retiro inmediato, evaluación de trabajos previos y notificación al cliente cuando corresponde?',
+        hint:'Solicite evidencia de al menos un caso real donde se haya aplicado este procedimiento. ¿Se documentó el análisis de impacto en resultados emitidos anteriormente? ¿Se notificó al cliente? ¿Se investigó la causa raíz? ¿El procedimiento define criterios claros para determinar qué constituye un "resultado dudoso"?',
+      },
+      {
+        id:'6.5.1', emoji:'📏',
+        texto:'¿La trazabilidad metrológica de las mediciones críticas está formalmente establecida con cadenas documentadas hasta el SI o patrones de referencia reconocidos internacionalmente, sin interrupciones?',
+        hint:'Solicite el mapa de trazabilidad de 2-3 parámetros críticos. ¿La cadena llega hasta el SI (metros, kilogramos, segundos…) o a patrones reconocidos por el BIPM? ¿Hay alguna medición crítica cuya cadena de trazabilidad esté incompleta o sin documentar?',
+      },
+      {
+        id:'6.5.2', emoji:'🔗',
+        texto:'¿Los patrones de referencia internos se calibran exclusivamente por laboratorios acreditados bajo ISO/IEC 17025, con certificados que contengan la incertidumbre de medición expandida?',
+        hint:'Revise los certificados de calibración de los patrones de referencia. ¿El laboratorio de calibración externo está acreditado (SAE, INEN, ONAC, ENAC u organismo signatario del ILAC MRA)? ¿El certificado declara incertidumbre expandida con factor de cobertura k? ¿Los patrones se almacenan en condiciones que garantizan su estabilidad?',
+      },
+      {
+        id:'6.6.1', emoji:'🤝',
+        texto:'¿Existe una lista de proveedores aprobados actualizada, con criterios documentados de evaluación y reevaluación para servicios de calibración, insumos críticos y subcontratistas?',
+        hint:'Revise la lista de proveedores aprobados. ¿Cuándo fue la última reevaluación? ¿Qué criterios se usan para aprobar y para revocar la aprobación? ¿Los laboratorios de calibración subcontratados están acreditados? ¿Hay registros de reevaluación de proveedores que hayan fallado en entregas o calidad?',
+      },
+      {
+        id:'6.6.2', emoji:'📦',
+        texto:'¿Los insumos, reactivos, materiales de referencia y equipamiento externo se inspeccionan sistemáticamente antes de su uso, con registros de recepción e inspección que incluyan criterios de aceptación/rechazo?',
+        hint:'Revise los registros de recepción de los últimos 3 meses. ¿Hay evidencia de inspecciones realizadas? ¿Cuántos rechazos hubo y cómo se gestionaron? ¿Los criterios de aceptación están definidos por escrito o dependen del criterio personal del receptor?',
+      },
+    ]
+  },
+  {
+    id:'cl7', theme:'theme-cl7', emoji:'📝',
+    titulo:'Cláusula 7 — Requisitos del Proceso',
+    subtitulo:'Desde la solicitud del cliente hasta la emisión del informe',
+    preguntas:[
+      {
+        id:'7.1.1', emoji:'📝',
+        texto:'¿El proceso de revisión de solicitudes verifica formalmente la capacidad técnica, disponibilidad de recursos, métodos aplicables y requisitos del cliente ANTES de comprometerse con el trabajo?',
+        hint:'Solicite la solicitud de servicio más reciente. ¿Existe evidencia de revisión formal antes de aceptar? ¿Se rechazó o condicionó algún trabajo por falta de capacidad? ¿La revisión incluye verificar que el método solicitado está dentro del alcance de acreditación?',
+      },
+      {
+        id:'7.1.2', emoji:'📄',
+        texto:'¿Los contratos o acuerdos de servicio están documentados y firmados antes del inicio del trabajo, con registro de cualquier modificación posterior acordada con el cliente?',
+        hint:'Revise el contrato o acuerdo de servicio de un cliente recurrente. ¿Especifica el método a aplicar, los plazos de entrega, el manejo de muestras y los requisitos especiales del cliente? ¿Las modificaciones tienen un registro de aprobación bilateral?',
+      },
+      {
+        id:'7.2.1', emoji:'🔍',
+        texto:'¿Los métodos de ensayo/calibración en uso son la versión más actual de la norma de referencia, con verificación documentada de que el personal tiene acceso efectivo a dicha versión?',
+        hint:'Seleccione un método normativo (ej. ISO, ASTM, NTE INEN). ¿La versión en uso es la más reciente? ¿Existe un sistema de alertas para detectar cuando se publica una nueva edición? ¿El personal puede demostrar que conoce la versión vigente?',
+      },
+      {
+        id:'7.2.2', emoji:'✔️',
+        texto:'¿Existe evidencia documentada de verificación del método (no validación) que confirma que el laboratorio puede implementarlo correctamente antes de su uso en muestras de clientes?',
+        hint:'Solicite el expediente de verificación de un método de ensayo. ¿Incluye repetibilidad, exactitud frente a materiales de referencia certificados (MRC), y comparación con el laboratorio desarrollador o con resultados de ensayos de aptitud? ¿La verificación fue realizada por personal competente?',
+      },
+      {
+        id:'7.2.3', emoji:'🧪',
+        texto:'¿Los métodos propios o no normalizados han sido validados con parámetros metrológicos documentados (exactitud, precisión, límite de detección, selectividad, rango lineal) que demuestren aptitud para el uso previsto?',
+        hint:'Revise el expediente de validación de un método in-house. ¿Incluye todos los parámetros relevantes para el tipo de ensayo? ¿La validación fue sometida a revisión por pares internos? ¿Existe un plan de seguimiento de la validez de la validación (estabilidad del método en el tiempo)?',
+      },
+      {
+        id:'7.3.1', emoji:'🌱',
+        texto:'¿Cuando el laboratorio es responsable del muestreo, existe un plan estadístico documentado que garantice la representatividad de las muestras y minimice la variabilidad en la toma?',
+        hint:'Si el laboratorio realiza muestreo en campo, revise el plan. ¿Incluye base estadística para determinar el número de muestras? ¿Define los puntos de muestreo, condiciones ambientales aceptables y criterios de rechazo de la muestra? ¿El personal de campo está capacitado y autorizado para el muestreo?',
+      },
+      {
+        id:'7.4.1', emoji:'🏷️',
+        texto:'¿El sistema de identificación única de ítems previene inequívocamente cualquier confusión o intercambio de muestras desde la recepción hasta el archivo o devolución?',
+        hint:'Observe el proceso de recepción y etiquetado de muestras. ¿La identificación es única, permanente e inequívoca? ¿Hay algún punto en el proceso donde la identificación podría perderse o duplicarse? ¿Las submuestras conservan el vínculo con la muestra original?',
+      },
+      {
+        id:'7.4.2', emoji:'🚚',
+        texto:'¿Las condiciones de transporte y el estado de las muestras al momento de la recepción se documentan sistemáticamente, con un proceso claro para consultar al cliente ante desviaciones?',
+        hint:'Revise los registros de recepción. ¿Existe un formulario estandarizado? ¿Se registran temperatura de transporte, estado del embalaje, integridad de la muestra? ¿Cuántas muestras fueron rechazadas en el último año por llegar fuera de condiciones? ¿Se notificó al cliente en cada caso?',
+      },
+      {
+        id:'7.5.1', emoji:'💾',
+        texto:'¿Los registros técnicos son suficientemente detallados para que un técnico competente independiente pueda repetir el ensayo y obtener resultados equivalentes sin necesidad de información adicional?',
+        hint:'Tome el registro de un ensayo reciente y pídale a un técnico que no lo realizó que lo interprete. ¿Puede identificar quién lo hizo, cuándo, con qué equipo, en qué condiciones ambientales y con qué datos brutos? ¿Los cálculos son trazables paso a paso?',
+      },
+      {
+        id:'7.5.2', emoji:'🔏',
+        texto:'¿Los registros técnicos están almacenados de forma segura (física y digitalmente), con períodos de retención definidos y con modificaciones que son trazables al autor y al momento del cambio?',
+        hint:'Verifique el sistema de gestión de registros. ¿Los registros físicos están protegidos contra daño, pérdida y acceso no autorizado? ¿Los registros electrónicos tienen control de versiones? ¿Qué ocurre si hay una corrección: se puede ver el valor original y quién lo cambió? ¿Los períodos de retención cumplen con los requisitos SAE y legales ecuatorianos?',
+      },
+      {
+        id:'7.6.1', emoji:'📐',
+        texto:'¿El laboratorio tiene una metodología documentada para evaluar la incertidumbre de medición de todos sus ensayos y calibraciones, y los resultados se reportan con incertidumbre expandida cuando corresponde?',
+        hint:'Solicite el cálculo de incertidumbre de un ensayo representativo. ¿Identifica todas las fuentes de incertidumbre (calibración, repetibilidad, resolución, temperatura, muestreo…)? ¿El cálculo sigue la Guía GUM o EURACHEM/CITAC? ¿La incertidumbre aparece en el informe con unidades y nivel de confianza?',
+      },
+      {
+        id:'7.7.1', emoji:'📊',
+        texto:'¿El programa de aseguramiento de la calidad de resultados incluye múltiples actividades (cartas de control, ensayos de aptitud, MRC, comparaciones interlaboratorio) con frecuencia suficiente para detectar tendencias?',
+        hint:'Revise el programa de control de calidad interno. ¿Qué tan frecuentemente se corren blancos, duplicados y MRC? ¿Las cartas de control tienen límites definidos basados en datos históricos? ¿La participación en ensayos de aptitud (INEN, RELACRE, FAPAS, etc.) cubre todos los parámetros críticos del alcance?',
+      },
+      {
+        id:'7.7.2', emoji:'📈',
+        texto:'¿Cuando los datos de control de calidad caen fuera de los límites de control, existe un proceso sistemático de investigación, con acciones correctivas documentadas y evaluación de impacto en resultados emitidos?',
+        hint:'Solicite evidencia de al menos 2 situaciones donde los controles fallaron en el último año. ¿Se detuvo el trabajo hasta aclarar la situación? ¿Se investigó la causa raíz? ¿Se evaluó si los informes emitidos previamente podían estar afectados? ¿Se notificó al cliente cuando fue necesario?',
+      },
+      {
+        id:'7.8.1', emoji:'📋',
+        texto:'¿Los informes de ensayo/calibración emitidos contienen todos los elementos requeridos por la norma y permiten al cliente interpretar correctamente los resultados sin información adicional?',
+        hint:'Revise un informe de ensayo reciente. ¿Contiene: identificación única del informe, nombre y dirección del laboratorio y del cliente, descripción e identificación del ítem, método de ensayo aplicado, resultados con unidades SI, incertidumbre si aplica, declaración de conformidad si fue solicitada, fecha y firma del responsable? ¿El informe está en idioma español con terminología comprensible?',
+      },
+      {
+        id:'7.8.2', emoji:'🗒️',
+        texto:'¿Cuando el laboratorio emite declaraciones de conformidad (pasa/no pasa, dentro/fuera de especificación), documenta explícitamente la regla de decisión aplicada, incluyendo cómo se considera la incertidumbre de medición?',
+        hint:'Solicite un informe con declaración de conformidad. ¿Especifica la regla de decisión (ej. "regla de aceptación simple", "regla de la guardia binaria" o referencia a ISO 14253-1)? ¿El cliente fue informado de la regla a utilizar antes del ensayo? ¿La incertidumbre es considerada correctamente al declarar conformidad?',
+      },
+      {
+        id:'7.8.3', emoji:'✏️',
+        texto:'¿El proceso de modificación de informes emitidos garantiza que el cliente recibe la corrección claramente identificada como tal, con referencia al informe original y sin posibilidad de confusión?',
+        hint:'Si existen informes corregidos, revise el proceso. ¿El informe corregido dice explícitamente "Informe corregido" o equivalente? ¿Hace referencia al informe original que reemplaza? ¿Se verifica que el cliente destruyó o reemplazó el original? ¿Se documenta la causa de la corrección?',
+      },
+      {
+        id:'7.9.1', emoji:'💬',
+        texto:'¿El proceso de gestión de quejas garantiza que toda reclamación, sea técnica o administrativa, se registra, investiga objetivamente y se responde al cliente con acciones correctivas concretas dentro de plazos definidos?',
+        hint:'Revise el registro de quejas del último año. ¿Cuántas quejas hubo? ¿Todas tienen evidencia de investigación y respuesta? ¿El proceso es independiente (quien investiga no es quien recibió la queja)? ¿Hay casos donde la queja derivó en una no conformidad del sistema?',
+      },
+      {
+        id:'7.10.1', emoji:'🚫',
+        texto:'¿El procedimiento de trabajo no conforme define criterios claros para suspender un ensayo, con autoridad delegada al personal técnico para detener trabajos sin necesidad de aprobación jerárquica?',
+        hint:'Entreviste a un técnico de laboratorio. ¿Sabe exactamente en qué situaciones debe detener un trabajo? ¿Tiene autoridad real para hacerlo sin temor a consecuencias? ¿Hay evidencia de trabajos suspendidos correctamente por el propio técnico? ¿El procedimiento define qué información se le da al cliente?',
+      },
+      {
+        id:'7.10.2', emoji:'🔁',
+        texto:'¿Las investigaciones de causas raíz para trabajo no conforme son sistemáticas (usando metodologías estructuradas como 5 porqués, diagrama de Ishikawa, etc.) y las acciones correctivas demuestran eficacia medible?',
+        hint:'Revise el expediente de una no conformidad reciente. ¿La causa raíz identificada es técnicamente creíble o es superficial ("error humano")? ¿La acción correctiva ataca la causa raíz o solo el síntoma? ¿Hay evidencia de seguimiento que confirme que la acción fue efectiva y la no conformidad no se repitió?',
+      },
+      {
+        id:'7.11.1', emoji:'💻',
+        texto:'¿El LIMS u otro software usado para gestionar datos de ensayo está validado o verificado para el uso previsto, con controles de acceso, copias de seguridad automáticas y plan de recuperación ante desastres?',
+        hint:'Solicite la documentación de validación/verificación del software. ¿Cuándo fue la última prueba de respaldo? ¿Existe un plan de continuidad de negocio si el sistema falla durante una jornada de trabajo? ¿Los niveles de acceso por usuario están definidos y se revisan periódicamente? ¿Las actualizaciones del software se validan antes de implementar en producción?',
+      },
+      {
+        id:'7.11.2', emoji:'🔐',
+        texto:'¿Los controles de integridad de datos garantizan que ninguna modificación a registros electrónicos puede realizarse sin dejar una huella auditable con identificación del usuario, fecha y justificación del cambio?',
+        hint:'Solicite una demostración del sistema de auditoría de datos. ¿Se puede rastrear la historia completa de cambios de un resultado? ¿El acceso a los registros desde fuera del laboratorio está controlado y registrado? ¿Existe evidencia de que se hayan detectado y gestionado intentos de manipulación de datos?',
+      },
+    ]
+  },
+  {
+    id:'cl8', theme:'theme-cl8', emoji:'🗺️',
+    titulo:'Cláusula 8 — Sistema de Gestión',
+    subtitulo:'Documentación, auditorías internas y revisión por la dirección',
+    preguntas:[
+      {
+        id:'8.1', emoji:'🗺️',
+        texto:'¿El laboratorio ha documentado formalmente la Opción de sistema de gestión seleccionada (A: requisitos específicos ISO 17025 / B: alineada a ISO 9001) y puede demostrar su implementación completa?',
+        hint:'Solicite el documento donde se declara la opción elegida. Si eligió la Opción B (ISO 9001), ¿tiene certificación ISO 9001 vigente en el alcance del laboratorio? Si eligió Opción A, ¿están implementados todos los requisitos de los numerales 8.2 a 8.9?',
+      },
+      {
+        id:'8.2.1', emoji:'📁',
+        texto:'¿La documentación del sistema de gestión (políticas, procedimientos, instrucciones técnicas, formularios y registros) está organizada, accesible al personal y coherente con la práctica real del laboratorio?',
+        hint:'Realice una auditoría de escritorio: tome un procedimiento al azar y verifique que lo que describe coincide con lo que el técnico hace en la práctica. ¿La documentación está actualizada? ¿El personal sabe dónde encontrar cada documento? ¿Existe un índice maestro de documentos?',
+      },
+      {
+        id:'8.2.2', emoji:'🎯',
+        texto:'¿La política de calidad del laboratorio es concreta, medible y revisada anualmente, con objetivos de calidad derivados de ella que son monitoreados con indicadores específicos?',
+        hint:'Revise la política de calidad y los objetivos derivados. ¿Los objetivos son SMART (específicos, medibles, alcanzables, relevantes, con plazo)? ¿Hay datos de seguimiento de los indicadores? ¿El personal puede citar al menos un objetivo de calidad del año en curso?',
+      },
+      {
+        id:'8.3.1', emoji:'🗃️',
+        texto:'¿El sistema de control de documentos garantiza que solo las versiones vigentes están disponibles en los puntos de uso, con documentos obsoletos retirados y protegidos contra uso no intencionado?',
+        hint:'Verifique en el área de trabajo: ¿Hay procedimientos impresos sin número de versión o sin fecha? ¿El técnico usa el procedimiento del sistema de gestión o una copia personal desactualizada? ¿El sistema permite que documentos obsoletos sean consultados por error?',
+      },
+      {
+        id:'8.4.1', emoji:'📂',
+        texto:'¿Los períodos de retención de todos los tipos de registros están definidos, son coherentes con los requisitos SAE y legales ecuatorianos, y los registros son efectivamente recuperables en el tiempo establecido?',
+        hint:'Revise la tabla de retención de registros. ¿Cumple con los mínimos establecidos por el SAE (generalmente 5-10 años para registros de ensayo)? ¿Hay registros que deberían existir pero no se encuentran? ¿Los archivos físicos están organizados y protegidos contra humedad, plagas y acceso no autorizado?',
+      },
+      {
+        id:'8.5.1', emoji:'🔮',
+        texto:'¿El proceso de gestión de riesgos y oportunidades del laboratorio produce acciones concretas proporcionales al riesgo identificado, con seguimiento de su eficacia?',
+        hint:'Revise la matriz de riesgos del laboratorio. ¿Es realista y específica para el laboratorio (no genérica)? ¿Los riesgos de imparcialidad, competencia técnica y continuidad del servicio están contemplados? ¿Las acciones preventivas definidas fueron implementadas? ¿Hay evidencia de que el proceso ha evitado problemas reales?',
+      },
+      {
+        id:'8.6.1', emoji:'🌱',
+        texto:'¿El laboratorio tiene un proceso sistemático para identificar y aprovechar oportunidades de mejora, más allá de simplemente reaccionar a no conformidades ya detectadas?',
+        hint:'Pregunte al responsable de calidad cuáles han sido las mejoras más significativas del último año y cómo fueron identificadas. ¿Provienen de análisis de tendencias de datos, retroalimentación de clientes, benchmarking con otros laboratorios, o avances tecnológicos? ¿Hay un registro formal de mejoras implementadas?',
+      },
+      {
+        id:'8.7.1', emoji:'🛠️',
+        texto:'¿El proceso de acciones correctivas incluye investigación de causa raíz, implementación de soluciones, seguimiento de eficacia y prevención de recurrencia, con tiempos de respuesta definidos y cumplidos?',
+        hint:'Revise el registro de acciones correctivas del último año. ¿Cuántas se cerraron dentro del plazo establecido? ¿Alguna se reabrió por recurrencia del problema? ¿La causa raíz identificada en promedio es suficientemente profunda? ¿Hay acciones correctivas abiertas por más de 6 meses sin cierre?',
+      },
+      {
+        id:'8.8.1', emoji:'🔍',
+        texto:'¿El programa de auditorías internas cubre todos los requisitos de la norma en cada ciclo, con auditores calificados e independientes del área auditada, y frecuencia suficiente para el tamaño y complejidad del laboratorio?',
+        hint:'Revise el programa de auditorías. ¿Todos los numerales de la norma fueron auditados en el último ciclo? ¿Los auditores internos tienen formación en ISO 17025 y en técnicas de auditoría? ¿Un auditor del área de química puede auditar el área de biología? ¿La frecuencia es adecuada para el volumen de trabajo?',
+      },
+      {
+        id:'8.8.2', emoji:'📝',
+        texto:'¿Los hallazgos de auditoría interna son formalmente documentados con informes estructurados, y cada no conformidad identificada genera una acción correctiva con responsable asignado y fecha de cierre verificada?',
+        hint:'Revise el último informe de auditoría interna. ¿Tiene estructura formal (alcance, criterios, hallazgos, conclusiones)? ¿Cada no conformidad tiene una acción correctiva abierta? ¿El responsable de calidad hace seguimiento hasta el cierre efectivo? ¿Los resultados de la auditoría se presentaron a la dirección?',
+      },
+      {
+        id:'8.9.1', emoji:'👔',
+        texto:'¿La revisión por la dirección se realiza con la frecuencia requerida, con presencia real de la alta dirección, y considera todos los elementos de entrada mandatorios de la norma?',
+        hint:'Revise el acta de la última revisión por la dirección. ¿Asistió la dirección o delegó en personal subalterno? ¿El acta evidencia análisis real de: resultados de auditorías, retroalimentación de clientes, quejas, desempeño de ensayos, adecuación de recursos, gestión de riesgos y cambios al sistema?',
+      },
+      {
+        id:'8.9.2', emoji:'📊',
+        texto:'¿Las decisiones y acciones derivadas de la revisión por la dirección son específicas, tienen responsables y plazos asignados, y existe seguimiento formal de los compromisos de revisiones anteriores?',
+        hint:'Compare el acta de la revisión anterior con la más reciente. ¿Los compromisos de la revisión anterior fueron ejecutados? ¿Las nuevas decisiones son concretas o son solo intenciones vagas? ¿Hay un mecanismo para verificar el avance de las decisiones entre revisiones?',
+      },
+    ]
+  },
+  {
+    id:'clA', theme:'theme-clA', emoji:'🔗',
+    titulo:'Anexo A — Trazabilidad Metrológica',
+    subtitulo:'Cadenas de trazabilidad y competencia de laboratorios de calibración',
+    preguntas:[
+      {
+        id:'A.1.1', emoji:'🔗',
+        texto:'¿El personal técnico del laboratorio comprende y puede explicar el concepto de trazabilidad metrológica, incluyendo la diferencia entre trazabilidad al SI y a patrones de referencia reconocidos?',
+        hint:'Evalúe el conocimiento del personal técnico, no solo del responsable de calidad. ¿Pueden explicar por qué la trazabilidad metrológica garantiza la comparabilidad de resultados a nivel internacional? ¿Conocen la diferencia entre calibración y verificación en términos de trazabilidad?',
+      },
+      {
+        id:'A.1.2', emoji:'🏅',
+        texto:'¿Los laboratorios de calibración externos utilizados están acreditados bajo ISO/IEC 17025 por un organismo signatario del Acuerdo de Reconocimiento Mutuo del ILAC (ILAC MRA), preferentemente el SAE en Ecuador?',
+        hint:'Verifique la acreditación de los laboratorios de calibración proveedores. ¿Busca siempre primero en el SINAE (sistema nacional de acreditación del SAE)? ¿Cuando usa laboratorios extranjeros, verifica que sean signatarios del ILAC MRA? ¿Acepta certificados de calibración de laboratorios no acreditados sin verificar su competencia técnica?',
+      },
+      {
+        id:'A.2.1', emoji:'📏',
+        texto:'¿La cadena de trazabilidad de cada mensurando crítico está documentada sin interrupciones, desde el instrumento de trabajo del laboratorio hasta el SI o un patrón de referencia internacionalmente reconocido?',
+        hint:'Solicite el diagrama o mapa de trazabilidad de la magnitud más crítica del laboratorio. ¿Cada eslabón de la cadena tiene su certificado de calibración correspondiente? ¿La incertidumbre se propaga correctamente a lo largo de toda la cadena? ¿Algún eslabón de la cadena es un laboratorio no acreditado cuya competencia no ha sido verificada?',
+      },
+      {
+        id:'A.2.2', emoji:'📄',
+        texto:'¿Los certificados de calibración recibidos de laboratorios externos cumplen con todos los requisitos de la norma: incertidumbre expandida, factor de cobertura k, condiciones de medición, declaración de trazabilidad y firma del responsable técnico?',
+        hint:'Tome un certificado de calibración reciente y verifique: ¿Declara la incertidumbre expandida U con su factor de cobertura k (típicamente k=2 para 95%)? ¿Indica las condiciones ambientales durante la calibración? ¿Hace referencia explícita a la trazabilidad de sus propios patrones? ¿Está firmado por el director técnico del laboratorio de calibración?',
+      },
+      {
+        id:'A.2.3', emoji:'🔄',
+        texto:'¿Los intervalos de calibración de cada equipo están establecidos con base técnica documentada (historial de estabilidad, frecuencia de uso, ambiente de trabajo) y se revisan sistemáticamente para ajustarlos si la evidencia lo requiere?',
+        hint:'Revise cómo se determinaron los intervalos de calibración del equipo más crítico del laboratorio. ¿El intervalo se basó en el historial de calibraciones anteriores? ¿Se ha acortado el intervalo alguna vez porque el equipo mostró inestabilidad? ¿Se ha alargado el intervalo para algún equipo particularmente estable, con base en datos históricos documentados?',
+      },
+    ]
+  }
+];
 
-    let currentIdx = 0;
+// ─── ESTADO ───
+const TOTAL = 65;
+const state = {}; // id → {val, note}
 
-    function renderQuestion() {
-        const qData = session2Data[currentIdx];
-        document.getElementById('question-counter').innerText = `${currentIdx + 1}/${session2Data.length}`;
-        document.getElementById('prog-fill').style.width = `${((currentIdx) / session2Data.length) * 100}%`;
-        document.getElementById('q-text').innerText = qData.q;
-        document.getElementById('icon-box').innerText = qData.icon;
-        
-        const container = document.getElementById('options-container');
-        container.innerHTML = '';
-        qData.options.forEach((opt, i) => {
-            const btn = document.createElement('button');
-            btn.className = 'option-btn';
-            btn.innerText = opt;
-            btn.onclick = () => checkAnswer(i);
-            container.appendChild(btn);
-        });
+// Conteo por sección para barra de progreso de sección
+const secCount = {}; // secId → {total, answered}
 
-        document.getElementById('feedback').style.display = 'none';
-        document.getElementById('game-zone').style.display = 'block';
+// ─── INIT ───
+function init(){
+  // Set today's date en header si se agrega campo
+  let qNum = 0;
+
+  SECCIONES.forEach(sec => {
+    secCount[sec.id] = {total: sec.preguntas.length, answered: 0};
+    const container = document.getElementById('sections-container');
+
+    // Wrapper sección
+    const secEl = document.createElement('div');
+    secEl.className = 'section';
+    secEl.id = 'sec-' + sec.id;
+
+    // Header
+    secEl.innerHTML = `
+      <div class="sec-hdr ${sec.theme}" onclick="toggleSection('${sec.id}')">
+        <div class="sec-icon ${sec.theme}">${sec.emoji}</div>
+        <div class="sec-title">
+          <h2>${sec.titulo}</h2>
+          <p>${sec.subtitulo}</p>
+        </div>
+        <span class="sec-badge ${sec.theme}">${sec.preguntas.length} preguntas</span>
+        <div class="sec-chevron ${sec.id === 'cl4' ? 'open' : ''}" id="chev-${sec.id}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+      <div class="sec-progress"><div class="sec-prog-fill ${sec.theme}" id="spfill-${sec.id}" style="width:0%"></div></div>
+      <div class="sec-body ${sec.id === 'cl4' ? 'open' : ''}" id="body-${sec.id}"></div>
+    `;
+    container.appendChild(secEl);
+
+    // Preguntas
+    const body = secEl.querySelector('.sec-body');
+    sec.preguntas.forEach(q => {
+      qNum++;
+      state[q.id] = {val: null, note: ''};
+
+      const qEl = document.createElement('div');
+      qEl.className = 'qcard';
+      qEl.id = 'qc-' + q.id;
+      qEl.innerHTML = `
+        <div class="q-hdr">
+          <span class="q-num">${q.id}</span>
+          <span class="q-ico">${q.emoji}</span>
+          <div>
+            <div class="q-txt">${q.texto}</div>
+            <div class="q-hint">${q.hint}</div>
+          </div>
+        </div>
+        <div class="q-body">
+          <div class="rg" id="rg-${q.id}"></div>
+          <textarea class="qnote" id="note-${q.id}" placeholder="📝 Anote evidencias encontradas, observaciones técnicas o acciones correctivas recomendadas..."></textarea>
+        </div>
+      `;
+      body.appendChild(qEl);
+
+      // Radio buttons
+      const rg = qEl.querySelector('.rg');
+      const OPTS = [
+        {val:'C',  label:'✅ C — Conforme'},
+        {val:'P',  label:'⚠️ PC — Parcialmente conforme'},
+        {val:'NC', label:'❌ NC — No conforme'},
+        {val:'NA', label:'— NA — No aplica'},
+      ];
+      OPTS.forEach(o => {
+        const lbl = document.createElement('label');
+        lbl.className = 'ropt';
+        lbl.dataset.val = o.val;
+        lbl.dataset.qid = q.id;
+        lbl.dataset.secid = sec.id;
+        lbl.innerHTML = `<input type="radio" name="q${q.id}" value="${o.val}">${o.label}`;
+        lbl.addEventListener('click', () => selectOpt(q.id, sec.id, o.val, rg, qEl));
+        rg.appendChild(lbl);
+      });
+
+      // Nota
+      const noteEl = qEl.querySelector('.qnote');
+      noteEl.addEventListener('input', e => { state[q.id].note = e.target.value; });
+    });
+  });
+}
+
+function selectOpt(qid, secid, val, rg, card){
+  const wasAnswered = state[qid].val !== null;
+  state[qid].val = val;
+
+  // Botones
+  rg.querySelectorAll('.ropt').forEach(l => {
+    l.classList.remove('sel-C','sel-P','sel-NC','sel-NA');
+    if(l.dataset.val === val) l.classList.add('sel-' + val);
+  });
+
+  // Card color
+  card.classList.remove('st-c','st-p','st-nc','st-na');
+  const map = {C:'st-c', P:'st-p', NC:'st-nc', NA:'st-na'};
+  card.classList.add(map[val]);
+
+  // Contar en sección
+  if(!wasAnswered) secCount[secid].answered++;
+  const spct = Math.round(secCount[secid].answered / secCount[secid].total * 100);
+  document.getElementById('spfill-' + secid).style.width = spct + '%';
+
+  updateScore();
+}
+
+function updateScore(){
+  let c=0, p=0, nc=0, na=0;
+  Object.values(state).forEach(s => {
+    if(s.val==='C') c++;
+    else if(s.val==='P') p++;
+    else if(s.val==='NC') nc++;
+    else if(s.val==='NA') na++;
+  });
+  const answered = c+p+nc+na;
+  const evaluated = c+p+nc;
+
+  document.getElementById('cnt-c').textContent = c;
+  document.getElementById('cnt-p').textContent = p;
+  document.getElementById('cnt-nc').textContent = nc;
+  document.getElementById('cnt-na').textContent = na;
+  document.getElementById('prog-fill').style.width = (answered/TOTAL*100) + '%';
+  document.getElementById('prog-label').textContent = answered + ' / ' + TOTAL + ' respondidas';
+
+  const pctEl = document.getElementById('score-pct');
+  if(evaluated > 0){
+    const pct = Math.round((c + p*0.5) / evaluated * 100);
+    pctEl.textContent = pct + '%';
+    pctEl.style.color = pct>=80 ? 'var(--mint-d)' : pct>=55 ? 'var(--amber-d)' : 'var(--red-d)';
+    document.getElementById('chart-bars').style.display = 'flex';
+    document.getElementById('chart-bars').style.flexDirection = 'column';
+    ['c','p','nc'].forEach(k => {
+      const n = k==='c' ? c : k==='p' ? p : nc;
+      const w = Math.round(n/evaluated*100);
+      document.getElementById('bar-'+k).style.width = w + '%';
+      document.getElementById('bpct-'+k).textContent = w + '%';
+    });
+  } else {
+    pctEl.textContent = '—';
+    pctEl.style.color = 'var(--gray300)';
+    document.getElementById('chart-bars').style.display = 'none';
+  }
+}
+
+function toggleSection(id){
+  const body = document.getElementById('body-' + id);
+  const chev = document.getElementById('chev-' + id);
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+  chev.classList.toggle('open', !isOpen);
+}
+
+// ─── LABELS PARA RESULTADOS ───
+function getAllLabels(){
+  const map = {};
+  SECCIONES.forEach(sec => {
+    sec.preguntas.forEach(q => { map[q.id] = {texto: q.texto, sec: sec.titulo}; });
+  });
+  return map;
+}
+
+function generateResults(){
+  const panel = document.getElementById('results-panel');
+  const body = document.getElementById('res-body');
+  const dateEl = document.getElementById('res-date');
+  const now = new Date();
+  dateEl.textContent = 'Generado el ' + now.toLocaleDateString('es-ES',{day:'2-digit',month:'long',year:'numeric'}) + ' a las ' + now.toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'});
+
+  const labels = getAllLabels();
+  const nc=[], p=[], c=[], na=[];
+  Object.keys(state).forEach(id => {
+    const v = state[id].val;
+    if(v==='NC') nc.push(id);
+    else if(v==='P') p.push(id);
+    else if(v==='C') c.push(id);
+    else if(v==='NA') na.push(id);
+  });
+
+  let html = '';
+
+  if(!nc.length && !p.length && !c.length){
+    html = '<p style="color:var(--gray500);font-size:13.5px;text-align:center;padding:24px;font-weight:700">Responde al menos una pregunta para generar el informe de resultados.</p>';
+  } else {
+    if(nc.length){
+      html += `<div class="res-section-title" style="color:var(--red-d)">❌ No conformidades — ${nc.length} hallazgo${nc.length>1?'s':''}</div>`;
+      nc.forEach(id => {
+        const note = state[id].note ? `<div class="res-note">📝 ${state[id].note}</div>` : '';
+        html += `<div class="res-row res-row-nc"><div class="res-icon">❌</div><div><div class="res-num">${id} · ${labels[id]?.sec||''}</div><div class="res-q">${labels[id]?.texto||id}</div>${note}</div></div>`;
+      });
+      html += '<div style="height:14px"></div>';
     }
-
-    function checkAnswer(idx) {
-        const qData = session2Data[currentIdx];
-        const feedback = document.getElementById('feedback');
-        document.getElementById('game-zone').style.display = 'none';
-        feedback.style.display = 'block';
-
-        if(idx === qData.correct) {
-            feedback.className = "feedback-area correct-box";
-            document.getElementById('feedback-title').innerText = "🌟 ¡Metrología Dominada!";
-            document.getElementById('feedback-info').innerText = qData.info;
-        } else {
-            feedback.className = "feedback-area wrong-box";
-            document.getElementById('feedback-title').innerText = "❌ Hay una desviación...";
-            document.getElementById('feedback-info').innerText = "Recuerda: " + qData.info;
-        }
+    if(p.length){
+      html += `<div class="res-section-title" style="color:var(--amber-d)">⚠️ Parcialmente conformes — ${p.length} hallazgo${p.length>1?'s':''}</div>`;
+      p.forEach(id => {
+        const note = state[id].note ? `<div class="res-note">📝 ${state[id].note}</div>` : '';
+        html += `<div class="res-row res-row-p"><div class="res-icon">⚠️</div><div><div class="res-num">${id} · ${labels[id]?.sec||''}</div><div class="res-q">${labels[id]?.texto||id}</div>${note}</div></div>`;
+      });
+      html += '<div style="height:14px"></div>';
     }
-
-    function nextQuestion() {
-        currentIdx++;
-        if(currentIdx < session2Data.length) {
-            renderQuestion();
-        } else {
-            showFinal();
-        }
+    if(c.length){
+      html += `<div class="res-section-title" style="color:var(--mint-d)">✅ Conformes — ${c.length} criterio${c.length>1?'s':''}</div>`;
+      c.forEach(id => {
+        const note = state[id].note ? `<div class="res-note">📝 ${state[id].note}</div>` : '';
+        html += `<div class="res-row res-row-c"><div class="res-icon">✅</div><div><div class="res-num">${id} · ${labels[id]?.sec||''}</div><div class="res-q">${labels[id]?.texto||id}</div>${note}</div></div>`;
+      });
     }
+  }
 
-    function showFinal() {
-        document.getElementById('prog-fill').style.width = "100%";
-        document.getElementById('quiz-app').innerHTML = `
-            <div style="font-size: 5.5rem; margin-bottom: 20px;">🏆</div>
-            <h1 style="color: #1d9e75">¡Sesión 2 Superada!</h1>
-            <p style="font-family: 'Inter', sans-serif; font-size: 1.2rem">Has demostrado competencia técnica en Recursos e Incertidumbre.</p>
-            <div style="background: var(--bg-pastel); padding: 20px; border-radius: 20px; margin: 20px 0;">
-                <p><strong>Logros:</strong> Trazabilidad, Control de Equipos y Gestión de Personal.</p>
-            </div>
-            <button class="btn-next" onclick="location.reload()">Reiniciar Sesión 2</button>
-        `;
-    }
+  body.innerHTML = html;
+  panel.style.display = 'block';
+  setTimeout(() => panel.scrollIntoView({behavior:'smooth', block:'start'}), 50);
+}
 
-    renderQuestion();
+function resetAll(){
+  if(!confirm('¿Deseas reiniciar todas las respuestas y observaciones? Esta acción no se puede deshacer.')) return;
+  Object.keys(state).forEach(id => {
+    state[id] = {val: null, note: ''};
+    const rg = document.getElementById('rg-' + id);
+    if(rg) rg.querySelectorAll('.ropt').forEach(l => l.classList.remove('sel-C','sel-P','sel-NC','sel-NA'));
+    const card = document.getElementById('qc-' + id);
+    if(card) card.classList.remove('st-c','st-p','st-nc','st-na');
+    const note = document.getElementById('note-' + id);
+    if(note) note.value = '';
+  });
+  Object.keys(secCount).forEach(id => { secCount[id].answered = 0; document.getElementById('spfill-' + id).style.width = '0%'; });
+  document.getElementById('results-panel').style.display = 'none';
+  ['c','p','nc','na'].forEach(k => document.getElementById('cnt-'+k).textContent = '0');
+  document.getElementById('score-pct').textContent = '—';
+  document.getElementById('score-pct').style.color = 'var(--gray300)';
+  document.getElementById('prog-fill').style.width = '0%';
+  document.getElementById('prog-label').textContent = '0 / 65 respondidas';
+  document.getElementById('chart-bars').style.display = 'none';
+}
+
+init();
 </script>
-
 </body>
 </html>
