@@ -34,6 +34,45 @@
     min-height: 100vh;
     overflow-x: hidden;
   }
+<div style="text-align:center; margin:30px 0;" class="no-print">
+
+  <button onclick="imprimir()" style="
+    padding:10px 18px;
+    margin:5px;
+    border:none;
+    border-radius:8px;
+    background:#4CAF50;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+  ">
+    🖨️ Imprimir
+  </button>
+
+  <button onclick="guardarPDF()" style="
+    padding:10px 18px;
+    margin:5px;
+    border:none;
+    border-radius:8px;
+    background:#2196F3;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+  ">
+    📄 Guardar en PDF
+  </button>
+
+</div>
+
+<script>
+function imprimir() {
+  window.print();
+}
+
+function guardarPDF() {
+  window.print(); // usa el mismo sistema del navegador
+}
+</script>
 
   /* ─── HERO ─── */
   .hero {
@@ -1067,43 +1106,4 @@
 </body>
 </html>
 
-<div style="text-align:center; margin:30px 0;" class="no-print">
-
-  <button onclick="imprimir()" style="
-    padding:10px 18px;
-    margin:5px;
-    border:none;
-    border-radius:8px;
-    background:#4CAF50;
-    color:white;
-    font-weight:600;
-    cursor:pointer;
-  ">
-    🖨️ Imprimir
-  </button>
-
-  <button onclick="guardarPDF()" style="
-    padding:10px 18px;
-    margin:5px;
-    border:none;
-    border-radius:8px;
-    background:#2196F3;
-    color:white;
-    font-weight:600;
-    cursor:pointer;
-  ">
-    📄 Guardar en PDF
-  </button>
-
-</div>
-
-<script>
-function imprimir() {
-  window.print();
-}
-
-function guardarPDF() {
-  window.print(); // usa el mismo sistema del navegador
-}
-</script>
 
