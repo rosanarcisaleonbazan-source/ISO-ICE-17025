@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Infografía ISO 17025</title>
+
+<!-- Fuente estilo Salsa -->
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --rosa:#f7d9e3;
+  --lila:#e6dcf5;
+  --menta:#d8f3dc;
+  --durazno:#ffe5d9;
+  --azul:#dceefb;
+
+  --texto:#3a3a3a;
+  --sub:#6b6b6b;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:'Quicksand', sans-serif;
+  background:#fafafa;
+  color:var(--texto);
+}
+
+/* CONTENEDOR */
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:30px;
+}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg, var(--rosa), var(--lila));
+  border-radius:20px;
+  padding:40px;
+  margin-bottom:25px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.05);
+}
+
+.hero h1{
+  font-size:32px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  font-size:15px;
+  color:var(--sub);
+}
+
+/* TARJETAS */
+.card{
+  background:var(--azul);
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:15px;
+  transition:.3s;
+  cursor:pointer;
+}
+
+.card:hover{
+  transform:scale(1.02);
+  background:var(--menta);
+}
+
+.card h3{
+  font-size:18px;
+  margin-bottom:6px;
+}
+
+.card p{
+  font-size:14px;
+  color:var(--sub);
+}
+
+/* BOTÓN INTERACTIVO */
+.btn{
+  display:inline-block;
+  margin-top:10px;
+  padding:8px 15px;
+  border-radius:10px;
+  background:var(--durazno);
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.extra{
+  display:none;
+  margin-top:10px;
+  font-size:13px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- PORTADA -->
+  <div class="hero">
+    <h1>Norma ISO 17025</h1>
+    <p>
+      Requisitos generales para la competencia de los laboratorios de ensayo y calibración.
+      Garantiza resultados confiables y técnicamente válidos.
+    </p>
+  </div>
+
+  <!-- ¿QUÉ ES? -->
+  <div class="card">
+    <h3>¿Qué es la ISO 17025?</h3>
+    <p>
+      Es una norma internacional que establece los requisitos que deben cumplir los laboratorios
+      para demostrar su competencia técnica.
+    </p>
+
+    <button class="btn" onclick="toggleInfo()">Ver más</button>
+
+    <div class="extra" id="info">
+      Aplica a laboratorios de ensayo, calibración y muestreo,
+      asegurando calidad, trazabilidad y validez de resultados.
+    </div>
+  </div>
+
+</div>
+
+<script>
+function toggleInfo(){
+  var x = document.getElementById("info");
+  x.style.display = (x.style.display === "block") ? "none" : "block";
+}
+</script>
+
+</body>
+</html>
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Infografía ISO 17025</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --rosa:#f7d9e3;
+  --lila:#e6dcf5;
+  --menta:#d8f3dc;
+  --durazno:#ffe5d9;
+  --azul:#dceefb;
+
+  --texto:#3a3a3a;
+  --sub:#6b6b6b;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:'Quicksand', sans-serif;
+  background:#fafafa;
+  color:var(--texto);
+}
+
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:30px;
+}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg, var(--rosa), var(--lila));
+  border-radius:20px;
+  padding:40px;
+  margin-bottom:25px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.05);
+}
+
+.hero h1{
+  font-size:30px;
+  margin-bottom:10px;
+}
+
+.hero p{
+  font-size:15px;
+  color:var(--sub);
+}
+
+/* TARJETAS */
+.card{
+  background:var(--azul);
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:20px;
+  transition:.3s;
+}
+
+.card:hover{
+  transform:scale(1.02);
+  background:var(--menta);
+}
+
+.card h3{
+  font-size:18px;
+  margin-bottom:8px;
+}
+
+.card p{
+  font-size:14px;
+  color:var(--sub);
+}
+
+/* BOTÓN */
+.btn{
+  margin-top:10px;
+  padding:8px 15px;
+  border-radius:10px;
+  background:var(--durazno);
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.extra{
+  display:none;
+  margin-top:10px;
+  font-size:13px;
+}
+
+/* ACORDEÓN */
+.accordion{
+  margin-top:20px;
+}
+
+.acc-item{
+  background:var(--rosa);
+  border-radius:12px;
+  margin-bottom:10px;
+  overflow:hidden;
+}
+
+.acc-title{
+  padding:15px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.acc-content{
+  padding:0 15px;
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .4s ease;
+  font-size:14px;
+  color:var(--sub);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <!-- PORTADA -->
+  <div class="hero">
+    <h1>Norma ISO 17025</h1>
+    <p>
+      Requisitos para la competencia de laboratorios de ensayo y calibración.
+    </p>
+  </div>
+
+  <!-- DEFINICIÓN -->
+  <div class="card">
+    <h3>¿Qué es la ISO 17025?</h3>
+    <p>
+      Norma internacional que asegura la calidad y validez de resultados en laboratorios.
+    </p>
+
+    <button class="btn" onclick="toggleInfo()">Ver más</button>
+
+    <div class="extra" id="info">
+      Aplica a laboratorios de ensayo, calibración y muestreo, garantizando trazabilidad y confiabilidad.
+    </div>
+  </div>
+
+  <!-- ESTRUCTURA -->
+  <div class="hero" style="background:linear-gradient(135deg, var(--menta), var(--azul));">
+    <h1>Estructura de la Norma</h1>
+    <p>Se divide en 5 tipos de requisitos</p>
+  </div>
+
+  <div class="accordion">
+
+    <div class="acc-item">
+      <div class="acc-title" onclick="toggleAcc(this)">Requisitos Generales</div>
+      <div class="acc-content">
+        Imparcialidad y confidencialidad en las actividades del laboratorio.
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-title" onclick="toggleAcc(this)">Requisitos Estructurales</div>
+      <div class="acc-content">
+        Organización interna, roles y responsabilidades.
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-title" onclick="toggleAcc(this)">Requisitos de Recursos</div>
+      <div class="acc-content">
+        Personal competente, equipos adecuados e infraestructura.
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-title" onclick="toggleAcc(this)">Requisitos de Proceso</div>
+      <div class="acc-content">
+        Métodos, validación, muestreo y control de resultados.
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-title" onclick="toggleAcc(this)">Requisitos de Gestión</div>
+      <div class="acc-content">
+        Sistema de gestión, auditorías internas y mejora continua.
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function toggleInfo(){
+  var x = document.getElementById("info");
+  x.style.display = (x.style.display === "block") ? "none" : "block";
+}
+
+function toggleAcc(element){
+  const content = element.nextElementSibling;
+
+  if(content.style.maxHeight){
+    content.style.maxHeight = null;
+  }else{
+    content.style.maxHeight = content.scrollHeight + "px";
+  }
+}
+</script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ISO 17025 PRO</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --rosa:#f7d9e3;
+  --lila:#e6dcf5;
+  --menta:#d8f3dc;
+  --durazno:#ffe5d9;
+  --azul:#dceefb;
+  --texto:#3a3a3a;
+  --sub:#6b6b6b;
+}
+
+body{
+  font-family:'Quicksand', sans-serif;
+  background:#fafafa;
+  color:var(--texto);
+  margin:0;
+}
+
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:30px;
+}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg, var(--rosa), var(--lila));
+  border-radius:20px;
+  padding:40px;
+  margin-bottom:25px;
+  animation:fadeIn 1s ease;
+}
+
+.hero h1{font-size:30px;}
+.hero p{color:var(--sub);}
+
+/* TARJETAS */
+.card{
+  background:var(--azul);
+  padding:20px;
+  border-radius:15px;
+  margin-bottom:20px;
+  transition:.3s;
+}
+.card:hover{
+  transform:translateY(-5px);
+  background:var(--menta);
+}
+
+/* BOTÓN */
+.btn{
+  margin-top:10px;
+  padding:8px 15px;
+  border-radius:10px;
+  background:var(--durazno);
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.extra{display:none;margin-top:10px}
+
+/* ACORDEÓN */
+.acc-item{
+  background:var(--rosa);
+  margin-bottom:10px;
+  border-radius:12px;
+  overflow:hidden;
+}
+.acc-title{
+  padding:15px;
+  cursor:pointer;
+  font-weight:700;
+}
+.acc-content{
+  max-height:0;
+  overflow:hidden;
+  transition:.4s;
+  padding:0 15px;
+}
+
+/* TIMELINE */
+.timeline{
+  margin-top:30px;
+  padding-left:20px;
+  border-left:4px solid var(--lila);
+}
+.step{
+  margin-bottom:20px;
+  background:var(--durazno);
+  padding:15px;
+  border-radius:10px;
+}
+
+/* CHECKLIST */
+.checklist{
+  margin-top:20px;
+}
+.check-item{
+  background:var(--menta);
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:10px;
+  cursor:pointer;
+}
+.check-item.done{
+  text-decoration:line-through;
+  background:#c7f0d2;
+}
+
+/* BOTÓN PDF */
+.print{
+  margin-top:30px;
+  padding:12px;
+  width:100%;
+  border:none;
+  background:var(--lila);
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+/* ANIMACIÓN */
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- PORTADA -->
+<div class="hero">
+  <h1>Norma ISO 17025</h1>
+  <p>Competencia de laboratorios de ensayo y calibración</p>
+</div>
+
+<!-- DEFINICIÓN -->
+<div class="card">
+  <h3>¿Qué es?</h3>
+  <p>Norma internacional para asegurar resultados válidos.</p>
+  <button class="btn" onclick="toggleInfo()">Ver más</button>
+  <div class="extra" id="info">
+    Garantiza calidad, trazabilidad y competencia técnica.
+  </div>
+</div>
+
+<!-- ACORDEÓN -->
+<div class="card">
+  <h3>Estructura de la norma</h3>
+
+  <div class="acc-item">
+    <div class="acc-title" onclick="toggleAcc(this)">Generales</div>
+    <div class="acc-content">Imparcialidad y confidencialidad</div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-title" onclick="toggleAcc(this)">Estructurales</div>
+    <div class="acc-content">Organización del laboratorio</div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-title" onclick="toggleAcc(this)">Recursos</div>
+    <div class="acc-content">Personal, equipos e instalaciones</div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-title" onclick="toggleAcc(this)">Proceso</div>
+    <div class="acc-content">Métodos y resultados</div>
+  </div>
+
+  <div class="acc-item">
+    <div class="acc-title" onclick="toggleAcc(this)">Gestión</div>
+    <div class="acc-content">Auditorías y mejora continua</div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="card">
+  <h3>Proceso del laboratorio</h3>
+
+  <div class="timeline">
+    <div class="step">Recepción de muestras</div>
+    <div class="step">Análisis</div>
+    <div class="step">Validación</div>
+    <div class="step">Resultados</div>
+  </div>
+</div>
+
+<!-- CHECKLIST -->
+<div class="card">
+  <h3>Checklist ISO 17025</h3>
+
+  <div class="checklist">
+    <div class="check-item" onclick="check(this)">Personal competente</div>
+    <div class="check-item" onclick="check(this)">Equipos calibrados</div>
+    <div class="check-item" onclick="check(this)">Resultados válidos</div>
+    <div class="check-item" onclick="check(this)">Auditorías internas</div>
+  </div>
+</div>
+
+<!-- BOTÓN PDF -->
+<button class="print" onclick="window.print()">Descargar / Imprimir PDF</button>
+
+</div>
+
+<script>
+function toggleInfo(){
+  let x=document.getElementById("info");
+  x.style.display=(x.style.display==="block")?"none":"block";
+}
+
+function toggleAcc(el){
+  let c=el.nextElementSibling;
+  c.style.maxHeight=c.style.maxHeight?null:c.scrollHeight+"px";
+}
+
+function check(el){
+  el.classList.toggle("done");
+}
+</script>
+
+</body>
+</html>
