@@ -1,294 +1,957 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Auditoría Interna ISO/IEC 17025:2017</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #1e40af; --primary-light: #dbeafe; --secondary: #3b82f6;
-            --success: #15803d; --success-light: #dcfce7;
-            --danger: #b91c1c; --danger-light: #fee2e2;
-            --warning: #a16207; --warning-light: #fef9c3;
-            --gray-bg: #f8fafc; --gray-border: #e2e8f0; --text-main: #1e293b;
-            --font: 'Plus Jakarta Sans', sans-serif;
-        }
+import { useState, useCallback } from "react";
 
-        body { font-family: var(--font); background: var(--gray-bg); color: var(--text-main); margin: 0; padding: 0; }
-        .action-bar { background: var(--primary); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        .ab-title { color: white; font-weight: 700; font-size: 14px; }
-        .ab-btns { display: flex; gap: 10px; }
-        .btn { padding: 8px 16px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; font-size: 12px; transition: 0.2s; }
-        .btn-white { background: white; color: var(--primary); }
-        .btn-danger { background: #ef4444; color: white; }
+type Answer = "C" | "N" | "NA" | null;
 
-        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
-        
-        /* Header Card */
-        .hdr-card { background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); border-radius: 20px; padding: 40px; color: white; margin-bottom: 25px; box-shadow: 0 10px 25px -5px rgba(30, 64, 175, 0.3); }
-        .hdr-card h1 { margin: 0; font-size: 28px; font-weight: 800; }
-        .hdr-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; }
-        .stat-item { text-align: center; }
-        .stat-val { display: block; font-size: 22px; font-weight: 800; color: #60a5fa; }
-        .stat-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
+interface Criterio {
+  id: string;
+  icon: string;
+  title: string;
+  hint: string;
+}
 
-        /* Progress Circle */
-        .score-panel { background: white; border-radius: 16px; padding: 25px; display: flex; align-items: center; gap: 30px; margin-bottom: 25px; border: 1px solid var(--gray-border); }
-        .progress-ring { position: relative; width: 100px; height: 100px; }
-        .progress-ring svg { transform: rotate(-90deg); width: 100px; height: 100px; }
-        .ring-bg { fill: none; stroke: var(--gray-border); stroke-width: 8; }
-        .ring-fill { fill: none; stroke: var(--success); stroke-width: 8; stroke-dasharray: 283; stroke-dashoffset: 283; transition: 0.5s; stroke-linecap: round; }
-        .percentage { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: 800; font-size: 20px; }
+interface Section {
+  key: string;
+  clause: string;
+  label: string;
+  bg: string;
+  accent: string;
+  textColor: string;
+  criterios: Criterio[];
+}
 
-        /* Checklist Items */
-        .section-title { font-size: 14px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1.5px; margin: 30px 0 15px; display: flex; align-items: center; gap: 10px; }
-        .section-title::after { content: ""; flex: 1; height: 1px; background: var(--gray-border); }
+const SECTIONS: Section[] = [
+  {
+    key: "s4",
+    clause: "Cláusula 4",
+    label: "Requisitos Generales",
+    bg: "#fce4ec",
+    accent: "#f06292",
+    textColor: "#880e4f",
+    criterios: [
+      {
+        id: "4.1.1",
+        icon: "⚖️",
+        title: "El laboratorio documenta su compromiso con la imparcialidad",
+        hint: "Debe existir una declaración documentada de imparcialidad que sea accesible al público y que incluya todos los factores que puedan comprometer la imparcialidad.",
+      },
+      {
+        id: "4.1.2",
+        icon: "🔎",
+        title: "Se identifican y gestionan los riesgos de imparcialidad de forma continua",
+        hint: "Incluye relaciones comerciales, financieras, personales y otras presiones que puedan afectar la imparcialidad. Se documentan las acciones tomadas.",
+      },
+      {
+        id: "4.1.3",
+        icon: "🏛️",
+        title: "La alta dirección se compromete con la imparcialidad",
+        hint: "La dirección demuestra activamente que la presión comercial no compromete la imparcialidad. Existen mecanismos para prevenir influencias indebidas.",
+      },
+      {
+        id: "4.2.1",
+        icon: "🔒",
+        title: "El laboratorio gestiona la información del cliente como confidencial",
+        hint: "Se dispone de acuerdos de confidencialidad o compromisos documentados. El personal está informado y formado sobre sus obligaciones de confidencialidad.",
+      },
+      {
+        id: "4.2.2",
+        icon: "📜",
+        title: "Existe un procedimiento para la divulgación de información confidencial requerida legalmente",
+        hint: "Cuando la ley exige divulgar información, el cliente es notificado (salvo prohibición legal). El procedimiento está documentado y el personal lo conoce.",
+      },
+      {
+        id: "4.2.3",
+        icon: "🛡️",
+        title: "La información obtenida de terceros se trata con confidencialidad",
+        hint: "La información de fuentes externas (clientes, reguladores, subcontratistas) se mantiene protegida. Se mantiene el anonimato cuando corresponde.",
+      },
+    ],
+  },
+  {
+    key: "s5",
+    clause: "Cláusula 5",
+    label: "Requisitos Relativos a la Estructura",
+    bg: "#f3e5f5",
+    accent: "#ab47bc",
+    textColor: "#4a148c",
+    criterios: [
+      {
+        id: "5.1",
+        icon: "🏢",
+        title: "El laboratorio es una entidad legalmente identificable y responsable de sus actividades",
+        hint: "Debe existir documentación legal que identifique al laboratorio. Si es parte de una organización mayor, las responsabilidades están claramente definidas.",
+      },
+      {
+        id: "5.2",
+        icon: "📋",
+        title: "El alcance de las actividades de laboratorio está claramente definido",
+        hint: "El alcance incluye las actividades realizadas en instalaciones permanentes, temporales o in situ. Está documentado y disponible públicamente.",
+      },
+      {
+        id: "5.3",
+        icon: "👔",
+        title: "Existe una estructura organizacional documentada con responsabilidades definidas",
+        hint: "El organigrama o documento equivalente muestra relaciones de autoridad. Las responsabilidades clave (calidad, técnicas) están asignadas a personas competentes.",
+      },
+      {
+        id: "5.4",
+        icon: "🎯",
+        title: "La dirección garantiza la integridad del sistema de gestión ante cambios",
+        hint: "Cuando se planifican e implementan cambios, se mantiene la integridad del sistema de gestión. Existe un proceso de gestión de cambios documentado.",
+      },
+      {
+        id: "5.5",
+        icon: "📣",
+        title: "El laboratorio comunica internamente sus objetivos y políticas",
+        hint: "Los objetivos de calidad y las políticas son conocidos por todo el personal. Se utilizan mecanismos efectivos de comunicación interna.",
+      },
+    ],
+  },
+  {
+    key: "s6",
+    clause: "Cláusula 6",
+    label: "Requisitos Relativos a los Recursos",
+    bg: "#e8f5e9",
+    accent: "#66bb6a",
+    textColor: "#1b5e20",
+    criterios: [
+      {
+        id: "6.1",
+        icon: "🌐",
+        title: "El laboratorio dispone de todos los recursos necesarios para sus actividades",
+        hint: "Se han identificado y asignado recursos suficientes: personal, instalaciones, equipamiento, sistemas de información y servicios de apoyo.",
+      },
+      {
+        id: "6.2.1",
+        icon: "👩‍🔬",
+        title: "Todo el personal que afecta a los resultados es competente y actúa con imparcialidad",
+        hint: "Existe documentación de competencias (educación, formación, experiencia, habilidades). Los registros de competencia son actuales y verificables.",
+      },
+      {
+        id: "6.2.2",
+        icon: "📑",
+        title: "Están documentados los requisitos de competencia para cada función",
+        hint: "Perfiles de puesto o descripción de competencias para todo el personal que afecta a los resultados, incluyendo personal externo y en formación.",
+      },
+      {
+        id: "6.2.3",
+        icon: "🎓",
+        title: "El personal recibe formación y se evalúa su eficacia",
+        hint: "Existe un programa de formación. La eficacia de la formación es evaluada. Los registros de formación y evaluación están disponibles.",
+      },
+      {
+        id: "6.2.4",
+        icon: "🖊️",
+        title: "El personal está autorizado para realizar actividades específicas del laboratorio",
+        hint: "Existen autorizaciones documentadas para actividades clave: uso de equipos, emisión de informes, validación de métodos, declaración de conformidad.",
+      },
+      {
+        id: "6.3.1",
+        icon: "🏗️",
+        title: "Las instalaciones son adecuadas para las actividades del laboratorio",
+        hint: "Las instalaciones no afectan negativamente a la validez de los resultados. Se controlan factores como temperatura, humedad, iluminación, vibraciones y contaminación.",
+      },
+      {
+        id: "6.3.2",
+        icon: "🌡️",
+        title: "Las condiciones ambientales se monitorean, controlan y registran",
+        hint: "Los parámetros ambientales críticos están identificados. Existen límites definidos y se registran las mediciones. Se actúa cuando los límites se superan.",
+      },
+      {
+        id: "6.3.3",
+        icon: "🚧",
+        title: "Se controla el acceso y uso de áreas que afectan a la calidad",
+        hint: "Existe separación entre áreas incompatibles. Se controla el acceso para prevenir contaminación cruzada, interferencias y accesos no autorizados.",
+      },
+      {
+        id: "6.4.1",
+        icon: "🔬",
+        title: "El equipamiento es adecuado y permite lograr la exactitud requerida",
+        hint: "El equipamiento cumple con las especificaciones del método. Se dispone de equipamiento de referencia y de trabajo correctamente identificados.",
+      },
+      {
+        id: "6.4.2",
+        icon: "📅",
+        title: "El equipamiento está calibrado o verificado según un programa documentado",
+        hint: "Existe un programa de calibración/verificación. Los registros muestran el estado de calibración, fechas y resultados. Los equipos fuera de servicio están etiquetados.",
+      },
+      {
+        id: "6.4.3",
+        icon: "🗂️",
+        title: "Los registros de equipamiento incluyen todos los datos requeridos por la norma",
+        hint: "Cada equipo tiene registros de: identificación, fabricante, número de serie, verificaciones, calibraciones, mantenimiento, daños y historial de servicio.",
+      },
+      {
+        id: "6.4.4",
+        icon: "⚠️",
+        title: "Existe un procedimiento para equipos que dan resultados dudosos o fuera de especificación",
+        hint: "Los equipos con problemas son retirados del servicio, etiquetados claramente y se evalúa el impacto en trabajos previos antes de ser rehabilitados.",
+      },
+      {
+        id: "6.5.1",
+        icon: "📏",
+        title: "La trazabilidad metrológica está establecida y documentada para mediciones clave",
+        hint: "Las mediciones son trazables al SI o a patrones de referencia nacionales/internacionales. La cadena de trazabilidad está documentada sin interrupciones.",
+      },
+      {
+        id: "6.5.2",
+        icon: "🔗",
+        title: "Los patrones de referencia se mantienen y calibran adecuadamente",
+        hint: "Los patrones primarios y de referencia se calibran por organismos acreditados o con trazabilidad demostrable. Se mantienen condiciones de almacenamiento adecuadas.",
+      },
+      {
+        id: "6.6.1",
+        icon: "🤝",
+        title: "Los productos y servicios externos que afectan a los resultados son controlados",
+        hint: "Existe una lista de proveedores aprobados. Los servicios de calibración, subcontratación y consumibles críticos pasan por un proceso de evaluación y aprobación.",
+      },
+      {
+        id: "6.6.2",
+        icon: "📦",
+        title: "Los productos y servicios externos se verifican antes de su uso",
+        hint: "Los reactivos, materiales de referencia y equipamiento externo son inspeccionados. Existe un proceso documentado de recepción e inspección.",
+      },
+    ],
+  },
+  {
+    key: "s7",
+    clause: "Cláusula 7",
+    label: "Requisitos del Proceso",
+    bg: "#e3f2fd",
+    accent: "#42a5f5",
+    textColor: "#0d47a1",
+    criterios: [
+      {
+        id: "7.1.1",
+        icon: "📝",
+        title: "Se revisan las solicitudes de ensayo/calibración antes de aceptarlas",
+        hint: "Existe un proceso documentado de revisión de solicitudes que verifica capacidad, métodos, recursos y requisitos del cliente antes de comprometerse.",
+      },
+      {
+        id: "7.1.2",
+        icon: "📄",
+        title: "Los contratos con clientes reflejan los requisitos del laboratorio y del cliente",
+        hint: "Los contratos o acuerdos de servicio documentan el alcance, métodos a usar, plazos y cualquier desviación acordada. Se revisan ante modificaciones.",
+      },
+      {
+        id: "7.2.1",
+        icon: "🔍",
+        title: "Los métodos utilizados son apropiados y están actualizados",
+        hint: "Se usan preferentemente métodos normalizados. Los métodos propios están desarrollados, validados y documentados. Se verifica que el personal tiene acceso a versiones vigentes.",
+      },
+      {
+        id: "7.2.2",
+        icon: "✔️",
+        title: "Los métodos son verificados antes de su implementación",
+        hint: "Existe evidencia de verificación que confirma que el laboratorio puede implementar correctamente el método según las especificaciones del desarrollador.",
+      },
+      {
+        id: "7.2.3",
+        icon: "🧪",
+        title: "Los métodos no normalizados o propios son validados",
+        hint: "La validación demuestra aptitud para el uso previsto. Los parámetros de validación (exactitud, precisión, LDD, rango lineal, etc.) están documentados.",
+      },
+      {
+        id: "7.3.1",
+        icon: "🌱",
+        title: "Existe un plan de muestreo documentado cuando el laboratorio realiza muestreo",
+        hint: "El plan de muestreo incluye método estadístico, tamaño de muestra, puntos de muestreo, condiciones ambientales y criterios de aceptación.",
+      },
+      {
+        id: "7.4.1",
+        icon: "🏷️",
+        title: "Los ítems de ensayo/calibración se identifican de forma única a lo largo del proceso",
+        hint: "El sistema de identificación previene confusiones. La identificación acompaña al ítem desde la recepción hasta el archivo o devolución.",
+      },
+      {
+        id: "7.4.2",
+        icon: "🚚",
+        title: "Las condiciones de transporte y recepción de ítems son registradas",
+        hint: "Se registran las condiciones de recepción, desviaciones del estado esperado, y se consulta al cliente cuando existen dudas sobre la aptitud del ítem.",
+      },
+      {
+        id: "7.5.1",
+        icon: "💾",
+        title: "Los registros técnicos contienen suficiente información para reproducir el ensayo",
+        hint: "Los registros incluyen: personal responsable, condiciones ambientales, equipos usados, datos brutos, cálculos, resultados y cualquier incidencia durante el ensayo.",
+      },
+      {
+        id: "7.5.2",
+        icon: "🔏",
+        title: "Los registros técnicos son protegidos y conservados según lo requerido",
+        hint: "Los registros se almacenan de forma segura (física o electrónica). Los períodos de retención están definidos. Las modificaciones son trazables y autorizadas.",
+      },
+      {
+        id: "7.6.1",
+        icon: "📐",
+        title: "Se evalúa la incertidumbre de medición en ensayos y calibraciones",
+        hint: "Existe una metodología documentada para la evaluación de la incertidumbre. Se identifican todas las componentes relevantes y se calcula la incertidumbre expandida.",
+      },
+      {
+        id: "7.7.1",
+        icon: "📊",
+        title: "El laboratorio tiene un programa de aseguramiento de la validez de resultados",
+        hint: "El programa incluye al menos uno de: cartas de control, participación en ensayos de aptitud, uso de materiales de referencia certificados, comparaciones interlaboratorio.",
+      },
+      {
+        id: "7.7.2",
+        icon: "📈",
+        title: "Los datos de control de calidad se analizan y se actúa ante resultados fuera de control",
+        hint: "Existen límites de control definidos. Se revisan los datos periódicamente. Las acciones correctivas se documentan cuando los controles fallan.",
+      },
+      {
+        id: "7.8.1",
+        icon: "📋",
+        title: "Los informes de resultados contienen toda la información requerida por la norma",
+        hint: "Los informes incluyen: identificación del laboratorio y cliente, descripción del ítem, método usado, resultados con unidades, incertidumbre, fecha, firma y referencia al acuerdo de muestreo si aplica.",
+      },
+      {
+        id: "7.8.2",
+        icon: "🗒️",
+        title: "Las declaraciones de conformidad incluyen la regla de decisión aplicada",
+        hint: "Cuando se emiten declaraciones de conformidad (pasa/falla), se especifica la regla de decisión utilizada y se tiene en cuenta la incertidumbre de medición.",
+      },
+      {
+        id: "7.8.3",
+        icon: "✏️",
+        title: "Las modificaciones a informes emitidos están claramente identificadas",
+        hint: "Las correcciones o suplementos a informes ya emitidos son identificados como tales, con referencias al informe original. El procedimiento está documentado.",
+      },
+      {
+        id: "7.9.1",
+        icon: "💬",
+        title: "Existe un proceso documentado para la recepción y gestión de quejas",
+        hint: "El proceso incluye recepción, validación, investigación, respuesta y cierre de quejas. Las quejas y las acciones tomadas son registradas.",
+      },
+      {
+        id: "7.10.1",
+        icon: "🚫",
+        title: "El trabajo no conforme es identificado, controlado y evaluado",
+        hint: "Existe un procedimiento para gestionar el trabajo no conforme. El personal está autorizado a suspender trabajos. Se notifica al cliente cuando corresponde.",
+      },
+      {
+        id: "7.10.2",
+        icon: "🔁",
+        title: "Se determinan y documentan las causas del trabajo no conforme",
+        hint: "El análisis de causas raíz está documentado. Las acciones correctivas se implementan y se verifica su eficacia. El historial de no conformidades se mantiene.",
+      },
+      {
+        id: "7.11.1",
+        icon: "💻",
+        title: "El sistema de gestión de información del laboratorio (LIMS o equivalente) es controlado",
+        hint: "El software y hardware usados para almacenar y procesar datos están validados o verificados. Existen controles de acceso, copias de seguridad y protección contra pérdida de datos.",
+      },
+      {
+        id: "7.11.2",
+        icon: "🔐",
+        title: "La integridad y confidencialidad de los datos se mantiene en todo el proceso",
+        hint: "Los datos están protegidos contra acceso no autorizado y modificaciones accidentales. Los cambios en datos electrónicos son trazables al responsable y fecha.",
+      },
+    ],
+  },
+  {
+    key: "s8",
+    clause: "Cláusula 8",
+    label: "Requisitos del Sistema de Gestión",
+    bg: "#fff8e1",
+    accent: "#ffa726",
+    textColor: "#e65100",
+    criterios: [
+      {
+        id: "8.1",
+        icon: "🗺️",
+        title: "El laboratorio ha seleccionado e implementado una Opción del sistema de gestión (A o B)",
+        hint: "Opción A: requisitos específicos de la norma (8.2–8.9). Opción B: cumplimiento con ISO 9001 en el alcance del laboratorio. La opción seleccionada está documentada.",
+      },
+      {
+        id: "8.2.1",
+        icon: "📁",
+        title: "El sistema de gestión está documentado y comunicado al personal (Opción A)",
+        hint: "La documentación del sistema incluye políticas, procedimientos, especificaciones, formularios y registros. El manual de calidad o documentos equivalentes están actualizados.",
+      },
+      {
+        id: "8.2.2",
+        icon: "🎯",
+        title: "La política de calidad está definida y es coherente con los objetivos del laboratorio",
+        hint: "La política de calidad incluye el compromiso con las buenas prácticas profesionales, la competencia del laboratorio y el cumplimiento con la norma.",
+      },
+      {
+        id: "8.3.1",
+        icon: "🗃️",
+        title: "Existe un proceso de control de documentos del sistema de gestión",
+        hint: "Los documentos son aprobados antes de su emisión. Se identifican versiones vigentes. Los documentos obsoletos son retirados y protegidos contra uso no intencionado.",
+      },
+      {
+        id: "8.4.1",
+        icon: "📂",
+        title: "Los registros se identifican, almacenan, protegen, recuperan y retienen adecuadamente",
+        hint: "Los períodos de retención están definidos para todos los tipos de registros. Los registros son legibles y se almacenan en condiciones que previenen deterioro o pérdida.",
+      },
+      {
+        id: "8.5.1",
+        icon: "🔮",
+        title: "Se identifican y abordan los riesgos y oportunidades relacionados con las actividades",
+        hint: "Existe un proceso para identificar riesgos que puedan afectar la imparcialidad, competencia y operación del laboratorio. Las acciones tomadas son proporcionales al riesgo.",
+      },
+      {
+        id: "8.6.1",
+        icon: "🌱",
+        title: "El laboratorio identifica y aplica oportunidades de mejora",
+        hint: "Las oportunidades de mejora se identifican a través de: revisiones por la dirección, auditorías internas, análisis de datos y retroalimentación del cliente.",
+      },
+      {
+        id: "8.7.1",
+        icon: "🛠️",
+        title: "Las no conformidades se gestionan con acciones correctivas documentadas",
+        hint: "Las acciones correctivas incluyen análisis de causas raíz, implementación de soluciones y verificación de eficacia. El proceso está documentado y es sistemático.",
+      },
+      {
+        id: "8.8.1",
+        icon: "🔍",
+        title: "Se realizan auditorías internas según un programa planificado",
+        hint: "El programa de auditorías cubre todos los requisitos de la norma en un ciclo definido. Los auditores son competentes e independientes del área auditada.",
+      },
+      {
+        id: "8.8.2",
+        icon: "📝",
+        title: "Los hallazgos de auditoría se documentan y se toman acciones correctivas",
+        hint: "Los informes de auditoría son formales. Las no conformidades detectadas en auditorías generan acciones correctivas con seguimiento y verificación de eficacia.",
+      },
+      {
+        id: "8.9.1",
+        icon: "👔",
+        title: "La alta dirección realiza revisiones periódicas del sistema de gestión",
+        hint: "Las revisiones por la dirección incluyen todos los elementos requeridos: resultados de auditorías, quejas, desempeño, adecuación de recursos, riesgos y cambios.",
+      },
+      {
+        id: "8.9.2",
+        icon: "📊",
+        title: "Las salidas de la revisión por la dirección incluyen decisiones y acciones",
+        hint: "Las decisiones sobre mejoras, cambios en recursos y modificaciones al sistema están documentadas. Existe seguimiento de los acuerdos de revisiones anteriores.",
+      },
+    ],
+  },
+  {
+    key: "sA",
+    clause: "Anexo A",
+    label: "Trazabilidad Metrológica",
+    bg: "#fce4ec",
+    accent: "#f06292",
+    textColor: "#880e4f",
+    criterios: [
+      {
+        id: "A.1.1",
+        icon: "🔗",
+        title: "Se comprende y aplica correctamente el concepto de trazabilidad metrológica",
+        hint: "La trazabilidad metrológica es una propiedad del resultado de una medición que puede relacionarse con una referencia a través de una cadena ininterrumpida de calibraciones documentadas.",
+      },
+      {
+        id: "A.1.2",
+        icon: "🏅",
+        title: "Los laboratorios de calibración utilizados son competentes y acreditados",
+        hint: "Se prefieren laboratorios acreditados (ENAC, DAkkS, UKAS, INMETRO u equivalente). Cuando no existe acreditación, se verifica la competencia técnica del laboratorio proveedor.",
+      },
+      {
+        id: "A.2.1",
+        icon: "📏",
+        title: "La cadena de trazabilidad está establecida hasta el SI o patrones reconocidos",
+        hint: "La cadena de trazabilidad es continua, sin interrupciones, hasta el SI (Sistema Internacional de Unidades) o patrones de referencia reconocidos internacionalmente.",
+      },
+      {
+        id: "A.2.2",
+        icon: "📄",
+        title: "Los certificados de calibración contienen la información requerida",
+        hint: "Los certificados incluyen: identificación del equipo, referencia al patrón usado, resultados de medición, incertidumbre expandida, factor de cobertura y trazabilidad del patrón.",
+      },
+      {
+        id: "A.2.3",
+        icon: "🔄",
+        title: "Los intervalos de calibración se establecen y revisan sistemáticamente",
+        hint: "Los intervalos de calibración se basan en la estabilidad del equipo, frecuencia de uso, influencia ambiental y requisitos del método. Se documentan las bases para los intervalos.",
+      },
+    ],
+  },
+];
 
-        .check-item { background: white; border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; border: 1px solid var(--gray-border); display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
-        .check-item:hover { border-color: var(--secondary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .item-info { flex: 1; padding-right: 20px; }
-        .item-req { font-size: 11px; font-weight: 700; color: var(--secondary); margin-bottom: 4px; display: block; }
-        .item-text { font-size: 14px; font-weight: 600; color: var(--text-main); line-height: 1.4; }
-        
-        .btn-group { display: flex; gap: 6px; }
-        .opt-btn { padding: 8px 12px; border-radius: 6px; border: 1.5px solid var(--gray-border); background: white; font-size: 11px; font-weight: 700; cursor: pointer; transition: 0.2s; min-width: 65px; }
-        
-        /* Interactive States */
-        .opt-btn.active-C { background: var(--success-light); border-color: var(--success); color: var(--success); }
-        .opt-btn.active-NC { background: var(--danger-light); border-color: var(--danger); color: var(--danger); }
-        .opt-btn.active-NA { background: #f1f5f9; border-color: #94a3b8; color: #475569; }
+interface FormData {
+  laboratorio: string;
+  codigo: string;
+  ciudad: string;
+  acreditacion: string;
+  alcance: string;
+  ciclo: string;
+  fecha: string;
+  auditor: string;
+  cargo: string;
+  obsGeneral: string;
+  obsNc: string;
+  obsPlan: string;
+  proxima: string;
+  firma: string;
+  revisor: string;
+}
 
-        .obs-area { margin-top: 10px; width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--gray-border); font-family: var(--font); font-size: 13px; resize: vertical; display: none; }
+function CheckItem({
+  criterio,
+  answer,
+  onAnswer,
+}: {
+  criterio: Criterio;
+  answer: Answer;
+  onAnswer: (id: string, val: Answer) => void;
+}) {
+  const borderStyle =
+    answer === "C"
+      ? { borderLeft: "4px solid #66bb6a", background: "#f1f8f1" }
+      : answer === "N"
+      ? { borderLeft: "4px solid #ef9a9a", background: "#fff5f5" }
+      : answer === "NA"
+      ? { borderLeft: "4px solid #ce93d8", background: "#faf5fc", opacity: 0.8 }
+      : { borderLeft: "4px solid #e0e0e0", background: "#fff" };
 
-        @media print { .action-bar { display: none; } .container { margin: 0; max-width: 100%; } }
-    </style>
-</head>
-<body>
+  const codeStyle =
+    answer === "C"
+      ? { background: "#e8f5e9", border: "1.5px solid #a5d6a7", color: "#2e7d32" }
+      : answer === "N"
+      ? { background: "#ffebee", border: "1.5px solid #ef9a9a", color: "#c62828" }
+      : answer === "NA"
+      ? { background: "#f3e5f5", border: "1.5px solid #ce93d8", color: "#6a1b9a" }
+      : { background: "#f5f5f5", border: "1.5px solid #e0e0e0", color: "#9e9e9e" };
 
-<div class="action-bar">
-    <div class="ab-title">LABORATORIO: AUDITORÍA INTERNA ISO 17025</div>
-    <div class="ab-btns">
-        <button class="btn btn-danger" onclick="resetForm()">Reiniciar</button>
-        <button class="btn btn-white" onclick="window.print()">Guardar PDF / Imprimir</button>
-    </div>
-</div>
-
-<div class="container">
-    <div class="hdr-card">
-        <h1>Checklist de Auditoría Interna</h1>
-        <p style="opacity: 0.9; font-size: 14px; margin-top: 8px;">Requisitos para la competencia de laboratorios de ensayo y calibración.</p>
-        
-        <div class="hdr-stats">
-            <div class="stat-item"><span class="stat-val" id="stat-total">0</span><span class="stat-lbl">Requisitos</span></div>
-            <div class="stat-item"><span class="stat-val" id="stat-c">0</span><span class="stat-lbl">Conforme</span></div>
-            <div class="stat-item"><span class="stat-val" id="stat-nc">0</span><span class="stat-lbl">No Conforme</span></div>
-            <div class="stat-item"><span class="stat-val" id="stat-na">0</span><span class="stat-lbl">N/A</span></div>
+  return (
+    <div
+      className="rounded-xl mb-2 border border-gray-100 shadow-sm overflow-hidden transition-all"
+      style={borderStyle}
+    >
+      <div className="p-4 flex gap-4 items-start flex-wrap md:flex-nowrap">
+        <div
+          className="shrink-0 w-14 h-9 rounded-lg flex items-center justify-center text-[11px] font-bold transition-colors"
+          style={codeStyle}
+        >
+          {criterio.id}
         </div>
-    </div>
-
-    <div class="score-panel">
-        <div class="progress-ring">
-            <svg>
-                <circle class="ring-bg" cx="50" cy="50" r="45"></circle>
-                <circle id="ring-fill" class="ring-fill" cx="50" cy="50" r="45"></circle>
-            </svg>
-            <div class="percentage" id="perc-val">0%</div>
+        <div className="flex-1 min-w-0">
+          <h4 className="text-sm font-semibold text-gray-800 leading-snug mb-1">
+            <span className="mr-1">{criterio.icon}</span>
+            {criterio.title}
+          </h4>
+          <p className="text-xs text-gray-400 italic leading-relaxed">
+            {criterio.hint}
+          </p>
         </div>
-        <div>
-            <h3 style="margin: 0; font-size: 18px;">Nivel de Cumplimiento Global</h3>
-            <p style="color: #64748b; font-size: 13px; margin: 5px 0 0;">Basado en requisitos aplicables evaluados.</p>
+        <div className="flex gap-2 items-center flex-wrap shrink-0 w-full md:w-auto">
+          {(["C", "N", "NA"] as const).map((val) => (
+            <label
+              key={val}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold cursor-pointer transition-all select-none"
+              style={
+                answer === val
+                  ? val === "C"
+                    ? { background: "#e8f5e9", border: "1.5px solid #66bb6a", color: "#1b5e20" }
+                    : val === "N"
+                    ? { background: "#ffebee", border: "1.5px solid #ef9a9a", color: "#b71c1c" }
+                    : { background: "#f3e5f5", border: "1.5px solid #ce93d8", color: "#4a148c" }
+                  : { background: "#fff", border: "1.5px solid #e0e0e0", color: "#9e9e9e" }
+              }
+            >
+              <input
+                type="radio"
+                className="hidden"
+                name={`item-${criterio.id}`}
+                value={val}
+                checked={answer === val}
+                onChange={() => onAnswer(criterio.id, val)}
+              />
+              {val === "C" ? "✅ Cumple" : val === "N" ? "❌ No Cumple" : "— N/A"}
+            </label>
+          ))}
         </div>
+      </div>
     </div>
+  );
+}
 
-    <div id="checklist-content">
+function ScoreCircle({ pct }: { pct: number | null }) {
+  const r = 50;
+  const circ = 2 * Math.PI * r;
+  const offset = pct === null ? circ : circ - (pct / 100) * circ;
+  const color =
+    pct === null
+      ? "#e0e0e0"
+      : pct >= 85
+      ? "#66bb6a"
+      : pct >= 65
+      ? "#42a5f5"
+      : pct >= 40
+      ? "#ffa726"
+      : "#ef9a9a";
+
+  return (
+    <div className="relative w-28 h-28 shrink-0">
+      <svg viewBox="0 0 120 120" className="w-28 h-28 -rotate-90">
+        <circle cx="60" cy="60" r={r} fill="none" stroke="#f3f4f6" strokeWidth="10" />
+        <circle
+          cx="60" cy="60" r={r}
+          fill="none"
+          stroke={color}
+          strokeWidth="10"
+          strokeLinecap="round"
+          strokeDasharray={circ}
+          strokeDashoffset={offset}
+          style={{ transition: "stroke-dashoffset 0.6s ease, stroke 0.4s ease" }}
+        />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-2xl font-extrabold leading-none" style={{ color: pct === null ? "#bdbdbd" : color, fontFamily: "'Salsa', cursive" }}>
+          {pct === null ? "—" : `${pct}%`}
+        </span>
+        <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-wide mt-0.5">
+          Cumplimiento
+        </span>
+      </div>
+    </div>
+  );
+}
+
+export default function Checklist() {
+  const [answers, setAnswers] = useState<Record<string, Answer>>({});
+  const [form, setForm] = useState<FormData>({
+    laboratorio: "", codigo: "", ciudad: "", acreditacion: "",
+    alcance: "", ciclo: "", fecha: "", auditor: "", cargo: "",
+    obsGeneral: "", obsNc: "", obsPlan: "", proxima: "", firma: "", revisor: "",
+  });
+
+  const allCriteria = SECTIONS.flatMap((s) => s.criterios);
+  const total = allCriteria.length;
+
+  const handleAnswer = useCallback((id: string, val: Answer) => {
+    setAnswers((prev) => ({ ...prev, [id]: val }));
+  }, []);
+
+  const handleReset = () => {
+    if (confirm("¿Reiniciar todos los valores del checklist?")) {
+      setAnswers({});
+    }
+  };
+
+  const cumple = Object.values(answers).filter((v) => v === "C").length;
+  const noCumple = Object.values(answers).filter((v) => v === "N").length;
+  const na = Object.values(answers).filter((v) => v === "NA").length;
+  const aplican = total - na;
+  const pct = aplican === 0 ? null : Math.round((cumple / aplican) * 100);
+  const answered = Object.values(answers).filter((v) => v !== null).length;
+
+  const verdictLabel =
+    pct === null ? "Sin evaluar"
+      : pct >= 85 ? "Excelente"
+      : pct >= 65 ? "Bueno"
+      : pct >= 40 ? "Regular"
+      : "Crítico";
+
+  const verdictStyle =
+    pct === null
+      ? { background: "#fce4ec", border: "2px solid #f48fb1", color: "#880e4f" }
+      : pct >= 85
+      ? { background: "#e8f5e9", border: "2px solid #a5d6a7", color: "#1b5e20" }
+      : pct >= 65
+      ? { background: "#e3f2fd", border: "2px solid #90caf9", color: "#0d47a1" }
+      : pct >= 40
+      ? { background: "#fff8e1", border: "2px solid #ffcc80", color: "#e65100" }
+      : { background: "#ffebee", border: "2px solid #ef9a9a", color: "#b71c1c" };
+
+  const inputStyle = {
+    fontFamily: "'Salsa', cursive",
+    border: "1.5px solid #e0e0e0",
+    borderRadius: "10px",
+    padding: "9px 13px",
+    fontSize: "13.5px",
+    color: "#3d3d3d",
+    background: "#fff",
+    outline: "none",
+    width: "100%",
+  };
+
+  const labelStyle = {
+    fontSize: "11px",
+    fontWeight: 700,
+    color: "#757575",
+    textTransform: "uppercase" as const,
+    letterSpacing: "0.07em",
+    fontFamily: "'Salsa', cursive",
+    marginBottom: "4px",
+    display: "block",
+  };
+
+  return (
+    <div style={{ fontFamily: "'Salsa', cursive", background: "#fafafa", minHeight: "100vh" }}>
+      <link href="https://fonts.googleapis.com/css2?family=Salsa&display=swap" rel="stylesheet" />
+
+      {/* Action Bar */}
+      <div
+        className="no-print sticky top-0 z-50 flex items-center justify-between gap-3 px-6 py-3 flex-wrap"
+        style={{ background: "#f3e5f5", borderBottom: "2px solid #ce93d8", boxShadow: "0 2px 12px rgba(0,0,0,.08)" }}
+      >
+        <div className="flex items-center gap-2">
+          <div className="w-2.5 h-2.5 rounded-full" style={{ background: "#ab47bc" }} />
+          <span className="text-xs font-bold" style={{ color: "#6a1b9a", fontFamily: "'Salsa', cursive" }}>
+            Checklist Auditoría · ISO/IEC 17025:2017 · Laboratorios de Ensayo y Calibración
+          </span>
         </div>
-</div>
+        <div className="flex gap-2">
+          <button
+            onClick={handleReset}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all"
+            style={{ background: "#ffebee", color: "#c62828", border: "1.5px solid #ef9a9a", fontFamily: "'Salsa', cursive" }}
+          >
+            🔄 Reiniciar
+          </button>
+          <button
+            onClick={() => window.print()}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold transition-all"
+            style={{ background: "#e3f2fd", color: "#0d47a1", border: "1.5px solid #90caf9", fontFamily: "'Salsa', cursive" }}
+          >
+            🖨️ Imprimir / PDF
+          </button>
+        </div>
+      </div>
 
-<script>
-    const DATA = [
-        { 
-            section: "4. Requisitos Generales", 
-            items: [
-                { req: "4.1", txt: "¿Se realizan las actividades de laboratorio de forma imparcial?" },
-                { req: "4.1.4", txt: "¿Se identifican los riesgos a la imparcialidad de forma continua?" },
-                { req: "4.2", txt: "¿Existe un compromiso legal ejecutable sobre la confidencialidad de la información?" }
-            ]
-        },
-        { 
-            section: "5. Requisitos Estructurales", 
-            items: [
-                { req: "5.3", txt: "¿Se ha definido el alcance de las actividades para las cuales se cumple con la norma?" },
-                { req: "5.5", txt: "¿Se cuenta con personal que tenga autoridad y recursos para cumplir sus funciones?" }
-            ]
-        },
-        { 
-            section: "6. Requisitos de Recursos", 
-            items: [
-                { req: "6.2", txt: "¿Está documentada la competencia del personal (educación, formación, experiencia)?" },
-                { req: "6.4", txt: "¿El equipo está calibrado y se identifica su estado de calibración?" },
-                { req: "6.6", txt: "¿Existen procedimientos para la selección y evaluación de proveedores externos?" }
-            ]
-        },
-        { 
-            section: "7. Requisitos del Proceso", 
-            items: [
-                { req: "7.1", txt: "¿Se revisan las solicitudes, ofertas y contratos antes de iniciar el trabajo?" },
-                { req: "7.2", txt: "¿Se utilizan métodos apropiados y se validan/verifican antes de su uso?" },
-                { req: "7.8", txt: "¿Los informes de resultados son claros, objetivos y cumplen los requisitos mínimos?" }
-            ]
-        }
-    ];
+      <div className="max-w-4xl mx-auto px-5 py-8 pb-20">
+        {/* Header */}
+        <div
+          className="rounded-3xl overflow-hidden mb-6"
+          style={{ background: "linear-gradient(135deg, #f3e5f5 0%, #e8eaf6 50%, #e3f2fd 100%)", border: "2px solid #ce93d8", boxShadow: "0 8px 32px rgba(171,71,188,.12)" }}
+        >
+          <div className="px-8 py-8">
+            <div className="flex gap-2 flex-wrap mb-4">
+              {["ISO/IEC 17025:2017", "Checklist de Auditoría", "Laboratorios de Ensayo y Calibración", "Acreditación"].map(
+                (tag, i) => (
+                  <span key={tag} className="px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wide"
+                    style={i === 0
+                      ? { background: "#ab47bc", color: "#f3e5f5" }
+                      : { background: "#fff", color: "#6a1b9a", border: "1.5px solid #ce93d8" }
+                    }
+                  >
+                    {tag}
+                  </span>
+                )
+              )}
+            </div>
+            <div className="flex gap-5 items-start">
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 text-3xl"
+                style={{ background: "#fff", border: "2px solid #ce93d8", boxShadow: "0 2px 8px rgba(171,71,188,.15)" }}>
+                🔬
+              </div>
+              <div>
+                <h1 className="text-3xl font-extrabold leading-tight mb-2" style={{ color: "#4a148c", fontFamily: "'Salsa', cursive" }}>
+                  Checklist de Auditoría<br />ISO/IEC 17025:2017
+                </h1>
+                <p className="text-sm leading-relaxed" style={{ color: "#6a1b9a" }}>
+                  Evaluación de cumplimiento de la norma <strong>ISO/IEC 17025:2017</strong> — Requisitos generales para la competencia de laboratorios de ensayo y de calibración. Califica cada criterio como <strong>Cumple</strong>, <strong>No Cumple</strong> o <strong>No Aplica</strong>.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-wrap border-t" style={{ background: "rgba(171,71,188,.08)", borderColor: "#ce93d8" }}>
+            {[
+              { n: total, l: "Criterios totales" },
+              { n: aplican, l: "Aplican" },
+              { n: cumple, l: "Cumplen" },
+              { n: noCumple, l: "No cumplen" },
+              { n: na, l: "No aplican" },
+              { n: answered, l: "Respondidos" },
+            ].map((s, i) => (
+              <div key={i} className="flex-1 min-w-20 text-center py-3 px-2 relative">
+                {i > 0 && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-7" style={{ background: "#ce93d8" }} />}
+                <div className="text-2xl font-extrabold" style={{ color: "#ab47bc", fontFamily: "'Salsa', cursive" }}>{s.n}</div>
+                <div className="text-[10.5px] mt-0.5 font-semibold" style={{ color: "#7b1fa2" }}>{s.l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
 
-    function init() {
-        const container = document.getElementById('checklist-content');
-        let totalItems = 0;
+        {/* Score Panel */}
+        <div className="bg-white rounded-2xl p-6 mb-6 border border-gray-100 shadow-sm flex gap-7 items-center flex-wrap"
+          style={{ border: "1.5px solid #f3e5f5" }}>
+          <ScoreCircle pct={pct} />
+          <div className="flex-1 min-w-48">
+            <h2 className="text-base font-bold mb-3" style={{ color: "#4a148c", fontFamily: "'Salsa', cursive" }}>Resumen de evaluación</h2>
+            {[
+              { label: "Cumple", val: cumple, tot: aplican, color: "#66bb6a" },
+              { label: "No Cumple", val: noCumple, tot: aplican, color: "#ef9a9a" },
+              { label: "No Aplica", val: na, tot: total, color: "#ce93d8" },
+            ].map((bar) => (
+              <div key={bar.label} className="flex items-center gap-3 mb-2">
+                <div className="flex items-center gap-1.5 w-24 shrink-0 text-xs" style={{ color: "#757575" }}>
+                  <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: bar.color }} />
+                  {bar.label}
+                </div>
+                <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: "#f5f5f5" }}>
+                  <div className="h-full rounded-full transition-all" style={{
+                    width: bar.tot === 0 ? "0%" : `${(bar.val / bar.tot) * 100}%`,
+                    background: bar.color,
+                  }} />
+                </div>
+                <span className="text-xs w-8 text-right shrink-0" style={{ color: "#9e9e9e" }}>
+                  {bar.tot === 0 ? "0%" : `${Math.round((bar.val / bar.tot) * 100)}%`}
+                </span>
+              </div>
+            ))}
+            <div className="flex gap-3 mt-4 flex-wrap">
+              {[
+                { v: cumple, l: "✅ Cumple", c: "#2e7d32", bg: "#e8f5e9" },
+                { v: noCumple, l: "❌ No Cumple", c: "#c62828", bg: "#ffebee" },
+                { v: na, l: "— N/A", c: "#6a1b9a", bg: "#f3e5f5" },
+                { v: total, l: "📋 Total", c: "#0d47a1", bg: "#e3f2fd" },
+              ].map((item) => (
+                <div key={item.l} className="text-center rounded-xl px-4 py-2 flex-1 min-w-16" style={{ background: item.bg }}>
+                  <div className="text-xl font-extrabold" style={{ color: item.c, fontFamily: "'Salsa', cursive" }}>{item.v}</div>
+                  <div className="text-[10px] mt-0.5 font-bold uppercase tracking-wide" style={{ color: item.c }}>{item.l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="text-center shrink-0 min-w-32 ml-auto">
+            <div className="inline-block px-5 py-2 rounded-full text-sm font-bold transition-all" style={{ ...verdictStyle, fontFamily: "'Salsa', cursive" }}>
+              {verdictLabel}
+            </div>
+            <div className="text-xs mt-2" style={{ color: "#9e9e9e" }}>
+              {pct === null ? "Complete los criterios" : `${answered} de ${total} respondidos`}
+            </div>
+          </div>
+        </div>
 
-        DATA.forEach((sec, sIdx) => {
-            const secHtml = document.createElement('div');
-            secHtml.innerHTML = `<div class="section-title">${sec.section}</div>`;
-            
-            sec.items.forEach((item, iIdx) => {
-                totalItems++;
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'check-item';
-                itemDiv.innerHTML = `
-                    <div class="item-info">
-                        <span class="item-req">CLÁUSULA ${item.req}</span>
-                        <div class="item-text">${item.txt}</div>
-                        <textarea class="obs-area" id="obs-${sIdx}-${iIdx}" placeholder="Observaciones o hallazgos..."></textarea>
-                    </div>
-                    <div class="btn-group">
-                        <button class="opt-btn" onclick="update(this, 'C', ${sIdx}, ${iIdx})">C</button>
-                        <button class="opt-btn" onclick="update(this, 'NC', ${sIdx}, ${iIdx})">NC</button>
-                        <button class="opt-btn" onclick="update(this, 'NA', ${sIdx}, ${iIdx})">N/A</button>
-                    </div>
-                `;
-                secHtml.appendChild(itemDiv);
-            });
-            container.appendChild(secHtml);
-        });
-        document.getElementById('stat-total').innerText = totalItems;
-    }
+        {/* Lab Info Card */}
+        <div className="bg-white rounded-2xl p-6 mb-6" style={{ border: "1.5px solid #e8eaf6", boxShadow: "0 2px 12px rgba(0,0,0,.05)" }}>
+          <div className="flex items-center gap-3 mb-5 pb-4 border-b border-dashed border-gray-100">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-xl" style={{ background: "#e8eaf6", border: "1.5px solid #9fa8da" }}>
+              🏛️
+            </div>
+            <div>
+              <h2 className="text-sm font-bold" style={{ color: "#1a237e", fontFamily: "'Salsa', cursive" }}>Identificación del Laboratorio</h2>
+              <p className="text-xs mt-0.5" style={{ color: "#9e9e9e" }}>Registre los datos del laboratorio antes de completar la auditoría</p>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { key: "laboratorio", label: "🏷️ Nombre del laboratorio *", placeholder: "Ej. Laboratorio de Metrología LM-01" },
+              { key: "codigo", label: "🔢 Código / N° de registro", placeholder: "Ej. LAB-2024-001" },
+              { key: "ciudad", label: "📍 Ciudad / País", placeholder: "Ej. Bogotá, Colombia" },
+              { key: "acreditacion", label: "🏅 N° de acreditación", placeholder: "Ej. LE-1234 / ONAC" },
+              { key: "alcance", label: "🎯 Alcance de acreditación", placeholder: "Ej. Ensayos fisicoquímicos de agua" },
+              { key: "ciclo", label: "🔁 Ciclo de auditoría", placeholder: "Ej. Renovación 2025 / Seguimiento 1" },
+            ].map((f) => (
+              <div key={f.key} className="flex flex-col gap-1">
+                <label style={labelStyle}>{f.label}</label>
+                <input
+                  type="text"
+                  value={form[f.key as keyof FormData]}
+                  onChange={(e) => setForm((p) => ({ ...p, [f.key]: e.target.value }))}
+                  placeholder={f.placeholder}
+                  style={inputStyle}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+            <div className="flex flex-col gap-1">
+              <label style={labelStyle}>📅 Fecha de auditoría *</label>
+              <input type="date" value={form.fecha} onChange={(e) => setForm((p) => ({ ...p, fecha: e.target.value }))} style={inputStyle} />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label style={labelStyle}>👤 Auditor responsable *</label>
+              <input type="text" value={form.auditor} onChange={(e) => setForm((p) => ({ ...p, auditor: e.target.value }))} placeholder="Nombre completo" style={inputStyle} />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label style={labelStyle}>💼 Cargo / Función</label>
+              <input type="text" value={form.cargo} onChange={(e) => setForm((p) => ({ ...p, cargo: e.target.value }))} placeholder="Ej. Auditor Líder" style={inputStyle} />
+            </div>
+          </div>
+        </div>
 
-    function update(btn, type, sIdx, iIdx) {
-        // Limpiar selección previa en el grupo
-        const parent = btn.parentElement;
-        parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active-C', 'active-NC', 'active-NA'));
-        
-        // Aplicar nueva clase
-        btn.classList.add('active-' + type);
-        
-        // Mostrar área de observaciones si es NC
-        const obs = document.getElementById(`obs-${sIdx}-${iIdx}`);
-        obs.style.display = (type === 'NC') ? 'block' : 'none';
+        {/* Sections */}
+        {SECTIONS.map((section) => {
+          const sAnswers = section.criterios.map((c) => answers[c.id]);
+          const sCumple = sAnswers.filter((a) => a === "C").length;
+          const sNa = sAnswers.filter((a) => a === "NA").length;
+          const sAplican = section.criterios.length - sNa;
+          const sPct = sAplican === 0 ? null : Math.round((sCumple / sAplican) * 100);
 
-        calculate();
-    }
+          return (
+            <div key={section.key}>
+              <div className="flex items-center gap-3 my-6">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: section.bg, border: `1.5px solid ${section.accent}` }}>
+                  <span className="text-xs font-bold" style={{ color: section.textColor, fontFamily: "'Salsa', cursive" }}>
+                    {section.clause.split(" ")[1]}
+                  </span>
+                </div>
+                <h3 className="text-[11px] font-extrabold uppercase tracking-widest" style={{ color: "#757575", fontFamily: "'Salsa', cursive", whiteSpace: "nowrap" }}>
+                  {section.clause} — {section.label}
+                </h3>
+                <span className="text-[11px] font-bold rounded-full px-3 py-0.5 shrink-0" style={{ background: section.bg, color: section.textColor, border: `1.5px solid ${section.accent}` }}>
+                  {section.criterios.length} criterios{sPct !== null ? ` · ${sPct}%` : ""}
+                </span>
+                <div className="flex-1 h-[1.5px]" style={{ background: section.accent, opacity: 0.3 }} />
+              </div>
+              {section.criterios.map((c) => (
+                <CheckItem key={c.id} criterio={c} answer={answers[c.id] ?? null} onAnswer={handleAnswer} />
+              ))}
+            </div>
+          );
+        })}
 
-    function calculate() {
-        const total = parseInt(document.getElementById('stat-total').innerText);
-        const c = document.querySelectorAll('.active-C').length;
-        const nc = document.querySelectorAll('.active-NC').length;
-        const na = document.querySelectorAll('.active-NA').length;
+        {/* Observations */}
+        <div className="bg-white rounded-2xl p-6 mt-6" style={{ border: "1.5px solid #e8f5e9", boxShadow: "0 2px 12px rgba(0,0,0,.05)" }}>
+          <div className="flex items-center gap-3 mb-5 pb-4 border-b border-dashed border-gray-100">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-xl" style={{ background: "#e8f5e9", border: "1.5px solid #a5d6a7" }}>
+              📝
+            </div>
+            <div>
+              <h2 className="text-sm font-bold" style={{ color: "#1b5e20", fontFamily: "'Salsa', cursive" }}>Observaciones y Plan de Acción</h2>
+              <p className="text-xs mt-0.5" style={{ color: "#9e9e9e" }}>Hallazgos, evidencias revisadas, brechas identificadas y acciones correctivas</p>
+            </div>
+          </div>
+          <div className="flex flex-col gap-1 mb-4">
+            <label style={labelStyle}>📝 Observaciones generales / Evidencias revisadas</label>
+            <textarea rows={4} value={form.obsGeneral} onChange={(e) => setForm((p) => ({ ...p, obsGeneral: e.target.value }))}
+              placeholder="Describa las evidencias revisadas, hallazgos positivos y áreas de mejora identificadas..."
+              style={{ ...inputStyle, minHeight: "90px", resize: "vertical", lineHeight: 1.6 }} />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div className="flex flex-col gap-1">
+              <label style={labelStyle}>🚨 No conformidades identificadas</label>
+              <textarea rows={3} value={form.obsNc} onChange={(e) => setForm((p) => ({ ...p, obsNc: e.target.value }))}
+                placeholder="Liste los criterios que no se cumplen y la evidencia de incumplimiento..."
+                style={{ ...inputStyle, minHeight: "80px", resize: "vertical", lineHeight: 1.6 }} />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label style={labelStyle}>🎯 Plan de acción / Acciones correctivas</label>
+              <textarea rows={3} value={form.obsPlan} onChange={(e) => setForm((p) => ({ ...p, obsPlan: e.target.value }))}
+                placeholder="Acciones correctivas para cada no conformidad, responsable y fecha límite..."
+                style={{ ...inputStyle, minHeight: "80px", resize: "vertical", lineHeight: 1.6 }} />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="flex flex-col gap-1">
+              <label style={labelStyle}>📅 Fecha próxima revisión</label>
+              <input type="date" value={form.proxima} onChange={(e) => setForm((p) => ({ ...p, proxima: e.target.value }))} style={inputStyle} />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label style={labelStyle}>✍️ Firma / Responsable</label>
+              <input type="text" value={form.firma} onChange={(e) => setForm((p) => ({ ...p, firma: e.target.value }))} placeholder="Nombre completo del auditor" style={inputStyle} />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label style={labelStyle}>✅ Revisado / Aprobado por</label>
+              <input type="text" value={form.revisor} onChange={(e) => setForm((p) => ({ ...p, revisor: e.target.value }))} placeholder="Nombre del revisor" style={inputStyle} />
+            </div>
+          </div>
+        </div>
 
-        document.getElementById('stat-c').innerText = c;
-        document.getElementById('stat-nc').innerText = nc;
-        document.getElementById('stat-na').innerText = na;
-
-        const aplicables = total - na;
-        const porcentaje = aplicables > 0 ? Math.round((c / aplicables) * 100) : 0;
-
-        // Update Ring
-        const ring = document.getElementById('ring-fill');
-        const offset = 283 - (283 * porcentaje / 100);
-        ring.style.strokeDashoffset = offset;
-        document.getElementById('perc-val').innerText = porcentaje + '%';
-        
-        // Color Dinámico del Ring
-        if (porcentaje < 50) ring.style.stroke = "#ef4444";
-        else if (porcentaje < 85) ring.style.stroke = "#f59e0b";
-        else ring.style.stroke = "#15803d";
-    }
-
-    function resetForm() {
-        if(confirm('¿Seguro que deseas limpiar todo el checklist?')) location.reload();
-    }
-
-    init();
-</script>
-
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-   <div style="margin-top: 30px; padding: 25px; border: 1px solid #e2e8f0; border-radius: 20px; font-family: sans-serif; background: #ffffff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-  
-  <div style="display: flex; align-items: center; margin-bottom: 20px;">
-    <div style="background: #f0fdf4; padding: 10px; border-radius: 12px; margin-right: 15px;">
-      <span style="font-size: 20px;">💬</span>
+        {/* Footer */}
+        <div className="mt-7 text-center border-t border-gray-200 pt-5 leading-7" style={{ fontSize: "11px", color: "#9e9e9e" }}>
+          Norma ISO/IEC 17025:2017 — Requisitos generales para la competencia de laboratorios de ensayo y de calibración<br />
+          <strong style={{ color: "#ab47bc" }}>Para guardar como PDF:</strong>{" "}
+          Botón "Imprimir / PDF" → Orientación Vertical · A4 · Márgenes mínimos · Activar "Gráficos de fondo"
+        </div>
+      </div>
     </div>
-    <div>
-      <h2 style="font-size: 16px; margin: 0; color: #1e293b; font-weight: 700;">Observaciones y plan de acción</h2>
-      <p style="font-size: 11px; margin: 0; color: #94a3b8;">Registre hallazgos, evidencias revisadas, brechas identificadas y acciones correctivas planificadas</p>
-    </div>
-  </div>
-
-  <div style="margin-bottom: 20px;">
-    <label style="display: block; font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">
-      📝 OBSERVACIONES GENERALES / EVIDENCIAS REVISADAS
-    </label>
-    <textarea style="width: 100%; min-height: 100px; padding: 15px; border: 1px dotted #cbd5e1; border-radius: 12px; font-size: 13px; color: #334155; outline: none; background: #fcfcfc;" placeholder="Describa las evidencias revisadas, hallazgos positivos y áreas de mejora..."></textarea>
-  </div>
-
-  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
-    <div>
-      <label style="display: block; font-size: 11px; font-weight: 800; color: #e11d48; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">
-        🚨 NO CONFORMIDADES IDENTIFICADAS
-      </label>
-      <textarea style="width: 100%; min-height: 120px; padding: 15px; border: 1px solid #fecdd3; border-radius: 12px; font-size: 13px; outline: none; background: #fffafb;" placeholder="Liste los criterios que no se cumplen..."></textarea>
-    </div>
-    <div>
-      <label style="display: block; font-size: 11px; font-weight: 800; color: #2563eb; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">
-        🎯 PLAN DE ACCIÓN / ACCIONES CORRECTIVAS
-      </label>
-      <textarea style="width: 100%; min-height: 120px; padding: 15px; border: 1px solid #bfdbfe; border-radius: 12px; font-size: 13px; outline: none; background: #f8faff;" placeholder="Describa las acciones, responsable y fecha límite..."></textarea>
-    </div>
-  </div>
-
-  <div style="display: grid; grid-template-columns: 1fr 1.2fr 1.2fr; gap: 15px; align-items: start;">
-    
-    <div>
-      <label style="display: block; font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 8px;">
-        🗓️ FECHA PRÓXIMA REVISIÓN
-      </label>
-      <input type="date" style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 13px; color: #475569; background: white;">
-    </div>
-
-    <div>
-      <label style="display: block; font-size: 11px; font-weight: 800; color: #64748b; text-transform: uppercase; margin-bottom: 8px;">
-        ✍️ FIRMA / RESPONSABLE DE LA EVALUACIÓN
-      </label>
-      <input type="text" style="width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 13px; outline: none;" placeholder="Nombre completo del evaluador">
-    </div>
-
-    <div>
-      <label style="display: block; font-size: 11px; font-weight: 800; color: #16a34a; text-transform: uppercase; margin-bottom: 8px;">
-        ✅ REVISADO POR
-      </label>
-      <input type="text" style="width: 100%; padding: 12px; border: 2px solid #bbf7d0; border-radius: 10px; font-size: 13px; outline: none;" placeholder="Nombre del revisor / aprobador">
-    </div>
-
-  </div>
-</div>
+  );
+}
