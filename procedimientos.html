@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banco de Procedimientos — ISO/IEC 17025:2017</title>
+<meta name="description" content="Banco de Procedimientos ISO/IEC 17025:2017 - 8 procedimientos clave documentados para laboratorios de ensayo y calibración.">
+<link href="https://fonts.googleapis.com/css2?family=Salsa&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* PALETA PASTEL */
+  --rosa-pastel: #FFB3D9;
+  --rosa-claro: #FFD4E5;
+  --rosa-muy-claro: #FFF0F6;
+  
+  --azul-pastel: #B3E5FC;
+  --azul-claro: #D1F0FF;
+  --azul-muy-claro: #F0F8FF;
+  
+  --verde-pastel: #B3F5D1;
+  --verde-claro: #D4F5E3;
+  --verde-muy-claro: #EEF9F5;
+  
+  --morado-pastel: #E1BEE7;
+  --morado-claro: #F0D9F5;
+  --morado-muy-claro: #F9F3FD;
+  
+  --naranja-pastel: #FFD4B3;
+  --naranja-claro: #FFE5D4;
+  --naranja-muy-claro: #FFF5ED;
+  
+  --amarillo-pastel: #FFF9C4;
+  --amarillo-claro: #FFFDE7;
+  
+  --gris-oscuro: #4a5568;
+  --gris-medio: #718096;
+  --gris-claro: #cbd5e0;
+  --gris-muy-claro: #f7fafc;
+  
+  --white: #ffffff;
+  --font-titulo: 'Salsa', cursive;
+  --font-cuerpo: 'Poppins', sans-serif;
+  --sh: 0 2px 12px rgba(0,0,0,.08);
+  --sh-md: 0 6px 24px rgba(0,0,0,.12);
+  --sh-lg: 0 12px 40px rgba(0,0,0,.15);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { 
+  font-family: var(--font-cuerpo); 
+  background: linear-gradient(135deg, var(--azul-muy-claro) 0%, var(--rosa-muy-claro) 100%);
+  color: var(--gris-oscuro); 
+  line-height: 1.6; 
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* NAV */
+nav {
+  background: linear-gradient(135deg, var(--rosa-pastel) 0%, var(--morado-pastel) 100%);
+  backdrop-filter: blur(10px);
+  padding: 0 40px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: var(--sh);
+  border-bottom: 2px solid rgba(255, 255, 255, .3);
+}
+
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 65px;
+  gap: 16px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.nav-logo-ic {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--verde-pastel), var(--azul-pastel));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--white);
+  box-shadow: var(--sh);
+}
+
+.nav-logo span {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gris-oscuro);
+  font-family: var(--font-titulo);
+  letter-spacing: .05em;
+}
+
+.nav-logo small {
+  font-size: 11px;
+  color: var(--gris-medio);
+  font-weight: 500;
+  display: block;
+  margin-top: -2px;
+  font-family: var(--font-cuerpo);
+}
+
+.nav-links { 
+  display: flex; 
+  gap: 8px; 
+  align-items: center; 
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gris-oscuro);
+  transition: all .15s;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, .4);
+  color: var(--gris-oscuro);
+}
+
+.nav-pill {
+  background: linear-gradient(135deg, var(--verde-pastel), var(--azul-pastel));
+  color: var(--white);
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .15s;
+  white-space: nowrap;
+  box-shadow: var(--sh);
+}
+
+.nav-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sh-md);
+}
+
+/* HERO SECTION */
+.hero {
+  background: linear-gradient(140deg, var(--verde-pastel) 0%, var(--azul-pastel) 35%, var(--morado-pastel) 75%, var(--naranja-pastel) 100%);
+  padding: 80px 40px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, .2) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(255, 255, 255, .15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, .7);
+  border: 1.5px solid rgba(255, 255, 255, .5);
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gris-oscuro);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  box-shadow: var(--sh);
+}
+
+.hero-badge::before { content: '📋'; font-size: 16px; }
+
+.hero h1 {
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800;
+  color: var(--gris-oscuro);
+  line-height: 1.15;
+  margin-bottom: 20px;
+  max-width: 800px;
+  font-family: var(--font-titulo);
+  letter-spacing: .02em;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: #000000;
+  background: rgba(255, 179, 217, .3);
+  padding: 4px 12px;
+  border-radius: 8px;
+}
+
+.hero p {
+  font-size: 16px;
+  color: var(--gris-medio);
+  line-height: 1.75;
+  max-width: 700px;
+  margin-bottom: 35px;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .18s;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-cuerpo);
+  background: linear-gradient(135deg, var(--verde-pastel), var(--azul-pastel));
+  color: var(--white);
+  box-shadow: var(--sh-md);
+}
+
+.hero-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sh-lg);
+}
+
+/* PROCEDIMIENTOS SECTION */
+.procedimientos-section {
+  padding: 90px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--gris-oscuro);
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-eyebrow::after {
+  content: '';
+  width: 40px;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--rosa-pastel), var(--verde-pastel));
+  border-radius: 2px;
+}
+
+.section-title {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 800;
+  color: var(--gris-oscuro);
+  line-height: 1.25;
+  margin-bottom: 14px;
+  font-family: var(--font-titulo);
+}
+
+.section-sub {
+  font-size: 16px;
+  color: var(--gris-medio);
+  line-height: 1.7;
+  max-width: 650px;
+  margin-bottom: 50px;
+}
+
+/* FILTROS */
+.filtros-container {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+}
+
+.filtro-btn {
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 2px solid var(--gris-claro);
+  background: var(--white);
+  color: var(--gris-oscuro);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .18s;
+  font-family: var(--font-cuerpo);
+}
+
+.filtro-btn:hover {
+  border-color: var(--rosa-pastel);
+  background: var(--rosa-muy-claro);
+}
+
+.filtro-btn.active {
+  background: linear-gradient(135deg, var(--rosa-pastel), var(--morado-pastel));
+  color: var(--white);
+  border-color: var(--rosa-pastel);
+  box-shadow: var(--sh-md);
+}
+
+/* PROCEDIMIENTOS GRID */
+.procedimientos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+}
+
+.proc-card {
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--sh-md);
+  border: 1.5px solid rgba(255, 255, 255, .6);
+  display: flex;
+  flex-direction: column;
+  transition: all .25s;
+  cursor: pointer;
+}
+
+.proc-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--sh-lg);
+}
+
+/* COLORES DE PROCEDIMIENTOS */
+.proc-color-1 { background: linear-gradient(135deg, var(--azul-pastel), var(--azul-claro)); }
+.proc-color-2 { background: linear-gradient(135deg, var(--rosa-pastel), var(--naranja-pastel)); }
+.proc-color-3 { background: linear-gradient(135deg, var(--verde-pastel), var(--morado-pastel)); }
+.proc-color-4 { background: linear-gradient(135deg, var(--morado-pastel), var(--rosa-pastel)); }
+.proc-color-5 { background: linear-gradient(135deg, var(--naranja-pastel), var(--amarillo-pastel)); }
+.proc-color-6 { background: linear-gradient(135deg, var(--azul-pastel), var(--verde-pastel)); }
+.proc-color-7 { background: linear-gradient(135deg, var(--rosa-pastel), var(--morado-claro)); }
+.proc-color-8 { background: linear-gradient(135deg, var(--verde-pastel), var(--azul-pastel)); }
+
+.proc-header {
+  padding: 35px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--white);
+  min-height: 120px;
+}
+
+.proc-header-left {
+  flex: 1;
+}
+
+.proc-num {
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, .8);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.proc-header h3 {
+  font-size: 20px;
+  font-weight: 800;
+  font-family: var(--font-titulo);
+  line-height: 1.25;
+}
+
+.proc-icon {
+  font-size: 40px;
+  opacity: .8;
+}
+
+.proc-body {
+  padding: 28px 28px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.proc-description {
+  font-size: 14px;
+  color: var(--gris-medio);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  min-height: 42px;
+}
+
+.proc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.proc-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--gris-muy-claro);
+  border: 1px solid var(--gris-claro);
+  border-radius: 18px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gris-medio);
+  white-space: nowrap;
+}
+
+.proc-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.btn-action {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 10px;
+  border: 1.5px solid;
+  background: var(--white);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-family: var(--font-cuerpo);
+}
+
+.btn-ver {
+  color: var(--azul-pastel);
+  border-color: var(--azul-claro);
+}
+
+.btn-ver:hover {
+  background: var(--azul-muy-claro);
+  border-color: var(--azul-pastel);
+}
+
+.btn-descargar {
+  color: var(--rosa-pastel);
+  border-color: var(--rosa-claro);
+}
+
+.btn-descargar:hover {
+  background: var(--rosa-muy-claro);
+  border-color: var(--rosa-pastel);
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 300;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  animation: fadeIn .2s;
+}
+
+.modal.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  background-color: var(--white);
+  padding: 40px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 700px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp .3s;
+  box-shadow: var(--sh-lg);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--gris-claro);
+}
+
+.modal-header h2 {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--gris-oscuro);
+  font-family: var(--font-titulo);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--gris-claro);
+  transition: color .15s;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  color: var(--gris-oscuro);
+}
+
+.modal-body {
+  color: var(--gris-oscuro);
+}
+
+.modal-body h3 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--gris-oscuro);
+  margin-top: 20px;
+  margin-bottom: 12px;
+}
+
+.modal-body p {
+  font-size: 14px;
+  color: var(--gris-medio);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.modal-body ul {
+  list-style: none;
+  margin-bottom: 16px;
+}
+
+.modal-body li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--gris-medio);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.modal-body li::before {
+  content: '✓';
+  color: var(--verde-pastel);
+  font-weight: 800;
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: -2px;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 12px;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--gris-claro);
+}
+
+.modal-btn {
+  flex: 1;
+  padding: 14px 24px;
+  border-radius: 10px;
+  border: 1.5px solid;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+  font-family: var(--font-cuerpo);
+}
+
+.modal-btn-primary {
+  background: linear-gradient(135deg, var(--verde-pastel), var(--azul-pastel));
+  color: var(--white);
+  border-color: var(--verde-pastel);
+}
+
+.modal-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sh-md);
+}
+
+.modal-btn-secondary {
+  background: var(--gris-muy-claro);
+  color: var(--gris-oscuro);
+  border-color: var(--gris-claro);
+}
+
+.modal-btn-secondary:hover {
+  background: var(--gris-claro);
+}
+
+/* FOOTER */
+footer {
+  background: linear-gradient(135deg, var(--gris-muy-claro) 0%, var(--azul-muy-claro) 100%);
+  padding: 50px 40px 35px;
+  border-top: 2px solid var(--gris-claro);
+  margin-top: 80px;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.footer-top {
+  display: flex;
+  gap: 50px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding-bottom: 35px;
+  border-bottom: 1px solid var(--gris-claro);
+}
+
+.footer-brand {
+  flex: 1;
+  min-width: 240px;
+}
+
+.footer-brand .fl {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  text-decoration: none;
+}
+
+.footer-brand .fl-ic {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--rosa-pastel), var(--morado-pastel));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.footer-brand .fl span {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--gris-oscuro);
+  font-family: var(--font-titulo);
+}
+
+.footer-brand p {
+  font-size: 13px;
+  color: var(--gris-medio);
+  line-height: 1.7;
+  max-width: 320px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.fl-col h4 {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--gris-oscuro);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  margin-bottom: 16px;
+}
+
+.fl-col a {
+  display: block;
+  font-size: 13px;
+  color: var(--gris-medio);
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: color .15s;
+}
+
+.fl-col a:hover {
+  color: var(--rosa-pastel);
+  font-weight: 600;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-bottom p {
+  font-size: 12px;
+  color: var(--gris-medio);
+  line-height: 1.6;
+}
+
+.footer-bottom p strong {
+  color: var(--gris-oscuro);
+  font-weight: 700;
+}
+
+/* RESPONSIVE */
+@media(max-width: 860px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 60px 24px 50px; }
+  .procedimientos-section { padding: 60px 20px; }
+  .procedimientos-grid { grid-template-columns: 1fr; }
+  .modal-content { width: 95%; padding: 30px; }
+  .footer-inner { padding-left: 20px; padding-right: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">
+      <div class="nav-logo-ic">🔬</div>
+      <div>
+        <span>ISO/IEC 17025</span>
+        <small>Gestión de Laboratorios</small>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="/">← Volver</a>
+      <a class="nav-link" href="#procedimientos">📋 Procedimientos</a>
+    </div>
+    <a class="nav-pill" href="#">📥 Descargar Todo</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Banco de Procedimientos</div>
+    <h1>Procedimientos <em>Documentados ISO/IEC 17025</em></h1>
+    <p>Conjunto completo de 8 procedimientos clave para laboratorios de ensayo y calibración. Cada procedimiento incluye formatos, instructivos y guías de implementación.</p>
+    <button class="hero-btn" onclick="descargarTodos()">📥 Descargar Todo</button>
+  </div>
+</section>
+
+<!-- PROCEDIMIENTOS -->
+<section id="procedimientos" class="procedimientos-section">
+  <div class="section-eyebrow">Banco Completo</div>
+  <h2 class="section-title">Procedimientos <em>Clave</em></h2>
+  <p class="section-sub">8 procedimientos documentados con formatos editables, instructivos detallados y guías de implementación específicas para cada proceso crítico del laboratorio.</p>
+
+  <!-- FILTROS -->
+  <div class="filtros-container">
+    <button class="filtro-btn active" onclick="filtrarProcedimientos('todos')">📚 Todos</button>
+    <button class="filtro-btn" onclick="filtrarProcedimientos('tecnico')">🔧 Técnico</button>
+    <button class="filtro-btn" onclick="filtrarProcedimientos('calidad')">✓ Calidad</button>
+    <button class="filtro-btn" onclick="filtrarProcedimientos('metrologia')">📏 Metrología</button>
+  </div>
+
+  <!-- GRID DE PROCEDIMIENTOS -->
+  <div class="procedimientos-grid" id="procedimientosGrid">
+    <!-- PROCEDIMIENTO 1 -->
+    <div class="proc-card" data-categoria="tecnico" onclick="abrirModal(1)">
+      <div class="proc-header proc-color-1">
+        <div class="proc-header-left">
+          <div class="proc-num">Procedimiento 01</div>
+          <h3>Control de Calibración</h3>
+        </div>
+        <div class="proc-icon">🔧</div>
+      </div>
+      <div class="proc-body">
+        <p class="proc-description">Procedimiento para verificación y calibración periódica de equipos de medición con trazabilidad metrológica.</p>
+        <div class="proc-meta">
+          <span class="proc-tag">📄 Formato editado</span>
+          <span class="proc-tag">📋 Instructivo</span>
+          <span class="proc-tag">🔗 8.6.6 ISO</span>
+        </div>
+        <div class="proc-actions">
+          <button class="btn-action btn-ver">👁️ Ver</button>
+          <button class="btn-action btn-descargar" onclick="event.stopPropagation(); descargarProcedimiento(1)">📥 Descargar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROCEDIMIENTO 2 -->
+    <div class="proc-card" data-categoria="tecnico" onclick="abrirModal(2)">
+      <div class="proc-header proc-color-2">
+        <div class="proc-header-left">
+          <div class="proc-num">Procedimiento 02</div>
+          <h3>Gestión de Equipos de Medida</h3>
+        </div>
+        <div class="proc-icon">⚙️</div>
+      </div>
+      <div class="proc-body">
+        <p class="proc-description">Control, mantenimiento y registro de todos los equipos e instrumentos de medición del laboratorio.</p>
+        <div class="proc-meta">
+          <span class="proc-tag">📄 Formato editado</span>
+          <span class="proc-tag">✅ Matriz de control</span>
+          <span class="proc-tag">🔗 8.5 ISO</span>
+        </div>
+        <div class="proc-actions">
+          <button class="btn-action btn-ver">👁️ Ver</button>
+          <button class="btn-action btn-descargar" onclick="event.stopPropagation(); descargarProcedimiento(2)">📥 Descargar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROCEDIMIENTO 3 -->
+    <div class="proc-card" data-categoria="calidad" onclick="abrirModal(3)">
+      <div class="proc-header proc-color-3">
+        <div class="proc-header-left">
+          <div class="proc-num">Procedimiento 03</div>
+          <h3>Control de Cambios</h3>
+        </div>
+        <div class="proc-icon">📝</div>
+      </div>
+      <div class="proc-body">
+        <p class="proc-description">Procedimiento para evaluar, documentar y autorizar cambios en procesos, equipos o documentos críticos.</p>
+        <div class="proc-meta">
+          <span class="proc-tag">📄 Formato editado</span>
+          <span class="proc-tag">✓ Validación</span>
+          <span class="proc-tag">🔗 8.6 ISO</span>
+        </div>
+        <div class="proc-actions">
+          <button class="btn-action btn-ver">👁️ Ver</button>
+          <button class="btn-action btn-descargar" onclick="event.stopPropagation(); descargarProcedimiento(3)">📥 Descargar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROCEDIMIENTO 4 -->
+    <div class="proc-card" data-categoria="metrologia" onclick="abrirModal(4)">
+      <div class="proc-header proc-color-4">
+        <div class="proc-header-left">
+          <div class="proc-num">Procedimiento 04</div>
+          <h3>Trazabilidad Metrológica</h3>
+        </div>
+        <div class="proc-icon">🔗</div>
+      </div>
+      <div class="proc-body">
+        <p class="proc-description">Sistema de trazabilidad de mediciones hacia patrones nacionales e internacionales acreditados.</p>
+        <div class="proc-meta">
+          <span class="proc-tag">📄 Formato editado</span>
+          <span class="proc-tag">🔐 Trazabilidad</span>
+          <span class="proc-tag">🔗 8.6.5 ISO</span>
+        </div>
+        <div class="proc-actions">
+          <button class="btn-action btn-ver">👁️ Ver</button>
+          <button class="btn-action btn-descargar" onclick="event.stopPropagation(); descargarProcedimiento(4)">📥 Descargar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROCEDIMIENTO 5 -->
+    <div class="proc-card" data-categoria="metrologia" onclick="abrirModal(5)">
+      <div class="proc-header proc-color-5">
+        <div class="proc-header-left">
+          <div class="proc-num">Procedimiento 05</div>
+          <h3>Incertidumbre de Medición</h3>
+        </div>
+        <div class="proc-icon">📊</div>
+      </div>
+      <div class="proc-body">
+        <p class="proc-description">Evaluación, cálculo y documentación de la incertidumbre asociada a cada medición realizada.</p>
+        <div class="proc-meta">
+          <span class="proc-tag">📄 Formato editado</span>
+          <span class="proc-tag">📈 Cálculos</span>
+          <span class="proc-tag">🔗 8.6.4 ISO</span>
+        </div>
+        <div class="proc-actions">
+          <button class="btn-action btn-ver">👁️ Ver</button>
+          <button class="btn-action btn-descargar" onclick="event.stopPropagation(); descargarProcedimiento(5)">📥 Descargar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROCEDIMIENTO 6 -->
+    <div class="proc-card" data-categoria="calidad" onclick="abrirModal(6)">
+      <div class="proc-header proc-color-6">
+        <div class="proc-header-left">
+          <div class="proc-num">Procedimiento 06</div>
+          <h3>Control de Documentos</h3>
+        </div>
+        <div class="proc-icon">📑</div>
+      </div>
+      <div class="proc-body">
+        <p class="proc-description">Procedimiento para la elaboración, revisión, aprobación, distribución y archivo de documentos del sistema.</p>
+        <div class="proc-meta">
+          <span class="proc-tag">📄 Formato editado</span>
+          <span class="proc-tag">📋 Registro</span>
+          <span class="proc-tag">🔗 8.3.2 ISO</span>
+        </div>
+        <div class="proc-actions">
+          <button class="btn-action btn-ver">👁️ Ver</button>
+          <button class="btn-action btn-descargar" onclick="event.stopPropagation(); descargarProcedimiento(6)">📥 Descargar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROCEDIMIENTO 7 -->
+    <div class="proc-card" data-categoria="tecnico" onclick="abrirModal(7)">
+      <div class="proc-header proc-color-7">
+        <div class="proc-header-left">
+          <div class="proc-num">Procedimiento 07</div>
+          <h3>Muestreo y Manejo de Muestras</h3>
+        </div>
+        <div class="proc-icon">🧪</div>
+      </div>
+      <div class="proc-body">
+        <p class="proc-description">Procedimiento para recepción, identificación, almacenamiento y trazabilidad de muestras ensayadas.</p>
+        <div class="proc-meta">
+          <span class="proc-tag">📄 Formato editado</span>
+          <span class="proc-tag">🔐 Identificación</span>
+          <span class="proc-tag">🔗 8.4 ISO</span>
+        </div>
+        <div class="proc-actions">
+          <button class="btn-action btn-ver">👁️ Ver</button>
+          <button class="btn-action btn-descargar" onclick="event.stopPropagation(); descargarProcedimiento(7)">📥 Descargar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROCEDIMIENTO 8 -->
+    <div class="proc-card" data-categoria="calidad" onclick="abrirModal(8)">
+      <div class="proc-header proc-color-8">
+        <div class="proc-header-left">
+          <div class="proc-num">Procedimiento 08</div>
+          <h3>Auditoría Interna y Mejora</h3>
+        </div>
+        <div class="proc-icon">✓</div>
+      </div>
+      <div class="proc-body">
+        <p class="proc-description">Plan de auditorías internas periódicas para verificar conformidad y acciones de mejora continua.</p>
+        <div class="proc-meta">
+          <span class="proc-tag">📄 Formato editado</span>
+          <span class="proc-tag">📋 Checklist</span>
+          <span class="proc-tag">🔗 8.9 ISO</span>
+        </div>
+        <div class="proc-actions">
+          <button class="btn-action btn-ver">👁️ Ver</button>
+          <button class="btn-action btn-descargar" onclick="event.stopPropagation(); descargarProcedimiento(8)">📥 Descargar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODALES -->
+<!-- MODAL 1: Control de Calibración -->
+<div id="modal1" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>🔧 Control de Calibración</h2>
+      <button class="modal-close" onclick="cerrarModal(1)">×</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Objetivo:</strong> Establecer el procedimiento para la verificación y calibración periódica de todos los equipos de medición utilizados en el laboratorio, asegurando su confiabilidad y trazabilidad metrológica.</p>
+      
+      <h3>Alcance</h3>
+      <p>Este procedimiento aplica a todos los equipos e instrumentos de medición utilizados en los ensayos y calibraciones realizadas por el laboratorio.</p>
+
+      <h3>Responsabilidades</h3>
+      <ul>
+        <li>Técnico de Calidad: Definir frecuencias de calibración</li>
+        <li>Responsable de Equipos: Gestionar agenda de calibración</li>
+        <li>Laboratorista: Utilizar equipos conforme a procedimiento</li>
+        <li>Dirección: Aprobar recursos para calibración</li>
+      </ul>
+
+      <h3>Procedimiento</h3>
+      <ul>
+        <li>Inventario completo de equipos con características técnicas</li>
+        <li>Establecer frecuencia de calibración según fabricante</li>
+        <li>Envío a laboratorio acreditado (ONAC, INMETRO)</li>
+        <li>Documentación de certificados de calibración</li>
+        <li>Registro de fechas próximas de recalibración</li>
+        <li>Control de equipos fuera de calibración</li>
+      </ul>
+
+      <h3>Documentos Relacionados</h3>
+      <ul>
+        <li>Formato FT-01: Registro de Calibración de Equipos</li>
+        <li>Matriz de Equipos Críticos</li>
+        <li>Certificados de Laboratorios Acreditados</li>
+      </ul>
+
+      <div class="modal-footer">
+        <button class="modal-btn modal-btn-secondary" onclick="cerrarModal(1)">Cerrar</button>
+        <button class="modal-btn modal-btn-primary" onclick="descargarProcedimiento(1); cerrarModal(1)">📥 Descargar Formato</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 2: Gestión de Equipos de Medida -->
+<div id="modal2" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>⚙️ Gestión de Equipos de Medida</h2>
+      <button class="modal-close" onclick="cerrarModal(2)">×</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Objetivo:</strong> Asegurar que todos los equipos e instrumentos de medición sean apropiados, mantenidos adecuadamente y calibrados regularmente para garantizar resultados confiables.</p>
+      
+      <h3>Alcance</h3>
+      <p>Todos los equipos, instrumentos, dispositivos e instalaciones utilizados en el laboratorio que afecten los resultados de los ensayos.</p>
+
+      <h3>Disposiciones Previas</h3>
+      <ul>
+        <li>Selección de equipos acordes con requisitos de ensayo</li>
+        <li>Verificación de capacidad metrológica</li>
+        <li>Especificaciones técnicas documentadas</li>
+        <li>Procedimientos de instalación y uso</li>
+        <li>Planes de mantenimiento preventivo</li>
+      </ul>
+
+      <h3>Mantenimiento de Equipos</h3>
+      <ul>
+        <li>Programa de mantenimiento preventivo</li>
+        <li>Registro de mantenimientos realizados</li>
+        <li>Identificación clara de equipos</li>
+        <li>Condiciones ambientales apropiadas</li>
+        <li>Protección contra acceso no autorizado</li>
+      </ul>
+
+      <h3>Documentos Relacionados</h3>
+      <ul>
+        <li>Matriz de Equipos del Laboratorio</li>
+        <li>Formato FT-02: Mantenimiento de Equipos</li>
+        <li>Manuales Técnicos de Fabricantes</li>
+      </ul>
+
+      <div class="modal-footer">
+        <button class="modal-btn modal-btn-secondary" onclick="cerrarModal(2)">Cerrar</button>
+        <button class="modal-btn modal-btn-primary" onclick="descargarProcedimiento(2); cerrarModal(2)">📥 Descargar Formato</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 3: Control de Cambios -->
+<div id="modal3" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>📝 Control de Cambios</h2>
+      <button class="modal-close" onclick="cerrarModal(3)">×</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Objetivo:</strong> Establecer un procedimiento para evaluar, documentar, autorizar e implementar cualquier cambio que pueda afectar la conformidad con los requisitos ISO/IEC 17025.</p>
+      
+      <h3>Alcance</h3>
+      <p>Cambios en equipos, métodos, personal, instalaciones, software, documentos del sistema de calidad o cualquier aspecto que influya en la calidad de los resultados.</p>
+
+      <h3>Tipos de Cambios</h3>
+      <ul>
+        <li>Cambios en procesos técnicos</li>
+        <li>Cambios en equipos e instrumentos</li>
+        <li>Cambios en métodos de ensayo</li>
+        <li>Cambios en personal o responsabilidades</li>
+        <li>Cambios en documentación</li>
+      </ul>
+
+      <h3>Proceso de Control</h3>
+      <ul>
+        <li>Solicitud formal de cambio</li>
+        <li>Evaluación de impacto en calidad</li>
+        <li>Aprobación por Dirección</li>
+        <li>Plan de implementación</li>
+        <li>Validación del cambio</li>
+        <li>Comunicación a personal involucrado</li>
+      </ul>
+
+      <h3>Documentos Relacionados</h3>
+      <ul>
+        <li>Formato FT-03: Solicitud de Cambio</li>
+        <li>Formato FT-04: Evaluación de Impacto</li>
+        <li>Registro de Cambios Aprobados</li>
+      </ul>
+
+      <div class="modal-footer">
+        <button class="modal-btn modal-btn-secondary" onclick="cerrarModal(3)">Cerrar</button>
+        <button class="modal-btn modal-btn-primary" onclick="descargarProcedimiento(3); cerrarModal(3)">📥 Descargar Formato</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 4: Trazabilidad Metrológica -->
+<div id="modal4" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>🔗 Trazabilidad Metrológica</h2>
+      <button class="modal-close" onclick="cerrarModal(4)">×</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Objetivo:</strong> Asegurar que todos los resultados de medición sean trazables a patrones nacionales e internacionales, proporcionando confianza en la exactitud de las mediciones.</p>
+      
+      <h3>Alcance</h3>
+      <p>Todas las mediciones realizadas en el laboratorio deben ser trazables a estándares metrológicos reconocidos internacionalmente (SI).</p>
+
+      <h3>Cadena de Trazabilidad</h3>
+      <ul>
+        <li>Patrones internacionales (BIPM)</li>
+        <li>Patrones nacionales (ONAC, INMETRO)</li>
+        <li>Laboratorios acreditados</li>
+        <li>Equipos del laboratorio</li>
+        <li>Mediciones de clientes</li>
+      </ul>
+
+      <h3>Requisitos de Trazabilidad</h3>
+      <ul>
+        <li>Calibración en laboratorios acreditados</li>
+        <li>Certificados con incertidumbre de medición</li>
+        <li>Documentación de cadena de calibración</li>
+        <li>Comparaciones periódicas con patrones</li>
+        <li>Evaluación de aptitud entre laboratorios</li>
+      </ul>
+
+      <h3>Documentos Relacionados</h3>
+      <ul>
+        <li>Formato FT-05: Matriz de Trazabilidad</li>
+        <li>Certificados de Calibración</li>
+        <li>Registro de Comparativas Interlaboratorio</li>
+      </ul>
+
+      <div class="modal-footer">
+        <button class="modal-btn modal-btn-secondary" onclick="cerrarModal(4)">Cerrar</button>
+        <button class="modal-btn modal-btn-primary" onclick="descargarProcedimiento(4); cerrarModal(4)">📥 Descargar Formato</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 5: Incertidumbre de Medición -->
+<div id="modal5" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>📊 Incertidumbre de Medición</h2>
+      <button class="modal-close" onclick="cerrarModal(5)">×</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Objetivo:</strong> Establecer el procedimiento para evaluar y documentar la incertidumbre de medición asociada a todos los resultados de ensayos realizados.</p>
+      
+      <h3>Alcance</h3>
+      <p>Todos los resultados de ensayos y calibraciones deben estar acompañados de declaración de incertidumbre de medición.</p>
+
+      <h3>Fuentes de Incertidumbre</h3>
+      <ul>
+        <li>Incertidumbre de calibración de equipos</li>
+        <li>Resolución del instrumento</li>
+        <li>Variabilidad del método</li>
+        <li>Condiciones ambientales</li>
+        <li>Habilidad del operador</li>
+        <li>Incertidumbre de patrones</li>
+      </ul>
+
+      <h3>Evaluación de Incertidumbre</h3>
+      <ul>
+        <li>Identificar fuentes de incertidumbre</li>
+        <li>Evaluar componentes (tipo A y B)</li>
+        <li>Calcular incertidumbre combinada</li>
+        <li>Expandir con factor de cobertura (k=2)</li>
+        <li>Documentar en certificado</li>
+      </ul>
+
+      <h3>Documentos Relacionados</h3>
+      <ul>
+        <li>Formato FT-06: Cálculo de Incertidumbre</li>
+        <li>Guía ISO/IEC GUM</li>
+        <li>Plantilla Excel de Cálculos</li>
+      </ul>
+
+      <div class="modal-footer">
+        <button class="modal-btn modal-btn-secondary" onclick="cerrarModal(5)">Cerrar</button>
+        <button class="modal-btn modal-btn-primary" onclick="descargarProcedimiento(5); cerrarModal(5)">📥 Descargar Formato</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 6: Control de Documentos -->
+<div id="modal6" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>📑 Control de Documentos</h2>
+      <button class="modal-close" onclick="cerrarModal(6)">×</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Objetivo:</strong> Establecer el control de elaboración, revisión, aprobación, distribución, actualización y archivo de documentos del sistema de gestión de calidad.</p>
+      
+      <h3>Alcance</h3>
+      <p>Todos los documentos del sistema de calidad, incluyendo procedimientos, instructivos, formatos, manuales y cualquier documento que describa requisitos o actividades.</p>
+
+      <h3>Tipos de Documentos</h3>
+      <ul>
+        <li>Manual de Calidad</li>
+        <li>Procedimientos del sistema</li>
+        <li>Instructivos técnicos</li>
+        <li>Formatos y registros</li>
+        <li>Especificaciones técnicas</li>
+        <li>Documentos externos</li>
+      </ul>
+
+      <h3>Ciclo de vida del Documento</h3>
+      <ul>
+        <li>Elaboración y primer borrador</li>
+        <li>Revisión técnica</li>
+        <li>Aprobación por Dirección</li>
+        <li>Distribución controlada</li>
+        <li>Actualización periódica</li>
+        <li>Archivo de versiones anteriores</li>
+      </ul>
+
+      <h3>Documentos Relacionados</h3>
+      <ul>
+        <li>Formato FT-07: Control de Documentos</li>
+        <li>Registro de Versiones de Documentos</li>
+        <li>Lista Maestra de Documentos Vigentes</li>
+      </ul>
+
+      <div class="modal-footer">
+        <button class="modal-btn modal-btn-secondary" onclick="cerrarModal(6)">Cerrar</button>
+        <button class="modal-btn modal-btn-primary" onclick="descargarProcedimiento(6); cerrarModal(6)">📥 Descargar Formato</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 7: Muestreo y Manejo de Muestras -->
+<div id="modal7" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>🧪 Muestreo y Manejo de Muestras</h2>
+      <button class="modal-close" onclick="cerrarModal(7)">×</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Objetivo:</strong> Establecer un procedimiento para la recepción, identificación, almacenamiento, manipulación y trazabilidad de muestras durante el ensayo.</p>
+      
+      <h3>Alcance</h3>
+      <p>Aplicable a todas las muestras recibidas en el laboratorio para análisis, ensayos o calibración.</p>
+
+      <h3>Recepción de Muestras</h3>
+      <ul>
+        <li>Verificación de documentación de remisión</li>
+        <li>Inspección física de muestras</li>
+        <li>Registro en sistema de información</li>
+        <li>Asignación de código interno</li>
+        <li>Verificación de condiciones de transporte</li>
+      </ul>
+
+      <h3>Identificación y Almacenamiento</h3>
+      <ul>
+        <li>Etiquetado único de cada muestra</li>
+        <li>Condiciones de almacenamiento apropiadas</li>
+        <li>Temperatura y humedad controladas</li>
+        <li>Prevención de contaminación cruzada</li>
+        <li>Registro de localización</li>
+      </ul>
+
+      <h3>Documentos Relacionados</h3>
+      <ul>
+        <li>Formato FT-08: Registro de Muestras</li>
+        <li>Formato de Cadena de Custodia</li>
+        <li>Etiquetas de Identificación</li>
+      </ul>
+
+      <div class="modal-footer">
+        <button class="modal-btn modal-btn-secondary" onclick="cerrarModal(7)">Cerrar</button>
+        <button class="modal-btn modal-btn-primary" onclick="descargarProcedimiento(7); cerrarModal(7)">📥 Descargar Formato</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL 8: Auditoría Interna y Mejora -->
+<div id="modal8" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>✓ Auditoría Interna y Mejora</h2>
+      <button class="modal-close" onclick="cerrarModal(8)">×</button>
+    </div>
+    <div class="modal-body">
+      <p><strong>Objetivo:</strong> Establecer un programa de auditorías internas periódicas para verificar la conformidad del sistema con ISO/IEC 17025 e identificar oportunidades de mejora.</p>
+      
+      <h3>Alcance</h3>
+      <p>Todas las áreas, procesos y actividades del laboratorio que incidan en la calidad de los resultados.</p>
+
+      <h3>Planificación de Auditorías</h3>
+      <ul>
+        <li>Elaboración de programa anual de auditorías</li>
+        <li>Selección de áreas y procesos a auditar</li>
+        <li>Asignación de auditores internos</li>
+        <li>Definición de fechas de auditoría</li>
+        <li>Preparación de listas de verificación</li>
+      </ul>
+
+      <h3>Ejecución de Auditorías</h3>
+      <ul>
+        <li>Reunión de apertura con responsables</li>
+        <li>Recolección de evidencias</li>
+        <li>Evaluación de conformidad</li>
+        <li>Registro de hallazgos</li>
+        <li>Reunión de cierre y comunicación</li>
+      </ul>
+
+      <h3>Documentos Relacionados</h3>
+      <ul>
+        <li>Formato FT-09: Plan de Auditorías</li>
+        <li>Formato FT-10: Reporte de Auditoría</li>
+        <li>Checklist de Auditoría ISO/IEC 17025</li>
+      </ul>
+
+      <div class="modal-footer">
+        <button class="modal-btn modal-btn-secondary" onclick="cerrarModal(8)">Cerrar</button>
+        <button class="modal-btn modal-btn-primary" onclick="descargarProcedimiento(8); cerrarModal(8)">📥 Descargar Formato</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="fl" href="/">
+          <div class="fl-ic">🔬</div>
+          <span>ISO/IEC 17025</span>
+        </a>
+        <p>Banco de procedimientos documentados diseñado para facilitar la implementación y mantenimiento de sistemas de gestión de calidad en laboratorios de ensayo y calibración conforme a ISO/IEC 17025:2017.</p>
+      </div>
+      <div class="footer-links">
+        <div class="fl-col">
+          <h4>Procedimientos</h4>
+          <a href="#procedimientos">📋 Ver Todos</a>
+          <a href="#procedimientos">🔧 Control de Calibración</a>
+          <a href="#procedimientos">⚙️ Gestión de Equipos</a>
+        </div>
+        <div class="fl-col">
+          <h4>Recursos</h4>
+          <a href="/">← Volver al Inicio</a>
+          <a href="/">📚 Manual de Calidad</a>
+          <a href="/">🔍 Auditoría Interna</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Banco de <strong>8 procedimientos documentados</strong> conforme a ISO/IEC 17025:2017. Incluye formatos editables e instructivos completos.</p>
+      <p style="white-space: nowrap;">© 2025 🔬</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Variables globales
+let procedimientosData = [
+  {
+    id: 1,
+    nombre: "Control de Calibración",
+    categoria: "tecnico"
+  },
+  {
+    id: 2,
+    nombre: "Gestión de Equipos de Medida",
+    categoria: "tecnico"
+  },
+  {
+    id: 3,
+    nombre: "Control de Cambios",
+    categoria: "calidad"
+  },
+  {
+    id: 4,
+    nombre: "Trazabilidad Metrológica",
+    categoria: "metrologia"
+  },
+  {
+    id: 5,
+    nombre: "Incertidumbre de Medición",
+    categoria: "metrologia"
+  },
+  {
+    id: 6,
+    nombre: "Control de Documentos",
+    categoria: "calidad"
+  },
+  {
+    id: 7,
+    nombre: "Muestreo y Manejo de Muestras",
+    categoria: "tecnico"
+  },
+  {
+    id: 8,
+    nombre: "Auditoría Interna y Mejora",
+    categoria: "calidad"
+  }
+];
+
+// Función para abrir modal
+function abrirModal(numero) {
+  document.getElementById('modal' + numero).classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+// Función para cerrar modal
+function cerrarModal(numero) {
+  document.getElementById('modal' + numero).classList.remove('active');
+  document.body.style.overflow = 'auto';
+}
+
+// Cerrar modal al hacer clic fuera
+window.onclick = function(event) {
+  if (event.target.classList.contains('modal')) {
+    event.target.classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+}
+
+// Función para filtrar procedimientos
+function filtrarProcedimientos(categoria) {
+  const cards = document.querySelectorAll('.proc-card');
+  const filtros = document.querySelectorAll('.filtro-btn');
+  
+  // Actualizar botón activo
+  filtros.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  // Filtrar cards
+  cards.forEach(card => {
+    if (categoria === 'todos') {
+      card.style.display = 'flex';
+      card.style.flexDirection = 'column';
+    } else {
+      const cardCategoria = card.getAttribute('data-categoria');
+      if (cardCategoria === categoria) {
+        card.style.display = 'flex';
+        card.style.flexDirection = 'column';
+      } else {
+        card.style.display = 'none';
+      }
+    }
+  });
+}
+
+// Función para descargar procedimiento individual
+function descargarProcedimiento(numero) {
+  const proc = procedimientosData.find(p => p.id === numero);
+  alert('📥 Descargando: Procedimiento ' + numero + ' - ' + proc.nombre + '\n\nEn una aplicación real, esto descargaría un PDF con:\n- Formato editable\n- Instructivo completo\n- Guía de implementación');
+}
+
+// Función para descargar todos los procedimientos
+function descargarTodos() {
+  alert('📥 Preparando descarga de todos los procedimientos...\n\nEste paquete incluirá:\n✓ 8 Procedimientos documentados\n✓ Formatos editables (.docx)\n✓ Instructivos completos\n✓ Guías de implementación\n✓ Manual integrado');
+}
+</script>
+
+</body>
+</html>
