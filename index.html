@@ -832,6 +832,8 @@ footer {
 
   .wf-step {
     width: 25%;
+    transition: all 0.3s ease;
+    cursor: pointer;
   }
 
   /* CIRCULOS */
@@ -847,6 +849,45 @@ footer {
     font-size: 26px;
     margin: 0 auto 20px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    animation: float 4s ease-in-out infinite;
+  }
+
+  /* ANIMACION FLOTANTE */
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(0px); }
+  }
+
+  /* RETRASO BONITO */
+  .wf-step:nth-child(1) .wf-circle { animation-delay: 0s; }
+  .wf-step:nth-child(2) .wf-circle { animation-delay: 0.5s; }
+  .wf-step:nth-child(3) .wf-circle { animation-delay: 1s; }
+  .wf-step:nth-child(4) .wf-circle { animation-delay: 1.5s; }
+
+  /* HOVER */
+  .wf-step:hover .wf-circle {
+    transform: scale(1.15) translateY(-5px);
+    background: linear-gradient(135deg, #38a169, #63b3ed);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  }
+
+  .wf-step:hover h3 {
+    color: #38a169;
+  }
+
+  /* CLICK ACTIVO */
+  .wf-step.active .wf-circle {
+    background: linear-gradient(135deg, #f687b3, #9f7aea);
+    color: white;
+    transform: scale(1.2);
+  }
+
+  .wf-step.active h3 {
+    color: #f687b3;
   }
 
   .wf-step h3 {
@@ -889,25 +930,25 @@ footer {
 
     <div class="wf-steps">
 
-      <div class="wf-step">
+      <div class="wf-step" onclick="this.classList.toggle('active')">
         <div class="wf-circle">📊</div>
         <h3>1. Estudia la Infografía</h3>
         <p>Comprende los requisitos clave de la norma y lo que evaluará el auditor.</p>
       </div>
 
-      <div class="wf-step">
+      <div class="wf-step" onclick="this.classList.toggle('active')">
         <div class="wf-circle">❓</div>
         <h3>2. Autoevalúa tu sistema</h3>
         <p>Identifica brechas en tu sistema de gestión ISO 17025.</p>
       </div>
 
-      <div class="wf-step">
+      <div class="wf-step" onclick="this.classList.toggle('active')">
         <div class="wf-circle">✔️</div>
         <h3>3. Aplica el Checklist</h3>
         <p>Evalúa procesos, equipos y ensayos con listas de verificación.</p>
       </div>
 
-      <div class="wf-step">
+      <div class="wf-step" onclick="this.classList.toggle('active')">
         <div class="wf-circle">📄</div>
         <h3>4. Documenta y archiva</h3>
         <p>Genera evidencias para auditorías y acreditación.</p>
@@ -1122,7 +1163,7 @@ footer {
       </div>
     </div>
     <div class="footer-bottom">
-      <p>Plataforma para <strong>gestión de laboratorios de ensayo y calibración</strong> según ISO/IEC 17025:2017. Desarrollado para optimizar procesos de acreditación.</p>
+      <p>Plataforma para <strong>gestión de laboratorios de ensayo y calibración</strong> según ISO/IEC 17025:2017. Desarrollado por Q.F Rosa Narcisa León Bazan.</p>
       <p style="white-space: nowrap;">© 2025 🔬</p>
     </div>
   </div>
