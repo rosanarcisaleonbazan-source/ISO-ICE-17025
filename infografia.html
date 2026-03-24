@@ -813,93 +813,60 @@
 
 
 
-<!-- ═══════════════════════════════════════ -->
-<!-- BLOQUE RECURSOS — FLUJO HORIZONTAL -->
-<!-- ═══════════════════════════════════════ -->
+<!-- ===== BLOQUE 2: RECURSOS (ESTILO MINI CARDS HORIZONTAL) ===== -->
 
 <style>
 .recursos-flow{
   margin-top:40px;
-  padding:30px 10px;
-  background:#f9fcff;
-  overflow-x:auto;
 }
 
-.recursos-flow h2{
-  text-align:center;
-  margin-bottom:25px;
-  font-size:26px;
+.recursos-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:14px;
 }
 
-/* CONTENEDOR HORIZONTAL */
-.flow-container{
-  display:flex;
-  gap:15px;
-  align-items:stretch;
-  min-width:900px;
-}
-
-/* CADA BLOQUE */
-.flow-item{
-  flex:1;
-  background:white;
+.recurso-card{
   border-radius:16px;
-  padding:18px;
-  box-shadow:0 6px 15px rgba(0,0,0,0.06);
-  position:relative;
-  min-width:180px;
+  padding:16px;
+  text-align:center;
+  cursor:pointer;
+  transition:all .25s ease;
+  border:2px solid transparent;
 }
 
-/* FLECHA ENTRE BLOQUES */
-.flow-item::after{
-  content:"➜";
-  position:absolute;
-  right:-12px;
-  top:50%;
-  transform:translateY(-50%);
-  font-size:18px;
-  color:#bbb;
+.recurso-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 10px 25px rgba(0,0,0,0.1);
 }
 
-.flow-item:last-child::after{
-  display:none;
-}
-
-/* ICONO */
-.icono{
-  width:45px;
-  height:45px;
-  border-radius:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:20px;
-  margin-bottom:10px;
-}
-
-/* COLORES */
-.p1{background:#e6dcf5;}
-.p2{background:#d8f3dc;}
-.p3{background:#ffe5d9;}
-.p4{background:#dceefb;}
-.p5{background:#f7d9e3;}
-
-/* TEXTO */
-.flow-item h3{
-  font-size:14px;
-  margin:5px 0;
-}
-
-.flow-item p{
-  font-size:12px;
-  color:#555;
+.recurso-icon{
+  font-size:26px;
   margin-bottom:8px;
 }
 
-.check{
-  font-size:11px;
+.recurso-title{
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:4px;
+}
+
+.recurso-sub{
+  font-size:10px;
+  color:#666;
+}
+
+/* cajas de detalle */
+.recurso-detail{
+  margin-top:18px;
+  display:none;
+  background:white;
+  border-radius:16px;
+  padding:18px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.08);
+  font-size:13px;
   color:#444;
-  line-height:1.5;
+  line-height:1.6;
 }
 </style>
 
@@ -907,70 +874,91 @@
 
 <h2>Requisitos de Recursos (ISO 17025)</h2>
 
-<div class="flow-container">
+<!-- ===== MINI CARDS (FLUJO) ===== -->
+<div class="recursos-grid">
 
-  <!-- PERSONAL -->
-  <div class="flow-item">
-    <div class="icono p1">👩‍🔬</div>
-    <h3>Personal</h3>
-    <p>El laboratorio debe asegurar la competencia del personal.</p>
-    <div class="check">
-      ✔ Formación, experiencia<br>
-      ✔ Evaluación documentada<br>
-      ✔ Registros de capacitación
-    </div>
+  <div class="recurso-card" style="background:#f4effc;border-color:#e6dcf5;" onclick="showRecurso('r1')">
+    <div class="recurso-icon">👩‍🔬</div>
+    <div class="recurso-title">Personal</div>
+    <div class="recurso-sub">Competencia</div>
   </div>
 
-  <!-- INSTALACIONES -->
-  <div class="flow-item">
-    <div class="icono p2">🏢</div>
-    <h3>Instalaciones</h3>
-    <p>Condiciones controladas para evitar interferencias.</p>
-    <div class="check">
-      ✔ Control ambiental<br>
-      ✔ Separación de áreas<br>
-      ✔ Monitoreo
-    </div>
+  <div class="recurso-card" style="background:#edfdf1;border-color:#d8f3dc;" onclick="showRecurso('r2')">
+    <div class="recurso-icon">🏢</div>
+    <div class="recurso-title">Instalaciones</div>
+    <div class="recurso-sub">Condiciones</div>
   </div>
 
-  <!-- EQUIPOS -->
-  <div class="flow-item">
-    <div class="icono p3">⚙️</div>
-    <h3>Equipos</h3>
-    <p>Equipos calibrados y mantenidos.</p>
-    <div class="check">
-      ✔ Calibración<br>
-      ✔ Mantenimiento<br>
-      ✔ Identificación
-    </div>
+  <div class="recurso-card" style="background:#fff3ec;border-color:#ffe5d9;" onclick="showRecurso('r3')">
+    <div class="recurso-icon">⚙️</div>
+    <div class="recurso-title">Equipos</div>
+    <div class="recurso-sub">Calibración</div>
   </div>
 
-  <!-- TRAZABILIDAD -->
-  <div class="flow-item">
-    <div class="icono p4">📏</div>
-    <h3>Trazabilidad</h3>
-    <p>Resultados trazables al SI.</p>
-    <div class="check">
-      ✔ Certificados<br>
-      ✔ Relación SI<br>
-      ✔ Incertidumbre
-    </div>
+  <div class="recurso-card" style="background:#eef7ff;border-color:#dceefb;" onclick="showRecurso('r4')">
+    <div class="recurso-icon">📏</div>
+    <div class="recurso-title">Trazabilidad</div>
+    <div class="recurso-sub">Metrológica</div>
   </div>
 
-  <!-- PROVEEDORES -->
-  <div class="flow-item">
-    <div class="icono p5">📦</div>
-    <h3>Proveedores</h3>
-    <p>Control de servicios externos.</p>
-    <div class="check">
-      ✔ Evaluación<br>
-      ✔ Control insumos<br>
-      ✔ Registros
-    </div>
+  <div class="recurso-card" style="background:#fff0f5;border-color:#f7d9e3;" onclick="showRecurso('r5')">
+    <div class="recurso-icon">📦</div>
+    <div class="recurso-title">Proveedores</div>
+    <div class="recurso-sub">Control externo</div>
   </div>
 
 </div>
+
+<!-- ===== DETALLES ===== -->
+
+<div id="r1" class="recurso-detail">
+👩‍🔬 <strong>Personal</strong><br>
+El laboratorio debe asegurar la competencia del personal que influye en los resultados.<br><br>
+✔ Formación, experiencia y habilidades<br>
+✔ Evaluación y autorización documentada<br>
+✔ Registros de capacitación
 </div>
+
+<div id="r2" class="recurso-detail">
+🏢 <strong>Instalaciones</strong><br>
+Condiciones ambientales controladas para evitar contaminación o interferencias.<br><br>
+✔ Control de temperatura y humedad<br>
+✔ Separación de áreas<br>
+✔ Monitoreo ambiental
+</div>
+
+<div id="r3" class="recurso-detail">
+⚙️ <strong>Equipos</strong><br>
+Equipos calibrados, verificados y mantenidos para asegurar resultados confiables.<br><br>
+✔ Calibración periódica<br>
+✔ Mantenimiento preventivo<br>
+✔ Identificación única
+</div>
+
+<div id="r4" class="recurso-detail">
+📏 <strong>Trazabilidad metrológica</strong><br>
+Resultados trazables a patrones nacionales o internacionales.<br><br>
+✔ Certificados de calibración<br>
+✔ Relación con SI<br>
+✔ Evaluación de incertidumbre
+</div>
+
+<div id="r5" class="recurso-detail">
+📦 <strong>Proveedores externos</strong><br>
+Control de productos y servicios que afectan la calidad de resultados.<br><br>
+✔ Evaluación de proveedores<br>
+✔ Control de insumos<br>
+✔ Registros aprobados
+</div>
+
+</div>
+
+<script>
+function showRecurso(id){
+  document.querySelectorAll('.recurso-detail').forEach(el=>el.style.display='none');
+  document.getElementById(id).style.display='block';
+}
+</script>
 
 
 
