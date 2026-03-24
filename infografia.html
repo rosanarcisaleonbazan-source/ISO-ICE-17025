@@ -210,141 +210,146 @@ function toggleAcordeon(el){
 
 
 
-<!-- ===== BLOQUE 2: RECURSOS ISO 17025 (PRO) ===== -->
+<!-- ===== BLOQUE 2: RECURSOS ISO 17025 (ESTILO CARDS) ===== -->
 
 <style>
 .recursos-box{
-  background:linear-gradient(135deg,#d8f3dc,#dceefb);
-  padding:30px;
-  border-radius:20px;
-  margin-top:30px;
+  margin-top:40px;
 }
 
 .recursos-box h2{
   margin-bottom:20px;
 }
 
-.recurso{
+.grid-recursos{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.card-recurso{
   background:white;
-  border-radius:15px;
-  margin-bottom:15px;
-  padding:18px;
-  cursor:pointer;
-  transition:0.3s;
+  border-radius:16px;
+  padding:20px;
   box-shadow:0 6px 15px rgba(0,0,0,0.08);
+  transition:0.3s;
 }
 
-.recurso:hover{
-  transform:translateY(-4px);
+.card-recurso:hover{
+  transform:translateY(-5px);
 }
 
-.recurso h3{
-  margin:0;
+.icono{
+  width:45px;
+  height:45px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  margin-bottom:10px;
+}
+
+/* colores pastel por tarjeta */
+.p1{background:#e6dcf5;}
+.p2{background:#d8f3dc;}
+.p3{background:#ffe5d9;}
+.p4{background:#dceefb;}
+.p5{background:#f7d9e3;}
+
+.card-recurso h3{
+  margin:5px 0;
   font-size:16px;
 }
 
-.detalle{
-  display:none;
-  margin-top:12px;
-  font-size:14px;
+.card-recurso p{
+  font-size:13px;
   color:#555;
-  line-height:1.5;
-}
-
-.recurso.active .detalle{
-  display:block;
 }
 
 .check{
   margin-top:10px;
-  padding-left:15px;
+  font-size:12px;
+  color:#444;
 }
 </style>
 
-<div class="recursos-box">
+<div class="section recursos-box">
 
-  <h2>Requisitos de Recursos (ISO 17025 - Cláusula 6)</h2>
+<h2>Requisitos de Recursos (ISO 17025)</h2>
+
+<div class="grid-recursos">
 
   <!-- PERSONAL -->
-  <div class="recurso" onclick="this.classList.toggle('active')">
-    👩‍🔬 <h3>Personal</h3>
-    <div class="detalle">
-      El laboratorio debe contar con personal competente que influya en los resultados,
-      incluyendo analistas, técnicos y responsables de validación.
-
-      <div class="check">
-        ✔ Competencia demostrada (educación, experiencia, formación)<br>
-        ✔ Descripciones de cargo definidas<br>
-        ✔ Autorización formal para actividades específicas<br>
-        ✔ Registros de capacitación y evaluación<br>
-        ✔ Supervisión adecuada
-      </div>
+  <div class="card-recurso">
+    <div class="icono p1">👩‍🔬</div>
+    <h3>Personal</h3>
+    <p>
+      El laboratorio debe asegurar la competencia del personal que influye en los resultados.
+    </p>
+    <div class="check">
+      ✔ Formación, experiencia y habilidades<br>
+      ✔ Evaluación y autorización documentada<br>
+      ✔ Registros de capacitación
     </div>
   </div>
 
   <!-- INSTALACIONES -->
-  <div class="recurso" onclick="this.classList.toggle('active')">
-    🏢 <h3>Instalaciones y condiciones ambientales</h3>
-    <div class="detalle">
-      Las instalaciones deben ser adecuadas para evitar contaminación, interferencias
-      y condiciones que afecten la validez de los resultados.
-
-      <div class="check">
-        ✔ Control de temperatura, humedad y contaminación<br>
-        ✔ Separación de áreas (ensayo, almacenamiento, recepción)<br>
-        ✔ Condiciones monitoreadas y registradas<br>
-        ✔ Acceso controlado a áreas críticas
-      </div>
+  <div class="card-recurso">
+    <div class="icono p2">🏢</div>
+    <h3>Instalaciones</h3>
+    <p>
+      Condiciones ambientales controladas para evitar contaminación o interferencias.
+    </p>
+    <div class="check">
+      ✔ Control de temperatura y humedad<br>
+      ✔ Separación de áreas<br>
+      ✔ Monitoreo ambiental
     </div>
   </div>
 
   <!-- EQUIPOS -->
-  <div class="recurso" onclick="this.classList.toggle('active')">
-    ⚙️ <h3>Equipos</h3>
-    <div class="detalle">
-      Todos los equipos utilizados deben ser aptos para su propósito y mantenerse
-      en condiciones que aseguren resultados confiables.
-
-      <div class="check">
-        ✔ Calibración periódica<br>
-        ✔ Verificación antes de uso<br>
-        ✔ Mantenimiento preventivo<br>
-        ✔ Identificación única del equipo<br>
-        ✔ Registros de uso y fallas
-      </div>
+  <div class="card-recurso">
+    <div class="icono p3">⚙️</div>
+    <h3>Equipos</h3>
+    <p>
+      Equipos calibrados, verificados y mantenidos para asegurar resultados confiables.
+    </p>
+    <div class="check">
+      ✔ Calibración periódica<br>
+      ✔ Mantenimiento preventivo<br>
+      ✔ Identificación única
     </div>
   </div>
 
   <!-- TRAZABILIDAD -->
-  <div class="recurso" onclick="this.classList.toggle('active')">
-    📏 <h3>Trazabilidad metrológica</h3>
-    <div class="detalle">
-      Los resultados deben ser trazables a estándares nacionales o internacionales
-      mediante una cadena ininterrumpida de calibraciones.
-
-      <div class="check">
-        ✔ Uso de patrones certificados<br>
-        ✔ Certificados de calibración válidos<br>
-        ✔ Relación con unidades del SI<br>
-        ✔ Evaluación de incertidumbre de medición
-      </div>
+  <div class="card-recurso">
+    <div class="icono p4">📏</div>
+    <h3>Trazabilidad metrológica</h3>
+    <p>
+      Resultados trazables a patrones nacionales o internacionales.
+    </p>
+    <div class="check">
+      ✔ Certificados de calibración<br>
+      ✔ Relación con SI<br>
+      ✔ Evaluación de incertidumbre
     </div>
   </div>
 
   <!-- PROVEEDORES -->
-  <div class="recurso" onclick="this.classList.toggle('active')">
-    📦 <h3>Productos y servicios externos</h3>
-    <div class="detalle">
-      El laboratorio debe asegurar que los proveedores externos cumplan requisitos
-      de calidad para no afectar los resultados.
-
-      <div class="check">
-        ✔ Evaluación y selección de proveedores<br>
-        ✔ Control de insumos y reactivos<br>
-        ✔ Verificación de certificados<br>
-        ✔ Registro de proveedores aprobados
-      </div>
+  <div class="card-recurso">
+    <div class="icono p5">📦</div>
+    <h3>Proveedores externos</h3>
+    <p>
+      Control de productos y servicios que afectan la calidad de resultados.
+    </p>
+    <div class="check">
+      ✔ Evaluación de proveedores<br>
+      ✔ Control de insumos<br>
+      ✔ Registros aprobados
     </div>
   </div>
+
+</div>
 
 </div>
