@@ -811,62 +811,73 @@
 </body>
 </html>
 
+
+
 <!-- ═══════════════════════════════════════ -->
-<!-- BLOQUE RECURSOS — ESTILO HORIZONTAL PRO -->
+<!-- BLOQUE RECURSOS — FLUJO HORIZONTAL -->
 <!-- ═══════════════════════════════════════ -->
 
 <style>
-.recursos-pro{
+.recursos-flow{
   margin-top:40px;
-  padding:30px 20px;
+  padding:30px 10px;
   background:#f9fcff;
-  border-radius:20px;
+  overflow-x:auto;
 }
 
-.recursos-pro h2{
+.recursos-flow h2{
   text-align:center;
   margin-bottom:25px;
   font-size:26px;
 }
 
-/* CONTENEDOR VERTICAL */
-.recursos-list{
+/* CONTENEDOR HORIZONTAL */
+.flow-container{
   display:flex;
-  flex-direction:column;
-  gap:18px;
-  max-width:900px;
-  margin:auto;
+  gap:15px;
+  align-items:stretch;
+  min-width:900px;
 }
 
-/* FILA HORIZONTAL */
-.recurso-item{
-  display:flex;
-  gap:18px;
-  align-items:flex-start;
+/* CADA BLOQUE */
+.flow-item{
+  flex:1;
   background:white;
-  padding:18px;
   border-radius:16px;
+  padding:18px;
   box-shadow:0 6px 15px rgba(0,0,0,0.06);
-  transition:.3s;
+  position:relative;
+  min-width:180px;
 }
 
-.recurso-item:hover{
-  transform:translateY(-4px);
+/* FLECHA ENTRE BLOQUES */
+.flow-item::after{
+  content:"➜";
+  position:absolute;
+  right:-12px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:18px;
+  color:#bbb;
+}
+
+.flow-item:last-child::after{
+  display:none;
 }
 
 /* ICONO */
 .icono{
-  width:50px;
-  height:50px;
-  border-radius:14px;
+  width:45px;
+  height:45px;
+  border-radius:12px;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:22px;
-  flex-shrink:0;
+  font-size:20px;
+  margin-bottom:10px;
 }
 
-/* COLORES PASTEL */
+/* COLORES */
 .p1{background:#e6dcf5;}
 .p2{background:#d8f3dc;}
 .p3{background:#ffe5d9;}
@@ -874,104 +885,92 @@
 .p5{background:#f7d9e3;}
 
 /* TEXTO */
-.recurso-content h3{
-  margin:0;
-  font-size:16px;
+.flow-item h3{
+  font-size:14px;
+  margin:5px 0;
 }
 
-.recurso-content p{
-  font-size:13px;
-  color:#555;
-  margin:5px 0 8px;
-}
-
-/* CHECK LIST */
-.check{
+.flow-item p{
   font-size:12px;
+  color:#555;
+  margin-bottom:8px;
+}
+
+.check{
+  font-size:11px;
   color:#444;
-  line-height:1.6;
+  line-height:1.5;
 }
 </style>
 
-<div class="recursos-pro">
+<div class="recursos-flow">
 
 <h2>Requisitos de Recursos (ISO 17025)</h2>
 
-<div class="recursos-list">
+<div class="flow-container">
 
   <!-- PERSONAL -->
-  <div class="recurso-item">
+  <div class="flow-item">
     <div class="icono p1">👩‍🔬</div>
-    <div class="recurso-content">
-      <h3>Personal</h3>
-      <p>El laboratorio debe asegurar la competencia del personal que influye en los resultados.</p>
-      <div class="check">
-        ✔ Formación, experiencia y habilidades<br>
-        ✔ Evaluación y autorización documentada<br>
-        ✔ Registros de capacitación
-      </div>
+    <h3>Personal</h3>
+    <p>El laboratorio debe asegurar la competencia del personal.</p>
+    <div class="check">
+      ✔ Formación, experiencia<br>
+      ✔ Evaluación documentada<br>
+      ✔ Registros de capacitación
     </div>
   </div>
 
   <!-- INSTALACIONES -->
-  <div class="recurso-item">
+  <div class="flow-item">
     <div class="icono p2">🏢</div>
-    <div class="recurso-content">
-      <h3>Instalaciones</h3>
-      <p>Condiciones ambientales controladas para evitar contaminación o interferencias.</p>
-      <div class="check">
-        ✔ Control de temperatura y humedad<br>
-        ✔ Separación de áreas<br>
-        ✔ Monitoreo ambiental
-      </div>
+    <h3>Instalaciones</h3>
+    <p>Condiciones controladas para evitar interferencias.</p>
+    <div class="check">
+      ✔ Control ambiental<br>
+      ✔ Separación de áreas<br>
+      ✔ Monitoreo
     </div>
   </div>
 
   <!-- EQUIPOS -->
-  <div class="recurso-item">
+  <div class="flow-item">
     <div class="icono p3">⚙️</div>
-    <div class="recurso-content">
-      <h3>Equipos</h3>
-      <p>Equipos calibrados, verificados y mantenidos para asegurar resultados confiables.</p>
-      <div class="check">
-        ✔ Calibración periódica<br>
-        ✔ Mantenimiento preventivo<br>
-        ✔ Identificación única
-      </div>
+    <h3>Equipos</h3>
+    <p>Equipos calibrados y mantenidos.</p>
+    <div class="check">
+      ✔ Calibración<br>
+      ✔ Mantenimiento<br>
+      ✔ Identificación
     </div>
   </div>
 
   <!-- TRAZABILIDAD -->
-  <div class="recurso-item">
+  <div class="flow-item">
     <div class="icono p4">📏</div>
-    <div class="recurso-content">
-      <h3>Trazabilidad metrológica</h3>
-      <p>Resultados trazables a patrones nacionales o internacionales.</p>
-      <div class="check">
-        ✔ Certificados de calibración<br>
-        ✔ Relación con SI<br>
-        ✔ Evaluación de incertidumbre
-      </div>
+    <h3>Trazabilidad</h3>
+    <p>Resultados trazables al SI.</p>
+    <div class="check">
+      ✔ Certificados<br>
+      ✔ Relación SI<br>
+      ✔ Incertidumbre
     </div>
   </div>
 
   <!-- PROVEEDORES -->
-  <div class="recurso-item">
+  <div class="flow-item">
     <div class="icono p5">📦</div>
-    <div class="recurso-content">
-      <h3>Proveedores externos</h3>
-      <p>Control de productos y servicios que afectan la calidad de resultados.</p>
-      <div class="check">
-        ✔ Evaluación de proveedores<br>
-        ✔ Control de insumos<br>
-        ✔ Registros aprobados
-      </div>
+    <h3>Proveedores</h3>
+    <p>Control de servicios externos.</p>
+    <div class="check">
+      ✔ Evaluación<br>
+      ✔ Control insumos<br>
+      ✔ Registros
     </div>
   </div>
 
 </div>
 </div>
-
 
 
 
