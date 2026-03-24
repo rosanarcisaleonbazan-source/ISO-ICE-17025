@@ -813,158 +813,88 @@
 
 
 
-<!-- ===== BLOQUE 2: RECURSOS (ESTILO MINI CARDS HORIZONTAL) ===== -->
 
-<style>
-.recursos-flow{
-  margin-top:40px;
-}
+<!-- SUB-BLOQUE VISUAL TIPO FLUJO -->
+<div style="margin-top:24px;background:#fff;border-radius:20px;border:2px solid var(--border);padding:24px;box-shadow:var(--shadow);">
 
-.recursos-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:14px;
-}
-
-.recurso-card{
-  border-radius:16px;
-  padding:16px;
-  text-align:center;
-  cursor:pointer;
-  transition:all .25s ease;
-  border:2px solid transparent;
-}
-
-.recurso-card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 10px 25px rgba(0,0,0,0.1);
-}
-
-.recurso-icon{
-  font-size:26px;
-  margin-bottom:8px;
-}
-
-.recurso-title{
-  font-size:12px;
-  font-weight:800;
-  margin-bottom:4px;
-}
-
-.recurso-sub{
-  font-size:10px;
-  color:#666;
-}
-
-/* cajas de detalle */
-.recurso-detail{
-  margin-top:18px;
-  display:none;
-  background:white;
-  border-radius:16px;
-  padding:18px;
-  box-shadow:0 6px 15px rgba(0,0,0,0.08);
-  font-size:13px;
-  color:#444;
-  line-height:1.6;
-}
-</style>
-
-<div class="recursos-flow">
-
-<h2>Requisitos de Recursos (ISO 17025)</h2>
-
-<!-- ===== MINI CARDS (FLUJO) ===== -->
-<div class="recursos-grid">
-
-  <div class="recurso-card" style="background:#f4effc;border-color:#e6dcf5;" onclick="showRecurso('r1')">
-    <div class="recurso-icon">👩‍🔬</div>
-    <div class="recurso-title">Personal</div>
-    <div class="recurso-sub">Competencia</div>
+  <div style="font-size:16px;font-weight:800;margin-bottom:18px;">
+    🔄 Flujo de Recursos del Laboratorio
   </div>
 
-  <div class="recurso-card" style="background:#edfdf1;border-color:#d8f3dc;" onclick="showRecurso('r2')">
-    <div class="recurso-icon">🏢</div>
-    <div class="recurso-title">Instalaciones</div>
-    <div class="recurso-sub">Condiciones</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;align-items:stretch;">
+
+    <!-- PERSONAL -->
+    <div style="background:#f5feff;border:2px solid #D6F9FF;border-radius:16px;padding:16px;">
+      <div style="font-size:22px;margin-bottom:6px;">👩‍🔬</div>
+      <div style="font-weight:800;font-size:13px;margin-bottom:5px;">Personal</div>
+      <div style="font-size:11px;color:#555;line-height:1.4;">
+        Competencia del personal que impacta resultados.
+      </div>
+      <div style="font-size:11px;margin-top:6px;color:#444;">
+        ✔ Formación y experiencia<br>
+        ✔ Autorización documentada<br>
+        ✔ Registros de capacitación
+      </div>
+    </div>
+
+    <!-- INSTALACIONES -->
+    <div style="background:#f5fff8;border:2px solid #D6FFE4;border-radius:16px;padding:16px;">
+      <div style="font-size:22px;margin-bottom:6px;">🏢</div>
+      <div style="font-weight:800;font-size:13px;margin-bottom:5px;">Instalaciones</div>
+      <div style="font-size:11px;color:#555;line-height:1.4;">
+        Condiciones controladas para evitar interferencias.
+      </div>
+      <div style="font-size:11px;margin-top:6px;color:#444;">
+        ✔ Control ambiental<br>
+        ✔ Separación de áreas<br>
+        ✔ Monitoreo continuo
+      </div>
+    </div>
+
+    <!-- EQUIPOS -->
+    <div style="background:#fff5f5;border:2px solid #FFE8D6;border-radius:16px;padding:16px;">
+      <div style="font-size:22px;margin-bottom:6px;">⚙️</div>
+      <div style="font-weight:800;font-size:13px;margin-bottom:5px;">Equipos</div>
+      <div style="font-size:11px;color:#555;line-height:1.4;">
+        Equipos confiables para resultados válidos.
+      </div>
+      <div style="font-size:11px;margin-top:6px;color:#444;">
+        ✔ Calibración<br>
+        ✔ Mantenimiento<br>
+        ✔ Identificación única
+      </div>
+    </div>
+
+    <!-- TRAZABILIDAD -->
+    <div style="background:#f5f9ff;border:2px solid #D6EAFF;border-radius:16px;padding:16px;">
+      <div style="font-size:22px;margin-bottom:6px;">📏</div>
+      <div style="font-weight:800;font-size:13px;margin-bottom:5px;">Trazabilidad</div>
+      <div style="font-size:11px;color:#555;line-height:1.4;">
+        Resultados vinculados al SI.
+      </div>
+      <div style="font-size:11px;margin-top:6px;color:#444;">
+        ✔ Certificados<br>
+        ✔ Relación con SI<br>
+        ✔ Incertidumbre
+      </div>
+    </div>
+
+    <!-- PROVEEDORES -->
+    <div style="background:#fdf9ff;border:2px solid #EDD6FF;border-radius:16px;padding:16px;">
+      <div style="font-size:22px;margin-bottom:6px;">📦</div>
+      <div style="font-weight:800;font-size:13px;margin-bottom:5px;">Proveedores</div>
+      <div style="font-size:11px;color:#555;line-height:1.4;">
+        Control de insumos y servicios externos.
+      </div>
+      <div style="font-size:11px;margin-top:6px;color:#444;">
+        ✔ Evaluación<br>
+        ✔ Control de insumos<br>
+        ✔ Lista aprobada
+      </div>
+    </div>
+
   </div>
-
-  <div class="recurso-card" style="background:#fff3ec;border-color:#ffe5d9;" onclick="showRecurso('r3')">
-    <div class="recurso-icon">⚙️</div>
-    <div class="recurso-title">Equipos</div>
-    <div class="recurso-sub">Calibración</div>
-  </div>
-
-  <div class="recurso-card" style="background:#eef7ff;border-color:#dceefb;" onclick="showRecurso('r4')">
-    <div class="recurso-icon">📏</div>
-    <div class="recurso-title">Trazabilidad</div>
-    <div class="recurso-sub">Metrológica</div>
-  </div>
-
-  <div class="recurso-card" style="background:#fff0f5;border-color:#f7d9e3;" onclick="showRecurso('r5')">
-    <div class="recurso-icon">📦</div>
-    <div class="recurso-title">Proveedores</div>
-    <div class="recurso-sub">Control externo</div>
-  </div>
-
 </div>
-
-<!-- ===== DETALLES ===== -->
-
-<div id="r1" class="recurso-detail">
-👩‍🔬 <strong>Personal</strong><br>
-El laboratorio debe asegurar la competencia del personal que influye en los resultados.<br><br>
-✔ Formación, experiencia y habilidades<br>
-✔ Evaluación y autorización documentada<br>
-✔ Registros de capacitación
-</div>
-
-<div id="r2" class="recurso-detail">
-🏢 <strong>Instalaciones</strong><br>
-Condiciones ambientales controladas para evitar contaminación o interferencias.<br><br>
-✔ Control de temperatura y humedad<br>
-✔ Separación de áreas<br>
-✔ Monitoreo ambiental
-</div>
-
-<div id="r3" class="recurso-detail">
-⚙️ <strong>Equipos</strong><br>
-Equipos calibrados, verificados y mantenidos para asegurar resultados confiables.<br><br>
-✔ Calibración periódica<br>
-✔ Mantenimiento preventivo<br>
-✔ Identificación única
-</div>
-
-<div id="r4" class="recurso-detail">
-📏 <strong>Trazabilidad metrológica</strong><br>
-Resultados trazables a patrones nacionales o internacionales.<br><br>
-✔ Certificados de calibración<br>
-✔ Relación con SI<br>
-✔ Evaluación de incertidumbre
-</div>
-
-<div id="r5" class="recurso-detail">
-📦 <strong>Proveedores externos</strong><br>
-Control de productos y servicios que afectan la calidad de resultados.<br><br>
-✔ Evaluación de proveedores<br>
-✔ Control de insumos<br>
-✔ Registros aprobados
-</div>
-
-</div>
-
-<script>
-function showRecurso(id){
-  document.querySelectorAll('.recurso-detail').forEach(el=>el.style.display='none');
-  document.getElementById(id).style.display='block';
-}
-</script>
-
-
-
-
-
-
 
 
 
