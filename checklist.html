@@ -1,222 +1,230 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Auditoría Interna ISO/IEC 17025:2017</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #1e40af; --primary-light: #dbeafe; --secondary: #3b82f6;
-            --success: #15803d; --success-light: #dcfce7;
-            --danger: #b91c1c; --danger-light: #fee2e2;
-            --warning: #a16207; --warning-light: #fef9c3;
-            --gray-bg: #f8fafc; --gray-border: #e2e8f0; --text-main: #1e293b;
-            --font: 'Plus Jakarta Sans', sans-serif;
-        }
+import React, { useState, useCallback } from "react";
 
-        body { font-family: var(--font); background: var(--gray-bg); color: var(--text-main); margin: 0; padding: 0; }
-        .action-bar { background: var(--primary); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        .ab-title { color: white; font-weight: 700; font-size: 14px; }
-        .ab-btns { display: flex; gap: 10px; }
-        .btn { padding: 8px 16px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; font-size: 12px; transition: 0.2s; }
-        .btn-white { background: white; color: var(--primary); }
-        .btn-danger { background: #ef4444; color: white; }
+// --- TIPOS ---
+type Answer = "C" | "N" | "NA" | null;
 
-        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
-        
-        /* Header Card */
-        .hdr-card { background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); border-radius: 20px; padding: 40px; color: white; margin-bottom: 25px; box-shadow: 0 10px 25px -5px rgba(30, 64, 175, 0.3); }
-        .hdr-card h1 { margin: 0; font-size: 28px; font-weight: 800; }
-        .hdr-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; }
-        .stat-item { text-align: center; }
-        .stat-val { display: block; font-size: 22px; font-weight: 800; color: #60a5fa; }
-        .stat-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; opacity: 0.8; }
+interface Criterio {
+  id: string;
+  icon: string;
+  title: string;
+  hint: string;
+}
 
-        /* Progress Circle */
-        .score-panel { background: white; border-radius: 16px; padding: 25px; display: flex; align-items: center; gap: 30px; margin-bottom: 25px; border: 1px solid var(--gray-border); }
-        .progress-ring { position: relative; width: 100px; height: 100px; }
-        .progress-ring svg { transform: rotate(-90deg); width: 100px; height: 100px; }
-        .ring-bg { fill: none; stroke: var(--gray-border); stroke-width: 8; }
-        .ring-fill { fill: none; stroke: var(--success); stroke-width: 8; stroke-dasharray: 283; stroke-dashoffset: 283; transition: 0.5s; stroke-linecap: round; }
-        .percentage { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-weight: 800; font-size: 20px; }
+interface Section {
+  key: string;
+  clause: string;
+  label: string;
+  bg: string;
+  accent: string;
+  textColor: string;
+  criterios: Criterio[];
+}
 
-        /* Checklist Items */
-        .section-title { font-size: 14px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1.5px; margin: 30px 0 15px; display: flex; align-items: center; gap: 10px; }
-        .section-title::after { content: ""; flex: 1; height: 1px; background: var(--gray-border); }
+interface FormData {
+  laboratorio: string;
+  codigo: string;
+  ciudad: string;
+  acreditacion: string;
+  alcance: string;
+  ciclo: string;
+  fecha: string;
+  auditor: string;
+  cargo: string;
+  obsGeneral: string;
+  obsNc: string;
+  obsPlan: string;
+  proxima: string;
+  firma: string;
+  revisor: string;
+}
 
-        .check-item { background: white; border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; border: 1px solid var(--gray-border); display: flex; justify-content: space-between; align-items: center; transition: 0.2s; }
-        .check-item:hover { border-color: var(--secondary); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .item-info { flex: 1; padding-right: 20px; }
-        .item-req { font-size: 11px; font-weight: 700; color: var(--secondary); margin-bottom: 4px; display: block; }
-        .item-text { font-size: 14px; font-weight: 600; color: var(--text-main); line-height: 1.4; }
-        
-        .btn-group { display: flex; gap: 6px; }
-        .opt-btn { padding: 8px 12px; border-radius: 6px; border: 1.5px solid var(--gray-border); background: white; font-size: 11px; font-weight: 700; cursor: pointer; transition: 0.2s; min-width: 65px; }
-        
-        /* Interactive States */
-        .opt-btn.active-C { background: var(--success-light); border-color: var(--success); color: var(--success); }
-        .opt-btn.active-NC { background: var(--danger-light); border-color: var(--danger); color: var(--danger); }
-        .opt-btn.active-NA { background: #f1f5f9; border-color: #94a3b8; color: #475569; }
+// --- DATOS DE LA NORMA ---
+const SECTIONS: Section[] = [
+  {
+    key: "s4",
+    clause: "Cláusula 4",
+    label: "Requisitos Generales",
+    bg: "#fce4ec",
+    accent: "#f06292",
+    textColor: "#880e4f",
+    criterios: [
+      { id: "4.1.1", icon: "⚖️", title: "Compromiso con la imparcialidad", hint: "Declaración documentada accesible al público." },
+      { id: "4.1.2", icon: "🔎", title: "Gestión de riesgos de imparcialidad", hint: "Identificación de presiones comerciales o financieras." },
+      { id: "4.2.1", icon: "🔒", title: "Confidencialidad de la información", hint: "Acuerdos firmados por el personal y terceros." },
+    ],
+  },
+  {
+    key: "s5",
+    clause: "Cláusula 5",
+    label: "Requisitos Estructurales",
+    bg: "#f3e5f5",
+    accent: "#ab47bc",
+    textColor: "#4a148c",
+    criterios: [
+      { id: "5.1", icon: "🏢", title: "Entidad legalmente responsable", hint: "Documentación legal y representación definida." },
+      { id: "5.3", icon: "👔", title: "Estructura organizacional", hint: "Organigrama y responsabilidades técnicas asignadas." },
+    ],
+  },
+  {
+    key: "s6",
+    clause: "Cláusula 6",
+    label: "Requisitos de Recursos",
+    bg: "#e8f5e9",
+    accent: "#66bb6a",
+    textColor: "#1b5e20",
+    criterios: [
+      { id: "6.2.1", icon: "👩‍🔬", title: "Competencia del personal", hint: "Registros de educación, formación y habilidades." },
+      { id: "6.3.1", icon: "🏗️", title: "Instalaciones adecuadas", hint: "Control de condiciones ambientales (T°, humedad)." },
+      { id: "6.4.1", icon: "🔬", title: "Equipamiento calibrado", hint: "Programa de mantenimiento y calibración vigente." },
+    ],
+  },
+  {
+    key: "s7",
+    clause: "Cláusula 7",
+    label: "Requisitos del Proceso",
+    bg: "#e3f2fd",
+    accent: "#42a5f5",
+    textColor: "#0d47a1",
+    criterios: [
+      { id: "7.1.1", icon: "📝", title: "Revisión de solicitudes", hint: "Verificación de capacidad antes de aceptar trabajos." },
+      { id: "7.5.1", icon: "💾", title: "Registros técnicos", hint: "Datos suficientes para asegurar la trazabilidad." },
+      { id: "7.11.1", icon: "💻", title: "Control de software LIMS", hint: "Validación de sistemas informáticos de datos." },
+    ],
+  },
+  {
+    key: "s8",
+    clause: "Cláusula 8",
+    label: "Sistema de Gestión",
+    bg: "#fff8e1",
+    accent: "#ffa726",
+    textColor: "#e65100",
+    criterios: [
+      { id: "8.5.1", icon: "🔮", title: "Riesgos y Oportunidades", hint: "Acciones para prevenir resultados no deseados." },
+      { id: "8.8.1", icon: "🔍", title: "Auditorías Internas", hint: "Programa planificado y auditores independientes." },
+    ],
+  },
+];
 
-        .obs-area { margin-top: 10px; width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--gray-border); font-family: var(--font); font-size: 13px; resize: vertical; display: none; }
+// --- COMPONENTES AUXILIARES ---
 
-        @media print { .action-bar { display: none; } .container { margin: 0; max-width: 100%; } }
-    </style>
-</head>
-<body>
+function ScoreCircle({ pct }: { pct: number | null }) {
+  const r = 50;
+  const circ = 2 * Math.PI * r;
+  const offset = pct === null ? circ : circ - (pct / 100) * circ;
+  const color = pct === null ? "#e0e0e0" : pct >= 85 ? "#66bb6a" : pct >= 65 ? "#42a5f5" : pct >= 40 ? "#ffa726" : "#ef9a9a";
 
-<div class="action-bar">
-    <div class="ab-title">LABORATORIO: AUDITORÍA INTERNA ISO 17025</div>
-    <div class="ab-btns">
-        <button class="btn btn-danger" onclick="resetForm()">Reiniciar</button>
-        <button class="btn btn-white" onclick="window.print()">Guardar PDF / Imprimir</button>
+  return (
+    <div className="relative w-28 h-28 shrink-0">
+      <svg viewBox="0 0 120 120" className="w-28 h-28 -rotate-90">
+        <circle cx="60" cy="60" r={r} fill="none" stroke="#f3f4f6" strokeWidth="10" />
+        <circle cx="60" cy="60" r={r} fill="none" stroke={color} strokeWidth="10" strokeLinecap="round" strokeDasharray={circ} strokeDashoffset={offset} style={{ transition: "all 0.6s ease" }} />
+      </svg>
+      <div className="absolute inset-0 flex flex-col items-center justify-center">
+        <span className="text-2xl font-extrabold" style={{ color: pct === null ? "#bdbdbd" : color }}>{pct === null ? "—" : `${pct}%`}</span>
+        <span className="text-[9px] text-gray-400 font-bold uppercase">Meta</span>
+      </div>
     </div>
-</div>
+  );
+}
 
-<div class="container">
-    <div class="hdr-card">
-        <h1>Checklist de Auditoría Interna</h1>
-        <p style="opacity: 0.9; font-size: 14px; margin-top: 8px;">Requisitos para la competencia de laboratorios de ensayo y calibración.</p>
-        
-        <div class="hdr-stats">
-            <div class="stat-item"><span class="stat-val" id="stat-total">0</span><span class="stat-lbl">Requisitos</span></div>
-            <div class="stat-item"><span class="stat-val" id="stat-c">0</span><span class="stat-lbl">Conforme</span></div>
-            <div class="stat-item"><span class="stat-val" id="stat-nc">0</span><span class="stat-lbl">No Conforme</span></div>
-            <div class="stat-item"><span class="stat-val" id="stat-na">0</span><span class="stat-lbl">N/A</span></div>
-        </div>
+function CheckItem({ criterio, answer, onAnswer }: { criterio: Criterio; answer: Answer; onAnswer: (id: string, val: Answer) => void; }) {
+  const isActive = (val: Answer) => answer === val;
+  return (
+    <div className="bg-white rounded-xl mb-3 border border-gray-100 shadow-sm p-4 flex flex-col md:flex-row gap-4 items-center">
+      <div className="w-12 h-12 rounded-lg flex items-center justify-center text-xs font-bold" style={{ background: "#f8f9fa", border: "1px solid #eee" }}>
+        {criterio.id}
+      </div>
+      <div className="flex-1 text-center md:text-left">
+        <h4 className="text-sm font-bold text-gray-800">{criterio.icon} {criterio.title}</h4>
+        <p className="text-[11px] text-gray-400 italic">{criterio.hint}</p>
+      </div>
+      <div className="flex gap-2">
+        {(["C", "N", "NA"] as const).map((val) => (
+          <button
+            key={val}
+            onClick={() => onAnswer(criterio.id, val)}
+            className={`px-3 py-1.5 rounded-lg text-[10px] font-bold border transition-all ${isActive(val) ? 'scale-105 shadow-md' : 'opacity-60'}`}
+            style={isActive(val) 
+                ? { background: val === "C" ? "#e8f5e9" : val === "N" ? "#ffebee" : "#f3e5f5", borderColor: val === "C" ? "#66bb6a" : val === "N" ? "#ef9a9a" : "#ce93d8", color: "#333" }
+                : { background: "#fff", borderColor: "#ddd", color: "#999" }}
+          >
+            {val === "C" ? "✅ C" : val === "N" ? "❌ N" : "— NA"}
+          </button>
+        ))}
+      </div>
     </div>
+  );
+}
 
-    <div class="score-panel">
-        <div class="progress-ring">
-            <svg>
-                <circle class="ring-bg" cx="50" cy="50" r="45"></circle>
-                <circle id="ring-fill" class="ring-fill" cx="50" cy="50" r="45"></circle>
-            </svg>
-            <div class="percentage" id="perc-val">0%</div>
+// --- COMPONENTE PRINCIPAL ---
+
+export default function ChecklistISO17025() {
+  const [answers, setAnswers] = useState<Record<string, Answer>>({});
+  
+  const handleAnswer = useCallback((id: string, val: Answer) => {
+    setAnswers((prev) => ({ ...prev, [id]: val }));
+  }, []);
+
+  const handleReset = () => { if (confirm("¿Reiniciar Checklist?")) setAnswers({}); };
+
+  const totalCriterios = SECTIONS.flatMap(s => s.criterios).length;
+  const cumple = Object.values(answers).filter(v => v === "C").length;
+  const na = Object.values(answers).filter(v => v === "NA").length;
+  const aplicables = totalCriterios - na;
+  const porcentaje = aplicables > 0 ? Math.round((cumple / aplicables) * 100) : 0;
+
+  return (
+    <div className="min-h-screen bg-gray-50 p-4 md:p-8" style={{ fontFamily: "'Salsa', cursive" }}>
+      <link href="https://fonts.googleapis.com/css2?family=Salsa&display=swap" rel="stylesheet" />
+      
+      {/* Header Estilo Card */}
+      <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border-2 border-purple-100 overflow-hidden mb-8">
+        <div className="bg-gradient-to-r from-purple-100 to-blue-50 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <span className="bg-purple-600 text-white px-4 py-1 rounded-full text-xs font-bold mb-2 inline-block">ISO/IEC 17025:2017</span>
+            <h1 className="text-3xl font-black text-purple-900">Auditoría de Calidad</h1>
+            <p className="text-purple-700 opacity-70">Sistema de Evaluación de Laboratorios</p>
+          </div>
+          <ScoreCircle pct={porcentaje} />
         </div>
-        <div>
-            <h3 style="margin: 0; font-size: 18px;">Nivel de Cumplimiento Global</h3>
-            <p style="color: #64748b; font-size: 13px; margin: 5px 0 0;">Basado en requisitos aplicables evaluados.</p>
+
+        {/* Botones de Acción */}
+        <div className="p-4 border-t flex justify-end gap-3 bg-white/50">
+            <button onClick={handleReset} className="px-5 py-2 rounded-xl text-xs font-bold bg-red-50 text-red-600 border border-red-200">🔄 Reiniciar</button>
+            <button onClick={() => window.print()} className="px-5 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-lg">🖨️ Exportar PDF</button>
         </div>
+      </div>
+
+      {/* Secciones del Checklist */}
+      <div className="max-w-4xl mx-auto space-y-8">
+        {SECTIONS.map((section) => (
+          <div key={section.key} className="rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+            <div className="p-4 flex items-center justify-between" style={{ background: section.bg }}>
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-widest opacity-60">{section.clause}</span>
+                <h3 className="text-lg font-bold" style={{ color: section.textColor }}>{section.label}</h3>
+              </div>
+              <div className="bg-white/40 px-3 py-1 rounded-full text-xs font-bold">
+                {section.criterios.length} Ítems
+              </div>
+            </div>
+            <div className="p-4 bg-white/30 backdrop-blur-sm">
+              {section.criterios.map((c) => (
+                <CheckItem 
+                  key={c.id} 
+                  criterio={c} 
+                  answer={answers[c.id] || null} 
+                  onAnswer={handleAnswer} 
+                />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      <footer className="text-center mt-12 text-gray-400 text-xs">
+        Hecho con ❤️ para la gestión de laboratorios acreditados.
+      </footer>
     </div>
-
-    <div id="checklist-content">
-        </div>
-</div>
-
-<script>
-    const DATA = [
-        { 
-            section: "4. Requisitos Generales", 
-            items: [
-                { req: "4.1", txt: "¿Se realizan las actividades de laboratorio de forma imparcial?" },
-                { req: "4.1.4", txt: "¿Se identifican los riesgos a la imparcialidad de forma continua?" },
-                { req: "4.2", txt: "¿Existe un compromiso legal ejecutable sobre la confidencialidad de la información?" }
-            ]
-        },
-        { 
-            section: "5. Requisitos Estructurales", 
-            items: [
-                { req: "5.3", txt: "¿Se ha definido el alcance de las actividades para las cuales se cumple con la norma?" },
-                { req: "5.5", txt: "¿Se cuenta con personal que tenga autoridad y recursos para cumplir sus funciones?" }
-            ]
-        },
-        { 
-            section: "6. Requisitos de Recursos", 
-            items: [
-                { req: "6.2", txt: "¿Está documentada la competencia del personal (educación, formación, experiencia)?" },
-                { req: "6.4", txt: "¿El equipo está calibrado y se identifica su estado de calibración?" },
-                { req: "6.6", txt: "¿Existen procedimientos para la selección y evaluación de proveedores externos?" }
-            ]
-        },
-        { 
-            section: "7. Requisitos del Proceso", 
-            items: [
-                { req: "7.1", txt: "¿Se revisan las solicitudes, ofertas y contratos antes de iniciar el trabajo?" },
-                { req: "7.2", txt: "¿Se utilizan métodos apropiados y se validan/verifican antes de su uso?" },
-                { req: "7.8", txt: "¿Los informes de resultados son claros, objetivos y cumplen los requisitos mínimos?" }
-            ]
-        }
-    ];
-
-    function init() {
-        const container = document.getElementById('checklist-content');
-        let totalItems = 0;
-
-        DATA.forEach((sec, sIdx) => {
-            const secHtml = document.createElement('div');
-            secHtml.innerHTML = `<div class="section-title">${sec.section}</div>`;
-            
-            sec.items.forEach((item, iIdx) => {
-                totalItems++;
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'check-item';
-                itemDiv.innerHTML = `
-                    <div class="item-info">
-                        <span class="item-req">CLÁUSULA ${item.req}</span>
-                        <div class="item-text">${item.txt}</div>
-                        <textarea class="obs-area" id="obs-${sIdx}-${iIdx}" placeholder="Observaciones o hallazgos..."></textarea>
-                    </div>
-                    <div class="btn-group">
-                        <button class="opt-btn" onclick="update(this, 'C', ${sIdx}, ${iIdx})">C</button>
-                        <button class="opt-btn" onclick="update(this, 'NC', ${sIdx}, ${iIdx})">NC</button>
-                        <button class="opt-btn" onclick="update(this, 'NA', ${sIdx}, ${iIdx})">N/A</button>
-                    </div>
-                `;
-                secHtml.appendChild(itemDiv);
-            });
-            container.appendChild(secHtml);
-        });
-        document.getElementById('stat-total').innerText = totalItems;
-    }
-
-    function update(btn, type, sIdx, iIdx) {
-        // Limpiar selección previa en el grupo
-        const parent = btn.parentElement;
-        parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active-C', 'active-NC', 'active-NA'));
-        
-        // Aplicar nueva clase
-        btn.classList.add('active-' + type);
-        
-        // Mostrar área de observaciones si es NC
-        const obs = document.getElementById(`obs-${sIdx}-${iIdx}`);
-        obs.style.display = (type === 'NC') ? 'block' : 'none';
-
-        calculate();
-    }
-
-    function calculate() {
-        const total = parseInt(document.getElementById('stat-total').innerText);
-        const c = document.querySelectorAll('.active-C').length;
-        const nc = document.querySelectorAll('.active-NC').length;
-        const na = document.querySelectorAll('.active-NA').length;
-
-        document.getElementById('stat-c').innerText = c;
-        document.getElementById('stat-nc').innerText = nc;
-        document.getElementById('stat-na').innerText = na;
-
-        const aplicables = total - na;
-        const porcentaje = aplicables > 0 ? Math.round((c / aplicables) * 100) : 0;
-
-        // Update Ring
-        const ring = document.getElementById('ring-fill');
-        const offset = 283 - (283 * porcentaje / 100);
-        ring.style.strokeDashoffset = offset;
-        document.getElementById('perc-val').innerText = porcentaje + '%';
-        
-        // Color Dinámico del Ring
-        if (porcentaje < 50) ring.style.stroke = "#ef4444";
-        else if (porcentaje < 85) ring.style.stroke = "#f59e0b";
-        else ring.style.stroke = "#15803d";
-    }
-
-    function resetForm() {
-        if(confirm('¿Seguro que deseas limpiar todo el checklist?')) location.reload();
-    }
-
-    init();
-</script>
-
-</body>
-</html>
+  );
+}
