@@ -357,7 +357,7 @@ nav {
 
 .tools-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 26px;
 }
 
@@ -375,7 +375,7 @@ nav {
 }
 
 .tool-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-10px) scale(1.02);
   box-shadow: var(--sh-lg);
 }
 
