@@ -1,68 +1,637 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <style>
-        body { font-family: sans-serif; background-color: #fce4ec; margin: 0; padding: 20px; }
-        
-        /* Contenedor principal */
-        .main-card { background: white; border-radius: 25px; padding: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        
-        /* Encabezado morado */
-        .header-section { background: linear-gradient(to right, #f3e5f5, #e1bee7); border-radius: 20px; padding: 30px; margin-bottom: 20px; }
-        
-        /* Stats Bar */
-        .stats-bar { display: flex; justify-content: space-around; border-top: 1px solid #ddd; padding-top: 20px; margin-top: 20px; }
-        .stat { text-align: center; }
-        .stat b { font-size: 24px; color: #4a148c; display: block; }
-        .stat span { font-size: 12px; color: #78909c; text-transform: uppercase; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Checklist Auditoría · ISO/IEC 17025:2017 · Laboratorios</title>
+<link href="https://fonts.googleapis.com/css2?family=Salsa&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --p900:#3b1a6b;--p800:#4e2489;--p700:#6133a8;--p600:#7645c4;--p500:#8e5cd9;--p400:#a87de8;--p300:#c4a8f2;--p200:#ddc9f9;--p100:#ede0fc;--p50:#f7f0ff;
+  --rose:#f472b6;--rose-l:#fce7f3;--rose-d:#9d174d;
+  --mint:#34d399;--mint-l:#d1fae5;--mint-d:#065f46;
+  --sky:#60a5fa;--sky-l:#dbeafe;--sky-d:#1e3a8a;
+  --amber:#fbbf24;--amber-l:#fef3c7;--amber-d:#78350f;
+  --red:#f87171;--red-l:#fee2e2;--red-d:#7f1d1d;
+  --page:#fdf6ff;
+  --white:#fff;
+  --gray900:#1e1b2e;--gray800:#2d2848;--gray700:#3d3460;--gray600:#5c5480;--gray500:#7a72a0;--gray400:#9d97bf;--gray300:#c0bcd9;--gray200:#ddd9ef;--gray100:#edeaf7;--gray50:#f5f3fc;
+  --font-title:'Salsa',cursive;
+  --font-body:'Nunito',sans-serif;
+  --r8:8px;--r12:12px;--r16:16px;--r20:20px;--r24:24px;
+  --sh:0 2px 16px rgba(110,60,200,.1),0 1px 4px rgba(110,60,200,.07);
+  --sh-md:0 6px 32px rgba(110,60,200,.14),0 2px 8px rgba(110,60,200,.08);
+  --sh-lg:0 12px 48px rgba(110,60,200,.18),0 4px 16px rgba(110,60,200,.1);
+}
+*{box-sizing:border-box;margin:0;padding:0;min-width:0}
+body{font-family:var(--font-body);background:var(--page);color:var(--gray900);line-height:1.55;-webkit-print-color-adjust:exact;print-color-adjust:exact;overflow-x:hidden}
 
-        /* Resumen */
-        .resumen-bar { display: flex; align-items: center; justify-content: space-between; padding: 20px; background: #fff; border-radius: 20px; margin-bottom: 20px; }
-        .resumen-btns { display: flex; gap: 10px; }
-        .btn-count { padding: 15px 25px; border-radius: 15px; border: none; font-weight: bold; }
+/* ─── ACTION BAR ─── */
+.action-bar{background:linear-gradient(90deg,var(--p800),var(--p600));padding:11px 28px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:999;box-shadow:0 2px 20px rgba(110,60,200,.35)}
+.ab-info{display:flex;align-items:center;gap:10px}
+.ab-dot{width:9px;height:9px;background:var(--p300);border-radius:50%;box-shadow:0 0 6px var(--p300)}
+.ab-info span{font-size:12.5px;color:var(--p200);font-weight:700;font-family:var(--font-body)}
+.ab-btns{display:flex;gap:8px;align-items:center}
+.ab-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 17px;border-radius:30px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:var(--font-body);border:none;transition:all .15s;white-space:nowrap}
+.ab-btn-white{background:var(--white);color:var(--p700)}
+.ab-btn-white:hover{background:var(--p100)}
+.ab-btn-ghost{background:rgba(255,255,255,.12);color:var(--p200);border:1.5px solid rgba(255,255,255,.25)}
+.ab-btn-ghost:hover{background:rgba(255,255,255,.22)}
+.ab-btn-danger{background:rgba(248,113,113,.18);color:#fca5a5;border:1.5px solid rgba(248,113,113,.35)}
+.ab-btn-danger:hover{background:rgba(248,113,113,.3)}
 
-        /* Formulario */
-        .form-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 20px; }
-        .input-group input { width: 100%; padding: 10px; border: 1px solid #eee; border-radius: 10px; }
-    </style>
+/* ─── PAGE ─── */
+.page{max-width:1040px;margin:0 auto;padding:30px 22px 72px}
+
+/* ─── DECORATIVE BG ─── */
+.page::before{content:'';position:fixed;top:-120px;right:-120px;width:420px;height:420px;background:radial-gradient(circle,rgba(142,92,217,.13) 0%,transparent 70%);pointer-events:none;z-index:0}
+.page::after{content:'';position:fixed;bottom:-100px;left:-100px;width:340px;height:340px;background:radial-gradient(circle,rgba(244,114,182,.1) 0%,transparent 70%);pointer-events:none;z-index:0}
+
+/* ─── HEADER ─── */
+.hdr{background:linear-gradient(135deg,var(--p800) 0%,var(--p600) 55%,#9d4fd4 100%);border-radius:24px;overflow:hidden;margin-bottom:24px;box-shadow:var(--sh-lg);position:relative;z-index:1}
+.hdr::before{content:'🔬';position:absolute;right:24px;top:18px;font-size:90px;opacity:.09;pointer-events:none;line-height:1}
+.hdr-body{padding:30px 36px 24px;position:relative}
+.hdr-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.htag{padding:4px 13px;border-radius:30px;font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;font-family:var(--font-body)}
+.ht-main{background:rgba(255,255,255,.25);color:#fff;border:1.5px solid rgba(255,255,255,.4)}
+.ht-out{background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);border:1.5px solid rgba(255,255,255,.2)}
+.hdr-row{display:flex;align-items:flex-start;gap:18px}
+.hdr-ic{width:64px;height:64px;background:rgba(255,255,255,.15);border-radius:18px;border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:30px}
+.hdr-txt h1{font-family:var(--font-title);font-size:28px;color:#fff;line-height:1.2;margin-bottom:8px;text-shadow:0 2px 8px rgba(0,0,0,.2)}
+.hdr-txt p{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.6}
+.hdr-txt p strong{color:#fff}
+.hdr-foot{background:rgba(0,0,0,.18);padding:15px 36px;display:flex;gap:0;border-top:1.5px solid rgba(255,255,255,.12);flex-wrap:wrap}
+.hstat{flex:1;min-width:90px;text-align:center;padding:4px 0;position:relative}
+.hstat+.hstat::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);height:28px;width:1px;background:rgba(255,255,255,.15)}
+.hstat .n{font-family:var(--font-title);font-size:24px;color:var(--p300);line-height:1}
+.hstat .l{font-size:10.5px;color:rgba(255,255,255,.6);margin-top:3px;font-weight:700;letter-spacing:.04em}
+
+/* ─── SCORE PANEL ─── */
+.score-panel{background:var(--white);border-radius:var(--r20);padding:22px 26px;margin-bottom:22px;border:2px solid var(--p100);box-shadow:var(--sh-md);display:flex;gap:26px;align-items:center;flex-wrap:wrap;position:relative;z-index:1}
+.score-panel::before{content:'';position:absolute;inset:0;border-radius:var(--r20);background:linear-gradient(135deg,var(--p50) 0%,transparent 60%);pointer-events:none}
+.score-circle-wrap{flex-shrink:0;position:relative;width:118px;height:118px}
+.score-circle-wrap svg{width:118px;height:118px;transform:rotate(-90deg)}
+.sc-bg{fill:none;stroke:var(--p100);stroke-width:10}
+.sc-fill{fill:none;stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset .6s ease,stroke .4s ease}
+.score-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.score-num .pct{font-family:var(--font-title);font-size:25px;line-height:1;transition:color .4s}
+.score-num .lbl{font-size:9.5px;color:var(--gray400);font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.score-meta{flex:1;min-width:200px;position:relative}
+.score-meta h2{font-family:var(--font-title);font-size:16px;color:var(--p800);margin-bottom:12px}
+.score-bars{display:flex;flex-direction:column;gap:8px}
+.sbar-row{display:flex;align-items:center;gap:10px}
+.sbar-label{font-size:12px;color:var(--gray600);width:100px;flex-shrink:0;display:flex;align-items:center;gap:7px;font-weight:700}
+.sbar-track{flex:1;height:10px;background:var(--gray100);border-radius:6px;overflow:hidden}
+.sbar-fill{height:100%;border-radius:6px;transition:width .5s ease}
+.sbar-pct{font-size:12px;color:var(--gray600);width:38px;text-align:right;flex-shrink:0;font-weight:700}
+.sb-green{background:linear-gradient(90deg,var(--mint),#10b981)}
+.sb-red{background:linear-gradient(90deg,var(--red),#ef4444)}
+.sb-gray{background:linear-gradient(90deg,var(--gray300),var(--gray400))}
+.score-verdict{margin-left:auto;text-align:center;flex-shrink:0;min-width:130px;position:relative}
+.verdict-badge{display:inline-block;padding:9px 22px;border-radius:30px;font-size:13px;font-weight:800;font-family:var(--font-title);border:2px solid;transition:all .4s;letter-spacing:.03em}
+.vb-excelente{background:var(--mint-l);border-color:var(--mint);color:var(--mint-d)}
+.vb-bueno{background:var(--sky-l);border-color:var(--sky);color:var(--sky-d)}
+.vb-regular{background:var(--amber-l);border-color:var(--amber);color:var(--amber-d)}
+.vb-critico{background:var(--red-l);border-color:var(--red);color:var(--red-d)}
+.verdict-label{font-size:11px;color:var(--gray400);margin-top:6px;font-weight:700}
+.score-counters{display:flex;gap:12px;margin-top:14px;flex-wrap:wrap}
+.sc-item{text-align:center;background:var(--gray50);border-radius:var(--r12);padding:10px 14px;flex:1;min-width:72px;border:1.5px solid var(--gray100)}
+.sc-item .v{font-family:var(--font-title);font-size:22px;line-height:1}
+.sc-item .l{font-size:10px;color:var(--gray500);margin-top:3px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.sc-green .v{color:var(--mint-d)}.sc-green{border-color:var(--mint-l);background:var(--mint-l)}
+.sc-red .v{color:var(--red-d)}.sc-red{border-color:var(--red-l);background:var(--red-l)}
+.sc-na .v{color:var(--gray600)}.sc-na{background:var(--gray100)}
+.sc-total .v{color:var(--p700)}.sc-total{border-color:var(--p100);background:var(--p50)}
+
+/* ─── FICHA ─── */
+.ficha-card{background:var(--white);border-radius:var(--r20);padding:22px 26px;margin-bottom:22px;border:2px solid var(--p100);box-shadow:var(--sh);position:relative;z-index:1}
+.card-header{display:flex;align-items:center;gap:13px;margin-bottom:18px;padding-bottom:14px;border-bottom:2px dashed var(--p100)}
+.card-header-ic{width:40px;height:40px;background:var(--p50);border:2px solid var(--p200);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.card-header h2{font-family:var(--font-title);font-size:16px;color:var(--p800)}
+.card-header p{font-size:12px;color:var(--gray500);margin-top:2px;font-weight:600}
+.form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.form-grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+.fgroup{display:flex;flex-direction:column;gap:5px}
+.fgroup label{font-size:11.5px;font-weight:800;color:var(--p700);text-transform:uppercase;letter-spacing:.07em;display:flex;align-items:center;gap:5px}
+.fgroup label .req{color:var(--rose);font-size:13px}
+.finput,.fselect,.ftextarea{width:100%;border:2px solid var(--p100);border-radius:var(--r8);padding:9px 13px;font-family:var(--font-body);font-size:13.5px;color:var(--gray900);background:var(--p50);outline:none;transition:border-color .15s,box-shadow .15s;font-weight:600}
+.finput:focus,.fselect:focus,.ftextarea:focus{border-color:var(--p400);box-shadow:0 0 0 3px rgba(142,92,217,.15)}
+.finput::placeholder,.ftextarea::placeholder{color:var(--gray300);font-weight:500}
+.ftextarea{min-height:80px;resize:vertical;line-height:1.6}
+
+/* ─── SECTION DIVIDER ─── */
+.sdiv{display:flex;align-items:center;gap:10px;margin:26px 0 12px;position:relative;z-index:1}
+.sdiv-ic{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+.sdiv h3{font-family:var(--font-title);font-size:13px;color:var(--gray700);white-space:nowrap}
+.sdiv-line{flex:1;height:2px;border-radius:2px}
+.sdiv-count{font-size:11px;font-weight:800;color:var(--white);border-radius:20px;padding:3px 10px;flex-shrink:0;font-family:var(--font-body)}
+/* Clause colors */
+.cl4 .sdiv-ic{background:#f3e8ff}.cl4 .sdiv h3{color:var(--p700)}.cl4 .sdiv-line{background:linear-gradient(90deg,var(--p200),transparent)}.cl4 .sdiv-count{background:var(--p500)}
+.cl5 .sdiv-ic{background:#dbeafe}.cl5 .sdiv h3{color:var(--sky-d)}.cl5 .sdiv-line{background:linear-gradient(90deg,var(--sky-l),transparent)}.cl5 .sdiv-count{background:var(--sky)}
+.cl6 .sdiv-ic{background:#d1fae5}.cl6 .sdiv h3{color:var(--mint-d)}.cl6 .sdiv-line{background:linear-gradient(90deg,var(--mint-l),transparent)}.cl6 .sdiv-count{background:var(--mint)}
+.cl7 .sdiv-ic{background:#fce7f3}.cl7 .sdiv h3{color:var(--rose-d)}.cl7 .sdiv-line{background:linear-gradient(90deg,var(--rose-l),transparent)}.cl7 .sdiv-count{background:var(--rose)}
+.cl8 .sdiv-ic{background:#fef3c7}.cl8 .sdiv h3{color:var(--amber-d)}.cl8 .sdiv-line{background:linear-gradient(90deg,var(--amber-l),transparent)}.cl8 .sdiv-count{background:var(--amber)}
+.clA .sdiv-ic{background:#fee2e2}.clA .sdiv h3{color:var(--red-d)}.clA .sdiv-line{background:linear-gradient(90deg,var(--red-l),transparent)}.clA .sdiv-count{background:var(--red)}
+
+/* ─── CHECK ITEM ─── */
+.check-item{background:var(--white);border-radius:var(--r16);margin-bottom:9px;border:2px solid var(--gray100);box-shadow:var(--sh);overflow:hidden;transition:border-color .2s,box-shadow .2s,transform .1s;position:relative;z-index:1}
+.check-item:hover{box-shadow:var(--sh-md);transform:translateY(-1px)}
+.check-item.ci-cumple{border-left:5px solid var(--mint);border-color:var(--mint-l);background:linear-gradient(90deg,rgba(209,250,229,.25),var(--white) 40%)}
+.check-item.ci-no{border-left:5px solid var(--red);border-color:var(--red-l);background:linear-gradient(90deg,rgba(254,226,226,.25),var(--white) 40%)}
+.check-item.ci-na{border-left:5px solid var(--gray300);border-color:var(--gray200);background:var(--gray50);opacity:.72}
+.ci-body{padding:14px 18px;display:flex;gap:14px;align-items:flex-start}
+.ci-code{flex-shrink:0;width:38px;height:38px;border-radius:10px;background:var(--p50);border:2px solid var(--p200);display:flex;align-items:center;justify-content:center;font-family:var(--font-title);font-size:11px;color:var(--p700);transition:background .2s}
+.check-item.ci-cumple .ci-code{background:var(--mint-l);border-color:var(--mint);color:var(--mint-d)}
+.check-item.ci-no .ci-code{background:var(--red-l);border-color:var(--red);color:var(--red-d)}
+.check-item.ci-na .ci-code{background:var(--gray100);border-color:var(--gray300);color:var(--gray500)}
+.ci-emoji{font-size:20px;flex-shrink:0;margin-top:8px;width:22px;text-align:center}
+.ci-text{flex:1}
+.ci-text h4{font-size:13.5px;font-weight:800;color:var(--gray900);line-height:1.45;margin-bottom:4px;font-family:var(--font-body)}
+.ci-text p{font-size:11.5px;color:var(--gray500);line-height:1.5;font-style:italic;font-weight:600}
+.ci-radios{display:flex;gap:7px;flex-shrink:0;align-items:center;flex-wrap:wrap}
+.cir-btn{display:flex;align-items:center;gap:5px;padding:8px 14px;border-radius:30px;border:2px solid var(--p200);background:var(--p50);cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:800;color:var(--p600);transition:all .15s;white-space:nowrap;user-select:none}
+.cir-btn:hover{background:var(--p100);border-color:var(--p400)}
+.cir-btn input{display:none}
+.cir-btn.active-C{background:var(--mint-l);border-color:var(--mint);color:var(--mint-d)}
+.cir-btn.active-N{background:var(--red-l);border-color:var(--red);color:var(--red-d)}
+.cir-btn.active-NA{background:var(--gray100);border-color:var(--gray400);color:var(--gray700)}
+
+/* ─── OBS CARD ─── */
+.obs-card{background:var(--white);border-radius:var(--r20);padding:22px 26px;margin-top:24px;border:2px solid var(--p100);box-shadow:var(--sh);position:relative;z-index:1}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:860px){
+  .form-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .ci-body{flex-wrap:wrap}
+  .ci-radios{width:100%;justify-content:flex-start;padding-top:8px;border-top:1.5px dashed var(--p100)}
+  .cir-btn{flex:1;min-width:calc(33% - 5px);justify-content:center}
+  .hdr-foot{padding:12px 18px}
+  .hstat{min-width:calc(33% - 4px);flex:none}
+  .hstat+.hstat::before{display:none}
+  .score-panel{flex-direction:column;align-items:center}
+  .score-verdict{width:100%}
+}
+@media(max-width:540px){
+  .form-grid{grid-template-columns:1fr}
+  .form-grid-2{grid-template-columns:1fr}
+  .hdr-body{padding:20px 18px}
+  .hdr-txt h1{font-size:22px}
+  .ab-btn-danger{display:none}
+  .ci-code{display:none}
+}
+
+/* ─── PRINT ─── */
+@media print{
+  .action-bar{display:none}
+  body{background:#fff}
+  .page{padding:10px 8px}
+  .check-item{page-break-inside:avoid}
+}
+</style>
 </head>
 <body>
 
-<div class="main-card">
-    <div class="header-section">
-        <h1>Checklist de Auditoría ISO/IEC 17025:2017</h1>
-        <p>Evaluación de cumplimiento de la norma... para laboratorios de ensayo y calibración.</p>
-        
-        <div class="stats-bar">
-            <div class="stat"><b>65</b><span>Criterios totales</span></div>
-            <div class="stat"><b>65</b><span>Aplican</span></div>
-            <div class="stat"><b>0</b><span>Cumplen</span></div>
-            <div class="stat"><b>0</b><span>No cumplen</span></div>
-            <div class="stat"><b>0</b><span>No aplican</span></div>
-            <div class="stat"><b>0</b><span>Respondidos</span></div>
-        </div>
-    </div>
-
-    <div class="resumen-bar">
-        <div><h3>Resumen de evaluación</h3></div>
-        <div class="resumen-btns">
-            <button class="btn-count" style="background:#e8f5e9; color:#2e7d32;">0 CUMPLE</button>
-            <button class="btn-count" style="background:#ffebee; color:#c62828;">0 NO CUMPLE</button>
-            <button class="btn-count" style="background:#f5f5f5; color:#616161;">0 - N/A</button>
-            <button class="btn-count" style="background:#e3f2fd; color:#1976d2;">65 TOTAL</button>
-        </div>
-    </div>
-
-    <div class="identificacion">
-        <h2>🏛️ Identificación del Laboratorio</h2>
-        <div class="form-grid">
-            <div class="input-group"><label>Nombre</label><input type="text"></div>
-            <div class="input-group"><label>Código</label><input type="text"></div>
-            <div class="input-group"><label>Ciudad</label><input type="text"></div>
-        </div>
-    </div>
+<!-- ACTION BAR -->
+<div class="action-bar">
+  <div class="ab-info">
+    <div class="ab-dot"></div>
+    <span>Checklist · ISO/IEC 17025:2017 · Laboratorios de Ensayo y Calibración</span>
+  </div>
+  <div class="ab-btns">
+    <button class="ab-btn ab-btn-danger" onclick="resetAll()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+      Reiniciar
+    </button>
+    <button class="ab-btn ab-btn-ghost" onclick="window.print()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Imprimir / PDF
+    </button>
+  </div>
 </div>
 
+<div class="page">
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-body">
+    <div class="hdr-tags">
+      <span class="htag ht-main">ISO/IEC 17025:2017</span>
+      <span class="htag ht-out">Checklist de Auditoría</span>
+      <span class="htag ht-out">Laboratorios de Ensayo y Calibración</span>
+      <span class="htag ht-out">Acreditación</span>
+    </div>
+    <div class="hdr-row">
+      <div class="hdr-ic">🔬</div>
+      <div class="hdr-txt">
+        <h1>Checklist de Auditoría<br>ISO/IEC 17025:2017</h1>
+        <p>Evaluación de cumplimiento de la norma <strong>ISO/IEC 17025:2017</strong> — Requisitos generales para la competencia de laboratorios de ensayo y de calibración. Califica cada criterio como <strong>Cumple</strong>, <strong>No Cumple</strong> o <strong>No Aplica</strong>.</p>
+      </div>
+    </div>
+  </div>
+  <div class="hdr-foot">
+    <div class="hstat"><div class="n">65</div><div class="l">Criterios totales</div></div>
+    <div class="hstat"><div class="n" id="stat-aplica">65</div><div class="l">Aplican</div></div>
+    <div class="hstat"><div class="n" id="stat-cumple">0</div><div class="l">Cumplen</div></div>
+    <div class="hstat"><div class="n" id="stat-nocumple">0</div><div class="l">No cumplen</div></div>
+    <div class="hstat"><div class="n" id="stat-na">0</div><div class="l">No aplican</div></div>
+    <div class="hstat"><div class="n" id="stat-respondidos">0</div><div class="l">Respondidos</div></div>
+    <div class="hstat"><div class="n" id="stat-pct">0%</div><div class="l">Cumplimiento</div></div>
+  </div>
+</div>
+
+<!-- SCORE PANEL -->
+<div class="score-panel">
+  <div class="score-circle-wrap">
+    <svg viewBox="0 0 120 120">
+      <circle class="sc-bg" cx="60" cy="60" r="50"/>
+      <circle class="sc-fill" id="sc-ring" cx="60" cy="60" r="50" stroke="var(--p400)" stroke-dasharray="314.16" stroke-dashoffset="314.16"/>
+    </svg>
+    <div class="score-num">
+      <div class="pct" id="sc-pct-big" style="color:var(--gray300)">—</div>
+      <div class="lbl">Cumplimiento</div>
+    </div>
+  </div>
+  <div class="score-meta">
+    <h2>Resumen de evaluación</h2>
+    <div class="score-bars">
+      <div class="sbar-row">
+        <div class="sbar-label"><span style="width:11px;height:11px;background:var(--mint);border-radius:50%;display:inline-block;flex-shrink:0"></span>Cumple</div>
+        <div class="sbar-track"><div class="sbar-fill sb-green" id="bar-c" style="width:0%"></div></div>
+        <div class="sbar-pct" id="bpct-c">0%</div>
+      </div>
+      <div class="sbar-row">
+        <div class="sbar-label"><span style="width:11px;height:11px;background:var(--red);border-radius:50%;display:inline-block;flex-shrink:0"></span>No Cumple</div>
+        <div class="sbar-track"><div class="sbar-fill sb-red" id="bar-n" style="width:0%"></div></div>
+        <div class="sbar-pct" id="bpct-n">0%</div>
+      </div>
+      <div class="sbar-row">
+        <div class="sbar-label"><span style="width:11px;height:11px;background:var(--gray300);border-radius:50%;display:inline-block;flex-shrink:0"></span>No Aplica</div>
+        <div class="sbar-track"><div class="sbar-fill sb-gray" id="bar-na" style="width:0%"></div></div>
+        <div class="sbar-pct" id="bpct-na">0%</div>
+      </div>
+    </div>
+    <div class="score-counters">
+      <div class="sc-item sc-green"><div class="v" id="cnt-c">0</div><div class="l">✅ Cumple</div></div>
+      <div class="sc-item sc-red"><div class="v" id="cnt-n">0</div><div class="l">❌ No Cumple</div></div>
+      <div class="sc-item sc-na"><div class="v" id="cnt-na">0</div><div class="l">— N/A</div></div>
+      <div class="sc-item sc-total"><div class="v">65</div><div class="l">📋 Total</div></div>
+    </div>
+  </div>
+  <div class="score-verdict">
+    <div class="verdict-badge vb-critico" id="verdict-badge">Sin evaluar</div>
+    <div class="verdict-label" id="verdict-label">Complete los criterios</div>
+  </div>
+</div>
+
+<!-- FICHA DEL LABORATORIO -->
+<div class="ficha-card">
+  <div class="card-header">
+    <div class="card-header-ic">🏛️</div>
+    <div>
+      <h2>Identificación del Laboratorio</h2>
+      <p>Registre los datos del laboratorio antes de completar la auditoría</p>
+    </div>
+  </div>
+  <div class="form-grid">
+    <div class="fgroup">
+      <label>🏷️ Nombre del laboratorio <span class="req">*</span></label>
+      <input class="finput" type="text" placeholder="Ej. Laboratorio de Metrología LM-01">
+    </div>
+    <div class="fgroup">
+      <label>🔢 Código / N° de registro</label>
+      <input class="finput" type="text" placeholder="Ej. LAB-2024-001">
+    </div>
+    <div class="fgroup">
+      <label>📍 Ciudad / País</label>
+      <input class="finput" type="text" placeholder="Ej. Bogotá, Colombia">
+    </div>
+    <div class="fgroup">
+      <label>🏅 N° de acreditación</label>
+      <input class="finput" type="text" placeholder="Ej. LE-1234 / ONAC">
+    </div>
+    <div class="fgroup">
+      <label>🎯 Alcance de acreditación</label>
+      <input class="finput" type="text" placeholder="Ej. Ensayos fisicoquímicos de agua">
+    </div>
+    <div class="fgroup">
+      <label>🔁 Ciclo de auditoría</label>
+      <input class="finput" type="text" placeholder="Ej. Renovación 2025">
+    </div>
+    <div class="fgroup">
+      <label>📅 Fecha de auditoría <span class="req">*</span></label>
+      <input class="finput" id="f-fecha" type="date">
+    </div>
+    <div class="fgroup">
+      <label>👤 Auditor responsable <span class="req">*</span></label>
+      <input class="finput" type="text" placeholder="Nombre completo">
+    </div>
+    <div class="fgroup">
+      <label>💼 Cargo / Función</label>
+      <input class="finput" type="text" placeholder="Ej. Auditor Líder">
+    </div>
+  </div>
+</div>
+
+<!-- SECCIONES DE CRITERIOS -->
+<div id="checklist-container"></div>
+
+<!-- OBSERVACIONES -->
+<div class="obs-card">
+  <div class="card-header">
+    <div class="card-header-ic">📝</div>
+    <div>
+      <h2>Observaciones y Plan de Acción</h2>
+      <p>Hallazgos, evidencias revisadas, brechas identificadas y acciones correctivas</p>
+    </div>
+  </div>
+  <div class="fgroup" style="margin-bottom:14px">
+    <label>📝 Observaciones generales / Evidencias revisadas</label>
+    <textarea class="ftextarea" rows="4" placeholder="Describa las evidencias revisadas, hallazgos positivos y áreas de mejora..."></textarea>
+  </div>
+  <div class="form-grid-2">
+    <div class="fgroup">
+      <label>🚨 No conformidades identificadas</label>
+      <textarea class="ftextarea" rows="3" placeholder="Liste los criterios que no se cumplen y la evidencia..."></textarea>
+    </div>
+    <div class="fgroup">
+      <label>🎯 Plan de acción / Acciones correctivas</label>
+      <textarea class="ftextarea" rows="3" placeholder="Acciones correctivas, responsable y fecha límite..."></textarea>
+    </div>
+  </div>
+  <div class="form-grid" style="margin-top:14px">
+    <div class="fgroup">
+      <label>📅 Fecha próxima revisión</label>
+      <input class="finput" type="date">
+    </div>
+    <div class="fgroup">
+      <label>✍️ Firma / Responsable</label>
+      <input class="finput" type="text" placeholder="Nombre completo del evaluador">
+    </div>
+    <div class="fgroup">
+      <label>✅ Revisado / Aprobado por</label>
+      <input class="finput" type="text" placeholder="Nombre del revisor">
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="margin-top:28px;text-align:center;font-size:11.5px;color:var(--gray500);border-top:2px dashed var(--p100);padding-top:18px;line-height:1.8;font-weight:700;position:relative;z-index:1">
+  Norma ISO/IEC 17025:2017 — Requisitos generales para la competencia de laboratorios de ensayo y de calibración<br>
+  <span style="color:var(--p600)">Para guardar como PDF:</span> Botón "Imprimir / PDF" → Orientación Vertical · A4 · Márgenes mínimos · Activar "Gráficos de fondo"
+</div>
+
+</div><!-- /page -->
+
+<script>
+// ═══════════════ DATOS ═══════════════
+const SECCIONES = [
+  {
+    id:'cl4', label:'Cláusula 4 — Requisitos Generales', emoji:'⚖️', num:'4',
+    items:[
+      {id:'4.1.1', emoji:'⚖️', title:'El laboratorio documenta su compromiso con la imparcialidad', hint:'Debe existir una declaración documentada de imparcialidad que sea accesible al público y que incluya todos los factores que puedan comprometer la imparcialidad.'},
+      {id:'4.1.2', emoji:'🔎', title:'Se identifican y gestionan los riesgos de imparcialidad de forma continua', hint:'Incluye relaciones comerciales, financieras, personales y otras presiones que puedan afectar la imparcialidad. Se documentan las acciones tomadas.'},
+      {id:'4.1.3', emoji:'🏛️', title:'La alta dirección se compromete con la imparcialidad', hint:'La dirección demuestra activamente que la presión comercial no compromete la imparcialidad. Existen mecanismos para prevenir influencias indebidas.'},
+      {id:'4.2.1', emoji:'🔒', title:'El laboratorio gestiona la información del cliente como confidencial', hint:'Se dispone de acuerdos de confidencialidad o compromisos documentados. El personal está informado y formado sobre sus obligaciones de confidencialidad.'},
+      {id:'4.2.2', emoji:'📜', title:'Existe un procedimiento para la divulgación de información confidencial requerida legalmente', hint:'Cuando la ley exige divulgar información, el cliente es notificado (salvo prohibición legal). El procedimiento está documentado y el personal lo conoce.'},
+      {id:'4.2.3', emoji:'🛡️', title:'La información obtenida de terceros se trata con confidencialidad', hint:'La información de fuentes externas (clientes, reguladores, subcontratistas) se mantiene protegida. Se mantiene el anonimato cuando corresponde.'},
+    ]
+  },
+  {
+    id:'cl5', label:'Cláusula 5 — Requisitos Relativos a la Estructura', emoji:'🏢', num:'5',
+    items:[
+      {id:'5.1', emoji:'🏢', title:'El laboratorio es una entidad legalmente identificable y responsable de sus actividades', hint:'Debe existir documentación legal que identifique al laboratorio. Si es parte de una organización mayor, las responsabilidades están claramente definidas.'},
+      {id:'5.2', emoji:'📋', title:'El alcance de las actividades de laboratorio está claramente definido', hint:'El alcance incluye las actividades realizadas en instalaciones permanentes, temporales o in situ. Está documentado y disponible públicamente.'},
+      {id:'5.3', emoji:'👔', title:'Existe una estructura organizacional documentada con responsabilidades definidas', hint:'El organigrama o documento equivalente muestra relaciones de autoridad. Las responsabilidades clave (calidad, técnicas) están asignadas a personas competentes.'},
+      {id:'5.4', emoji:'🎯', title:'La dirección garantiza la integridad del sistema de gestión ante cambios', hint:'Cuando se planifican e implementan cambios, se mantiene la integridad del sistema de gestión. Existe un proceso de gestión de cambios documentado.'},
+      {id:'5.5', emoji:'📣', title:'El laboratorio comunica internamente sus objetivos y políticas', hint:'Los objetivos de calidad y las políticas son conocidos por todo el personal. Se utilizan mecanismos efectivos de comunicación interna.'},
+    ]
+  },
+  {
+    id:'cl6', label:'Cláusula 6 — Requisitos Relativos a los Recursos', emoji:'🌐', num:'6',
+    items:[
+      {id:'6.1', emoji:'🌐', title:'El laboratorio dispone de todos los recursos necesarios para sus actividades', hint:'Se han identificado y asignado recursos suficientes: personal, instalaciones, equipamiento, sistemas de información y servicios de apoyo.'},
+      {id:'6.2.1', emoji:'👩‍🔬', title:'Todo el personal que afecta a los resultados es competente y actúa con imparcialidad', hint:'Existe documentación de competencias (educación, formación, experiencia, habilidades). Los registros de competencia son actuales y verificables.'},
+      {id:'6.2.2', emoji:'📑', title:'Están documentados los requisitos de competencia para cada función', hint:'Perfiles de puesto o descripción de competencias para todo el personal que afecta a los resultados, incluyendo personal externo y en formación.'},
+      {id:'6.2.3', emoji:'🎓', title:'El personal recibe formación y se evalúa su eficacia', hint:'Existe un programa de formación. La eficacia de la formación es evaluada. Los registros de formación y evaluación están disponibles.'},
+      {id:'6.2.4', emoji:'🖊️', title:'El personal está autorizado para realizar actividades específicas del laboratorio', hint:'Existen autorizaciones documentadas para actividades clave: uso de equipos, emisión de informes, validación de métodos, declaración de conformidad.'},
+      {id:'6.3.1', emoji:'🏗️', title:'Las instalaciones son adecuadas para las actividades del laboratorio', hint:'Las instalaciones no afectan negativamente a la validez de los resultados. Se controlan factores como temperatura, humedad, iluminación, vibraciones y contaminación.'},
+      {id:'6.3.2', emoji:'🌡️', title:'Las condiciones ambientales se monitorean, controlan y registran', hint:'Los parámetros ambientales críticos están identificados. Existen límites definidos y se registran las mediciones. Se actúa cuando los límites se superan.'},
+      {id:'6.3.3', emoji:'🚧', title:'Se controla el acceso y uso de áreas que afectan a la calidad', hint:'Existe separación entre áreas incompatibles. Se controla el acceso para prevenir contaminación cruzada, interferencias y accesos no autorizados.'},
+      {id:'6.4.1', emoji:'🔬', title:'El equipamiento es adecuado y permite lograr la exactitud requerida', hint:'El equipamiento cumple con las especificaciones del método. Se dispone de equipamiento de referencia y de trabajo correctamente identificados.'},
+      {id:'6.4.2', emoji:'📅', title:'El equipamiento está calibrado o verificado según un programa documentado', hint:'Existe un programa de calibración/verificación. Los registros muestran el estado de calibración, fechas y resultados. Los equipos fuera de servicio están etiquetados.'},
+      {id:'6.4.3', emoji:'🗂️', title:'Los registros de equipamiento incluyen todos los datos requeridos por la norma', hint:'Cada equipo tiene registros de: identificación, fabricante, número de serie, verificaciones, calibraciones, mantenimiento, daños y historial de servicio.'},
+      {id:'6.4.4', emoji:'⚠️', title:'Existe un procedimiento para equipos que dan resultados dudosos o fuera de especificación', hint:'Los equipos con problemas son retirados del servicio, etiquetados claramente y se evalúa el impacto en trabajos previos antes de ser rehabilitados.'},
+      {id:'6.5.1', emoji:'📏', title:'La trazabilidad metrológica está establecida y documentada para mediciones clave', hint:'Las mediciones son trazables al SI o a patrones de referencia nacionales/internacionales. La cadena de trazabilidad está documentada sin interrupciones.'},
+      {id:'6.5.2', emoji:'🔗', title:'Los patrones de referencia se mantienen y calibran adecuadamente', hint:'Los patrones primarios y de referencia se calibran por organismos acreditados o con trazabilidad demostrable. Se mantienen condiciones de almacenamiento adecuadas.'},
+      {id:'6.6.1', emoji:'🤝', title:'Los productos y servicios externos que afectan a los resultados son controlados', hint:'Existe una lista de proveedores aprobados. Los servicios de calibración, subcontratación y consumibles críticos pasan por un proceso de evaluación y aprobación.'},
+      {id:'6.6.2', emoji:'📦', title:'Los productos y servicios externos se verifican antes de su uso', hint:'Los reactivos, materiales de referencia y equipamiento externo son inspeccionados. Existe un proceso documentado de recepción e inspección.'},
+    ]
+  },
+  {
+    id:'cl7', label:'Cláusula 7 — Requisitos del Proceso', emoji:'📝', num:'7',
+    items:[
+      {id:'7.1.1', emoji:'📝', title:'Se revisan las solicitudes de ensayo/calibración antes de aceptarlas', hint:'Existe un proceso documentado de revisión de solicitudes que verifica capacidad, métodos, recursos y requisitos del cliente antes de comprometerse.'},
+      {id:'7.1.2', emoji:'📄', title:'Los contratos con clientes reflejan los requisitos del laboratorio y del cliente', hint:'Los contratos o acuerdos de servicio documentan el alcance, métodos a usar, plazos y cualquier desviación acordada. Se revisan ante modificaciones.'},
+      {id:'7.2.1', emoji:'🔍', title:'Los métodos utilizados son apropiados y están actualizados', hint:'Se usan preferentemente métodos normalizados. Los métodos propios están desarrollados, validados y documentados. Se verifica que el personal tiene acceso a versiones vigentes.'},
+      {id:'7.2.2', emoji:'✔️', title:'Los métodos son verificados antes de su implementación', hint:'Existe evidencia de verificación que confirma que el laboratorio puede implementar correctamente el método según las especificaciones del desarrollador.'},
+      {id:'7.2.3', emoji:'🧪', title:'Los métodos no normalizados o propios son validados', hint:'La validación demuestra aptitud para el uso previsto. Los parámetros de validación (exactitud, precisión, LDD, rango lineal, etc.) están documentados.'},
+      {id:'7.3.1', emoji:'🌱', title:'Existe un plan de muestreo documentado cuando el laboratorio realiza muestreo', hint:'El plan de muestreo incluye método estadístico, tamaño de muestra, puntos de muestreo, condiciones ambientales y criterios de aceptación.'},
+      {id:'7.4.1', emoji:'🏷️', title:'Los ítems de ensayo/calibración se identifican de forma única a lo largo del proceso', hint:'El sistema de identificación previene confusiones. La identificación acompaña al ítem desde la recepción hasta el archivo o devolución.'},
+      {id:'7.4.2', emoji:'🚚', title:'Las condiciones de transporte y recepción de ítems son registradas', hint:'Se registran las condiciones de recepción, desviaciones del estado esperado, y se consulta al cliente cuando existen dudas sobre la aptitud del ítem.'},
+      {id:'7.5.1', emoji:'💾', title:'Los registros técnicos contienen suficiente información para reproducir el ensayo', hint:'Los registros incluyen: personal responsable, condiciones ambientales, equipos usados, datos brutos, cálculos, resultados y cualquier incidencia durante el ensayo.'},
+      {id:'7.5.2', emoji:'🔏', title:'Los registros técnicos son protegidos y conservados según lo requerido', hint:'Los registros se almacenan de forma segura (física o electrónica). Los períodos de retención están definidos. Las modificaciones son trazables y autorizadas.'},
+      {id:'7.6.1', emoji:'📐', title:'Se evalúa la incertidumbre de medición en ensayos y calibraciones', hint:'Existe una metodología documentada para la evaluación de la incertidumbre. Se identifican todas las componentes relevantes y se calcula la incertidumbre expandida.'},
+      {id:'7.7.1', emoji:'📊', title:'El laboratorio tiene un programa de aseguramiento de la validez de resultados', hint:'El programa incluye al menos uno de: cartas de control, participación en ensayos de aptitud, uso de materiales de referencia certificados, comparaciones interlaboratorio.'},
+      {id:'7.7.2', emoji:'📈', title:'Los datos de control de calidad se analizan y se actúa ante resultados fuera de control', hint:'Existen límites de control definidos. Se revisan los datos periódicamente. Las acciones correctivas se documentan cuando los controles fallan.'},
+      {id:'7.8.1', emoji:'📋', title:'Los informes de resultados contienen toda la información requerida por la norma', hint:'Los informes incluyen: identificación del laboratorio y cliente, descripción del ítem, método usado, resultados con unidades, incertidumbre, fecha, firma y referencia al acuerdo de muestreo si aplica.'},
+      {id:'7.8.2', emoji:'🗒️', title:'Las declaraciones de conformidad incluyen la regla de decisión aplicada', hint:'Cuando se emiten declaraciones de conformidad (pasa/falla), se especifica la regla de decisión utilizada y se tiene en cuenta la incertidumbre de medición.'},
+      {id:'7.8.3', emoji:'✏️', title:'Las modificaciones a informes emitidos están claramente identificadas', hint:'Las correcciones o suplementos a informes ya emitidos son identificados como tales, con referencias al informe original. El procedimiento está documentado.'},
+      {id:'7.9.1', emoji:'💬', title:'Existe un proceso documentado para la recepción y gestión de quejas', hint:'El proceso incluye recepción, validación, investigación, respuesta y cierre de quejas. Las quejas y las acciones tomadas son registradas.'},
+      {id:'7.10.1', emoji:'🚫', title:'El trabajo no conforme es identificado, controlado y evaluado', hint:'Existe un procedimiento para gestionar el trabajo no conforme. El personal está autorizado a suspender trabajos. Se notifica al cliente cuando corresponde.'},
+      {id:'7.10.2', emoji:'🔁', title:'Se determinan y documentan las causas del trabajo no conforme', hint:'El análisis de causas raíz está documentado. Las acciones correctivas se implementan y se verifica su eficacia. El historial de no conformidades se mantiene.'},
+      {id:'7.11.1', emoji:'💻', title:'El sistema de gestión de información del laboratorio (LIMS o equivalente) es controlado', hint:'El software y hardware usados para almacenar y procesar datos están validados o verificados. Existen controles de acceso, copias de seguridad y protección contra pérdida de datos.'},
+      {id:'7.11.2', emoji:'🔐', title:'La integridad y confidencialidad de los datos se mantiene en todo el proceso', hint:'Los datos están protegidos contra acceso no autorizado y modificaciones accidentales. Los cambios en datos electrónicos son trazables al responsable y fecha.'},
+    ]
+  },
+  {
+    id:'cl8', label:'Cláusula 8 — Requisitos del Sistema de Gestión', emoji:'🗺️', num:'8',
+    items:[
+      {id:'8.1', emoji:'🗺️', title:'El laboratorio ha seleccionado e implementado una Opción del sistema de gestión (A o B)', hint:'Opción A: requisitos específicos de la norma (8.2–8.9). Opción B: cumplimiento con ISO 9001 en el alcance del laboratorio. La opción seleccionada está documentada.'},
+      {id:'8.2.1', emoji:'📁', title:'El sistema de gestión está documentado y comunicado al personal (Opción A)', hint:'La documentación del sistema incluye políticas, procedimientos, especificaciones, formularios y registros. El manual de calidad o documentos equivalentes están actualizados.'},
+      {id:'8.2.2', emoji:'🎯', title:'La política de calidad está definida y es coherente con los objetivos del laboratorio', hint:'La política de calidad incluye el compromiso con las buenas prácticas profesionales, la competencia del laboratorio y el cumplimiento con la norma.'},
+      {id:'8.3.1', emoji:'🗃️', title:'Existe un proceso de control de documentos del sistema de gestión', hint:'Los documentos son aprobados antes de su emisión. Se identifican versiones vigentes. Los documentos obsoletos son retirados y protegidos contra uso no intencionado.'},
+      {id:'8.4.1', emoji:'📂', title:'Los registros se identifican, almacenan, protegen, recuperan y retienen adecuadamente', hint:'Los períodos de retención están definidos para todos los tipos de registros. Los registros son legibles y se almacenan en condiciones que previenen deterioro o pérdida.'},
+      {id:'8.5.1', emoji:'🔮', title:'Se identifican y abordan los riesgos y oportunidades relacionados con las actividades', hint:'Existe un proceso para identificar riesgos que puedan afectar la imparcialidad, competencia y operación del laboratorio. Las acciones tomadas son proporcionales al riesgo.'},
+      {id:'8.6.1', emoji:'🌱', title:'El laboratorio identifica y aplica oportunidades de mejora', hint:'Las oportunidades de mejora se identifican a través de: revisiones por la dirección, auditorías internas, análisis de datos y retroalimentación del cliente.'},
+      {id:'8.7.1', emoji:'🛠️', title:'Las no conformidades se gestionan con acciones correctivas documentadas', hint:'Las acciones correctivas incluyen análisis de causas raíz, implementación de soluciones y verificación de eficacia. El proceso está documentado y es sistemático.'},
+      {id:'8.8.1', emoji:'🔍', title:'Se realizan auditorías internas según un programa planificado', hint:'El programa de auditorías cubre todos los requisitos de la norma en un ciclo definido. Los auditores son competentes e independientes del área auditada.'},
+      {id:'8.8.2', emoji:'📝', title:'Los hallazgos de auditoría se documentan y se toman acciones correctivas', hint:'Los informes de auditoría son formales. Las no conformidades detectadas en auditorías generan acciones correctivas con seguimiento y verificación de eficacia.'},
+      {id:'8.9.1', emoji:'👔', title:'La alta dirección realiza revisiones periódicas del sistema de gestión', hint:'Las revisiones por la dirección incluyen todos los elementos requeridos: resultados de auditorías, quejas, desempeño, adecuación de recursos, riesgos y cambios.'},
+      {id:'8.9.2', emoji:'📊', title:'Las salidas de la revisión por la dirección incluyen decisiones y acciones', hint:'Las decisiones sobre mejoras, cambios en recursos y modificaciones al sistema están documentadas. Existe seguimiento de los acuerdos de revisiones anteriores.'},
+    ]
+  },
+  {
+    id:'clA', label:'Anexo A — Trazabilidad Metrológica', emoji:'🔗', num:'A',
+    items:[
+      {id:'A.1.1', emoji:'🔗', title:'Se comprende y aplica correctamente el concepto de trazabilidad metrológica', hint:'La trazabilidad metrológica es una propiedad del resultado de una medición que puede relacionarse con una referencia a través de una cadena ininterrumpida de calibraciones documentadas.'},
+      {id:'A.1.2', emoji:'🏅', title:'Los laboratorios de calibración utilizados son competentes y acreditados', hint:'Se prefieren laboratorios acreditados (ENAC, DAkkS, UKAS, INMETRO u equivalente). Cuando no existe acreditación, se verifica la competencia técnica del laboratorio proveedor.'},
+      {id:'A.2.1', emoji:'📏', title:'La cadena de trazabilidad está establecida hasta el SI o patrones reconocidos', hint:'La cadena de trazabilidad es continua, sin interrupciones, hasta el SI (Sistema Internacional de Unidades) o patrones de referencia reconocidos internacionalmente.'},
+      {id:'A.2.2', emoji:'📄', title:'Los certificados de calibración contienen la información requerida', hint:'Los certificados incluyen: identificación del equipo, referencia al patrón usado, resultados de medición, incertidumbre expandida, factor de cobertura y trazabilidad del patrón.'},
+      {id:'A.2.3', emoji:'🔄', title:'Los intervalos de calibración se establecen y revisan sistemáticamente', hint:'Los intervalos de calibración se basan en la estabilidad del equipo, frecuencia de uso, influencia ambiental y requisitos del método. Se documentan las bases para los intervalos.'},
+    ]
+  }
+];
+
+// Estado
+const state = {};
+const TOTAL = 65;
+
+// Init
+function init(){
+  document.getElementById('f-fecha').value = new Date().toISOString().split('T')[0];
+  const container = document.getElementById('checklist-container');
+
+  SECCIONES.forEach(sec => {
+    // Divider
+    const sdiv = document.createElement('div');
+    sdiv.className = 'sdiv ' + sec.id;
+    sdiv.innerHTML = `
+      <div class="sdiv-ic">${sec.emoji}</div>
+      <h3>Cláusula ${sec.num} — ${sec.label.split('—')[1]?.trim() || sec.label}</h3>
+      <span class="sdiv-count">${sec.items.length} criterios</span>
+      <div class="sdiv-line"></div>
+    `;
+    container.appendChild(sdiv);
+
+    // Items
+    sec.items.forEach(item => {
+      state[item.id] = 'none';
+      const div = document.createElement('div');
+      div.className = 'check-item';
+      div.id = 'item-' + item.id;
+      div.innerHTML = `
+        <div class="ci-body">
+          <div class="ci-code" id="code-${item.id}">${item.id}</div>
+          <div class="ci-emoji">${item.emoji}</div>
+          <div class="ci-text">
+            <h4>${item.title}</h4>
+            <p>${item.hint}</p>
+          </div>
+          <div class="ci-radios">
+            <label class="cir-btn" id="rb-C-${item.id}" onclick="setVal('${item.id}','C')">
+              <input type="radio" name="q${item.id}" value="C">
+              ✅ Cumple
+            </label>
+            <label class="cir-btn" id="rb-N-${item.id}" onclick="setVal('${item.id}','N')">
+              <input type="radio" name="q${item.id}" value="N">
+              ❌ No Cumple
+            </label>
+            <label class="cir-btn" id="rb-NA-${item.id}" onclick="setVal('${item.id}','NA')">
+              <input type="radio" name="q${item.id}" value="NA">
+              — N/A
+            </label>
+          </div>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  });
+
+  updateScore();
+}
+
+function setVal(id, val){
+  state[id] = val;
+  ['C','N','NA'].forEach(v => {
+    document.getElementById('rb-' + v + '-' + id).classList.remove('active-C','active-N','active-NA');
+  });
+  document.getElementById('rb-' + val + '-' + id).classList.add('active-' + val);
+  const card = document.getElementById('item-' + id);
+  card.classList.remove('ci-cumple','ci-no','ci-na');
+  if(val==='C') card.classList.add('ci-cumple');
+  else if(val==='N') card.classList.add('ci-no');
+  else if(val==='NA') card.classList.add('ci-na');
+  updateScore();
+}
+
+function updateScore(){
+  let cumple=0, nocumple=0, na=0;
+  Object.values(state).forEach(v => {
+    if(v==='C') cumple++;
+    else if(v==='N') nocumple++;
+    else if(v==='NA') na++;
+  });
+  const respondidos = cumple + nocumple + na;
+  const aplica = cumple + nocumple;
+  const pct = aplica > 0 ? Math.round(cumple/aplica*100) : null;
+
+  // Stats
+  document.getElementById('stat-aplica').textContent = aplica;
+  document.getElementById('stat-cumple').textContent = cumple;
+  document.getElementById('stat-nocumple').textContent = nocumple;
+  document.getElementById('stat-na').textContent = na;
+  document.getElementById('stat-respondidos').textContent = respondidos;
+  document.getElementById('stat-pct').textContent = pct !== null ? pct + '%' : '—';
+
+  document.getElementById('cnt-c').textContent = cumple;
+  document.getElementById('cnt-n').textContent = nocumple;
+  document.getElementById('cnt-na').textContent = na;
+
+  // Bars
+  const pctC = aplica > 0 ? Math.round(cumple/aplica*100) : 0;
+  const pctN = aplica > 0 ? Math.round(nocumple/aplica*100) : 0;
+  const pctNA = TOTAL > 0 ? Math.round(na/TOTAL*100) : 0;
+  document.getElementById('bar-c').style.width = pctC + '%';
+  document.getElementById('bpct-c').textContent = pctC + '%';
+  document.getElementById('bar-n').style.width = pctN + '%';
+  document.getElementById('bpct-n').textContent = pctN + '%';
+  document.getElementById('bar-na').style.width = pctNA + '%';
+  document.getElementById('bpct-na').textContent = pctNA + '%';
+
+  // Circle
+  const ring = document.getElementById('sc-ring');
+  const bigPct = document.getElementById('sc-pct-big');
+  const circum = 314.16;
+  if(pct !== null){
+    ring.style.strokeDashoffset = circum - (circum * pct / 100);
+    bigPct.textContent = pct + '%';
+    let color = pct>=85 ? 'var(--mint-d)' : pct>=65 ? 'var(--sky-d)' : pct>=45 ? 'var(--amber-d)' : 'var(--red-d)';
+    let stroke = pct>=85 ? 'var(--mint)' : pct>=65 ? 'var(--sky)' : pct>=45 ? 'var(--amber)' : 'var(--red)';
+    ring.style.stroke = stroke;
+    bigPct.style.color = color;
+  } else {
+    ring.style.strokeDashoffset = circum;
+    bigPct.textContent = '—';
+    bigPct.style.color = 'var(--gray300)';
+    ring.style.stroke = 'var(--p400)';
+  }
+
+  // Verdict
+  const vb = document.getElementById('verdict-badge');
+  const vl = document.getElementById('verdict-label');
+  vb.className = 'verdict-badge';
+  if(pct===null){vb.classList.add('vb-critico');vb.textContent='Sin evaluar';vl.textContent='Complete los criterios'}
+  else if(pct>=85){vb.classList.add('vb-excelente');vb.textContent='🏆 Excelente';vl.textContent='Cumplimiento óptimo'}
+  else if(pct>=65){vb.classList.add('vb-bueno');vb.textContent='👍 Aceptable';vl.textContent='Requiere mejoras menores'}
+  else if(pct>=40){vb.classList.add('vb-regular');vb.textContent='⚠️ Regular';vl.textContent='Brechas significativas'}
+  else{vb.classList.add('vb-critico');vb.textContent='🚨 Crítico';vl.textContent='Acción inmediata requerida'}
+}
+
+function resetAll(){
+  if(!confirm('¿Deseas reiniciar todas las respuestas?')) return;
+  Object.keys(state).forEach(id => {
+    state[id]='none';
+    ['C','N','NA'].forEach(v => {
+      const btn = document.getElementById('rb-'+v+'-'+id);
+      if(btn) btn.classList.remove('active-C','active-N','active-NA');
+    });
+    const card = document.getElementById('item-'+id);
+    if(card) card.classList.remove('ci-cumple','ci-no','ci-na');
+  });
+  updateScore();
+}
+
+init();
+</script>
 </body>
 </html>
