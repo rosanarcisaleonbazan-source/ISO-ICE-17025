@@ -1,230 +1,474 @@
-import React, { useState, useCallback } from "react";
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist ISO/IEC 17025:2017</title>
+    <style>
+        :root {
+            --primary-purple: #9b59b6;
+            --light-purple: #f8f4fc;
+            --border-color: #e0d0f0;
+            --text-dark: #2c3e50;
+        }
 
-// --- TIPOS ---
-type Answer = "C" | "N" | "NA" | null;
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
 
-interface Criterio {
-  id: string;
-  icon: string;
-  title: string;
-  hint: string;
-}
+        .main-container {
+            width: 100%;
+            max-width: 900px;
+        }
 
-interface Section {
-  key: string;
-  clause: string;
-  label: string;
-  bg: string;
-  accent: string;
-  textColor: string;
-  criterios: Criterio[];
-}
+        /* Barra superior */
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: var(--primary-purple);
+            font-weight: bold;
+            font-size: 0.9em;
+        }
 
-interface FormData {
-  laboratorio: string;
-  codigo: string;
-  ciudad: string;
-  acreditacion: string;
-  alcance: string;
-  ciclo: string;
-  fecha: string;
-  auditor: string;
-  cargo: string;
-  obsGeneral: string;
-  obsNc: string;
-  obsPlan: string;
-  proxima: string;
-  firma: string;
-  revisor: string;
-}
+        /* Tarjeta Principal */
+        .card-header {
+            background-color: var(--light-purple);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            padding: 40px;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
 
-// --- DATOS DE LA NORMA ---
-const SECTIONS: Section[] = [
-  {
-    key: "s4",
-    clause: "Cláusula 4",
-    label: "Requisitos Generales",
-    bg: "#fce4ec",
-    accent: "#f06292",
-    textColor: "#880e4f",
-    criterios: [
-      { id: "4.1.1", icon: "⚖️", title: "Compromiso con la imparcialidad", hint: "Declaración documentada accesible al público." },
-      { id: "4.1.2", icon: "🔎", title: "Gestión de riesgos de imparcialidad", hint: "Identificación de presiones comerciales o financieras." },
-      { id: "4.2.1", icon: "🔒", title: "Confidencialidad de la información", hint: "Acuerdos firmados por el personal y terceros." },
-    ],
-  },
-  {
-    key: "s5",
-    clause: "Cláusula 5",
-    label: "Requisitos Estructurales",
-    bg: "#f3e5f5",
-    accent: "#ab47bc",
-    textColor: "#4a148c",
-    criterios: [
-      { id: "5.1", icon: "🏢", title: "Entidad legalmente responsable", hint: "Documentación legal y representación definida." },
-      { id: "5.3", icon: "👔", title: "Estructura organizacional", hint: "Organigrama y responsabilidades técnicas asignadas." },
-    ],
-  },
-  {
-    key: "s6",
-    clause: "Cláusula 6",
-    label: "Requisitos de Recursos",
-    bg: "#e8f5e9",
-    accent: "#66bb6a",
-    textColor: "#1b5e20",
-    criterios: [
-      { id: "6.2.1", icon: "👩‍🔬", title: "Competencia del personal", hint: "Registros de educación, formación y habilidades." },
-      { id: "6.3.1", icon: "🏗️", title: "Instalaciones adecuadas", hint: "Control de condiciones ambientales (T°, humedad)." },
-      { id: "6.4.1", icon: "🔬", title: "Equipamiento calibrado", hint: "Programa de mantenimiento y calibración vigente." },
-    ],
-  },
-  {
-    key: "s7",
-    clause: "Cláusula 7",
-    label: "Requisitos del Proceso",
-    bg: "#e3f2fd",
-    accent: "#42a5f5",
-    textColor: "#0d47a1",
-    criterios: [
-      { id: "7.1.1", icon: "📝", title: "Revisión de solicitudes", hint: "Verificación de capacidad antes de aceptar trabajos." },
-      { id: "7.5.1", icon: "💾", title: "Registros técnicos", hint: "Datos suficientes para asegurar la trazabilidad." },
-      { id: "7.11.1", icon: "💻", title: "Control de software LIMS", hint: "Validación de sistemas informáticos de datos." },
-    ],
-  },
-  {
-    key: "s8",
-    clause: "Cláusula 8",
-    label: "Sistema de Gestión",
-    bg: "#fff8e1",
-    accent: "#ffa726",
-    textColor: "#e65100",
-    criterios: [
-      { id: "8.5.1", icon: "🔮", title: "Riesgos y Oportunidades", hint: "Acciones para prevenir resultados no deseados." },
-      { id: "8.8.1", icon: "🔍", title: "Auditorías Internas", hint: "Programa planificado y auditores independientes." },
-    ],
-  },
-];
+        /* Etiquetas (Pills) */
+        .badge-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
 
-// --- COMPONENTES AUXILIARES ---
+        .badge {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 5px 15px;
+            font-size: 0.75em;
+            font-weight: bold;
+            color: var(--primary-purple);
+            text-transform: uppercase;
+        }
 
-function ScoreCircle({ pct }: { pct: number | null }) {
-  const r = 50;
-  const circ = 2 * Math.PI * r;
-  const offset = pct === null ? circ : circ - (pct / 100) * circ;
-  const color = pct === null ? "#e0e0e0" : pct >= 85 ? "#66bb6a" : pct >= 65 ? "#42a5f5" : pct >= 40 ? "#ffa726" : "#ef9a9a";
+        .badge.active {
+            background: var(--primary-purple);
+            color: white;
+        }
 
-  return (
-    <div className="relative w-28 h-28 shrink-0">
-      <svg viewBox="0 0 120 120" className="w-28 h-28 -rotate-90">
-        <circle cx="60" cy="60" r={r} fill="none" stroke="#f3f4f6" strokeWidth="10" />
-        <circle cx="60" cy="60" r={r} fill="none" stroke={color} strokeWidth="10" strokeLinecap="round" strokeDasharray={circ} strokeDashoffset={offset} style={{ transition: "all 0.6s ease" }} />
-      </svg>
-      <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-2xl font-extrabold" style={{ color: pct === null ? "#bdbdbd" : color }}>{pct === null ? "—" : `${pct}%`}</span>
-        <span className="text-[9px] text-gray-400 font-bold uppercase">Meta</span>
-      </div>
+        /* Título y Contenido */
+        .header-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .icon-box {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-size: 2em;
+        }
+
+        .title-section h1 {
+            margin: 0;
+            color: #4a148c;
+            font-size: 1.8em;
+            line-height: 1.2;
+        }
+
+        .description {
+            color: #6a1b9a;
+            font-size: 0.95em;
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="top-nav">
+        <span>● Checklist Auditoría · ISO/IEC 17025:2017 · Laboratorios de Ensayo y Calibración</span>
+        <div>
+            <button style="border: none; background: #ffebee; color: #e91e63; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">🔄 Reiniciar</button>
+            <button style="border: none; background: #e3f2fd; color: #1976d2; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-left: 10px;">🖨️ Imprimir / PDF</button>
+        </div>
     </div>
-  );
-}
 
-function CheckItem({ criterio, answer, onAnswer }: { criterio: Criterio; answer: Answer; onAnswer: (id: string, val: Answer) => void; }) {
-  const isActive = (val: Answer) => answer === val;
-  return (
-    <div className="bg-white rounded-xl mb-3 border border-gray-100 shadow-sm p-4 flex flex-col md:flex-row gap-4 items-center">
-      <div className="w-12 h-12 rounded-lg flex items-center justify-center text-xs font-bold" style={{ background: "#f8f9fa", border: "1px solid #eee" }}>
-        {criterio.id}
-      </div>
-      <div className="flex-1 text-center md:text-left">
-        <h4 className="text-sm font-bold text-gray-800">{criterio.icon} {criterio.title}</h4>
-        <p className="text-[11px] text-gray-400 italic">{criterio.hint}</p>
-      </div>
-      <div className="flex gap-2">
-        {(["C", "N", "NA"] as const).map((val) => (
-          <button
-            key={val}
-            onClick={() => onAnswer(criterio.id, val)}
-            className={`px-3 py-1.5 rounded-lg text-[10px] font-bold border transition-all ${isActive(val) ? 'scale-105 shadow-md' : 'opacity-60'}`}
-            style={isActive(val) 
-                ? { background: val === "C" ? "#e8f5e9" : val === "N" ? "#ffebee" : "#f3e5f5", borderColor: val === "C" ? "#66bb6a" : val === "N" ? "#ef9a9a" : "#ce93d8", color: "#333" }
-                : { background: "#fff", borderColor: "#ddd", color: "#999" }}
-          >
-            {val === "C" ? "✅ C" : val === "N" ? "❌ N" : "— NA"}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// --- COMPONENTE PRINCIPAL ---
-
-export default function ChecklistISO17025() {
-  const [answers, setAnswers] = useState<Record<string, Answer>>({});
-  
-  const handleAnswer = useCallback((id: string, val: Answer) => {
-    setAnswers((prev) => ({ ...prev, [id]: val }));
-  }, []);
-
-  const handleReset = () => { if (confirm("¿Reiniciar Checklist?")) setAnswers({}); };
-
-  const totalCriterios = SECTIONS.flatMap(s => s.criterios).length;
-  const cumple = Object.values(answers).filter(v => v === "C").length;
-  const na = Object.values(answers).filter(v => v === "NA").length;
-  const aplicables = totalCriterios - na;
-  const porcentaje = aplicables > 0 ? Math.round((cumple / aplicables) * 100) : 0;
-
-  return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8" style={{ fontFamily: "'Salsa', cursive" }}>
-      <link href="https://fonts.googleapis.com/css2?family=Salsa&display=swap" rel="stylesheet" />
-      
-      {/* Header Estilo Card */}
-      <div className="max-w-4xl mx-auto bg-white rounded-3xl shadow-xl border-2 border-purple-100 overflow-hidden mb-8">
-        <div className="bg-gradient-to-r from-purple-100 to-blue-50 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div>
-            <span className="bg-purple-600 text-white px-4 py-1 rounded-full text-xs font-bold mb-2 inline-block">ISO/IEC 17025:2017</span>
-            <h1 className="text-3xl font-black text-purple-900">Auditoría de Calidad</h1>
-            <p className="text-purple-700 opacity-70">Sistema de Evaluación de Laboratorios</p>
-          </div>
-          <ScoreCircle pct={porcentaje} />
+    <div class="card-header">
+        <div class="badge-container">
+            <div class="badge active">ISO/IEC 17025:2017</div>
+            <div class="badge">CHECKLIST DE AUDITORÍA</div>
+            <div class="badge">LABORATORIOS DE ENSAYO Y CALIBRACIÓN</div>
+            <div class="badge">ACREDITACIÓN</div>
         </div>
 
-        {/* Botones de Acción */}
-        <div className="p-4 border-t flex justify-end gap-3 bg-white/50">
-            <button onClick={handleReset} className="px-5 py-2 rounded-xl text-xs font-bold bg-red-50 text-red-600 border border-red-200">🔄 Reiniciar</button>
-            <button onClick={() => window.print()} className="px-5 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white shadow-lg">🖨️ Exportar PDF</button>
+        <div class="header-content">
+            <div class="icon-box">🔬</div>
+            <div class="title-section">
+                <h1>Checklist de Auditoría<br>ISO/IEC 17025:2017</h1>
+                <p class="description">
+                    Evaluación de cumplimiento de la norma <strong>ISO/IEC 17025:2017</strong> — Requisitos generales para la competencia de laboratorios de ensayo y de calibración. Califica cada criterio como <strong>Cumple, No Cumple o No Aplica.</strong>
+                </p>
+            </div>
         </div>
-      </div>
+        
+        </div>
+</div>
 
-      {/* Secciones del Checklist */}
-      <div className="max-w-4xl mx-auto space-y-8">
-        {SECTIONS.map((section) => (
-          <div key={section.key} className="rounded-2xl overflow-hidden shadow-sm border border-gray-100">
-            <div className="p-4 flex items-center justify-between" style={{ background: section.bg }}>
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-widest opacity-60">{section.clause}</span>
-                <h3 className="text-lg font-bold" style={{ color: section.textColor }}>{section.label}</h3>
-              </div>
-              <div className="bg-white/40 px-3 py-1 rounded-full text-xs font-bold">
-                {section.criterios.length} Ítems
-              </div>
+</body>
+</html>
+
+
+<style>
+        /* --- ESTILOS ADICIONALES PARA LA SECCIÓN 2 --- */
+        
+        /* Tarjeta secundaria para el formulario */
+        .card-form {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid rgba(224, 208, 240, 0.5); /* Borde muy suave */
+        }
+
+        /* Encabezado del formulario */
+        .form-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .form-icon-box {
+            background-color: var(--light-purple);
+            color: #5c6bc0; /* Color azulado del icono de edificio */
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-header-text h2 {
+            margin: 0;
+            color: #283593; /* Azul oscuro del título */
+            font-size: 1.15em;
+            font-weight: bold;
+        }
+
+        .form-header-text p {
+            margin: 3px 0 0 0;
+            color: #78909c; /* Gris azulado del subtítulo */
+            font-size: 0.85em;
+        }
+
+        /* Cuadrícula del formulario (Grid 3x3) */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px 25px; /* Espaciado vertical y horizontal */
+        }
+
+        /* Grupo de campo individual */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Etiqueta del campo */
+        .input-group label {
+            font-size: 0.75em;
+            font-weight: bold;
+            color: #78909c; /* Color de las etiquetas */
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .required-star {
+            color: #d32f2f; /* Rojo para el asterisco */
+        }
+
+        /* Campo de entrada (Input) */
+        .input-field {
+            border: 1.5px solid #eceff1;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 0.9em;
+            color: #37474f;
+            transition: border-color 0.2s;
+        }
+
+        .input-field::placeholder {
+            color: #b0bec5; /* Color del texto de ejemplo */
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #7986cb; /* Color al hacer foco */
+        }
+        
+        /* Estilo para el input de fecha */
+        .input-field[type="date"] {
+            color: #78909c; /* Color por defecto más claro */
+        }
+        
+        /* Ajuste para iconos de emoji en etiquetas */
+        .label-icon {
+            font-size: 1.1em;
+        }
+
+    </style>
+
+    <div class="card-form">
+        <div class="form-header">
+            <div class="form-icon-box">
+                🏛️
             </div>
-            <div className="p-4 bg-white/30 backdrop-blur-sm">
-              {section.criterios.map((c) => (
-                <CheckItem 
-                  key={c.id} 
-                  criterio={c} 
-                  answer={answers[c.id] || null} 
-                  onAnswer={handleAnswer} 
-                />
-              ))}
+            <div class="form-header-text">
+                <h2>Identificación del Laboratorio</h2>
+                <p>Registre los datos del laboratorio antes de completar la auditoría</p>
             </div>
-          </div>
-        ))}
-      </div>
-      
-      <footer className="text-center mt-12 text-gray-400 text-xs">
-        Hecho con ❤️ para la gestión de laboratorios acreditados.
-      </footer>
+        </div>
+
+        <div class="form-grid">
+            
+            <div class="input-group">
+                <label><span class="label-icon">🏷️</span> Nombre del laboratorio <span class="required-star">*</span></label>
+                <input type="text" class="input-field" placeholder="Ej. Laboratorio de Metrología LM-01">
+            </div>
+            <div class="input-group">
+                <label><span class="label-icon">🔢</span> Código / N° de registro</label>
+                <input type="text" class="input-field" placeholder="Ej. LAB-2024-001">
+            </div>
+            <div class="input-group">
+                <label><span class="label-icon">📍</span> Ciudad / País</label>
+                <input type="text" class="input-field" placeholder="Ej. Bogotá, Colombia">
+            </div>
+
+            <div class="input-group">
+                <label><span class="label-icon">🏅</span> N° de acreditación</label>
+                <input type="text" class="input-field" placeholder="Ej. LE-1234 / ONAC">
+            </div>
+            <div class="input-group">
+                <label><span class="label-icon">🎯</span> Alcance de acreditación</label>
+                <input type="text" class="input-field" placeholder="Ej. Ensayos fisicoquímicos de agua">
+            </div>
+            <div class="input-group">
+                <label><span class="label-icon">🔁</span> Ciclo de auditoría</label>
+                <input type="text" class="input-field" placeholder="Ej. Renovación 2025 / Seguimiento 1">
+            </div>
+
+            <div class="input-group">
+                <label><span class="label-icon">📅</span> Fecha de auditoría <span class="required-star">*</span></label>
+                <input type="date" class="input-field"> </div>
+            <div class="input-group">
+                <label><span class="label-icon">👤</span> Auditor responsable <span class="required-star">*</span></label>
+                <input type="text" class="input-field" placeholder="Nombre completo">
+            </div>
+            <div class="input-group">
+                <label><span class="label-icon">💼</span> Cargo / Función</label>
+                <input type="text" class="input-field" placeholder="Ej. Auditor Líder">
+            </div>
+
+        </div>
     </div>
-  );
-}
+    </div> ```
+
+<style>
+        /* --- ESTILOS PARA LAS CLÁUSULAS --- */
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 30px 0 20px 0;
+        }
+
+        .clause-badge {
+            background: #fce4ec;
+            color: #d81b60;
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.9em;
+            border: 1px solid #f8bbd0;
+        }
+
+        .clause-title {
+            color: #78909c;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.85em;
+            letter-spacing: 1px;
+        }
+
+        .count-pill {
+            background: #f3e5f5;
+            color: #8e24aa;
+            padding: 3px 12px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            font-weight: bold;
+            border: 1px solid #e1bee7;
+        }
+
+        /* Filas de Criterios */
+        .criterion-row {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid #eceff1;
+            transition: all 0.2s;
+        }
+
+        .criterion-number {
+            background: #f8f9fa;
+            color: #90a4ae;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8em;
+            font-weight: bold;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .criterion-text {
+            flex-grow: 1;
+        }
+
+        .criterion-text h3 {
+            margin: 0;
+            font-size: 0.95em;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .criterion-text p {
+            margin: 5px 0 0 0;
+            font-size: 0.85em;
+            color: #90a4ae;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        /* Botones de Evaluación */
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .eval-btn {
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px solid #eceff1;
+            background: white;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: bold;
+            color: #b0bec5;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.2s;
+        }
+
+        /* Colores activos según la imagen */
+        .eval-btn.cumple.active { background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7; }
+        .eval-btn.no-cumple.active { background: #ffebee; color: #c62828; border-color: #ef9a9a; }
+        .eval-btn.na.active { background: #f5f5f5; color: #616161; border-color: #bdbdbd; }
+    </style>
+
+    <div class="section-divider">
+        <span class="clause-badge">4</span>
+        <span class="clause-title">CLÁUSULA 4 — REQUISITOS GENERALES</span>
+        <span class="count-pill">6 criterios - 0%</span>
+    </div>
+
+    <div id="clause-4-container">
+        <div class="criterion-row" data-id="4.1.1">
+            <div class="criterion-number">4.1.1</div>
+            <div class="criterion-text">
+                <h3>⚖️ El laboratorio documenta su compromiso con la imparcialidad</h3>
+                <p>Debe existir una declaración documentada de imparcialidad que sea accesible al público y que incluya todos los factores que puedan comprometer la imparcialidad.</p>
+            </div>
+            <div class="btn-group">
+                <button class="eval-btn cumple" onclick="evaluateItem(this, 'cumple')">✅ Cumple</button>
+                <button class="eval-btn no-cumple" onclick="evaluateItem(this, 'no-cumple')">❌ No Cumple</button>
+                <button class="eval-btn na" onclick="evaluateItem(this, 'na')">— N/A</button>
+            </div>
+        </div>
+
+        <div class="criterion-row" data-id="4.1.2">
+            <div class="criterion-number">4.1.2</div>
+            <div class="criterion-text">
+                <h3>🔎 Se identifican y gestionan los riesgos de imparcialidad de forma continua</h3>
+                <p>Incluye relaciones comerciales, financieras, personales y otras presiones que puedan afectar la imparcialidad. Se documentan las acciones tomadas.</p>
+            </div>
+            <div class="btn-group">
+                <button class="eval-btn cumple" onclick="evaluateItem(this, 'cumple')">✅ Cumple</button>
+                <button class="eval-btn no-cumple" onclick="evaluateItem(this, 'no-cumple')">❌ No Cumple</button>
+                <button class="eval-btn na" onclick="evaluateItem(this, 'na')">— N/A</button>
+            </div>
+        </div>
+
+        </div>
+
+    <script>
+        // Lógica para actualizar contadores
+        function evaluateItem(btn, status) {
+            // Quitar clase activa de los hermanos
+            const parent = btn.parentElement;
+            parent.querySelectorAll('.eval-btn').forEach(b => b.classList.remove('active'));
+            
+            // Agregar clase activa al presionado
+            btn.classList.add('active');
+
+            updateStats();
+        }
+
+        function updateStats() {
+            const allRows = document.querySelectorAll('.criterion-row');
+            const cumpleCount = document.querySelectorAll('.eval-btn.cumple.active').length;
+            const noCumpleCount = document.querySelectorAll('.eval-btn.no-cumple.active').length;
+            const naCount = document.querySelectorAll('.eval-btn.na.active').length;
+            const respondidos = cumpleCount + noCumpleCount + naCount;
+
+            // Aquí actualizamos los IDs que pusimos en la tarjeta de arriba (Paso 1)
+            // Asegúrate de poner id="count-cumplen", etc., en los elementos del Paso 1
+            document.getElementById('stat-cumplen').innerText = cumpleCount;
+            document.getElementById('stat-no-cumplen').innerText = noCumpleCount;
+            document.getElementById('stat-na').innerText = naCount;
+            document.getElementById('stat-respondidos').innerText = respondidos;
+            
+            let porcentaje = (cumpleCount / 65) * 100;
+            document.getElementById('stat-porcentaje').innerText = porcentaje.toFixed(0) + "%";
+        }
+    </script>
