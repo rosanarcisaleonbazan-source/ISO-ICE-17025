@@ -161,20 +161,165 @@
             <div class="stat-item"><b id="count-resp">0</b><span>Respondidos</span></div>
         </div>
 
-        <div class="card">
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:20px;">
-                <span style="font-size:24px;">🏛️</span>
-                <div>
-                    <b style="color:#283593;">Identificación del Laboratorio</b>
-                    <div style="font-size:12px; color:#90a4ae;">Registre los datos del laboratorio</div>
-                </div>
+      <style>
+        /* --- ESTILOS ADICIONALES PARA LA SECCIÓN 2 --- */
+        
+        /* Tarjeta secundaria para el formulario */
+        .card-form {
+            background-color: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid rgba(224, 208, 240, 0.5); /* Borde muy suave */
+        }
+
+        /* Encabezado del formulario */
+        .form-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .form-icon-box {
+            background-color: var(--light-purple);
+            color: #5c6bc0; /* Color azulado del icono de edificio */
+            padding: 12px;
+            border-radius: 12px;
+            font-size: 1.4em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-header-text h2 {
+            margin: 0;
+            color: #283593; /* Azul oscuro del título */
+            font-size: 1.15em;
+            font-weight: bold;
+        }
+
+        .form-header-text p {
+            margin: 3px 0 0 0;
+            color: #78909c; /* Gris azulado del subtítulo */
+            font-size: 0.85em;
+        }
+
+        /* Cuadrícula del formulario (Grid 3x3) */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px 25px; /* Espaciado vertical y horizontal */
+        }
+
+        /* Grupo de campo individual */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Etiqueta del campo */
+        .input-group label {
+            font-size: 0.75em;
+            font-weight: bold;
+            color: #78909c; /* Color de las etiquetas */
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .required-star {
+            color: #d32f2f; /* Rojo para el asterisco */
+        }
+
+        /* Campo de entrada (Input) */
+        .input-field {
+            border: 1.5px solid #eceff1;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 0.9em;
+            color: #37474f;
+            transition: border-color 0.2s;
+        }
+
+        .input-field::placeholder {
+            color: #b0bec5; /* Color del texto de ejemplo */
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #7986cb; /* Color al hacer foco */
+        }
+        
+        /* Estilo para el input de fecha */
+        .input-field[type="date"] {
+            color: #78909c; /* Color por defecto más claro */
+        }
+        
+        /* Ajuste para iconos de emoji en etiquetas */
+        .label-icon {
+            font-size: 1.1em;
+        }
+
+    </style>
+
+    <div class="card-form">
+        <div class="form-header">
+            <div class="form-icon-box">
+                🏛️
             </div>
-            <div class="form-grid">
-                <div class="input-group"><label>🏷️ Nombre</label><input type="text" placeholder="Ej. Metrología LM-01"></div>
-                <div class="input-group"><label>🔢 Código</label><input type="text" placeholder="Ej. LAB-2024"></div>
-                <div class="input-group"><label>📍 Ciudad</label><input type="text" placeholder="Ej. Bogotá"></div>
+            <div class="form-header-text">
+                <h2>Identificación del Laboratorio</h2>
+                <p>Registre los datos del laboratorio antes de completar la auditoría</p>
             </div>
         </div>
+
+        <div class="form-grid">
+            
+            <div class="input-group">
+                <label><span class="label-icon">🏷️</span> Nombre del laboratorio <span class="required-star">*</span></label>
+                <input type="text" class="input-field" placeholder="Ej. Laboratorio de Metrología LM-01">
+            </div>
+            <div class="input-group">
+                <label><span class="label-icon">🔢</span> Código / N° de registro</label>
+                <input type="text" class="input-field" placeholder="Ej. LAB-2024-001">
+            </div>
+            <div class="input-group">
+                <label><span class="label-icon">📍</span> Ciudad / País</label>
+                <input type="text" class="input-field" placeholder="Ej. Bogotá, Colombia">
+            </div>
+
+            <div class="input-group">
+                <label><span class="label-icon">🏅</span> N° de acreditación</label>
+                <input type="text" class="input-field" placeholder="Ej. LE-1234 / ONAC">
+            </div>
+            <div class="input-group">
+                <label><span class="label-icon">🎯</span> Alcance de acreditación</label>
+                <input type="text" class="input-field" placeholder="Ej. Ensayos fisicoquímicos de agua">
+            </div>
+            <div class="input-group">
+                <label><span class="label-icon">🔁</span> Ciclo de auditoría</label>
+                <input type="text" class="input-field" placeholder="Ej. Renovación 2025 / Seguimiento 1">
+            </div>
+
+            <div class="input-group">
+                <label><span class="label-icon">📅</span> Fecha de auditoría <span class="required-star">*</span></label>
+                <input type="date" class="input-field"> </div>
+            <div class="input-group">
+                <label><span class="label-icon">👤</span> Auditor responsable <span class="required-star">*</span></label>
+                <input type="text" class="input-field" placeholder="Nombre completo">
+            </div>
+            <div class="input-group">
+                <label><span class="label-icon">💼</span> Cargo / Función</label>
+                <input type="text" class="input-field" placeholder="Ej. Auditor Líder">
+            </div>
+
+        </div>
+    </div>
+    </div> 
 
         <h2 style="color: var(--text-gray); font-size: 14px; margin: 30px 0 15px 0;">CLÁUSULA 4 — REQUISITOS GENERALES</h2>
 
