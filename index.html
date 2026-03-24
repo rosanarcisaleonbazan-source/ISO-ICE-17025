@@ -1,124 +1,813 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Equipos ISO/IEC 17025:2017 | Control Metrológico</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            /* Paleta Técnica ISO 17025 */
-            --p900: #001a33; --p800: #003366; --p500: #0059b3; --p400: #3399ff;
-            --s800: #063d31; --s600: #0d6b55; --s50: #edfaf5;
-            --gray900: #1a1a1a; --gray600: #595955; --gray100: #e8e7e0;
-            --white: #ffffff; --page: #f4f7f9;
-            --font: 'Plus Jakarta Sans', sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISO/IEC 17025:2017 — Sistema de Gestión para Laboratorios</title>
+<meta name="description" content="Herramientas interactivas para implementar ISO/IEC 17025:2017 - Competencia técnica en laboratorios de ensayo y calibración.">
+<link href="https://fonts.googleapis.com/css2?family=Salsa&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* PALETA PASTEL */
+  --rosa-pastel: #FFB3D9;
+  --rosa-claro: #FFD4E5;
+  --rosa-muy-claro: #FFF0F6;
+  
+  --azul-pastel: #B3E5FC;
+  --azul-claro: #D1F0FF;
+  --azul-muy-claro: #F0F8FF;
+  
+  --verde-pastel: #B3F5D1;
+  --verde-claro: #D4F5E3;
+  --verde-muy-claro: #EEF9F5;
+  
+  --morado-pastel: #E1BEE7;
+  --morado-claro: #F0D9F5;
+  --morado-muy-claro: #F9F3FD;
+  
+  --naranja-pastel: #FFD4B3;
+  --naranja-claro: #FFE5D4;
+  --naranja-muy-claro: #FFF5ED;
+  
+  --amarillo-pastel: #FFF9C4;
+  --amarillo-claro: #FFFDE7;
+  
+  --gris-oscuro: #4a5568;
+  --gris-medio: #718096;
+  --gris-claro: #cbd5e0;
+  --gris-muy-claro: #f7fafc;
+  
+  --white: #ffffff;
+  --font-titulo: 'Salsa', cursive;
+  --font-cuerpo: 'Poppins', sans-serif;
+  --sh: 0 2px 12px rgba(0,0,0,.08);
+  --sh-md: 0 6px 24px rgba(0,0,0,.12);
+  --sh-lg: 0 12px 40px rgba(0,0,0,.15);
+}
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: var(--font); background: var(--page); color: var(--gray900); line-height: 1.5; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { 
+  font-family: var(--font-cuerpo); 
+  background: linear-gradient(135deg, var(--azul-muy-claro) 0%, var(--rosa-muy-claro) 100%);
+  color: var(--gris-oscuro); 
+  line-height: 1.6; 
+  overflow-x: hidden;
+  min-height: 100vh;
+}
 
-        /* NAVEGACIÓN */
-        nav { background: var(--p900); padding: 0 40px; height: 65px; display: flex; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .nav-inner { max-width: 1100px; margin: 0 auto; width: 100%; display: flex; justify-content: space-between; align-items: center; }
-        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: white; }
-        .logo-ic { width: 32px; height: 32px; background: var(--p500); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
-        .logo span { font-weight: 800; font-size: 15px; }
+/* NAV */
+nav {
+  background: linear-gradient(135deg, var(--rosa-pastel) 0%, var(--morado-pastel) 100%);
+  backdrop-filter: blur(10px);
+  padding: 0 40px;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: var(--sh);
+  border-bottom: 2px solid rgba(255, 255, 255, .3);
+}
 
-        /* HERO */
-        .hero { background: linear-gradient(135deg, var(--p900) 0%, var(--p800) 100%); padding: 80px 20px; text-align: center; color: white; }
-        .hero-badge { display: inline-block; background: rgba(255,255,255,0.1); padding: 6px 15px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.2); }
-        .hero h1 { font-size: 42px; margin-bottom: 15px; }
-        .hero h1 em { color: var(--p400); font-style: normal; }
-        .hero p { max-width: 600px; margin: 0 auto; opacity: 0.8; }
+.nav-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 65px;
+  gap: 16px;
+}
 
-        /* GRID DE HERRAMIENTAS */
-        .container { max-width: 1100px; margin: -40px auto 60px; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
-        .card { background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-decoration: none; color: inherit; transition: 0.3s; border: 1px solid var(--gray100); display: flex; flex-direction: column; }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
-        
-        .card-header { padding: 30px; color: white; }
-        .h-blue { background: var(--p800); }
-        .h-teal { background: var(--s800); }
-        
-        .card-body { padding: 25px; flex-grow: 1; }
-        .card-body h2 { font-size: 20px; margin-bottom: 10px; color: var(--p900); }
-        .card-body ul { list-style: none; padding: 0; margin-bottom: 20px; }
-        .card-body li { font-size: 13px; color: var(--gray600); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        .card-body li::before { content: '•'; color: var(--p500); font-weight: bold; }
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
 
-        .btn { display: block; text-align: center; background: var(--p50); color: var(--p800); padding: 12px; border-radius: 8px; font-weight: 700; transition: 0.2s; }
-        .card:hover .btn { background: var(--p500); color: white; }
+.nav-logo-ic {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--verde-pastel), var(--azul-pastel));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--white);
+  box-shadow: var(--sh);
+}
 
-        footer { text-align: center; padding: 40px; color: var(--gray600); font-size: 12px; border-top: 1px solid var(--gray100); }
-    </style>
+.nav-logo span {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--gris-oscuro);
+  font-family: var(--font-titulo);
+  letter-spacing: .05em;
+}
+
+.nav-logo small {
+  font-size: 11px;
+  color: var(--gris-medio);
+  font-weight: 500;
+  display: block;
+  margin-top: -2px;
+  font-family: var(--font-cuerpo);
+}
+
+.nav-links { 
+  display: flex; 
+  gap: 8px; 
+  align-items: center; 
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gris-oscuro);
+  transition: all .15s;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, .4);
+  color: var(--gris-oscuro);
+}
+
+.nav-pill {
+  background: linear-gradient(135deg, var(--verde-pastel), var(--azul-pastel));
+  color: var(--white);
+  border-radius: 20px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .15s;
+  white-space: nowrap;
+  box-shadow: var(--sh);
+}
+
+.nav-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sh-md);
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(140deg, var(--azul-pastel) 0%, var(--verde-pastel) 35%, var(--rosa-pastel) 75%, var(--morado-pastel) 100%);
+  padding: 100px 40px 90px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, .2) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(255, 255, 255, .15) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, .7);
+  border: 1.5px solid rgba(255, 255, 255, .5);
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gris-oscuro);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  box-shadow: var(--sh);
+}
+
+.hero-badge::before { content: '🔬'; font-size: 16px; }
+
+.hero h1 {
+  font-size: clamp(36px, 6vw, 60px);
+  font-weight: 800;
+  color: var(--gris-oscuro);
+  line-height: 1.15;
+  margin-bottom: 24px;
+  max-width: 800px;
+  font-family: var(--font-titulo);
+  letter-spacing: .02em;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--verde-pastel);
+  background: rgba(179, 245, 209, .3);
+  padding: 4px 12px;
+  border-radius: 8px;
+}
+
+.hero p {
+  font-size: 17px;
+  color: var(--gris-medio);
+  line-height: 1.75;
+  max-width: 700px;
+  margin-bottom: 40px;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .18s;
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-cuerpo);
+}
+
+.hb-primary {
+  background: linear-gradient(135deg, var(--verde-pastel), var(--azul-pastel));
+  color: var(--white);
+  box-shadow: var(--sh-md);
+}
+
+.hb-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sh-lg);
+}
+
+.hb-outline {
+  background: rgba(255, 255, 255, .8);
+  color: var(--gris-oscuro);
+  border: 2px solid rgba(255, 255, 255, .5);
+}
+
+.hb-outline:hover {
+  background: var(--white);
+  transform: translateY(-3px);
+  box-shadow: var(--sh-md);
+}
+
+.hero-stats {
+  display: flex;
+  gap: 45px;
+  margin-top: 60px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hstat { 
+  text-align: center;
+  background: rgba(255, 255, 255, .6);
+  padding: 20px 28px;
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: var(--sh);
+}
+
+.hstat .n {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--verde-pastel);
+  line-height: 1;
+  font-family: var(--font-titulo);
+}
+
+.hstat .l {
+  font-size: 12px;
+  color: var(--gris-medio);
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+/* TOOLS SECTION */
+.tools-section {
+  padding: 90px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--gris-oscuro);
+  text-transform: uppercase;
+  letter-spacing: .15em;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-eyebrow::after {
+  content: '';
+  width: 40px;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--rosa-pastel), var(--azul-pastel));
+  border-radius: 2px;
+}
+
+.section-title {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
+  color: var(--gris-oscuro);
+  line-height: 1.25;
+  margin-bottom: 14px;
+  font-family: var(--font-titulo);
+}
+
+.section-sub {
+  font-size: 16px;
+  color: var(--gris-medio);
+  line-height: 1.7;
+  max-width: 620px;
+  margin-bottom: 52px;
+}
+
+.tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+.tool-card {
+  background: var(--white);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--sh-md);
+  border: 1.5px solid rgba(255, 255, 255, .6);
+  display: flex;
+  flex-direction: column;
+  transition: transform .25s, box-shadow .25s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.tool-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--sh-lg);
+}
+
+/* CARD COLORS */
+.card-bg-1 { background: linear-gradient(135deg, var(--azul-pastel), var(--azul-claro)); }
+.card-bg-2 { background: linear-gradient(135deg, var(--rosa-pastel), var(--naranja-pastel)); }
+.card-bg-3 { background: linear-gradient(135deg, var(--verde-pastel), var(--morado-pastel)); }
+
+.card-head {
+  padding: 32px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+  color: var(--white);
+  font-size: 48px;
+}
+
+.tc-body {
+  padding: 28px 28px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.tc-num {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--gris-claro);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.tc-header h2 {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--gris-oscuro);
+  line-height: 1.25;
+  margin-bottom: 9px;
+  font-family: var(--font-titulo);
+}
+
+.tc-header p {
+  font-size: 14px;
+  color: var(--gris-medio);
+  line-height: 1.55;
+}
+
+.tc-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 18px;
+  margin-bottom: 24px;
+  flex: 1;
+}
+
+.tc-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--gris-medio);
+  line-height: 1.45;
+}
+
+.tc-features li::before {
+  content: '✓';
+  color: var(--verde-pastel);
+  font-weight: 800;
+  margin-top: 2px;
+  flex-shrink: 0;
+  font-size: 16px;
+}
+
+.tc-meta {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+
+.tc-tag {
+  background: var(--gris-muy-claro);
+  border: 1px solid var(--gris-claro);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gris-medio);
+}
+
+.tc-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .15s;
+  cursor: pointer;
+  border: 1.5px solid;
+  font-family: var(--font-cuerpo);
+  width: 100%;
+}
+
+.tc-cta-1 {
+  background: var(--azul-muy-claro);
+  color: var(--gris-oscuro);
+  border-color: var(--azul-claro);
+}
+
+.tc-cta-1:hover {
+  background: var(--azul-claro);
+  border-color: var(--azul-pastel);
+}
+
+.tc-cta-2 {
+  background: var(--rosa-muy-claro);
+  color: var(--gris-oscuro);
+  border-color: var(--rosa-claro);
+}
+
+.tc-cta-2:hover {
+  background: var(--rosa-claro);
+  border-color: var(--rosa-pastel);
+}
+
+.tc-cta-3 {
+  background: var(--verde-muy-claro);
+  color: var(--gris-oscuro);
+  border-color: var(--verde-claro);
+}
+
+.tc-cta-3:hover {
+  background: var(--verde-claro);
+  border-color: var(--verde-pastel);
+}
+
+/* FOOTER */
+footer {
+  background: linear-gradient(135deg, var(--gris-muy-claro) 0%, var(--azul-muy-claro) 100%);
+  padding: 50px 40px 35px;
+  border-top: 2px solid var(--gris-claro);
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.footer-top {
+  display: flex;
+  gap: 50px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding-bottom: 35px;
+  border-bottom: 1px solid var(--gris-claro);
+}
+
+.footer-brand {
+  flex: 1;
+  min-width: 240px;
+}
+
+.footer-brand .fl {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  text-decoration: none;
+}
+
+.footer-brand .fl-ic {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--rosa-pastel), var(--morado-pastel));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.footer-brand .fl span {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--gris-oscuro);
+  font-family: var(--font-titulo);
+}
+
+.footer-brand p {
+  font-size: 13px;
+  color: var(--gris-medio);
+  line-height: 1.7;
+  max-width: 320px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 50px;
+  flex-wrap: wrap;
+}
+
+.fl-col h4 {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--gris-oscuro);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  margin-bottom: 16px;
+}
+
+.fl-col a {
+  display: block;
+  font-size: 13px;
+  color: var(--gris-medio);
+  text-decoration: none;
+  margin-bottom: 10px;
+  transition: color .15s;
+}
+
+.fl-col a:hover {
+  color: var(--rosa-pastel);
+  font-weight: 600;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-bottom p {
+  font-size: 12px;
+  color: var(--gris-medio);
+  line-height: 1.6;
+}
+
+.footer-bottom p strong {
+  color: var(--gris-oscuro);
+  font-weight: 700;
+}
+
+/* RESPONSIVE */
+@media(max-width: 860px) {
+  .tools-grid { grid-template-columns: 1fr; }
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 70px 24px 60px; }
+  .tools-section { padding: 60px 20px; }
+  .footer-inner { padding-left: 20px; padding-right: 20px; }
+  .hero-stats { gap: 20px; }
+}
+</style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-    <div class="nav-inner">
-        <a href="#" class="logo">
-            <div class="logo-ic">🧪</div>
-            <span>METROLOGÍA 17025</span>
-        </a>
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">
+      <div class="nav-logo-ic">🔬</div>
+      <div>
+        <span>ISO/IEC 17025</span>
+        <small>Gestión de Laboratorios</small>
+      </div>
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="#requisitos">📋 Requisitos</a>
+      <a class="nav-link" href="#herramientas">🛠️ Herramientas</a>
+      <a class="nav-link" href="#contacto">📞 Contacto</a>
     </div>
+    <a class="nav-pill" href="#comenzar">Comenzar →</a>
+  </div>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
-    <div class="hero-badge">ISO/IEC 17025:2017</div>
-    <h1>Gestión de <em>Equipamiento</em></h1>
-    <p>Asegurando la trazabilidad metrológica y la competencia técnica en laboratorios de ensayo y calibración.</p>
+  <div class="hero-inner">
+    <div class="hero-badge">Competencia Técnica en Laboratorios</div>
+    <h1>Gestión de Calidad en <em>Laboratorios de Ensayo</em></h1>
+    <p>Implementación integral de ISO/IEC 17025:2017 para asegurar la competencia técnica, imparcialidad y confiabilidad de laboratorios de ensayo y calibración.</p>
+    <div class="hero-btns">
+      <a class="hero-btn hb-primary" href="#herramientas">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        Ver Herramientas
+      </a>
+      <a class="hero-btn hb-outline" href="#requisitos">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        Leer Guía
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n">25+</div><div class="l">Requisitos Clave</div></div>
+      <div class="hstat"><div class="n">6</div><div class="l">Áreas de Control</div></div>
+      <div class="hstat"><div class="n">8</div><div class="l">Documentos Plantilla</div></div>
+      <div class="hstat"><div class="n">100%</div><div class="l">Conformidad ISO</div></div>
+    </div>
+  </div>
 </section>
 
-<div class="container">
-    <a href="infografia.html" class="card">
-        <div class="card-header h-blue">
-            <span style="font-size: 30px;">📊</span>
-        </div>
-        <div class="card-body">
-            <h2>Guía de Trazabilidad</h2>
-            <ul>
-                <li>Cláusula 6.4: Equipamiento</li>
-                <li>Pirámide de Trazabilidad</li>
-                <li>Calibración vs Verificación</li>
-            </ul>
-            <div class="btn">Abrir Guía →</div>
-        </div>
-    </a>
+<!-- TOOLS -->
+<section id="herramientas">
+  <div class="tools-section">
+    <div class="section-eyebrow">Herramientas</div>
+    <h2 class="section-title">Recursos para tu <em>Laboratorio</em></h2>
+    <p class="section-sub">Plantillas, guías interactivas y sistemas de auditoría diseñados específicamente para cumplir ISO/IEC 17025:2017.</p>
 
-    <a href="cuestionario.html" class="card">
-        <div class="card-header h-blue" style="background: var(--p500);">
-            <span style="font-size: 30px;">❓</span>
+    <div class="tools-grid">
+      <!-- CARD 1 -->
+      <a class="tool-card" href="#">
+        <div class="card-head card-bg-1">📚</div>
+        <div class="tc-body">
+          <div class="tc-num">Herramienta 01</div>
+          <h2>Manual de Calidad</h2>
+          <p style="color: var(--gris-medio); font-size: 13px; margin-bottom: 16px;">Plantilla completa del manual conforme a norma.</p>
+          <ul class="tc-features">
+            <li>Estructura ISO 17025 integrada</li>
+            <li>Políticas de calidad predefinidas</li>
+            <li>Procedimientos documentados</li>
+            <li>Plantilla de organigrama</li>
+            <li>Alcance de acreditación</li>
+          </ul>
+          <div class="tc-meta">
+            <span class="tc-tag">📥 Descargable</span>
+            <span class="tc-tag">📋 Editable</span>
+            <span class="tc-tag">✓ Completo</span>
+          </div>
+          <div class="tc-cta tc-cta-1">
+            <span>Abrir Manual</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
         </div>
-        <div class="card-body">
-            <h2>Autoevaluación</h2>
-            <ul>
-                <li>Interpretación de Certificados</li>
-                <li>Cálculo de Incertidumbre</li>
-                <li>Frecuencias de Calibración</li>
-            </ul>
-            <div class="btn">Iniciar Test →</div>
-        </div>
-    </a>
+      </a>
 
-    <a href="auditoria.html" class="card">
-        <div class="card-header h-teal">
-            <span style="font-size: 30px;">✅</span>
+      <!-- CARD 2 -->
+      <a class="tool-card" href="#">
+        <div class="card-head card-bg-2">🔍</div>
+        <div class="tc-body">
+          <div class="tc-num">Herramienta 02</div>
+          <h2>Auditoría Interna</h2>
+          <p style="color: var(--gris-medio); font-size: 13px; margin-bottom: 16px;">Checklist interactivo para auditoría conforme ISO.</p>
+          <ul class="tc-features">
+            <li>25+ requisitos principales</li>
+            <li>6 áreas de evaluación</li>
+            <li>Calificación automática (%)</li>
+            <li>Hallazgos y observaciones</li>
+            <li>Informe en PDF generado</li>
+          </ul>
+          <div class="tc-meta">
+            <span class="tc-tag">✅ Interactivo</span>
+            <span class="tc-tag">📊 Reportes</span>
+            <span class="tc-tag">🎯 Detallado</span>
+          </div>
+          <div class="tc-cta tc-cta-2">
+            <span>Realizar Auditoría</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
         </div>
-        <div class="card-body">
-            <h2>Checklist Auditoría</h2>
-            <ul>
-                <li>Inventario y Codificación</li>
-                <li>Comprobaciones Intermedias</li>
-                <li>Registros de Mantenimiento</li>
-            </ul>
-            <div class="btn">Realizar Auditoría →</div>
-        </div>
-    </a>
-</div>
+      </a>
 
+      <!-- CARD 3 -->
+      <a class="tool-card" href="#">
+        <div class="card-head card-bg-3">📝</div>
+        <div class="tc-body">
+          <div class="tc-num">Herramienta 03</div>
+          <h2>Banco de Procedimientos</h2>
+          <p style="color: var(--gris-medio); font-size: 13px; margin-bottom: 16px;">8 procedimientos documentados clave de la norma.</p>
+          <ul class="tc-features">
+            <li>Control de calibración</li>
+            <li>Gestión de equipos de medida</li>
+            <li>Control de cambios</li>
+            <li>Trazabilidad metrológica</li>
+            <li>Incertidumbre de medición</li>
+          </ul>
+          <div class="tc-meta">
+            <span class="tc-tag">📄 Formatos</span>
+            <span class="tc-tag">🔗 Procedimientos</span>
+            <span class="tc-tag">⚙️ Operativo</span>
+          </div>
+          <div class="tc-cta tc-cta-3">
+            <span>Acceder Procedimientos</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-    <p>Portal Educativo de Gestión de Laboratorios<br>© 2026 — Estándares Internacionales</p>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="fl" href="/">
+          <div class="fl-ic">🔬</div>
+          <span>ISO/IEC 17025</span>
+        </a>
+        <p>Plataforma especializada en implementación de ISO/IEC 17025:2017 para laboratorios de ensayo y calibración. Herramientas interactivas, plantillas editables y auditorías en línea.</p>
+      </div>
+      <div class="footer-links">
+        <div class="fl-col">
+          <h4>Herramientas</h4>
+          <a href="#">📚 Manual de Calidad</a>
+          <a href="#">🔍 Auditoría Interna</a>
+          <a href="#">📝 Procedimientos</a>
+        </div>
+        <div class="fl-col">
+          <h4>Normativa</h4>
+          <a href="#">ISO/IEC 17025:2017</a>
+          <a href="#">ILAC</a>
+          <a href="#">Acreditación</a>
+          <a href="#">OIA</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>Plataforma para <strong>gestión de laboratorios de ensayo y calibración</strong> según ISO/IEC 17025:2017. Desarrollado para optimizar procesos de acreditación.</p>
+      <p style="white-space: nowrap;">© 2025 🔬</p>
+    </div>
+  </div>
 </footer>
 
 </body>
