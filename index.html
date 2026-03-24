@@ -820,6 +820,104 @@ footer {
 
 
 <section class="workflow">
+
+  <style>
+  .workflow {
+    padding: 90px 40px;
+    background: white;
+    text-align: center;
+  }
+
+  .workflow-container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .wf-mini {
+    color: #38a169;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: .15em;
+    margin-bottom: 10px;
+  }
+
+  .wf-title {
+    font-size: 38px;
+    margin-bottom: 10px;
+  }
+
+  .wf-sub {
+    color: #718096;
+    margin-bottom: 60px;
+  }
+
+  /* LINEA */
+  .wf-line {
+    height: 3px;
+    background: linear-gradient(to right, #4ade80, #60a5fa, #f59e0b);
+    width: 80%;
+    margin: 0 auto 40px;
+    position: relative;
+    top: 35px;
+    z-index: 1;
+  }
+
+  /* STEPS */
+  .wf-steps {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .wf-step {
+    width: 25%;
+  }
+
+  /* CIRCULOS */
+  .wf-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid #38a169;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    margin: 0 auto 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+
+  .wf-step h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .wf-step p {
+    font-size: 13px;
+    color: #718096;
+  }
+
+  /* RESPONSIVE */
+  @media(max-width: 860px) {
+    .wf-steps {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .wf-step {
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .wf-line {
+      display: none;
+    }
+  }
+  </style>
+
   <div class="workflow-container">
 
     <p class="wf-mini">¿CÓMO USARLO?</p>
@@ -863,9 +961,106 @@ footer {
 
 
 
+<!-- SECCIÓN SOBRE EL REQUISITO -->
+<style>
+.requisito {
+  padding: 80px 40px;
+  background: #f8fafc;
+}
 
+.req-container {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
 
-  <section class="requisito">
+.req-tag {
+  font-size: 12px;
+  font-weight: 800;
+  color: #38a169;
+  letter-spacing: .1em;
+}
+
+.req-left h2 {
+  font-size: 34px;
+  margin: 10px 0;
+}
+
+.req-left p {
+  color: #718096;
+  margin-bottom: 20px;
+}
+
+.req-item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.req-item .icon {
+  background: #e6fffa;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 18px;
+}
+
+.req-item strong {
+  display: block;
+}
+
+.req-item p {
+  font-size: 13px;
+  margin: 2px 0 0;
+}
+
+/* TARJETA DERECHA */
+.req-card {
+  background: linear-gradient(135deg, #2f855a, #276749);
+  color: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.req-card h4 {
+  font-size: 14px;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.card-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.08);
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.badge {
+  background: #38a169;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+}
+
+.badge.green {
+  background: #68d391;
+}
+
+/* RESPONSIVE */
+@media (max-width: 800px) {
+  .req-container {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<section class="requisito">
   <div class="req-container">
 
     <!-- IZQUIERDA -->
@@ -934,15 +1129,6 @@ footer {
 
   </div>
 </section>
-
-
-
-  
-
-
-
-
-
 
 
 
