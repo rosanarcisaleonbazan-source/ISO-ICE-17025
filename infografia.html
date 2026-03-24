@@ -1,1064 +1,255 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ISO/IEC 17025:2017 — Infografía Interactiva</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --c1: #FFD6D6; --c1d: #e05a5a;
-    --c2: #D6EAFF; --c2d: #3a82c4;
-    --c3: #D6FFE4; --c3d: #2eaa60;
-    --c4: #FFF3D6; --c4d: #c98a1a;
-    --c5: #EDD6FF; --c5d: #8e44c9;
-    --c6: #D6F9FF; --c6d: #1aa8c1;
-    --c7: #FFE8D6; --c7d: #d95f20;
-    --ink: #111111;
-    --ink2: #333333;
-    --ink3: #555555;
-    --bg: #FAFAF7;
-    --white: #ffffff;
-    --border: rgba(0,0,0,0.08);
-    --shadow: 0 4px 24px rgba(0,0,0,0.08);
-    --shadow-hover: 0 12px 40px rgba(0,0,0,0.14);
-    --radius: 20px;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISO/IEC 17025:2017 — Infografía Interactiva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --c1: #FFD6D6; --c1d: #e05a5a;
+            --c2: #D6EAFF; --c2d: #3a82c4;
+            --c3: #D6FFE4; --c3d: #2eaa60;
+            --c4: #FFF3D6; --c4d: #c98a1a;
+            --c5: #EDD6FF; --c5d: #8e44c9;
+            --c6: #D6F9FF; --c6d: #1aa8c1;
+            --c7: #FFE8D6; --c7d: #d95f20;
+            --ink: #111111;
+            --ink2: #333333;
+            --ink3: #555555;
+            --bg: #FAFAF7;
+            --white: #ffffff;
+            --border: rgba(0,0,0,0.08);
+            --shadow: 0 4px 24px rgba(0,0,0,0.08);
+            --shadow-hover: 0 12px 40px rgba(0,0,0,0.14);
+            --radius: 20px;
+        }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            min-height: 100vh;
+        }
 
-  /* ─── HERO ─── */
-  .hero {
-    background: linear-gradient(135deg, #fff5f5 0%, #f0f8ff 50%, #f5fff8 100%);
-    padding: 60px 40px 50px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    border-bottom: 2px dashed var(--border);
-  }
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -60px; left: -60px;
-    width: 260px; height: 260px;
-    border-radius: 50%;
-    background: #FFD6D6;
-    opacity: 0.35;
-  }
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: -80px; right: -40px;
-    width: 300px; height: 300px;
-    border-radius: 50%;
-    background: #D6EAFF;
-    opacity: 0.35;
-  }
-  .hero-content { position: relative; z-index: 1; }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: #fff; border: 2px solid #FFD6D6;
-    border-radius: 40px; padding: 6px 20px;
-    font-size: 13px; font-weight: 700; color: var(--c1d);
-    letter-spacing: 0.04em; margin-bottom: 20px;
-  }
-  .hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(32px, 5vw, 52px);
-    color: var(--ink);
-    line-height: 1.1;
-    margin-bottom: 10px;
-  }
-  .hero-title span { color: var(--c2d); }
-  .hero-sub {
-    font-size: 16px; color: var(--ink3); max-width: 540px;
-    margin: 0 auto 30px; line-height: 1.6;
-  }
-  .hero-stats {
-    display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
-  }
-  .stat-pill {
-    background: var(--white);
-    border: 2px solid var(--border);
-    border-radius: 50px;
-    padding: 10px 24px;
-    display: flex; flex-direction: column; align-items: center;
-  }
-  .stat-pill .num { font-size: 26px; font-weight: 900; color: var(--ink); line-height: 1; }
-  .stat-pill .lbl { font-size: 11px; color: var(--ink3); font-weight: 600; letter-spacing: 0.04em; margin-top: 2px; }
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #fff5f5 0%, #f0f8ff 50%, #f5fff8 100%);
+            padding: 60px 40px 50px;
+            text-align: center;
+            position: relative;
+            border-bottom: 2px dashed var(--border);
+        }
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(32px, 5vw, 52px);
+            line-height: 1.1;
+            margin-bottom: 10px;
+        }
+        .hero-title span { color: var(--c2d); }
+        .hero-sub { color: var(--ink3); max-width: 600px; margin: 0 auto 30px; }
 
-  /* ─── NAV TABS ─── */
-  .nav-wrap {
-    display: flex; gap: 10px; flex-wrap: wrap;
-    padding: 24px 40px 0;
-    justify-content: center;
-  }
-  .nav-tab {
-    display: flex; align-items: center; gap: 7px;
-    padding: 9px 18px;
-    border-radius: 50px;
-    border: 2px solid var(--border);
-    background: var(--white);
-    font-family: 'Nunito', sans-serif;
-    font-size: 13px; font-weight: 700;
-    color: var(--ink2);
-    cursor: pointer;
-    transition: all 0.22s;
-  }
-  .nav-tab:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-  .nav-tab.active { color: var(--ink); border-width: 2.5px; transform: translateY(-2px); box-shadow: var(--shadow); }
+        /* NAV TABS */
+        .nav-wrap { display: flex; gap: 10px; flex-wrap: wrap; padding: 24px 40px; justify-content: center; position: sticky; top: 0; background: var(--bg); z-index: 100; }
+        .nav-tab {
+            padding: 10px 20px; border-radius: 50px; border: 2px solid var(--border);
+            background: var(--white); font-weight: 700; cursor: pointer; transition: all 0.2s;
+        }
+        .nav-tab.active { border-color: var(--ink); box-shadow: var(--shadow); transform: translateY(-2px); }
 
-  /* ─── MAIN GRID ─── */
-  .main { padding: 32px 40px 60px; max-width: 1200px; margin: 0 auto; }
+        /* MAIN */
+        .main { padding: 0 40px 60px; max-width: 1200px; margin: 0 auto; }
+        .section-group { display: none; animation: fadeUp 0.4s ease forwards; }
+        .section-group.visible { display: block; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-  .section-group {
-    display: none;
-    animation: fadeUp 0.35s ease both;
-  }
-  .section-group.visible { display: block; }
+        /* CARDS */
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+        .card { background: var(--white); border-radius: var(--radius); border: 2px solid var(--border); overflow: hidden; box-shadow: var(--shadow); cursor: pointer; transition: 0.2s; }
+        .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+        .card-head { padding: 20px; display: flex; gap: 15px; align-items: flex-start; }
+        .card-icon { width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+        .card-name { font-weight: 800; font-size: 17px; }
+        .card-num { font-size: 11px; font-weight: 900; opacity: 0.6; }
+        .card-body { max-height: 0; overflow: hidden; transition: 0.4s ease; padding: 0 20px; }
+        .card.open .card-body { max-height: 800px; padding-bottom: 20px; }
+        .req-item { display: flex; gap: 10px; padding: 10px 0; border-top: 1px dashed #eee; font-size: 13.5px; }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
+        /* PRINT STYLES */
+        @media print {
+            .nav-wrap, #print-btn, .card-toggle { display: none !important; }
+            .section-group { display: block !important; page-break-after: always; }
+            .card-body { max-height: none !important; padding: 15px 20px !important; }
+            .card { break-inside: avoid; margin-bottom: 20px; box-shadow: none !important; border: 1px solid #ddd !important; }
+            body { background: white; }
+            .hero { padding: 20px !important; }
+        }
 
-  .group-title {
-    display: flex; align-items: center; gap: 12px;
-    font-size: 22px; font-weight: 800;
-    color: var(--ink); margin-bottom: 20px;
-  }
-  .group-icon { font-size: 28px; }
-
-  .cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-  }
-
-  /* ─── CARDS ─── */
-  .card {
-    background: var(--white);
-    border-radius: var(--radius);
-    border: 2px solid var(--border);
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    transition: transform 0.22s, box-shadow 0.22s;
-    cursor: pointer;
-  }
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-hover);
-  }
-  .card-head {
-    padding: 20px 20px 14px;
-    display: flex; align-items: flex-start; gap: 14px;
-  }
-  .card-icon {
-    width: 48px; height: 48px; border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px; flex-shrink: 0;
-  }
-  .card-heading { flex: 1; }
-  .card-num { font-size: 11px; font-weight: 800; letter-spacing: 0.06em; opacity: 0.7; margin-bottom: 3px; }
-  .card-name { font-size: 16px; font-weight: 800; color: var(--ink); line-height: 1.25; }
-  .card-desc { font-size: 12px; color: var(--ink3); margin-top: 3px; line-height: 1.4; }
-  .card-toggle {
-    width: 28px; height: 28px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--border);
-    font-size: 14px;
-    color: var(--ink2);
-    flex-shrink: 0;
-    transition: transform 0.25s, background 0.2s;
-    margin-top: 4px;
-  }
-  .card.open .card-toggle { transform: rotate(180deg); }
-
-  .card-body {
-    max-height: 0; overflow: hidden;
-    transition: max-height 0.38s cubic-bezier(0.4,0,0.2,1);
-    padding: 0 20px;
-  }
-  .card.open .card-body { max-height: 500px; padding-bottom: 18px; }
-
-  .req-item {
-    display: flex; align-items: flex-start; gap: 10px;
-    padding: 8px 0;
-    border-top: 1.5px dashed rgba(0,0,0,0.07);
-    font-size: 13px; color: var(--ink2); line-height: 1.45;
-  }
-  .req-dot {
-    width: 22px; height: 22px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 10px; font-weight: 800;
-    flex-shrink: 0; margin-top: 1px;
-  }
-
-  /* ─── WIDE CARD (full width) ─── */
-  .card-full { grid-column: 1 / -1; }
-
-  /* ─── ALL VIEW ─── */
-  .all-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 14px;
-  }
-  .mini-card {
-    background: var(--white);
-    border-radius: 16px;
-    border: 2px solid var(--border);
-    padding: 18px 14px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.22s;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-  }
-  .mini-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
-  .mini-icon { font-size: 30px; margin-bottom: 8px; }
-  .mini-num { font-size: 10px; font-weight: 800; letter-spacing: 0.07em; opacity: 0.6; }
-  .mini-name { font-size: 13px; font-weight: 800; color: var(--ink); margin-top: 3px; line-height: 1.3; }
-
-  /* ─── PROGRESS BAR ─── */
-  .progress-wrap { margin: 10px 0 28px; }
-  .progress-label { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: var(--ink3); margin-bottom: 6px; }
-  .progress-bar { height: 8px; background: rgba(0,0,0,0.07); border-radius: 10px; overflow: hidden; }
-  .progress-fill { height: 100%; border-radius: 10px; transition: width 0.6s ease 0.1s; }
-
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 600px) {
-    .hero { padding: 40px 20px 36px; }
-    .main { padding: 24px 16px 48px; }
-    .nav-wrap { padding: 16px 16px 0; }
-    .nav-tab span.label { display: none; }
-    .cards-grid { grid-template-columns: 1fr; }
-  }
-</style>
+        #print-btn {
+            position: fixed; bottom: 30px; right: 30px; background: var(--c1d); color: white;
+            border: none; padding: 15px 25px; border-radius: 50px; font-weight: 800;
+            cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 1000;
+        }
+    </style>
 </head>
 <body>
 
-<!-- HERO -->
+<button id="print-btn" onclick="window.print()">🖨️ Imprimir / Guardar PDF</button>
+
 <div class="hero">
-  <div class="hero-content">
-    <div class="hero-badge">🔬 Norma Internacional</div>
-    <h1 class="hero-title">ISO/IEC <span>17025</span> : 2017</h1>
-    <p class="hero-sub">Requisitos generales para la competencia de los laboratorios de ensayo y de calibración</p>
-    <div class="hero-stats">
-      <div class="stat-pill"><span class="num">8</span><span class="lbl">CLÁUSULAS</span></div>
-      <div class="stat-pill"><span class="num">2017</span><span class="lbl">VERSIÓN VIGENTE</span></div>
-      <div class="stat-pill"><span class="num">3ª</span><span class="lbl">EDICIÓN</span></div>
-      <div class="stat-pill"><span class="num">ISO+IEC</span><span class="lbl">ORGANISMO</span></div>
-    </div>
-  </div>
+    <div class="hero-badge" style="background:#fff; border:1px solid #ddd; padding:5px 15px; border-radius:20px; display:inline-block; margin-bottom:15px; font-size:12px; font-weight:700;">🔬 NORMA TÉCNICA</div>
+    <h1 class="hero-title">ISO/IEC <span>17025</span>:2017</h1>
+    <p class="hero-sub">Requisitos para la competencia de laboratorios de ensayo y calibración</p>
 </div>
 
-<!-- NAV TABS -->
-<div class="nav-wrap" id="navWrap">
-  <button class="nav-tab active" data-group="all" style="border-color:#ddd;" onclick="showGroup('all',this)">
-    🗺️ <span class="label">Vista general</span>
-  </button>
-  <button class="nav-tab" data-group="g4" style="border-color:#FFD6D6;" onclick="showGroup('g4',this)">
-    <span>⚖️</span> <span class="label">Cláusula 4</span>
-  </button>
-  <button class="nav-tab" data-group="g5" style="border-color:#EDD6FF;" onclick="showGroup('g5',this)">
-    <span>🏛️</span> <span class="label">Cláusula 5</span>
-  </button>
-  <button class="nav-tab" data-group="g6" style="border-color:#D6F9FF;" onclick="showGroup('g6',this)">
-    <span>🛠️</span> <span class="label">Cláusula 6</span>
-  </button>
-  <button class="nav-tab" data-group="g7" style="border-color:#D6EAFF;" onclick="showGroup('g7',this)">
-    <span>⚗️</span> <span class="label">Cláusula 7</span>
-  </button>
-  <button class="nav-tab" data-group="g8" style="border-color:#D6FFE4;" onclick="showGroup('g8',this)">
-    <span>📋</span> <span class="label">Cláusula 8</span>
-  </button>
+<div class="nav-wrap">
+    <button class="nav-tab active" onclick="showGroup('all', this)">🗺️ Vista General</button>
+    <button class="nav-tab" onclick="showGroup('g4', this)">⚖️ Cláusula 4</button>
+    <button class="nav-tab" onclick="showGroup('g6', this)">🛠️ Cláusula 6</button>
+    <button class="nav-tab" onclick="showGroup('g7', this)">⚗️ Cláusula 7</button>
+    <button class="nav-tab" onclick="showGroup('g8', this)">📋 Cláusula 8</button>
 </div>
 
-<!-- MAIN CONTENT -->
 <div class="main">
-
-  <!-- ══════ VISTA GENERAL ══════ -->
-  <div class="section-group visible" id="grp-all">
-    <div class="group-title"><span class="group-icon">🗺️</span> Estructura completa de la norma</div>
-    <div class="all-grid">
-
-      <div class="mini-card" style="border-color:#FFD6D6;background:#fff9f9;" onclick="showGroup('g4', document.querySelector('[data-group=g4]'))">
-        <div class="mini-icon">⚖️</div>
-        <div class="mini-num">CLÁUSULA 4</div>
-        <div class="mini-name">Requisitos Generales</div>
-      </div>
-
-      <div class="mini-card" style="border-color:#EDD6FF;background:#fdf9ff;" onclick="showGroup('g5', document.querySelector('[data-group=g5]'))">
-        <div class="mini-icon">🏛️</div>
-        <div class="mini-num">CLÁUSULA 5</div>
-        <div class="mini-name">Requisitos Estructurales</div>
-      </div>
-
-      <div class="mini-card" style="border-color:#D6F9FF;background:#f5feff;" onclick="showGroup('g6', document.querySelector('[data-group=g6]'))">
-        <div class="mini-icon">🛠️</div>
-        <div class="mini-num">CLÁUSULA 6</div>
-        <div class="mini-name">Requisitos de Recursos</div>
-      </div>
-
-      <div class="mini-card" style="border-color:#D6EAFF;background:#f5f9ff;" onclick="showGroup('g7', document.querySelector('[data-group=g7]'))">
-        <div class="mini-icon">⚗️</div>
-        <div class="mini-num">CLÁUSULA 7</div>
-        <div class="mini-name">Requisitos del Proceso</div>
-      </div>
-
-      <div class="mini-card" style="border-color:#D6FFE4;background:#f5fff8;" onclick="showGroup('g8', document.querySelector('[data-group=g8]'))">
-        <div class="mini-icon">📋</div>
-        <div class="mini-num">CLÁUSULA 8</div>
-        <div class="mini-name">Requisitos del Sistema de Gestión</div>
-      </div>
-
-      <div class="mini-card" style="border-color:#FFF3D6;background:#fffdf5;">
-        <div class="mini-icon">🔍</div>
-        <div class="mini-num">CLÁUSULA 1–3</div>
-        <div class="mini-name">Objeto, Referencias y Términos</div>
-      </div>
-
+    <div class="section-group visible" id="grp-all">
+        <div style="background:white; padding:30px; border-radius:20px; border:2px solid #eee; text-align:center;">
+            <h2>Estructura de Alto Nivel</h2>
+            <p style="margin:15px 0; color:#666;">Haz clic en las pestañas superiores para explorar cada sección en detalle.</p>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap:15px; margin-top:20px;">
+                <div style="padding:15px; background:#fff5f5; border-radius:15px;"><strong>4. Generales</strong><br>Imparcialidad</div>
+                <div style="padding:15px; background:#f5faff; border-radius:15px;"><strong>5. Estructurales</strong><br>Organización</div>
+                <div style="padding:15px; background:#f5fffa; border-radius:15px;"><strong>6. Recursos</strong><br>Personal y Equipos</div>
+                <div style="padding:15px; background:#fffdf5; border-radius:15px;"><strong>7. Procesos</strong><br>Operación técnica</div>
+                <div style="padding:15px; background:#f9f5ff; border-radius:15px;"><strong>8. Gestión</strong><br>Mejora Continua</div>
+            </div>
+        </div>
     </div>
 
-    <!-- Mapa visual -->
-    <div style="margin-top:32px;background:#fff;border-radius:20px;border:2px solid var(--border);padding:28px;box-shadow:var(--shadow);">
-      <div style="font-size:16px;font-weight:800;margin-bottom:18px;">📊 Pilares de la competencia del laboratorio</div>
-      <div id="progressBars"></div>
+    <div class="section-group" id="grp-g4">
+        <h2 style="margin-bottom:20px;">⚖️ Requisitos Generales</h2>
+        <div class="cards-grid">
+            <div class="card" onclick="this.classList.toggle('open')">
+                <div class="card-head">
+                    <div class="card-icon" style="background:var(--c1)">⚖️</div>
+                    <div><div class="card-num">4.1</div><div class="card-name">Imparcialidad</div></div>
+                </div>
+                <div class="card-body">
+                    <div class="req-item">Identificación de riesgos a la imparcialidad de forma continua.</div>
+                    <div class="req-item">Compromiso de la alta dirección con la objetividad.</div>
+                </div>
+            </div>
+            <div class="card" onclick="this.classList.toggle('open')">
+                <div class="card-head">
+                    <div class="card-icon" style="background:var(--c1)">🔒</div>
+                    <div><div class="card-num">4.2</div><div class="card-name">Confidencialidad</div></div>
+                </div>
+                <div class="card-body">
+                    <div class="req-item">Gestión legal de la información del cliente.</div>
+                    <div class="req-item">Notificación al cliente sobre liberación de info por ley.</div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div style="margin-top:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;">
-      <div style="background:#FFF5F5;border:2px solid #FFD6D6;border-radius:16px;padding:18px;">
-        <div style="font-size:22px;margin-bottom:8px;">🎯</div>
-        <div style="font-weight:800;font-size:14px;margin-bottom:5px;">Objetivo Principal</div>
-        <div style="font-size:12px;color:#444;line-height:1.5;">Demostrar que el laboratorio opera de manera competente y genera resultados válidos.</div>
-      </div>
-      <div style="background:#F5F9FF;border:2px solid #D6EAFF;border-radius:16px;padding:18px;">
-        <div style="font-size:22px;margin-bottom:8px;">🌐</div>
-        <div style="font-weight:800;font-size:14px;margin-bottom:5px;">Aplicación</div>
-        <div style="font-size:12px;color:#444;line-height:1.5;">Laboratorios de ensayo, calibración y muestreo de cualquier sector o disciplina.</div>
-      </div>
-      <div style="background:#F5FFF8;border:2px solid #D6FFE4;border-radius:16px;padding:18px;">
-        <div style="font-size:22px;margin-bottom:8px;">🏆</div>
-        <div style="font-weight:800;font-size:14px;margin-bottom:5px;">Beneficio</div>
-        <div style="font-size:12px;color:#444;line-height:1.5;">Base para la acreditación por organismos nacionales e internacionales reconocidos.</div>
-      </div>
-      <div style="background:#FDFAF0;border:2px solid #FFF3D6;border-radius:16px;padding:18px;">
-        <div style="font-size:22px;margin-bottom:8px;">🔄</div>
-        <div style="font-weight:800;font-size:14px;margin-bottom:5px;">Enfoque por riesgos</div>
-        <div style="font-size:12px;color:#444;line-height:1.5;">Nueva en 2017: gestión del pensamiento basado en riesgos e imparcialidad.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════ CLÁUSULA 4 ══════ -->
-  <div class="section-group" id="grp-g4">
-    <div class="group-title" style="color:var(--c1d)"><span class="group-icon">⚖️</span> Cláusula 4 — Requisitos Generales</div>
-    <div class="cards-grid">
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c1);">⚖️</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c1d)">4.1</div>
-            <div class="card-name">Imparcialidad</div>
-            <div class="card-desc">Independencia y objetividad en todas las actividades</div>
-          </div>
-          <div class="card-toggle">▼</div>
+    <div class="section-group" id="grp-g6">
+        <h2 style="margin-bottom:20px;">🛠️ Requisitos de Recursos</h2>
+        <div class="cards-grid">
+            <div class="card" onclick="this.classList.toggle('open')">
+                <div class="card-head">
+                    <div class="card-icon" style="background:var(--c6)">👩‍🔬</div>
+                    <div><div class="card-num">6.2</div><div class="card-name">Personal</div></div>
+                </div>
+                <div class="card-body">
+                    <div class="req-item">Documentar requisitos de competencia para cada función.</div>
+                    <div class="req-item">Autorización formal para operar equipos y realizar ensayos.</div>
+                </div>
+            </div>
+            <div class="card" onclick="this.classList.toggle('open')">
+                <div class="card-head">
+                    <div class="card-icon" style="background:var(--c6)">⚙️</div>
+                    <div><div class="card-num">6.4</div><div class="card-name">Equipos</div></div>
+                </div>
+                <div class="card-body">
+                    <div class="req-item">Programa de calibración y mantenimiento preventivo.</div>
+                    <div class="req-item">Etiquetado claro del estado de calibración.</div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c1);color:var(--c1d);">1</div>Actividades del laboratorio realizadas de manera imparcial</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c1);color:var(--c1d);">2</div>Identificación continua de riesgos a la imparcialidad</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c1);color:var(--c1d);">3</div>Eliminación o minimización de riesgos identificados</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c1);color:var(--c1d);">4</div>No permitir presiones comerciales, financieras o de otra índole</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c1);color:var(--c1d);">5</div>Comunicar a la dirección cualquier conflicto de interés</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c1);">🔒</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c1d)">4.2</div>
-            <div class="card-name">Confidencialidad</div>
-            <div class="card-desc">Protección de la información del cliente</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c1);color:var(--c1d);">1</div>Información del cliente gestionada con confidencialidad</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c1);color:var(--c1d);">2</div>Divulgación solo con consentimiento escrito del cliente</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c1);color:var(--c1d);">3</div>Cuando la ley exija divulgación, notificar al cliente</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c1);color:var(--c1d);">4</div>Personal obligado contractualmente a la confidencialidad</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ══════ CLÁUSULA 5 ══════ -->
-  <div class="section-group" id="grp-g5">
-    <div class="group-title" style="color:var(--c5d)"><span class="group-icon">🏛️</span> Cláusula 5 — Requisitos Estructurales</div>
-    <div class="cards-grid">
-
-      <div class="card card-full" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c5);">🏛️</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c5d)">5.1 – 5.6</div>
-            <div class="card-name">Organización y Responsabilidades</div>
-            <div class="card-desc">Estructura legal, roles y autoridades del laboratorio</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px;">
-            <div class="req-item"><div class="req-dot" style="background:var(--c5);color:var(--c5d);">5.1</div>Entidad legalmente identificable y responsable</div>
-            <div class="req-item"><div class="req-dot" style="background:var(--c5);color:var(--c5d);">5.2</div>Personal con autoridad y recursos para cumplir requisitos</div>
-            <div class="req-item"><div class="req-dot" style="background:var(--c5);color:var(--c5d);">5.3</div>Procedimientos para asegurar la imparcialidad operativa</div>
-            <div class="req-item"><div class="req-dot" style="background:var(--c5);color:var(--c5d);">5.4</div>Estructura organizacional documentada y comunicada</div>
-            <div class="req-item"><div class="req-dot" style="background:var(--c5);color:var(--c5d);">5.5</div>Dirección técnica responsable de operaciones del laboratorio</div>
-            <div class="req-item"><div class="req-dot" style="background:var(--c5);color:var(--c5d);">5.6</div>Gestor de calidad con acceso directo a la dirección</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ══════ CLÁUSULA 6 ══════ -->
-  <div class="section-group" id="grp-g6">
-    <div class="group-title" style="color:var(--c6d)"><span class="group-icon">🛠️</span> Cláusula 6 — Requisitos de Recursos</div>
-    <div class="cards-grid">
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c6);">👩‍🔬</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c6d)">6.2</div>
-            <div class="card-name">Personal</div>
-            <div class="card-desc">Competencia, calificación y autorización</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">1</div>Competencia demostrada para tareas específicas</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">2</div>Autorización formal para tipos de actividades</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">3</div>Supervisión del personal en período de entrenamiento</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">4</div>Registros de competencia, educación y experiencia actualizados</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">5</div>Plan de formación continua documentado</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c6);">🏗️</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c6d)">6.3</div>
-            <div class="card-name">Instalaciones y Condiciones</div>
-            <div class="card-desc">Ambiente de trabajo controlado</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">1</div>Instalaciones adecuadas para las actividades del laboratorio</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">2</div>Control de condiciones ambientales (T°, humedad, vibración)</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">3</div>Separación eficaz de áreas incompatibles</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">4</div>Registro de condiciones cuando afecten los resultados</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">5</div>Control de acceso de personas que puedan afectar actividades</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c6);">⚙️</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c6d)">6.4</div>
-            <div class="card-name">Equipos</div>
-            <div class="card-desc">Instrumentos de medición y herramientas</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">1</div>Acceso a equipos necesarios para las actividades</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">2</div>Calibración y verificación periódica de equipos</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">3</div>Programa de mantenimiento preventivo documentado</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">4</div>Etiquetado con estado de calibración visible</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">5</div>Protección ante daño, deterioro o uso inadecuado</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">6</div>Registros de equipos con identificación única</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c6);">📏</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c6d)">6.5</div>
-            <div class="card-name">Trazabilidad Metrológica</div>
-            <div class="card-desc">Cadena de calibración al SI</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">1</div>Resultados de medición referidos al Sistema Internacional (SI)</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">2</div>Cadena ininterrumpida de calibraciones documentada</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">3</div>Patrones de medición con trazabilidad demostrable</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">4</div>Materiales de referencia certificados (MRC) cuando aplique</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c6);">🤝</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c6d)">6.6</div>
-            <div class="card-name">Productos y Servicios Externos</div>
-            <div class="card-desc">Proveedores y subcontratación</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">1</div>Selección y evaluación de proveedores externos</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">2</div>Comunicación de requisitos técnicos a proveedores</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">3</div>Verificación de productos y servicios recibidos</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c6);color:var(--c6d);">4</div>Lista actualizada de proveedores aprobados</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ══════ CLÁUSULA 7 ══════ -->
-  <div class="section-group" id="grp-g7">
-    <div class="group-title" style="color:var(--c2d)"><span class="group-icon">⚗️</span> Cláusula 7 — Requisitos del Proceso</div>
-    <div class="cards-grid">
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c2);">📝</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c2d)">7.1</div>
-            <div class="card-name">Revisión de Solicitudes</div>
-            <div class="card-desc">Contratos, licitaciones y acuerdos</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">1</div>Revisión de solicitudes, licitaciones y contratos</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">2</div>Requisitos definidos, documentados y entendidos</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">3</div>Capacidad y recursos disponibles para cumplir requisitos</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">4</div>Notificación al cliente de cualquier desviación</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c2);">🔬</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c2d)">7.2</div>
-            <div class="card-name">Selección y Validación de Métodos</div>
-            <div class="card-desc">Métodos apropiados y validados</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">1</div>Uso de métodos normalizados (ISO, ASTM, etc.)</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">2</div>Validación de métodos desarrollados internamente</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">3</div>Verificación de la aptitud del método para el uso previsto</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">4</div>Características de desempeño: exactitud, precisión, LD, LC</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">5</div>Registros de validación conservados</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c2);">📦</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c2d)">7.3 – 7.4</div>
-            <div class="card-name">Muestreo y Manipulación</div>
-            <div class="card-desc">Ítems y muestras de ensayo</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">7.3</div>Plan de muestreo basado en métodos estadísticos</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">7.4</div>Sistema de identificación única de ítems de ensayo</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">7.4</div>Registro de recepción: condición, anomalías, desviaciones</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">7.4</div>Instrucciones para manipulación, transporte y almacenamiento</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c2);">📊</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c2d)">7.6</div>
-            <div class="card-name">Incertidumbre de Medición</div>
-            <div class="card-desc">Evaluación y expresión de incertidumbre</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">1</div>Identificación de todas las contribuciones a la incertidumbre</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">2</div>Evaluación siguiendo la Guía GUM (ISO/IEC)</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">3</div>Incertidumbre reportada en los informes de resultados</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">4</div>Actualización cuando cambien condiciones de medición</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c2);">✅</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c2d)">7.7</div>
-            <div class="card-name">Aseguramiento de la Validez</div>
-            <div class="card-desc">Control de calidad de resultados</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">1</div>Uso de materiales de referencia certificados (MRC)</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">2</div>Uso de material de referencia de segundo nivel</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">3</div>Comparaciones interlaboratorio / ensayos de aptitud</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">4</div>Réplicas usando el mismo método u otros métodos</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">5</div>Gráficos de control y análisis de tendencias</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c2);">📄</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c2d)">7.8</div>
-            <div class="card-name">Informes de Resultados</div>
-            <div class="card-desc">Formato y contenido de informes</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">1</div>Resultados presentados de manera precisa y no ambigua</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">2</div>Identificación del laboratorio, fecha y número único</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">3</div>Identificación del método y resultado con unidades SI</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">4</div>Incertidumbre de medición incluida en el informe</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">5</div>Declaración de conformidad cuando corresponda</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c2);color:var(--c2d);">6</div>Firma o aprobación de persona autorizada</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- ══════ CLÁUSULA 8 ══════ -->
-  <div class="section-group" id="grp-g8">
-    <div class="group-title" style="color:var(--c3d)"><span class="group-icon">📋</span> Cláusula 8 — Sistema de Gestión</div>
-    <div class="cards-grid">
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c3);">📁</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c3d)">8.2</div>
-            <div class="card-name">Documentación del Sistema de Gestión</div>
-            <div class="card-desc">Política, objetivos y manual</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">1</div>Política de calidad documentada y comunicada</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">2</div>Objetivos de calidad medibles y revisados</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">3</div>Manual de calidad con referencia a procedimientos</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">4</div>Control de documentos internos y externos</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c3);">🔎</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c3d)">8.6</div>
-            <div class="card-name">Auditorías Internas</div>
-            <div class="card-desc">Evaluación del sistema de gestión</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">1</div>Programa de auditorías internas periódicas planificado</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">2</div>Auditores independientes del área auditada</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">3</div>Hallazgos documentados y comunicados a la dirección</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">4</div>Acciones correctivas implementadas en plazos definidos</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c3);">🔄</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c3d)">8.7</div>
-            <div class="card-name">Revisión por la Dirección</div>
-            <div class="card-desc">Revisión gerencial del sistema</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">1</div>Revisión periódica del sistema de gestión completo</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">2</div>Resultados de auditorías internas y externas revisados</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">3</div>Retroalimentación de clientes analizada</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">4</div>Decisiones sobre mejora continua documentadas</div>
-        </div>
-      </div>
-
-      <div class="card" onclick="toggleCard(this)">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c3);">🚨</div>
-          <div class="card-heading">
-            <div class="card-num" style="color:var(--c3d)">8.4 – 8.5</div>
-            <div class="card-name">No Conformidades y Acciones Correctivas</div>
-            <div class="card-desc">Control y mejora</div>
-          </div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">8.4</div>Identificación y control del trabajo no conforme</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">8.4</div>Autoridad para detener o retener trabajo</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">8.5</div>Análisis de causas raíz de no conformidades</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">8.5</div>Acciones correctivas para eliminar causas</div>
-          <div class="req-item"><div class="req-dot" style="background:var(--c3);color:var(--c3d);">8.5</div>Seguimiento de la eficacia de las acciones</div>
-        </div>
-      </div>
-
     </div>
 
-    <!-- Ciclo PHVA -->
-    <div style="margin-top:24px;background:#fff;border-radius:20px;border:2px solid #D6FFE4;padding:24px;box-shadow:var(--shadow);">
-      <div style="font-size:16px;font-weight:800;margin-bottom:16px;">🔄 Ciclo PHVA en el Sistema de Gestión</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;text-align:center;">
-        <div style="background:#FFF5F5;border-radius:14px;padding:16px;border:2px solid #FFD6D6;">
-          <div style="font-size:28px;margin-bottom:6px;">📌</div>
-          <div style="font-weight:800;font-size:15px;margin-bottom:4px;">PLANEAR</div>
-          <div style="font-size:11px;color:#555;line-height:1.4;">Objetivos, políticas, análisis de riesgos y planificación</div>
+    <div class="section-group" id="grp-g7">
+        <h2 style="margin-bottom:20px;">⚗️ Requisitos del Proceso</h2>
+        <div class="cards-grid">
+            <div class="card" onclick="this.classList.toggle('open')">
+                <div class="card-head">
+                    <div class="card-icon" style="background:var(--c2)">📝</div>
+                    <div><div class="card-num">7.1</div><div class="card-name">Revisión de Solicitudes</div></div>
+                </div>
+                <div class="card-body">
+                    <div class="req-item">Asegurar que el laboratorio tiene la capacidad técnica.</div>
+                    <div class="req-item">Informar al cliente si el método solicitado es inapropiado.</div>
+                </div>
+            </div>
+            <div class="card" onclick="this.classList.toggle('open')">
+                <div class="card-head">
+                    <div class="card-icon" style="background:var(--c2)">📊</div>
+                    <div><div class="card-num">7.6</div><div class="card-name">Incertidumbre</div></div>
+                </div>
+                <div class="card-body">
+                    <div class="req-item">Evaluar la incertidumbre de medición para todos los resultados.</div>
+                    <div class="req-item">Considerar todas las contribuciones significativas.</div>
+                </div>
+            </div>
+            <div class="card" onclick="this.classList.toggle('open')">
+                <div class="card-head">
+                    <div class="card-icon" style="background:var(--c2)">📄</div>
+                    <div><div class="card-num">7.8</div><div class="card-name">Informe de Resultados</div></div>
+                </div>
+                <div class="card-body">
+                    <div class="req-item">Los resultados deben ser objetivos, claros e inequívocos.</div>
+                    <div class="req-item">Incluir declaraciones de conformidad cuando sea necesario.</div>
+                </div>
+            </div>
         </div>
-        <div style="background:#F5F9FF;border-radius:14px;padding:16px;border:2px solid #D6EAFF;">
-          <div style="font-size:28px;margin-bottom:6px;">⚡</div>
-          <div style="font-weight:800;font-size:15px;margin-bottom:4px;">HACER</div>
-          <div style="font-size:11px;color:#555;line-height:1.4;">Implementar procesos, ensayos, calibraciones, informes</div>
-        </div>
-        <div style="background:#FDFAF0;border-radius:14px;padding:16px;border:2px solid #FFF3D6;">
-          <div style="font-size:28px;margin-bottom:6px;">🔍</div>
-          <div style="font-weight:800;font-size:15px;margin-bottom:4px;">VERIFICAR</div>
-          <div style="font-size:11px;color:#555;line-height:1.4;">Auditorías, revisión por la dirección, seguimiento</div>
-        </div>
-        <div style="background:#F5FFF8;border-radius:14px;padding:16px;border:2px solid #D6FFE4;">
-          <div style="font-size:28px;margin-bottom:6px;">🚀</div>
-          <div style="font-weight:800;font-size:15px;margin-bottom:4px;">ACTUAR</div>
-          <div style="font-size:11px;color:#555;line-height:1.4;">Acciones correctivas, mejora continua, prevención</div>
-        </div>
-      </div>
     </div>
-  </div>
 
+    <div class="section-group" id="grp-g8">
+        <h2 style="margin-bottom:20px;">📋 Requisitos del Sistema de Gestión</h2>
+        <div class="cards-grid">
+            <div class="card" onclick="this.classList.toggle('open')">
+                <div class="card-head">
+                    <div class="card-icon" style="background:var(--c3)">🔄</div>
+                    <div><div class="card-num">8.5</div><div class="card-name">Acciones para Riesgos</div></div>
+                </div>
+                <div class="card-body">
+                    <div class="req-item">Identificar oportunidades y prevenir resultados no deseados.</div>
+                    <div class="req-item">Integrar acciones de mejora en el sistema de gestión.</div>
+                </div>
+            </div>
+            <div class="card" onclick="this.classList.toggle('open')">
+                <div class="card-head">
+                    <div class="card-icon" style="background:var(--c3)">🧐</div>
+                    <div><div class="card-num">8.8</div><div class="card-name">Auditorías Internas</div></div>
+                </div>
+                <div class="card-body">
+                    <div class="req-item">Realizar auditorías a intervalos planificados.</div>
+                    <div class="req-item">Verificar el cumplimiento con la propia norma y los requisitos.</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-  // Toggle cards
-  function toggleCard(card) {
-    card.classList.toggle('open');
-    const btn = card.querySelector('.card-toggle');
-    if (btn) btn.textContent = card.classList.contains('open') ? '▲' : '▼';
-  }
-
-  // Show group
-  function showGroup(id, btn) {
-    document.querySelectorAll('.section-group').forEach(g => g.classList.remove('visible'));
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-    const grp = document.getElementById('grp-' + id);
-    if (grp) grp.classList.add('visible');
-    if (btn) btn.classList.add('active');
-  }
-
-  // Build progress bars
-  const bars = [
-    { label: 'Cl. 4 — Imparcialidad y Confidencialidad', pct: 100, color: '#FFB3B3' },
-    { label: 'Cl. 5 — Estructura Organizacional', pct: 100, color: '#DDB3FF' },
-    { label: 'Cl. 6 — Recursos (personal, equipos, trazabilidad)', pct: 100, color: '#A3E8F5' },
-    { label: 'Cl. 7 — Proceso (métodos, informes, incertidumbre)', pct: 100, color: '#A3C4FF' },
-    { label: 'Cl. 8 — Sistema de Gestión (auditorías, mejora)', pct: 100, color: '#A3F5C0' },
-  ];
-  const wrap = document.getElementById('progressBars');
-  bars.forEach((b, i) => {
-    wrap.innerHTML += `
-      <div class="progress-wrap">
-        <div class="progress-label"><span>${b.label}</span></div>
-        <div class="progress-bar"><div class="progress-fill" id="pf${i}" style="width:0%;background:${b.color}"></div></div>
-      </div>`;
-  });
-  setTimeout(() => {
-    bars.forEach((b, i) => {
-      document.getElementById('pf' + i).style.width = b.pct + '%';
-    });
-  }, 300);
+    function showGroup(groupId, btn) {
+        document.querySelectorAll('.section-group').forEach(g => g.classList.remove('visible'));
+        document.getElementById('grp-' + groupId).classList.add('visible');
+        document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+    }
 </script>
-</body>
-</html>
 
-<!-- SUB-BLOQUE VISUAL TIPO FLUJO -->
-<div style="
-  margin:24px auto;
-  max-width:1100px;
-  background:#fff;
-  border-radius:16px;
-  border:1.5px solid var(--border);
-  padding:20px;
-  box-shadow:var(--shadow);
-">
-
-  <div style="
-    font-size:16px;
-    font-weight:800;
-    margin-bottom:16px;
-    text-align:center;
-  ">
-    🔄 Flujo de Recursos del Laboratorio
-  </div>
-
-  <div style="
-    display:grid;
-    grid-template-columns:repeat(5, 1fr);
-    gap:14px;
-  ">
-
-    <!-- TARJETAS -->
-    <div style="background:#f5feff;border:1.5px solid #D6F9FF;border-radius:14px;padding:14px;text-align:center;">
-      <div style="font-size:22px;">👩‍🔬</div>
-      <div style="font-weight:700;font-size:13px;margin:5px 0;">Personal</div>
-      <div style="font-size:11px;color:#555;">Competencia del personal que impacta resultados.</div>
-      <div style="font-size:11px;margin-top:6px;color:#444;">
-        ✔ Formación y experiencia<br>✔ Autorización documentada<br>✔ Registros de capacitación
-      </div>
-    </div>
-
-    <div style="background:#f5fff8;border:1.5px solid #D6FFE4;border-radius:14px;padding:14px;text-align:center;">
-      <div style="font-size:22px;">🏢</div>
-      <div style="font-weight:700;font-size:13px;margin:5px 0;">Instalaciones</div>
-      <div style="font-size:11px;color:#555;">Condiciones controladas para evitar interferencias.</div>
-      <div style="font-size:11px;margin-top:6px;color:#444;">
-        ✔ Control ambiental<br>✔ Separación de áreas<br>✔ Monitoreo continuo
-      </div>
-    </div>
-
-    <div style="background:#fff5f5;border:1.5px solid #FFE8D6;border-radius:14px;padding:14px;text-align:center;">
-      <div style="font-size:22px;">⚙️</div>
-      <div style="font-weight:700;font-size:13px;margin:5px 0;">Equipos</div>
-      <div style="font-size:11px;color:#555;">Equipos confiables para resultados válidos.</div>
-      <div style="font-size:11px;margin-top:6px;color:#444;">
-        ✔ Calibración<br>✔ Mantenimiento<br>✔ Identificación única
-      </div>
-    </div>
-
-    <div style="background:#f5f9ff;border:1.5px solid #D6EAFF;border-radius:14px;padding:14px;text-align:center;">
-      <div style="font-size:22px;">📏</div>
-      <div style="font-weight:700;font-size:13px;margin:5px 0;">Trazabilidad</div>
-      <div style="font-size:11px;color:#555;">Resultados vinculados al SI.</div>
-      <div style="font-size:11px;margin-top:6px;color:#444;">
-        ✔ Certificados<br>✔ Relación con SI<br>✔ Incertidumbre
-      </div>
-    </div>
-
-    <div style="background:#fdf9ff;border:1.5px solid #EDD6FF;border-radius:14px;padding:14px;text-align:center;">
-      <div style="font-size:22px;">📦</div>
-      <div style="font-weight:700;font-size:13px;margin:5px 0;">Proveedores</div>
-      <div style="font-size:11px;color:#555;">Control de insumos y servicios externos.</div>
-      <div style="font-size:11px;margin-top:6px;color:#444;">
-        ✔ Evaluación<br>✔ Control de insumos<br>✔ Lista aprobada
-      </div>
-    </div>
-
-  </div>
-</div>
-
-
-
-</div>
- 
-<!-- ══════════════════════════════════════════════ -->
-<!-- SECCIÓN FINAL: AUDITOR + CHECKLIST + NORMAS -->
-<!-- ══════════════════════════════════════════════ -->
-<div style="max-width:1200px;margin:0 auto;padding:0 40px 60px;">
- 
-  <!-- ─── PREGUNTAS CLAVE DEL AUDITOR ─── -->
-  <div style="margin-bottom:36px;">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-      <span style="font-size:18px;">🔍</span>
-      <span style="font-size:11px;font-weight:800;letter-spacing:0.09em;color:#888;text-transform:uppercase;">Preguntas clave del auditor — ISO/IEC 17025:2017</span>
-    </div>
-    <div style="height:2px;background:linear-gradient(90deg,#FFD6D6,#D6EAFF,#D6FFE4);border-radius:2px;margin-bottom:20px;"></div>
- 
-    <div style="background:#fff;border:2px solid #e8e8e0;border-radius:20px;padding:24px 28px;">
-      <div style="display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;">
-        <div style="width:40px;height:40px;background:#D6FFE4;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">✅</div>
-        <div>
-          <div style="font-weight:800;font-size:16px;color:#111;">Lista de verificación para auditoría</div>
-          <div style="font-size:12px;color:#777;margin-top:2px;">Cada respuesta debe estar respaldada por evidencia documental objetiva</div>
-        </div>
-      </div>
-      <p style="font-size:13px;color:#555;line-height:1.6;margin-bottom:20px;">Lista no exhaustiva de preguntas que los auditores utilizan para evaluar el cumplimiento de los requisitos de la <strong>ISO/IEC 17025:2017</strong> en una auditoría de acreditación. Se requiere evidencia objetiva para cada punto.</p>
- 
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;">
- 
-        <div style="background:#FFF9F9;border:1.5px solid #FFD6D6;border-radius:14px;padding:16px;display:flex;gap:12px;align-items:flex-start;">
-          <div style="background:#FFD6D6;color:#c04040;font-weight:800;font-size:11px;padding:3px 8px;border-radius:8px;flex-shrink:0;margin-top:1px;">P1</div>
-          <div style="font-size:13px;color:#222;line-height:1.5;">⚖️ ¿Tiene el laboratorio una política de imparcialidad documentada y aplica mecanismos para identificar y gestionar riesgos?</div>
-        </div>
- 
-        <div style="background:#F8F5FF;border:1.5px solid #EDD6FF;border-radius:14px;padding:16px;display:flex;gap:12px;align-items:flex-start;">
-          <div style="background:#EDD6FF;color:#7a30bb;font-weight:800;font-size:11px;padding:3px 8px;border-radius:8px;flex-shrink:0;margin-top:1px;">P2</div>
-          <div style="font-size:13px;color:#222;line-height:1.5;">🏛️ ¿Cuenta con estructura organizacional definida, con roles, responsabilidades y reemplazos del personal clave documentados?</div>
-        </div>
- 
-        <div style="background:#F5FEFF;border:1.5px solid #D6F9FF;border-radius:14px;padding:16px;display:flex;gap:12px;align-items:flex-start;">
-          <div style="background:#D6F9FF;color:#0f8fa8;font-weight:800;font-size:11px;padding:3px 8px;border-radius:8px;flex-shrink:0;margin-top:1px;">P3</div>
-          <div style="font-size:13px;color:#222;line-height:1.5;">👩‍🔬 ¿Existe evidencia de competencia del personal? ¿Se registran educación, formación, habilidades y experiencia?</div>
-        </div>
- 
-        <div style="background:#F5F9FF;border:1.5px solid #D6EAFF;border-radius:14px;padding:16px;display:flex;gap:12px;align-items:flex-start;">
-          <div style="background:#D6EAFF;color:#2563a8;font-weight:800;font-size:11px;padding:3px 8px;border-radius:8px;flex-shrink:0;margin-top:1px;">P4</div>
-          <div style="font-size:13px;color:#222;line-height:1.5;">⚙️ ¿Los equipos están identificados, calibrados y con registros de mantenimiento y estado de calibración visibles?</div>
-        </div>
- 
-        <div style="background:#FDFAF0;border:1.5px solid #FFF3D6;border-radius:14px;padding:16px;display:flex;gap:12px;align-items:flex-start;">
-          <div style="background:#FFF3D6;color:#b07010;font-weight:800;font-size:11px;padding:3px 8px;border-radius:8px;flex-shrink:0;margin-top:1px;">P5</div>
-          <div style="font-size:13px;color:#222;line-height:1.5;">📏 ¿Puede demostrar la trazabilidad metrológica de sus resultados hasta el SI mediante cadena ininterrumpida de calibraciones?</div>
-        </div>
- 
-        <div style="background:#F5FFF8;border:1.5px solid #D6FFE4;border-radius:14px;padding:16px;display:flex;gap:12px;align-items:flex-start;">
-          <div style="background:#D6FFE4;color:#1a8a4a;font-weight:800;font-size:11px;padding:3px 8px;border-radius:8px;flex-shrink:0;margin-top:1px;">P6</div>
-          <div style="font-size:13px;color:#222;line-height:1.5;">🔬 ¿Los métodos de ensayo están validados o verificados? ¿Existe documentación de las características de desempeño?</div>
-        </div>
- 
-        <div style="background:#FFF9F5;border:1.5px solid #FFE8D6;border-radius:14px;padding:16px;display:flex;gap:12px;align-items:flex-start;">
-          <div style="background:#FFE8D6;color:#c04a10;font-weight:800;font-size:11px;padding:3px 8px;border-radius:8px;flex-shrink:0;margin-top:1px;">P7</div>
-          <div style="font-size:13px;color:#222;line-height:1.5;">📊 ¿La incertidumbre de medición es evaluada y reportada en los informes de resultados conforme a la Guía GUM?</div>
-        </div>
- 
-        <div style="background:#FFF5F9;border:1.5px solid #FFD6E8;border-radius:14px;padding:16px;display:flex;gap:12px;align-items:flex-start;">
-          <div style="background:#FFD6E8;color:#b03060;font-weight:800;font-size:11px;padding:3px 8px;border-radius:8px;flex-shrink:0;margin-top:1px;">P8</div>
-          <div style="font-size:13px;color:#222;line-height:1.5;">📋 ¿Se realizan auditorías internas periódicas y revisiones por la dirección con registros de hallazgos y acciones correctivas?</div>
-        </div>
- 
-      </div>
-    </div>
-  </div>
- 
-  <!-- ─── ORGANISMOS Y NORMAS DE REFERENCIA ─── -->
-  <div>
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-      <span style="font-size:18px;">📚</span>
-      <span style="font-size:11px;font-weight:800;letter-spacing:0.09em;color:#888;text-transform:uppercase;">Organismos y normas de referencia</span>
-    </div>
-    <div style="height:2px;background:linear-gradient(90deg,#D6EAFF,#EDD6FF,#FFD6D6);border-radius:2px;margin-bottom:20px;"></div>
- 
-    <div style="display:flex;flex-wrap:wrap;gap:10px;">
- 
-      <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid #D6EAFF;border-radius:50px;padding:8px 18px;font-size:13px;font-weight:700;color:#222;">
-        <span style="width:8px;height:8px;background:#3a82c4;border-radius:50%;display:inline-block;flex-shrink:0;"></span>
-        BIPM — Buró Internacional de Pesas y Medidas
-      </div>
- 
-      <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid #D6FFE4;border-radius:50px;padding:8px 18px;font-size:13px;font-weight:700;color:#222;">
-        <span style="width:8px;height:8px;background:#2eaa60;border-radius:50%;display:inline-block;flex-shrink:0;"></span>
-        ILAC — Cooperación Internacional de Acreditación de Laboratorios
-      </div>
- 
-      <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid #FFD6D6;border-radius:50px;padding:8px 18px;font-size:13px;font-weight:700;color:#222;">
-        <span style="width:8px;height:8px;background:#e05a5a;border-radius:50%;display:inline-block;flex-shrink:0;"></span>
-        ISO/IEC Guide 99 — Vocabulario Internacional de Metrología (VIM)
-      </div>
- 
-      <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid #EDD6FF;border-radius:50px;padding:8px 18px;font-size:13px;font-weight:700;color:#222;">
-        <span style="width:8px;height:8px;background:#8e44c9;border-radius:50%;display:inline-block;flex-shrink:0;"></span>
-        JCGM 100:2008 — Guía GUM para expresión de incertidumbre
-      </div>
- 
-      <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid #FFF3D6;border-radius:50px;padding:8px 18px;font-size:13px;font-weight:700;color:#222;">
-        <span style="width:8px;height:8px;background:#c98a1a;border-radius:50%;display:inline-block;flex-shrink:0;"></span>
-        ISO/IEC 17000 — Vocabulario de evaluación de la conformidad
-      </div>
- 
-      <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid #D6F9FF;border-radius:50px;padding:8px 18px;font-size:13px;font-weight:700;color:#222;">
-        <span style="width:8px;height:8px;background:#1aa8c1;border-radius:50%;display:inline-block;flex-shrink:0;"></span>
-        EA-4/02 — Expresión de la incertidumbre en calibración (EA)
-      </div>
- 
-      <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid #FFD6D6;border-radius:50px;padding:8px 18px;font-size:13px;font-weight:700;color:#222;">
-        <span style="width:8px;height:8px;background:#d95f20;border-radius:50%;display:inline-block;flex-shrink:0;"></span>
-        ISO 9001:2015 — Sistemas de Gestión de la Calidad (compatible)
-      </div>
- 
-      <div style="display:flex;align-items:center;gap:8px;background:#fff;border:1.5px solid #D6FFE4;border-radius:50px;padding:8px 18px;font-size:13px;font-weight:700;color:#222;">
-        <span style="width:8px;height:8px;background:#2eaa60;border-radius:50%;display:inline-block;flex-shrink:0;"></span>
-        IAAC / ONAC — Organismos de acreditación regionales
-      </div>
- 
-    </div>
- 
-    <!-- Nota final -->
-    <div style="margin-top:28px;text-align:center;font-size:12px;color:#999;line-height:1.7;border-top:1px dashed #ddd;padding-top:20px;">
-      Basado en la <strong style="color:#555;">Norma Internacional ISO/IEC 17025:2017</strong> — Requisitos generales para la competencia de laboratorios de ensayo y calibración<br>
-      Para uso interno de capacitación y referencia. Consulte siempre la versión oficial vigente.<br>
-      <span style="color:#aaa;">Para guardar como PDF: use la opción de impresión del navegador → tamaño A4 → orientación Vertical → activar "Gráficos de fondo"</span>
-    </div>
-  </div>
- 
-</div>
- 
-<!-- FOOTER -->
-<div style="text-align:center;padding:24px;font-size:12px;color:#888;border-top:1px solid var(--border);">
-  ISO/IEC 17025:2017 — Infografía Interactiva &nbsp;·&nbsp; Haz clic en cada tarjeta para expandir los requisitos
-</div>
- 
-<script>
-  // Toggle cards
-  function toggleCard(card) {
-    card.classList.toggle('open');
-    const btn = card.querySelector('.card-toggle');
-    if (btn) btn.textContent = card.classList.contains('open') ? '▲' : '▼';
-  }
- 
-  // Show group
-  function showGroup(id, btn) {
-    document.querySelectorAll('.section-group').forEach(g => g.classList.remove('visible'));
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-    const grp = document.getElementById('grp-' + id);
-    if (grp) grp.classList.add('visible');
-    if (btn) btn.classList.add('active');
-  }
- 
-  // Build progress bars
-  const bars = [
-    { label: 'Cl. 4 — Imparcialidad y Confidencialidad', pct: 100, color: '#FFB3B3' },
-    { label: 'Cl. 5 — Estructura Organizacional', pct: 100, color: '#DDB3FF' },
-    { label: 'Cl. 6 — Recursos (personal, equipos, trazabilidad)', pct: 100, color: '#A3E8F5' },
-    { label: 'Cl. 7 — Proceso (métodos, informes, incertidumbre)', pct: 100, color: '#A3C4FF' },
-    { label: 'Cl. 8 — Sistema de Gestión (auditorías, mejora)', pct: 100, color: '#A3F5C0' },
-  ];
-  const wrap = document.getElementById('progressBars');
-  bars.forEach((b, i) => {
-    wrap.innerHTML += `
-      <div class="progress-wrap">
-        <div class="progress-label"><span>${b.label}</span></div>
-        <div class="progress-bar"><div class="progress-fill" id="pf${i}" style="width:0%;background:${b.color}"></div></div>
-      </div>`;
-  });
-  setTimeout(() => {
-    bars.forEach((b, i) => {
-      document.getElementById('pf' + i).style.width = b.pct + '%';
-    });
-  }, 300);
-</script>
 </body>
 </html>
