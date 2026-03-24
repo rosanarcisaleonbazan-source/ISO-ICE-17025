@@ -299,3 +299,314 @@
 
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISO 17025 Master — Sesión 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Salsa&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-pastel: #f0f9ff; /* Azul muy pálido */
+            --primary-pastel: #b9fbc0; /* Verde pastel */
+            --secondary-pastel: #ffecb3; /* Amarillo pastel */
+            --accent-pastel: #ffafcc; /* Rosa pastel */
+            --text-main: #2c3e50;
+            --white-card: #ffffff;
+            --shadow: 0 12px 30px rgba(0,0,0,0.07);
+        }
+
+        body {
+            font-family: 'Salsa', cursive;
+            background-color: var(--bg-pastel);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        #quiz-app {
+            background: var(--white-card);
+            max-width: 800px;
+            width: 100%;
+            border-radius: 40px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+            border: 6px solid var(--secondary-pastel);
+            position: relative;
+            text-align: center;
+        }
+
+        .header-session {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .badge {
+            background: var(--primary-pastel);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 1rem;
+            color: #27500a;
+        }
+
+        h1 { font-size: 1.7rem; margin: 15px 0; color: #ba7517; }
+        
+        .question-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #2d3436;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option-btn {
+            background: #fff;
+            border: 2px solid #eee;
+            padding: 18px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Salsa', cursive;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            transition: all 0.3s;
+            text-align: left;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .option-btn:hover {
+            border-color: var(--accent-pastel);
+            background: #fffdfd;
+            transform: scale(1.01);
+        }
+
+        /* Feedback */
+        .feedback-area {
+            margin-top: 25px;
+            padding: 25px;
+            border-radius: 25px;
+            display: none;
+            text-align: left;
+        }
+        .correct-box { background: #e1f5ee; border: 3px solid #1d9e75; }
+        .wrong-box { background: #fcebeb; border: 3px solid #e24b4a; }
+
+        .btn-next {
+            background: #378add;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-family: 'Salsa', cursive;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #eee;
+            border-radius: 10px;
+            margin-top: 35px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #1d9e75;
+            width: 0%;
+            transition: width 0.4s;
+        }
+    </style>
+</head>
+<body>
+
+<div id="quiz-app">
+    <div class="header-session">
+        <span class="badge" id="session-title">Sesión 2: Cláusula 6 y 7.6</span>
+        <span id="question-counter">1/12</span>
+    </div>
+
+    <div id="game-zone">
+        <div id="icon-box" style="font-size: 4.5rem; margin-bottom: 15px;">🔬</div>
+        <div class="question-text" id="q-text">Preparando reactivos...</div>
+        <div class="options-grid" id="options-container"></div>
+    </div>
+
+    <div id="feedback" class="feedback-area">
+        <h2 id="feedback-title" style="margin-top:0"></h2>
+        <p id="feedback-info" style="font-family: 'Inter', sans-serif; font-size: 1.1rem;"></p>
+        <button class="btn-next" onclick="nextQuestion()">Siguiente paso ➔</button>
+    </div>
+
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+</div>
+
+<script>
+    const session2Data = [
+        {
+            q: "¿Qué debe asegurar el laboratorio cuando usa equipamiento que está fuera de su control permanente?",
+            options: ["Nada, la responsabilidad es del dueño", "Que se cumplan los requisitos de la norma para ese equipo", "Solo que el equipo encienda correctamente", "Que el equipo sea de una marca reconocida"],
+            correct: 1,
+            icon: "🏗️",
+            info: "Cláusula 6.4.2: El laboratorio debe asegurar que el equipamiento fuera de su control cumpla con los requisitos de la norma antes de ser utilizado."
+        },
+        {
+            q: "Si un equipo da resultados cuestionables o está defectuoso, ¿cuál es el primer paso?",
+            options: ["Seguir usándolo con cuidado", "Ponerlo fuera de servicio, aislarlo o rotularlo claramente", "Calibrarlo inmediatamente sin detener el trabajo", "Venderlo a otro laboratorio"],
+            correct: 1,
+            icon: "🚫",
+            info: "Cláusula 6.4.9: El equipo defectuoso debe ponerse fuera de servicio y marcarse claramente hasta que se verifique su correcto funcionamiento."
+        },
+        {
+            q: "¿Para qué sirven las 'comprobaciones intermedias' en los equipos?",
+            options: ["Para que el personal no se olvide de usarlos", "Para mantener la confianza en el desempeño del equipo entre calibraciones", "Para evitar pagar la calibración anual", "Para limpiar el equipo profundamente"],
+            correct: 1,
+            icon: "⏲️",
+            info: "Cláusula 6.4.10: Se realizan de acuerdo con un procedimiento para mantener la confianza en el desempeño del equipo en intervalos definidos."
+        },
+        {
+            q: "¿Cómo se define la Trazabilidad Metrológica?",
+            options: ["Es el camino que recorre el analista al laboratorio", "Propiedad de un resultado relacionada a una referencia mediante una cadena ininterrumpida de calibraciones", "Es el manual de usuario de un equipo", "La lista de proveedores del laboratorio"],
+            correct: 1,
+            icon: "🔗",
+            info: "Cláusula 6.5.1: Es una cadena ininterrumpida y documentada de calibraciones, donde cada una contribuye a la incertidumbre de medición."
+        },
+        {
+            q: "¿Cuál de estas es una forma de lograr trazabilidad al Sistema Internacional de Unidades (SI)?",
+            options: ["Usar un equipo nuevo de paquete", "Calibración por un laboratorio competente o el uso de Materiales de Referencia Certificados (MRC)", "Pedirle al fabricante una carta de garantía", "Comparar el resultado con Wikipedia"],
+            correct: 1,
+            icon: "🌍",
+            info: "Cláusula 6.5.2: Se logra mediante laboratorios competentes, MRC de productores que cumplan ISO 17034 o realización directa de unidades SI."
+        },
+        {
+            q: "¿Qué es la Incertidumbre de Medición?",
+            options: ["Un error que cometió el analista", "Un parámetro asociado al resultado que caracteriza la dispersión de los valores", "La duda de si el laboratorio abrirá mañana", "El precio total del ensayo"],
+            correct: 1,
+            icon: "📊",
+            info: "Fundamentos técnicos: Es el parámetro que caracteriza la dispersión de los valores que podrían ser atribuidos a la magnitud medida."
+        },
+        {
+            q: "Un laboratorio que realiza calibraciones debe evaluar la incertidumbre para:",
+            options: ["Solo los equipos más caros", "Todas las calibraciones, incluidas las de sus propios equipos", "Solo si el cliente lo pide", "Una vez cada cinco años"],
+            correct: 1,
+            icon: "⚖️",
+            info: "Cláusula 7.6.2: El laboratorio que realiza calibraciones DEBE evaluar la incertidumbre para todas las calibraciones sin excepción."
+        },
+        {
+            q: "¿Qué debe incluirse al evaluar las contribuciones a la incertidumbre?",
+            options: ["Solo el error del equipo", "Todas las contribuciones significativas, incluidas las del muestreo", "Únicamente la temperatura ambiental", "Nada, se usa un valor estándar de internet"],
+            correct: 1,
+            icon: "🧩",
+            info: "Cláusula 7.6.1: Deben identificarse todas las contribuciones significativas, utilizando métodos apropiados de análisis."
+        },
+        {
+            q: "¿Cómo se llama la incertidumbre que resulta de multiplicar la combinada por un factor de cobertura 'k'?",
+            options: ["Incertidumbre Gigante", "Incertidumbre Expandida", "Incertidumbre Relativa", "Incertidumbre de Error"],
+            correct: 1,
+            icon: "📈",
+            info: "Técnicamente, la Incertidumbre Expandida (U) se obtiene al multiplicar la incertidumbre estándar combinada (uc) por un factor k (usualmente k=2 para 95% de confianza)."
+        },
+        {
+            q: "¿Qué debe hacer el laboratorio con los factores de corrección obtenidos en una calibración?",
+            options: ["Archivarlos y no usarlos", "Asegurar que se actualicen e implementen adecuadamente", "Sumarlos siempre al resultado sin importar el signo", "Borrarlos del certificado"],
+            correct: 1,
+            icon: "📝",
+            info: "Cláusula 6.4.11: Los valores de referencia y factores de corrección deben actualizarse e implementarse para cumplir con los requisitos."
+        },
+        {
+            q: "El personal que influye en las actividades del laboratorio debe actuar de forma:",
+            options: ["Amigable y social", "Imparcial y competente", "Independiente de los procedimientos", "Rápida aunque haya errores"],
+            correct: 1,
+            icon: "👩‍🔬",
+            info: "Cláusula 6.2.1: Todo el personal (interno o externo) que pueda influir en los resultados debe actuar imparcialmente y ser competente."
+        },
+        {
+            q: "Las instalaciones y condiciones ambientales deben ser adecuadas para:",
+            options: ["Que el personal esté cómodo", "No afectar negativamente la validez de los resultados", "Ahorrar energía eléctrica", "Que el laboratorio se vea moderno"],
+            correct: 1,
+            icon: "🌡️",
+            info: "Cláusula 6.3.1: Las condiciones ambientales deben ser adecuadas para las actividades y no afectar la validez de los resultados."
+        }
+    ];
+
+    let currentIdx = 0;
+
+    function renderQuestion() {
+        const qData = session2Data[currentIdx];
+        document.getElementById('question-counter').innerText = `${currentIdx + 1}/${session2Data.length}`;
+        document.getElementById('prog-fill').style.width = `${((currentIdx) / session2Data.length) * 100}%`;
+        document.getElementById('q-text').innerText = qData.q;
+        document.getElementById('icon-box').innerText = qData.icon;
+        
+        const container = document.getElementById('options-container');
+        container.innerHTML = '';
+        qData.options.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(i);
+            container.appendChild(btn);
+        });
+
+        document.getElementById('feedback').style.display = 'none';
+        document.getElementById('game-zone').style.display = 'block';
+    }
+
+    function checkAnswer(idx) {
+        const qData = session2Data[currentIdx];
+        const feedback = document.getElementById('feedback');
+        document.getElementById('game-zone').style.display = 'none';
+        feedback.style.display = 'block';
+
+        if(idx === qData.correct) {
+            feedback.className = "feedback-area correct-box";
+            document.getElementById('feedback-title').innerText = "🌟 ¡Metrología Dominada!";
+            document.getElementById('feedback-info').innerText = qData.info;
+        } else {
+            feedback.className = "feedback-area wrong-box";
+            document.getElementById('feedback-title').innerText = "❌ Hay una desviación...";
+            document.getElementById('feedback-info').innerText = "Recuerda: " + qData.info;
+        }
+    }
+
+    function nextQuestion() {
+        currentIdx++;
+        if(currentIdx < session2Data.length) {
+            renderQuestion();
+        } else {
+            showFinal();
+        }
+    }
+
+    function showFinal() {
+        document.getElementById('prog-fill').style.width = "100%";
+        document.getElementById('quiz-app').innerHTML = `
+            <div style="font-size: 5.5rem; margin-bottom: 20px;">🏆</div>
+            <h1 style="color: #1d9e75">¡Sesión 2 Superada!</h1>
+            <p style="font-family: 'Inter', sans-serif; font-size: 1.2rem">Has demostrado competencia técnica en Recursos e Incertidumbre.</p>
+            <div style="background: var(--bg-pastel); padding: 20px; border-radius: 20px; margin: 20px 0;">
+                <p><strong>Logros:</strong> Trazabilidad, Control de Equipos y Gestión de Personal.</p>
+            </div>
+            <button class="btn-next" onclick="location.reload()">Reiniciar Sesión 2</button>
+        `;
+    }
+
+    renderQuestion();
+</script>
+
+</body>
+</html>
