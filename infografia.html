@@ -1,275 +1,350 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ISO 17025 Infografía PRO</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 <style>
-
-:root{
-  --verde1:#1e7d4d;
-  --verde2:#2ca36c;
-  --gris:#6b7280;
-  --bg:#f4f6f8;
-  --card:#ffffff;
-}
-
-/* GENERAL */
-body{
-  font-family:'Quicksand', sans-serif;
-  margin:0;
-  background:var(--bg);
-  color:#333;
-}
-
-.container{
-  max-width:1200px;
-  margin:auto;
+.principios{
   padding:30px;
 }
 
-/* HERO */
-.hero{
-  background:linear-gradient(135deg,var(--verde1),var(--verde2));
-  color:white;
-  padding:40px;
-  border-radius:20px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.15);
-}
-
-.hero h1{
-  margin:10px 0;
-  font-size:34px;
-}
-
-.hero p{
-  max-width:700px;
-  opacity:0.9;
-}
-
-/* STATS */
-.stats{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:15px;
-  margin-top:25px;
-}
-
-.stat{
-  background:rgba(255,255,255,0.15);
-  padding:15px;
-  border-radius:12px;
-  text-align:center;
-  backdrop-filter:blur(5px);
-}
-
-.stat b{
-  font-size:22px;
-}
-
-/* SECTION */
-.section{
-  margin-top:40px;
-}
-
-.section h2{
+.acordeon{
+  background:white;
+  border-radius:15px;
   margin-bottom:15px;
-  font-size:22px;
-}
-
-/* CARDS */
-.card{
-  background:var(--card);
-  padding:20px;
-  border-radius:16px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.08);
-  display:flex;
-  gap:12px;
-  align-items:flex-start;
-}
-
-.icon{
-  background:#e8f5ee;
-  color:var(--verde1);
-  padding:10px;
-  border-radius:10px;
-}
-
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:15px;
-}
-
-/* PILARES */
-.pilares{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:20px;
-}
-
-.pilar{
-  background:var(--card);
-  padding:20px;
-  border-radius:16px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.08);
-}
-
-/* FLOW */
-.flow{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:15px;
-}
-
-.step{
-  background:white;
   padding:15px;
-  border-radius:12px;
-  text-align:center;
-  box-shadow:0 4px 12px rgba(0,0,0,0.06);
+  cursor:pointer;
+  box-shadow:0 6px 15px rgba(0,0,0,0.08);
+  transition:0.3s;
 }
 
-.step span{
+.acordeon:hover{
+  transform:scale(1.02);
+}
+
+.acordeon h3{
+  margin:0;
+  font-size:16px;
+}
+
+.contenido{
+  display:none;
+  margin-top:10px;
+  font-size:14px;
+  color:#555;
+}
+
+.acordeon.active .contenido{
   display:block;
-  font-size:20px;
-  margin-bottom:5px;
 }
-
-/* QUESTIONS */
-.q{
-  background:white;
-  padding:15px;
-  border-radius:12px;
-  margin-bottom:10px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.05);
-}
-
-/* FOOTER */
-.footer{
-  margin-top:40px;
-  font-size:12px;
-  color:var(--gris);
-}
-
 </style>
-</head>
 
-<body>
+<script>
+function toggleAcordeon(el){
+  el.classList.toggle("active");
+}
+</script>
 
-<div class="container">
+<div class="section principios">
+  <h2>Principios clave de competencia técnica (ISO 17025)</h2>
 
-<!-- HERO -->
-<div class="hero">
-  <p>ISO 17025 · Laboratorios · Competencia técnica</p>
-  <h1>Gestión de Laboratorios<br>ISO 17025</h1>
-
-  <p>
-    Norma internacional que asegura la competencia técnica,
-    imparcialidad y confiabilidad de los resultados de laboratorio.
-  </p>
-
-  <div class="stats">
-    <div class="stat"><b>5</b><br>Requisitos</div>
-    <div class="stat"><b>3</b><br>Áreas</div>
-    <div class="stat"><b>4</b><br>Procesos</div>
-    <div class="stat"><b>7</b><br>Controles</div>
-    <div class="stat"><b>6</b><br>Auditorías</div>
-  </div>
-</div>
-
-<!-- DEFINICIÓN -->
-<div class="section">
-  <h2>¿Qué es ISO 17025?</h2>
-
-  <div class="card">
-    <div class="icon"><span class="material-icons">science</span></div>
-    <div>Norma que garantiza resultados técnicamente válidos en laboratorios.</div>
-  </div>
-</div>
-
-<!-- REQUISITOS -->
-<div class="section">
-  <h2>Tipos de requisitos</h2>
-
-  <div class="grid">
-    <div class="card"><span class="material-icons">security</span> Generales</div>
-    <div class="card"><span class="material-icons">account_tree</span> Estructurales</div>
-    <div class="card"><span class="material-icons">build</span> Recursos</div>
-    <div class="card"><span class="material-icons">science</span> Procesos</div>
-    <div class="card"><span class="material-icons">settings</span> Gestión</div>
-  </div>
-</div>
-
-<!-- PILARES -->
-<div class="section">
-  <h2>Pilares clave</h2>
-
-  <div class="pilares">
-    <div class="pilar">
-      🔍 Competencia técnica<br>
-      ⚖️ Imparcialidad<br>
-      🔐 Confidencialidad
-    </div>
-
-    <div class="pilar">
-      📊 Resultados confiables<br>
-      📈 Mejora continua
+  <div class="acordeon" onclick="toggleAcordeon(this)">
+    🔍 <h3>Competencia del personal</h3>
+    <div class="contenido">
+      El laboratorio debe asegurar que todo el personal que influye en los resultados
+      sea competente con base en educación, formación, experiencia y habilidades demostrables.
+      Debe existir evidencia documentada (registros, evaluaciones, capacitaciones).
     </div>
   </div>
-</div>
 
-<!-- PROCESO -->
-<div class="section">
-  <h2>Proceso del laboratorio</h2>
-
-  <div class="flow">
-    <div class="step"><span>1</span>Recepción</div>
-    <div class="step"><span>2</span>Ensayo</div>
-    <div class="step"><span>3</span>Validación</div>
-    <div class="step"><span>4</span>Resultados</div>
-    <div class="step"><span>5</span>Informe</div>
+  <div class="acordeon" onclick="toggleAcordeon(this)">
+    ⚖️ <h3>Imparcialidad</h3>
+    <div class="contenido">
+      El laboratorio debe identificar, analizar y gestionar riesgos a la imparcialidad.
+      No deben existir presiones comerciales, financieras o internas que afecten los resultados.
+    </div>
   </div>
-</div>
 
-<!-- CONTROLES -->
-<div class="section">
-  <h2>Controles del sistema</h2>
-
-  <div class="grid">
-    <div class="card">⚙️ Calibración</div>
-    <div class="card">📋 Documentación</div>
-    <div class="card">🔍 Auditorías</div>
-    <div class="card">📊 Calidad</div>
-    <div class="card">🧪 Validación</div>
-    <div class="card">👩‍🏫 Capacitación</div>
+  <div class="acordeon" onclick="toggleAcordeon(this)">
+    🔐 <h3>Confidencialidad</h3>
+    <div class="contenido">
+      Toda la información del cliente debe ser protegida. El laboratorio debe establecer
+      acuerdos formales y controles para garantizar la confidencialidad de datos y resultados.
+    </div>
   </div>
-</div>
 
-<!-- AUDITORÍA -->
-<div class="section">
-  <h2>Preguntas de auditoría</h2>
+  <div class="acordeon" onclick="toggleAcordeon(this)">
+    ⚙️ <h3>Control de equipos</h3>
+    <div class="contenido">
+      Los equipos deben ser calibrados, verificados y mantenidos. Debe asegurarse
+      la trazabilidad metrológica y el estado adecuado antes de su uso.
+    </div>
+  </div>
 
-  <div class="q">¿El personal es competente?</div>
-  <div class="q">¿Equipos calibrados?</div>
-  <div class="q">¿Métodos validados?</div>
-  <div class="q">¿Registros controlados?</div>
-  <div class="q">¿Auditorías internas?</div>
-  <div class="q">¿Mejora continua?</div>
-</div>
+  <div class="acordeon" onclick="toggleAcordeon(this)">
+    🧪 <h3>Validez de los resultados</h3>
+    <div class="contenido">
+      Los métodos deben ser validados o verificados. Se deben aplicar controles de calidad,
+      ensayos de aptitud y monitoreo continuo para asegurar resultados confiables.
+    </div>
+  </div>
 
-<!-- FOOTER -->
-<div class="footer">
-Basado en ISO 17025:2017 · Diseño tipo infografía profesional
-</div>
+  <div class="acordeon" onclick="toggleAcordeon(this)">
+    📈 <h3>Mejora continua</h3>
+    <div class="contenido">
+      El laboratorio debe implementar acciones correctivas, auditorías internas
+      y revisiones periódicas para mejorar continuamente su desempeño.
+    </div>
+  </div>
 
 </div>
 
 </body>
 </html>
+
+<!-- ===== BLOQUE 1: PRINCIPIOS ISO 17025 (PRO) ===== -->
+
+<style>
+.principios-box{
+  background:linear-gradient(135deg,#e6dcf5,#f7d9e3);
+  padding:30px;
+  border-radius:20px;
+  margin-top:30px;
+}
+
+.principios-box h2{
+  margin-bottom:20px;
+}
+
+.acordeon{
+  background:white;
+  border-radius:15px;
+  margin-bottom:15px;
+  padding:18px;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 6px 15px rgba(0,0,0,0.08);
+}
+
+.acordeon:hover{
+  transform:translateY(-4px);
+}
+
+.acordeon h3{
+  margin:0;
+  font-size:16px;
+}
+
+.contenido{
+  display:none;
+  margin-top:12px;
+  font-size:14px;
+  color:#555;
+  line-height:1.5;
+}
+
+.acordeon.active .contenido{
+  display:block;
+}
+</style>
+
+<div class="principios-box">
+
+  <h2>Principios clave de competencia técnica (ISO 17025)</h2>
+
+  <div class="acordeon" onclick="this.classList.toggle('active')">
+    🔍 <h3>Competencia del personal</h3>
+    <div class="contenido">
+      El laboratorio debe asegurar que todo el personal que influye en los resultados sea competente,
+      con base en educación, formación, experiencia y habilidades demostradas.
+      <br><br>
+      ✔ Evidencia requerida: registros de capacitación, evaluaciones de desempeño y autorizaciones formales.
+    </div>
+  </div>
+
+  <div class="acordeon" onclick="this.classList.toggle('active')">
+    ⚖️ <h3>Imparcialidad</h3>
+    <div class="contenido">
+      El laboratorio debe identificar y gestionar riesgos que puedan afectar la objetividad de los resultados.
+      <br><br>
+      ✔ No deben existir presiones comerciales, financieras o internas que comprometan la integridad.
+    </div>
+  </div>
+
+  <div class="acordeon" onclick="this.classList.toggle('active')">
+    🔐 <h3>Confidencialidad</h3>
+    <div class="contenido">
+      Toda la información del cliente debe ser protegida.
+      <br><br>
+      ✔ Se deben implementar controles para evitar divulgación no autorizada.
+    </div>
+  </div>
+
+  <div class="acordeon" onclick="this.classList.toggle('active')">
+    ⚙️ <h3>Control de equipos</h3>
+    <div class="contenido">
+      Los equipos deben mantenerse calibrados, verificados y en condiciones adecuadas de operación.
+      <br><br>
+      ✔ Se debe asegurar trazabilidad metrológica a patrones nacionales o internacionales.
+    </div>
+  </div>
+
+  <div class="acordeon" onclick="this.classList.toggle('active')">
+    🧪 <h3>Validez de los resultados</h3>
+    <div class="contenido">
+      Los métodos utilizados deben ser validados o verificados antes de su aplicación.
+      <br><br>
+      ✔ Incluye controles de calidad, ensayos de aptitud y monitoreo continuo.
+    </div>
+  </div>
+
+  <div class="acordeon" onclick="this.classList.toggle('active')">
+    📈 <h3>Mejora continua</h3>
+    <div class="contenido">
+      El laboratorio debe mejorar continuamente su sistema mediante auditorías internas,
+      acciones correctivas y revisión por la dirección.
+      <br><br>
+      ✔ Enfoque basado en riesgos y oportunidades.
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+<!-- ===== BLOQUE 2: RECURSOS ISO 17025 (PRO) ===== -->
+
+<style>
+.recursos-box{
+  background:linear-gradient(135deg,#d8f3dc,#dceefb);
+  padding:30px;
+  border-radius:20px;
+  margin-top:30px;
+}
+
+.recursos-box h2{
+  margin-bottom:20px;
+}
+
+.recurso{
+  background:white;
+  border-radius:15px;
+  margin-bottom:15px;
+  padding:18px;
+  cursor:pointer;
+  transition:0.3s;
+  box-shadow:0 6px 15px rgba(0,0,0,0.08);
+}
+
+.recurso:hover{
+  transform:translateY(-4px);
+}
+
+.recurso h3{
+  margin:0;
+  font-size:16px;
+}
+
+.detalle{
+  display:none;
+  margin-top:12px;
+  font-size:14px;
+  color:#555;
+  line-height:1.5;
+}
+
+.recurso.active .detalle{
+  display:block;
+}
+
+.check{
+  margin-top:10px;
+  padding-left:15px;
+}
+</style>
+
+<div class="recursos-box">
+
+  <h2>Requisitos de Recursos (ISO 17025 - Cláusula 6)</h2>
+
+  <!-- PERSONAL -->
+  <div class="recurso" onclick="this.classList.toggle('active')">
+    👩‍🔬 <h3>Personal</h3>
+    <div class="detalle">
+      El laboratorio debe contar con personal competente que influya en los resultados,
+      incluyendo analistas, técnicos y responsables de validación.
+
+      <div class="check">
+        ✔ Competencia demostrada (educación, experiencia, formación)<br>
+        ✔ Descripciones de cargo definidas<br>
+        ✔ Autorización formal para actividades específicas<br>
+        ✔ Registros de capacitación y evaluación<br>
+        ✔ Supervisión adecuada
+      </div>
+    </div>
+  </div>
+
+  <!-- INSTALACIONES -->
+  <div class="recurso" onclick="this.classList.toggle('active')">
+    🏢 <h3>Instalaciones y condiciones ambientales</h3>
+    <div class="detalle">
+      Las instalaciones deben ser adecuadas para evitar contaminación, interferencias
+      y condiciones que afecten la validez de los resultados.
+
+      <div class="check">
+        ✔ Control de temperatura, humedad y contaminación<br>
+        ✔ Separación de áreas (ensayo, almacenamiento, recepción)<br>
+        ✔ Condiciones monitoreadas y registradas<br>
+        ✔ Acceso controlado a áreas críticas
+      </div>
+    </div>
+  </div>
+
+  <!-- EQUIPOS -->
+  <div class="recurso" onclick="this.classList.toggle('active')">
+    ⚙️ <h3>Equipos</h3>
+    <div class="detalle">
+      Todos los equipos utilizados deben ser aptos para su propósito y mantenerse
+      en condiciones que aseguren resultados confiables.
+
+      <div class="check">
+        ✔ Calibración periódica<br>
+        ✔ Verificación antes de uso<br>
+        ✔ Mantenimiento preventivo<br>
+        ✔ Identificación única del equipo<br>
+        ✔ Registros de uso y fallas
+      </div>
+    </div>
+  </div>
+
+  <!-- TRAZABILIDAD -->
+  <div class="recurso" onclick="this.classList.toggle('active')">
+    📏 <h3>Trazabilidad metrológica</h3>
+    <div class="detalle">
+      Los resultados deben ser trazables a estándares nacionales o internacionales
+      mediante una cadena ininterrumpida de calibraciones.
+
+      <div class="check">
+        ✔ Uso de patrones certificados<br>
+        ✔ Certificados de calibración válidos<br>
+        ✔ Relación con unidades del SI<br>
+        ✔ Evaluación de incertidumbre de medición
+      </div>
+    </div>
+  </div>
+
+  <!-- PROVEEDORES -->
+  <div class="recurso" onclick="this.classList.toggle('active')">
+    📦 <h3>Productos y servicios externos</h3>
+    <div class="detalle">
+      El laboratorio debe asegurar que los proveedores externos cumplan requisitos
+      de calidad para no afectar los resultados.
+
+      <div class="check">
+        ✔ Evaluación y selección de proveedores<br>
+        ✔ Control de insumos y reactivos<br>
+        ✔ Verificación de certificados<br>
+        ✔ Registro de proveedores aprobados
+      </div>
+    </div>
+  </div>
+
+</div>
