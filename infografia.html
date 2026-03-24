@@ -35,208 +35,6 @@
     overflow-x: hidden;
   }
 
-  /* --- BOTÓN DE IMPRESIÓN --- */
-  #btn-print {
-    position: fixed; bottom: 20px; right: 20px; z-index: 9999;
-    padding: 12px 24px; background: #e05a5a; color: white;
-    border: none; border-radius: 50px; font-weight: 800; cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: 0.3s;
-  }
-  #btn-print:hover { transform: scale(1.05); background: #c0392b; }
-
-  /* ─── HERO ─── */
-  .hero {
-    background: linear-gradient(135deg, #fff5f5 0%, #f0f8ff 50%, #f5fff8 100%);
-    padding: 60px 40px 50px; text-align: center; position: relative;
-    border-bottom: 2px dashed var(--border);
-  }
-  .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: #fff; border: 2px solid #FFD6D6;
-    border-radius: 40px; padding: 6px 20px;
-    font-size: 13px; font-weight: 700; color: var(--c1d);
-    margin-bottom: 20px;
-  }
-  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(32px, 5vw, 52px); margin-bottom: 10px; }
-  .hero-title span { color: var(--c2d); }
-  .hero-sub { font-size: 16px; color: var(--ink3); max-width: 540px; margin: 0 auto 30px; }
-  .hero-stats { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
-  .stat-pill { background: var(--white); border: 2px solid var(--border); border-radius: 50px; padding: 10px 24px; text-align: center; }
-  .stat-pill .num { font-size: 26px; font-weight: 900; }
-  .stat-pill .lbl { font-size: 11px; color: var(--ink3); font-weight: 600; display: block; }
-
-  /* ─── NAV TABS ─── */
-  .nav-wrap { display: flex; gap: 10px; flex-wrap: wrap; padding: 24px 40px 0; justify-content: center; }
-  .nav-tab {
-    padding: 9px 18px; border-radius: 50px; border: 2px solid var(--border);
-    background: var(--white); font-weight: 700; cursor: pointer; transition: 0.2s;
-  }
-  .nav-tab.active { box-shadow: var(--shadow); border-width: 2.5px; transform: translateY(-2px); }
-
-  /* ─── MAIN ─── */
-  .main { padding: 32px 40px 60px; max-width: 1200px; margin: 0 auto; }
-  .section-group { display: none; }
-  .section-group.visible { display: block; animation: fadeUp 0.35s ease both; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-
-  .group-title { display: flex; align-items: center; gap: 12px; font-size: 22px; font-weight: 800; margin-bottom: 20px; }
-  .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-
-  /* ─── CARDS ─── */
-  .card { background: var(--white); border-radius: var(--radius); border: 2px solid var(--border); overflow: hidden; box-shadow: var(--shadow); cursor: pointer; transition: 0.22s; }
-  .card-head { padding: 20px; display: flex; align-items: flex-start; gap: 14px; }
-  .card-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-  .card-heading { flex: 1; }
-  .card-num { font-size: 11px; font-weight: 800; opacity: 0.7; }
-  .card-name { font-size: 16px; font-weight: 800; }
-  .card-toggle { transition: transform 0.25s; }
-  .card.open .card-toggle { transform: rotate(180deg); }
-  .card-body { max-height: 0; overflow: hidden; transition: 0.38s ease; padding: 0 20px; }
-  .card.open .card-body { max-height: 800px; padding-bottom: 18px; }
-  .req-item { display: flex; gap: 10px; padding: 8px 0; border-top: 1.5px dashed rgba(0,0,0,0.07); font-size: 13px; }
-
-  /* ─── ESTILOS PARA IMPRESIÓN (PDF) ─── */
-  @media print {
-    #btn-print, .nav-wrap, .card-toggle { display: none !important; }
-    .section-group { display: block !important; page-break-after: always; }
-    .card-body { max-height: none !important; padding: 15px 20px !important; }
-    .card { break-inside: avoid; margin-bottom: 15px; box-shadow: none !important; border: 1px solid #ddd !important; }
-    body { background: white; }
-    .hero { padding: 30px !important; }
-  }
-</style>
-</head>
-<body>
-
-<button id="btn-print" onclick="window.print()">📄 Guardar como PDF / Imprimir</button>
-
-<div class="hero">
-  <div class="hero-badge">🔬 Norma Internacional</div>
-  <h1 class="hero-title">ISO/IEC <span>17025</span> : 2017</h1>
-  <p class="hero-sub">Requisitos generales para la competencia de los laboratorios de ensayo y de calibración</p>
-  <div class="hero-stats">
-    <div class="stat-pill"><span class="num">8</span><span class="lbl">CLÁUSULAS</span></div>
-    <div class="stat-pill"><span class="num">2017</span><span class="lbl">VERSIÓN</span></div>
-    <div class="stat-pill"><span class="num">ISO</span><span class="lbl">ORGANISMO</span></div>
-  </div>
-</div>
-
-<div class="nav-wrap">
-  <button class="nav-tab active" onclick="showGroup('all', this)">🗺️ Vista general</button>
-  <button class="nav-tab" onclick="showGroup('g4', this)">⚖️ Cláusula 4</button>
-  <button class="nav-tab" onclick="showGroup('g6', this)">🛠️ Cláusula 6</button>
-  <button class="nav-tab" onclick="showGroup('g7', this)">⚗️ Cláusula 7</button>
-</div>
-
-<div class="main">
-  <div class="section-group visible" id="grp-all">
-    <div class="group-title">📊 Resumen de la Norma</div>
-    <p>Selecciona una cláusula arriba para ver los detalles técnicos.</p>
-  </div>
-
-  <div class="section-group" id="grp-g4">
-    <div class="group-title">⚖️ Requisitos Generales</div>
-    <div class="cards-grid">
-      <div class="card" onclick="this.classList.toggle('open')">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c1)">⚖️</div>
-          <div class="card-heading"><div class="card-num">4.1</div><div class="card-name">Imparcialidad</div></div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item">Identificación continua de riesgos a la imparcialidad.</div>
-          <div class="req-item">Compromiso de la dirección con la objetividad.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-group" id="grp-g6">
-    <div class="group-title">🛠️ Requisitos de Recursos</div>
-    <div class="cards-grid">
-      <div class="card" onclick="this.classList.toggle('open')">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c6)">⚙️</div>
-          <div class="card-heading"><div class="card-num">6.4</div><div class="card-name">Equipos</div></div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item">Calibración y verificación periódica de equipos.</div>
-          <div class="req-item">Mantenimiento preventivo documentado.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="section-group" id="grp-g7">
-    <div class="group-title">⚗️ Requisitos del Proceso</div>
-    <div class="cards-grid">
-      <div class="card" onclick="this.classList.toggle('open')">
-        <div class="card-head">
-          <div class="card-icon" style="background:var(--c2)">🔬</div>
-          <div class="card-heading"><div class="card-num">7.2</div><div class="card-name">Validación de Métodos</div></div>
-          <div class="card-toggle">▼</div>
-        </div>
-        <div class="card-body">
-          <div class="req-item">Uso de métodos normalizados y validados.</div>
-          <div class="req-item">Registros de validación conservados.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-  function showGroup(groupId, btn) {
-    document.querySelectorAll('.section-group').forEach(g => g.classList.remove('visible'));
-    document.getElementById('grp-' + groupId).classList.add('visible');
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-  }
-</script>
-
-</body>
-</html>
-
-
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ISO/IEC 17025:2017 — Infografía Interactiva</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --c1: #FFD6D6; --c1d: #e05a5a;
-    --c2: #D6EAFF; --c2d: #3a82c4;
-    --c3: #D6FFE4; --c3d: #2eaa60;
-    --c4: #FFF3D6; --c4d: #c98a1a;
-    --c5: #EDD6FF; --c5d: #8e44c9;
-    --c6: #D6F9FF; --c6d: #1aa8c1;
-    --c7: #FFE8D6; --c7d: #d95f20;
-    --ink: #111111;
-    --ink2: #333333;
-    --ink3: #555555;
-    --bg: #FAFAF7;
-    --white: #ffffff;
-    --border: rgba(0,0,0,0.08);
-    --shadow: 0 4px 24px rgba(0,0,0,0.08);
-    --shadow-hover: 0 12px 40px rgba(0,0,0,0.14);
-    --radius: 20px;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'Nunito', sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
-
   /* ─── HERO ─── */
   .hero {
     background: linear-gradient(135deg, #fff5f5 0%, #f0f8ff 50%, #f5fff8 100%);
@@ -966,11 +764,6 @@
 
 </div>
 
-<!-- FOOTER -->
-<div style="text-align:center;padding:24px;font-size:12px;color:#888;border-top:1px solid var(--border);">
-  ISO/IEC 17025:2017 — Infografía Interactiva &nbsp;·&nbsp; Haz clic en cada tarjeta para expandir los requisitos
-</div>
-
 <script>
   // Toggle cards
   function toggleCard(card) {
@@ -1013,148 +806,84 @@
 </body>
 </html>
 
-
-<!-- ===== BLOQUE 2: RECURSOS ISO 17025 (ESTILO CARDS) ===== -->
-
-<style>
-.recursos-box{
-  margin-top:40px;
-}
-
-.recursos-box h2{
-  margin-bottom:20px;
-}
-
-.grid-recursos{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:20px;
-}
-
-.card-recurso{
-  background:white;
+<!-- SUB-BLOQUE VISUAL TIPO FLUJO -->
+<div style="
+  margin:24px auto;
+  max-width:1200px;
+  background:#fff;
   border-radius:16px;
+  border:1.5px solid var(--border);
   padding:20px;
-  box-shadow:0 6px 15px rgba(0,0,0,0.08);
-  transition:0.3s;
-}
+  box-shadow:var(--shadow);
+">
 
-.card-recurso:hover{
-  transform:translateY(-5px);
-}
-
-.icono{
-  width:45px;
-  height:45px;
-  border-radius:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:22px;
-  margin-bottom:10px;
-}
-
-/* colores pastel por tarjeta */
-.p1{background:#e6dcf5;}
-.p2{background:#d8f3dc;}
-.p3{background:#ffe5d9;}
-.p4{background:#dceefb;}
-.p5{background:#f7d9e3;}
-
-.card-recurso h3{
-  margin:5px 0;
-  font-size:16px;
-}
-
-.card-recurso p{
-  font-size:13px;
-  color:#555;
-}
-
-.check{
-  margin-top:10px;
-  font-size:12px;
-  color:#444;
-}
-</style>
-
-<div class="section recursos-box">
-
-<h2>Requisitos de Recursos (ISO 17025)</h2>
-
-<div class="grid-recursos">
-
-  <!-- PERSONAL -->
-  <div class="card-recurso">
-    <div class="icono p1">👩‍🔬</div>
-    <h3>Personal</h3>
-    <p>
-      El laboratorio debe asegurar la competencia del personal que influye en los resultados.
-    </p>
-    <div class="check">
-      ✔ Formación, experiencia y habilidades<br>
-      ✔ Evaluación y autorización documentada<br>
-      ✔ Registros de capacitación
-    </div>
+  <div style="
+    font-size:16px;
+    font-weight:800;
+    margin-bottom:16px;
+    text-align:center;
+  ">
+    🔄 Flujo de Recursos del Laboratorio
   </div>
 
-  <!-- INSTALACIONES -->
-  <div class="card-recurso">
-    <div class="icono p2">🏢</div>
-    <h3>Instalaciones</h3>
-    <p>
-      Condiciones ambientales controladas para evitar contaminación o interferencias.
-    </p>
-    <div class="check">
-      ✔ Control de temperatura y humedad<br>
-      ✔ Separación de áreas<br>
-      ✔ Monitoreo ambiental
-    </div>
-  </div>
+  <div style="
+    display:grid;
+    grid-template-columns:repeat(5, 1fr);
+    gap:14px;
+  ">
 
-  <!-- EQUIPOS -->
-  <div class="card-recurso">
-    <div class="icono p3">⚙️</div>
-    <h3>Equipos</h3>
-    <p>
-      Equipos calibrados, verificados y mantenidos para asegurar resultados confiables.
-    </p>
-    <div class="check">
-      ✔ Calibración periódica<br>
-      ✔ Mantenimiento preventivo<br>
-      ✔ Identificación única
+    <!-- TARJETAS -->
+    <div style="background:#f5feff;border:1.5px solid #D6F9FF;border-radius:14px;padding:14px;text-align:center;">
+      <div style="font-size:22px;">👩‍🔬</div>
+      <div style="font-weight:700;font-size:13px;margin:5px 0;">Personal</div>
+      <div style="font-size:11px;color:#555;">Competencia del personal que impacta resultados.</div>
+      <div style="font-size:11px;margin-top:6px;color:#444;">
+        ✔ Formación y experiencia<br>✔ Autorización documentada<br>✔ Registros de capacitación
+      </div>
     </div>
-  </div>
 
-  <!-- TRAZABILIDAD -->
-  <div class="card-recurso">
-    <div class="icono p4">📏</div>
-    <h3>Trazabilidad metrológica</h3>
-    <p>
-      Resultados trazables a patrones nacionales o internacionales.
-    </p>
-    <div class="check">
-      ✔ Certificados de calibración<br>
-      ✔ Relación con SI<br>
-      ✔ Evaluación de incertidumbre
+    <div style="background:#f5fff8;border:1.5px solid #D6FFE4;border-radius:14px;padding:14px;text-align:center;">
+      <div style="font-size:22px;">🏢</div>
+      <div style="font-weight:700;font-size:13px;margin:5px 0;">Instalaciones</div>
+      <div style="font-size:11px;color:#555;">Condiciones controladas para evitar interferencias.</div>
+      <div style="font-size:11px;margin-top:6px;color:#444;">
+        ✔ Control ambiental<br>✔ Separación de áreas<br>✔ Monitoreo continuo
+      </div>
     </div>
-  </div>
 
-  <!-- PROVEEDORES -->
-  <div class="card-recurso">
-    <div class="icono p5">📦</div>
-    <h3>Proveedores externos</h3>
-    <p>
-      Control de productos y servicios que afectan la calidad de resultados.
-    </p>
-    <div class="check">
-      ✔ Evaluación de proveedores<br>
-      ✔ Control de insumos<br>
-      ✔ Registros aprobados
+    <div style="background:#fff5f5;border:1.5px solid #FFE8D6;border-radius:14px;padding:14px;text-align:center;">
+      <div style="font-size:22px;">⚙️</div>
+      <div style="font-weight:700;font-size:13px;margin:5px 0;">Equipos</div>
+      <div style="font-size:11px;color:#555;">Equipos confiables para resultados válidos.</div>
+      <div style="font-size:11px;margin-top:6px;color:#444;">
+        ✔ Calibración<br>✔ Mantenimiento<br>✔ Identificación única
+      </div>
     </div>
-  </div>
 
+    <div style="background:#f5f9ff;border:1.5px solid #D6EAFF;border-radius:14px;padding:14px;text-align:center;">
+      <div style="font-size:22px;">📏</div>
+      <div style="font-weight:700;font-size:13px;margin:5px 0;">Trazabilidad</div>
+      <div style="font-size:11px;color:#555;">Resultados vinculados al SI.</div>
+      <div style="font-size:11px;margin-top:6px;color:#444;">
+        ✔ Certificados<br>✔ Relación con SI<br>✔ Incertidumbre
+      </div>
+    </div>
+
+    <div style="background:#fdf9ff;border:1.5px solid #EDD6FF;border-radius:14px;padding:14px;text-align:center;">
+      <div style="font-size:22px;">📦</div>
+      <div style="font-weight:700;font-size:13px;margin:5px 0;">Proveedores</div>
+      <div style="font-size:11px;color:#555;">Control de insumos y servicios externos.</div>
+      <div style="font-size:11px;margin-top:6px;color:#444;">
+        ✔ Evaluación<br>✔ Control de insumos<br>✔ Lista aprobada
+      </div>
+    </div>
+
+  </div>
 </div>
+
+
+
+
 
 </div>
 
