@@ -3,758 +3,345 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ISO/IEC 17025:2017 — Infografía Interactiva</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<title>ISO 17025 Infografía Vertical</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --ink: #111;
-  --ink2: #333;
-  --ink3: #666;
-  --bg: #F8F8F5;
-  --white: #fff;
-  --border: rgba(0,0,0,0.09);
-  --sh: 0 3px 18px rgba(0,0,0,0.07);
-  --sh2: 0 10px 36px rgba(0,0,0,0.13);
-  --r: 18px;
-  /* pastel palette */
-  --p1: #FFD6D6; --p1d: #c94040;
-  --p2: #D6EAFF; --p2d: #2a6dbf;
-  --p3: #D6FFE8; --p3d: #1e9a55;
-  --p4: #FFF0D6; --p4d: #b87810;
-  --p5: #EED6FF; --p5d: #7e30c0;
-  --p6: #D6F9FF; --p6d: #0d9ab8;
-  --p7: #FFE8D6; --p7d: #c44f10;
-  --p8: #FFD6EE; --p8d: #b02860;
+body{
+  margin:0;
+  font-family:'Nunito', sans-serif;
+  background:#F8F8F5;
+  color:#111;
 }
 
-body {
-  font-family: 'Nunito', sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  overflow-x: hidden;
+.section{
+  max-width:900px;
+  margin:auto;
+  padding:50px 30px;
 }
 
-/* ══ HERO ══ */
-.hero {
-  background: linear-gradient(135deg,#fff7f7 0%,#f2f7ff 55%,#f2fff7 100%);
-  padding: 52px 40px 44px;
-  text-align: center;
-  border-bottom: 2px dashed rgba(0,0,0,0.07);
-  position: relative;
-  overflow: hidden;
+.hero{
+  background:linear-gradient(135deg,#fff7f7,#f2f7ff,#f2fff7);
+  text-align:center;
+  border-bottom:3px dashed #eee;
 }
-.hero::before,.hero::after {
-  content:''; position:absolute; border-radius:50%; opacity:.28;
-}
-.hero::before { width:240px;height:240px;background:#FFD6D6;top:-70px;left:-60px; }
-.hero::after  { width:280px;height:280px;background:#D6EAFF;bottom:-80px;right:-50px; }
-.hero-inner { position:relative;z-index:1; }
-.badge {
-  display:inline-flex;align-items:center;gap:7px;
-  background:#fff;border:2px solid #FFD6D6;border-radius:40px;
-  padding:5px 18px;font-size:12px;font-weight:800;color:var(--p1d);
-  letter-spacing:.05em;margin-bottom:16px;
-}
-.hero h1 {
+
+.hero h1{
   font-family:'Playfair Display',serif;
-  font-size:clamp(28px,5vw,50px);
-  color:var(--ink);line-height:1.1;margin-bottom:8px;
-}
-.hero h1 span{color:var(--p2d);}
-.hero p {font-size:15px;color:var(--ink3);max-width:500px;margin:0 auto 28px;line-height:1.6;}
-.stats {display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
-.stat {
-  background:#fff;border:1.5px solid var(--border);border-radius:50px;
-  padding:9px 22px;display:flex;flex-direction:column;align-items:center;
-}
-.stat .n{font-size:22px;font-weight:900;line-height:1;}
-.stat .l{font-size:10px;color:var(--ink3);font-weight:700;letter-spacing:.05em;margin-top:2px;}
-
-/* ══ NAV ══ */
-.nav {
-  display:flex;gap:8px;flex-wrap:wrap;justify-content:center;
-  padding:22px 40px 0;
-}
-.ntab {
-  display:flex;align-items:center;gap:6px;
-  padding:8px 16px;border-radius:50px;
-  border:2px solid var(--border);background:#fff;
-  font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;
-  color:var(--ink2);cursor:pointer;transition:all .2s;
-}
-.ntab:hover{transform:translateY(-2px);box-shadow:var(--sh);}
-.ntab.on{transform:translateY(-2px);box-shadow:var(--sh);border-width:2.5px;}
-
-/* ══ MAIN ══ */
-.main{padding:28px 40px 56px;max-width:1160px;margin:0 auto;}
-
-.grp{display:none;animation:up .3s ease both;}
-.grp.show{display:block;}
-@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-
-.gtitle {
-  display:flex;align-items:center;gap:10px;
-  font-size:20px;font-weight:900;margin-bottom:18px;
+  font-size:48px;
+  margin:10px 0;
 }
 
-/* ══ GRID DE TARJETAS ══ */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px;}
-.full{grid-column:1/-1;}
-
-/* ══ TARJETA ══ */
-.card {
-  background:#fff;border:2px solid var(--border);border-radius:var(--r);
-  overflow:hidden;box-shadow:var(--sh);cursor:pointer;
-  transition:transform .2s,box-shadow .2s;
-}
-.card:hover{transform:translateY(-4px);box-shadow:var(--sh2);}
-.ch {padding:18px 18px 12px;display:flex;align-items:flex-start;gap:12px;}
-.ci {
-  width:44px;height:44px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:20px;flex-shrink:0;
-}
-.cn {font-size:10px;font-weight:800;letter-spacing:.07em;opacity:.65;margin-bottom:2px;}
-.ct {font-size:15px;font-weight:800;color:var(--ink);line-height:1.2;}
-.cs {font-size:11px;color:var(--ink3);margin-top:2px;line-height:1.4;}
-.carr {
-  width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.07);
-  display:flex;align-items:center;justify-content:center;
-  font-size:12px;flex-shrink:0;margin-top:2px;
-  transition:transform .25s;
-}
-.card.open .carr{transform:rotate(180deg);}
-.cb {
-  max-height:0;overflow:hidden;padding:0 18px;
-  transition:max-height .35s cubic-bezier(.4,0,.2,1);
-}
-.card.open .cb{max-height:600px;padding-bottom:16px;}
-.ri {
-  display:flex;align-items:flex-start;gap:9px;
-  padding:7px 0;border-top:1.5px dashed rgba(0,0,0,.07);
-  font-size:12px;color:var(--ink2);line-height:1.45;
-}
-.rd {
-  width:20px;height:20px;border-radius:50%;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-  font-size:9px;font-weight:900;margin-top:1px;
+.hero span{
+  color:#2a6dbf;
 }
 
-/* ══ MINI CARDS (vista general) ══ */
-.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
-.mc {
-  background:#fff;border:2px solid var(--border);border-radius:16px;
-  padding:16px 12px;text-align:center;cursor:pointer;
-  transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.05);
-}
-.mc:hover{transform:translateY(-4px);box-shadow:var(--sh2);}
-.mi{font-size:28px;margin-bottom:7px;}
-.mn{font-size:9px;font-weight:800;letter-spacing:.07em;opacity:.55;}
-.mt{font-size:12px;font-weight:800;color:var(--ink);margin-top:3px;line-height:1.3;}
-
-/* ══ BLOQUES INFO ══ */
-.infobox {
-  background:#fff;border:2px solid var(--border);border-radius:var(--r);
-  padding:22px 24px;box-shadow:var(--sh);margin-top:18px;
-}
-.ibtitle{font-size:15px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-
-/* ══ BARRAS ══ */
-.bwrap{margin-bottom:12px;}
-.blbl{font-size:11px;font-weight:700;color:var(--ink3);margin-bottom:5px;}
-.bbar{height:7px;background:rgba(0,0,0,.07);border-radius:8px;overflow:hidden;}
-.bfill{height:100%;border-radius:8px;transition:width .7s ease .1s;}
-
-/* ══ SECCIÓN AUDITOR ══ */
-.aud-section{margin-top:36px;}
-.sec-label {
-  display:flex;align-items:center;gap:8px;margin-bottom:5px;
-}
-.sec-label span{font-size:10px;font-weight:800;letter-spacing:.09em;color:#999;text-transform:uppercase;}
-.sec-line{height:2px;border-radius:2px;margin-bottom:18px;}
-
-/* ══ PREGUNTAS GRID ══ */
-.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
-.pcard {
-  border:1.5px solid var(--border);border-radius:14px;
-  padding:14px;display:flex;gap:10px;align-items:flex-start;
-}
-.pbadge {
-  font-weight:900;font-size:10px;padding:3px 8px;border-radius:8px;
-  flex-shrink:0;margin-top:1px;letter-spacing:.04em;
-}
-.ptxt{font-size:12px;color:var(--ink2);line-height:1.5;}
-
-/* ══ NORMAS PILLS ══ */
-.pills{display:flex;flex-wrap:wrap;gap:9px;}
-.pill {
-  display:flex;align-items:center;gap:7px;
-  background:#fff;border:1.5px solid var(--border);border-radius:50px;
-  padding:7px 16px;font-size:12px;font-weight:700;color:var(--ink2);
-}
-.pdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-
-/* ══ CICLO PHVA ══ */
-.phva-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;}
-.phva-card {
-  border:2px solid var(--border);border-radius:14px;
-  padding:16px;text-align:center;
-}
-.phva-icon{font-size:26px;margin-bottom:7px;}
-.phva-title{font-size:14px;font-weight:900;margin-bottom:4px;}
-.phva-desc{font-size:11px;color:var(--ink3);line-height:1.5;}
-
-/* ══ NOTA FINAL ══ */
-.nota {
-  margin-top:28px;text-align:center;font-size:11px;color:#aaa;
-  line-height:1.8;border-top:1px dashed #ddd;padding-top:20px;
-}
-.nota strong{color:#777;}
-
-/* ══ FOOTER ══ */
-.footer{
-  text-align:center;padding:20px;font-size:11px;color:#aaa;
-  border-top:1px solid var(--border);
+.subtitle{
+  color:#666;
+  font-size:16px;
+  max-width:500px;
+  margin:auto;
 }
 
-@media(max-width:600px){
-  .hero,.main,.nav{padding-left:16px;padding-right:16px;}
-  .ntab .lbl{display:none;}
-  .grid,.pgrid{grid-template-columns:1fr;}
+.stats{
+  display:flex;
+  justify-content:center;
+  gap:15px;
+  margin-top:25px;
+  flex-wrap:wrap;
+}
+
+.stat{
+  background:#fff;
+  border-radius:30px;
+  padding:10px 20px;
+  font-weight:800;
+  font-size:14px;
+  border:1px solid #ddd;
+}
+
+.block{
+  border-radius:20px;
+  padding:30px;
+  margin-top:30px;
+}
+
+.block h2{
+  margin-bottom:20px;
+  font-size:22px;
+}
+
+.card{
+  background:#fff;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:10px;
+  font-size:13px;
 }
 </style>
 </head>
+
 <body>
 
-<!-- ══ HERO ══ -->
-<div class="hero">
-  <div class="hero-inner">
-    <div class="badge">🔬 Norma Internacional</div>
-    <h1>ISO/IEC <span>17025</span> : 2017</h1>
-    <p>Requisitos generales para la competencia de los laboratorios de ensayo y de calibración</p>
-    <div class="stats">
-      <div class="stat"><span class="n">8</span><span class="l">CLÁUSULAS</span></div>
-      <div class="stat"><span class="n">2017</span><span class="l">VERSIÓN</span></div>
-      <div class="stat"><span class="n">3ª</span><span class="l">EDICIÓN</span></div>
-      <div class="stat"><span class="n">ISO+IEC</span><span class="l">ORGANISMO</span></div>
-    </div>
+<!-- HERO -->
+<div class="section hero">
+  <h1>ISO/IEC <span>17025:2017</span></h1>
+  <p class="subtitle">
+    Requisitos generales para la competencia de los laboratorios de ensayo y calibración
+  </p>
+
+  <div class="stats">
+    <div class="stat">8 CLÁUSULAS</div>
+    <div class="stat">2017</div>
+    <div class="stat">3ª EDICIÓN</div>
+    <div class="stat">ISO + IEC</div>
   </div>
 </div>
 
-<!-- ══ NAV ══ -->
-<div class="nav" id="nav">
-  <button class="ntab on" data-g="all" style="border-color:#ddd" onclick="show('all',this)">🗺️ <span class="lbl">Vista general</span></button>
-  <button class="ntab" data-g="g4" style="border-color:#FFD6D6" onclick="show('g4',this)">⚖️ <span class="lbl">Cláusula 4</span></button>
-  <button class="ntab" data-g="g5" style="border-color:#EED6FF" onclick="show('g5',this)">🏛️ <span class="lbl">Cláusula 5</span></button>
-  <button class="ntab" data-g="g6" style="border-color:#D6F9FF" onclick="show('g6',this)">🛠️ <span class="lbl">Cláusula 6</span></button>
-  <button class="ntab" data-g="g7" style="border-color:#D6EAFF" onclick="show('g7',this)">⚗️ <span class="lbl">Cláusula 7</span></button>
-  <button class="ntab" data-g="g8" style="border-color:#D6FFE8" onclick="show('g8',this)">📋 <span class="lbl">Cláusula 8</span></button>
-  <button class="ntab" data-g="gaud" style="border-color:#FFF0D6" onclick="show('gaud',this)">🔍 <span class="lbl">Auditor</span></button>
-</div>
-
-<!-- ══ MAIN ══ -->
-<div class="main">
-
-<!-- ─────────────────── VISTA GENERAL ─────────────────── -->
-<div class="grp show" id="grp-all">
-  <div class="gtitle">🗺️ Estructura completa de la norma</div>
-  <div class="mgrid">
-    <div class="mc" style="border-color:#FFD6D6;background:#fff9f9" onclick="show('g4',document.querySelector('[data-g=g4]'))">
-      <div class="mi">⚖️</div><div class="mn">CLÁUSULA 4</div><div class="mt">Requisitos Generales</div>
-    </div>
-    <div class="mc" style="border-color:#EED6FF;background:#fdf9ff" onclick="show('g5',document.querySelector('[data-g=g5]'))">
-      <div class="mi">🏛️</div><div class="mn">CLÁUSULA 5</div><div class="mt">Requisitos Estructurales</div>
-    </div>
-    <div class="mc" style="border-color:#D6F9FF;background:#f5feff" onclick="show('g6',document.querySelector('[data-g=g6]'))">
-      <div class="mi">🛠️</div><div class="mn">CLÁUSULA 6</div><div class="mt">Requisitos de Recursos</div>
-    </div>
-    <div class="mc" style="border-color:#D6EAFF;background:#f5f9ff" onclick="show('g7',document.querySelector('[data-g=g7]'))">
-      <div class="mi">⚗️</div><div class="mn">CLÁUSULA 7</div><div class="mt">Requisitos del Proceso</div>
-    </div>
-    <div class="mc" style="border-color:#D6FFE8;background:#f5fff9" onclick="show('g8',document.querySelector('[data-g=g8]'))">
-      <div class="mi">📋</div><div class="mn">CLÁUSULA 8</div><div class="mt">Sistema de Gestión</div>
-    </div>
-    <div class="mc" style="border-color:#FFF0D6;background:#fffdf5" onclick="show('gaud',document.querySelector('[data-g=gaud]'))">
-      <div class="mi">🔍</div><div class="mn">AUDITOR</div><div class="mt">Preguntas y Referencias</div>
-    </div>
+<!-- INFO GENERAL -->
+<div class="section">
+  <div class="block" style="background:#FFF5F5">
+    <h2>🎯 Objetivo</h2>
+    <div class="card">Demostrar que el laboratorio opera de manera competente y genera resultados válidos.</div>
   </div>
 
-  <div class="infobox" style="margin-top:20px;">
-    <div class="ibtitle">📊 Pilares de la competencia del laboratorio</div>
-    <div id="pbars"></div>
+  <div class="block" style="background:#F5F9FF">
+    <h2>🌐 Aplicación</h2>
+    <div class="card">Laboratorios de ensayo, calibración y muestreo de cualquier sector.</div>
   </div>
 
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px;margin-top:16px;">
-    <div style="background:#FFF5F5;border:2px solid #FFD6D6;border-radius:16px;padding:16px;">
-      <div style="font-size:22px;margin-bottom:7px;">🎯</div>
-      <div style="font-weight:800;font-size:13px;margin-bottom:4px;">Objetivo Principal</div>
-      <div style="font-size:12px;color:#444;line-height:1.5;">Demostrar que el laboratorio opera de manera competente y genera resultados válidos.</div>
-    </div>
-    <div style="background:#F5F9FF;border:2px solid #D6EAFF;border-radius:16px;padding:16px;">
-      <div style="font-size:22px;margin-bottom:7px;">🌐</div>
-      <div style="font-weight:800;font-size:13px;margin-bottom:4px;">Aplicación</div>
-      <div style="font-size:12px;color:#444;line-height:1.5;">Laboratorios de ensayo, calibración y muestreo de cualquier sector o disciplina.</div>
-    </div>
-    <div style="background:#F5FFF9;border:2px solid #D6FFE8;border-radius:16px;padding:16px;">
-      <div style="font-size:22px;margin-bottom:7px;">🏆</div>
-      <div style="font-weight:800;font-size:13px;margin-bottom:4px;">Beneficio</div>
-      <div style="font-size:12px;color:#444;line-height:1.5;">Base para la acreditación por organismos nacionales e internacionales reconocidos.</div>
-    </div>
-    <div style="background:#FFFDF5;border:2px solid #FFF0D6;border-radius:16px;padding:16px;">
-      <div style="font-size:22px;margin-bottom:7px;">🔄</div>
-      <div style="font-weight:800;font-size:13px;margin-bottom:4px;">Enfoque por riesgos</div>
-      <div style="font-size:12px;color:#444;line-height:1.5;">Nueva en 2017: gestión del pensamiento basado en riesgos e imparcialidad.</div>
-    </div>
+  <div class="block" style="background:#F5FFF9">
+    <h2>🏆 Beneficio</h2>
+    <div class="card">Base para la acreditación por organismos reconocidos.</div>
+  </div>
+
+  <div class="block" style="background:#FFFDF5">
+    <h2>🔄 Enfoque</h2>
+    <div class="card">Pensamiento basado en riesgos e imparcialidad.</div>
   </div>
 </div>
 
-<!-- ─────────────────── CLÁUSULA 4 ─────────────────── -->
-<div class="grp" id="grp-g4">
-  <div class="gtitle" style="color:var(--p1d)">⚖️ Cláusula 4 — Requisitos Generales</div>
-  <div class="grid">
+  
+  
+  
+  <!-- CLÁUSULA 4 -->
+<div class="section">
+  
+  <div class="block" style="background:#FFF5F5; border:2px solid #FFD6D6;">
+    <h2>⚖️ Cláusula 4 — Requisitos Generales</h2>
 
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p1)">⚖️</div>
-        <div style="flex:1">
-          <div class="cn" style="color:var(--p1d)">4.1</div>
-          <div class="ct">Imparcialidad</div>
-          <div class="cs">Independencia y objetividad en todas las actividades</div>
-        </div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p1);color:var(--p1d)">1</div>Actividades del laboratorio realizadas de manera imparcial</div>
-        <div class="ri"><div class="rd" style="background:var(--p1);color:var(--p1d)">2</div>Identificación continua de riesgos a la imparcialidad</div>
-        <div class="ri"><div class="rd" style="background:var(--p1);color:var(--p1d)">3</div>Eliminación o minimización de riesgos identificados</div>
-        <div class="ri"><div class="rd" style="background:var(--p1);color:var(--p1d)">4</div>No permitir presiones comerciales, financieras o de otra índole</div>
-        <div class="ri"><div class="rd" style="background:var(--p1);color:var(--p1d)">5</div>Comunicar a la dirección cualquier conflicto de interés</div>
-      </div>
+    <!-- 4.1 -->
+    <div class="card">
+      <strong>4.1 Imparcialidad</strong><br>
+      Independencia y objetividad en todas las actividades
     </div>
 
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p1)">🔒</div>
-        <div style="flex:1">
-          <div class="cn" style="color:var(--p1d)">4.2</div>
-          <div class="ct">Confidencialidad</div>
-          <div class="cs">Protección de la información del cliente</div>
-        </div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p1);color:var(--p1d)">1</div>Información del cliente gestionada con confidencialidad</div>
-        <div class="ri"><div class="rd" style="background:var(--p1);color:var(--p1d)">2</div>Divulgación solo con consentimiento escrito del cliente</div>
-        <div class="ri"><div class="rd" style="background:var(--p1);color:var(--p1d)">3</div>Cuando la ley exija divulgación, notificar al cliente</div>
-        <div class="ri"><div class="rd" style="background:var(--p1);color:var(--p1d)">4</div>Personal obligado contractualmente a la confidencialidad</div>
-      </div>
+    <div class="card">1. Actividades del laboratorio realizadas de manera imparcial</div>
+    <div class="card">2. Identificación continua de riesgos a la imparcialidad</div>
+    <div class="card">3. Eliminación o minimización de riesgos identificados</div>
+    <div class="card">4. No permitir presiones comerciales, financieras o de otra índole</div>
+    <div class="card">5. Comunicar a la dirección cualquier conflicto de interés</div>
+
+    <!-- 4.2 -->
+    <div class="card" style="margin-top:20px;">
+      <strong>4.2 Confidencialidad</strong><br>
+      Protección de la información del cliente
     </div>
+
+    <div class="card">1. Información del cliente gestionada con confidencialidad</div>
+    <div class="card">2. Divulgación solo con consentimiento escrito del cliente</div>
+    <div class="card">3. Cuando la ley exija divulgación, notificar al cliente</div>
+    <div class="card">4. Personal obligado contractualmente a la confidencialidad</div>
 
   </div>
+
 </div>
 
-<!-- ─────────────────── CLÁUSULA 5 ─────────────────── -->
-<div class="grp" id="grp-g5">
-  <div class="gtitle" style="color:var(--p5d)">🏛️ Cláusula 5 — Requisitos Estructurales</div>
-  <div class="grid">
-    <div class="card full" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p5)">🏛️</div>
-        <div style="flex:1">
-          <div class="cn" style="color:var(--p5d)">5.1 – 5.6</div>
-          <div class="ct">Organización y Responsabilidades</div>
-          <div class="cs">Estructura legal, roles y autoridades del laboratorio</div>
-        </div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:6px;">
-          <div class="ri"><div class="rd" style="background:var(--p5);color:var(--p5d)">5.1</div>Entidad legalmente identificable y responsable</div>
-          <div class="ri"><div class="rd" style="background:var(--p5);color:var(--p5d)">5.2</div>Personal con autoridad y recursos para cumplir requisitos</div>
-          <div class="ri"><div class="rd" style="background:var(--p5);color:var(--p5d)">5.3</div>Procedimientos para asegurar la imparcialidad operativa</div>
-          <div class="ri"><div class="rd" style="background:var(--p5);color:var(--p5d)">5.4</div>Estructura organizacional documentada y comunicada</div>
-          <div class="ri"><div class="rd" style="background:var(--p5);color:var(--p5d)">5.5</div>Dirección técnica responsable de operaciones del laboratorio</div>
-          <div class="ri"><div class="rd" style="background:var(--p5);color:var(--p5d)">5.6</div>Gestor de calidad con acceso directo a la dirección</div>
-        </div>
-      </div>
-    </div>
+
+
+  <!-- CLÁUSULA 6 -->
+<div class="section">
+
+  <div class="block" style="background:#F5FEFF; border:2px solid #D6F9FF;">
+    <h2>🛠️ Cláusula 6 — Requisitos de Recursos</h2>
+
+    <!-- 6.2 -->
+    <div class="card"><strong>6.2 Personal</strong><br>Competencia y calificación</div>
+    <div class="card">1. Competencia demostrada para tareas específicas</div>
+    <div class="card">2. Autorización formal para tipos de actividades</div>
+    <div class="card">3. Supervisión del personal en período de entrenamiento</div>
+    <div class="card">4. Registros de competencia, educación y experiencia</div>
+    <div class="card">5. Plan de formación continua documentado</div>
+
+    <!-- 6.3 -->
+    <div class="card" style="margin-top:20px;"><strong>6.3 Instalaciones y Condiciones</strong><br>Ambiente de trabajo controlado</div>
+    <div class="card">1. Instalaciones adecuadas para las actividades</div>
+    <div class="card">2. Control de condiciones ambientales (T°, humedad, vibración)</div>
+    <div class="card">3. Separación eficaz de áreas incompatibles</div>
+    <div class="card">4. Registro de condiciones cuando afecten resultados</div>
+    <div class="card">5. Control de acceso de personas que afecten actividades</div>
+
+    <!-- 6.4 -->
+    <div class="card" style="margin-top:20px;"><strong>6.4 Equipos</strong><br>Instrumentos de medición</div>
+    <div class="card">1. Acceso a equipos necesarios para las actividades</div>
+    <div class="card">2. Calibración y verificación periódica de equipos</div>
+    <div class="card">3. Programa de mantenimiento preventivo documentado</div>
+    <div class="card">4. Etiquetado con estado de calibración visible</div>
+    <div class="card">5. Protección ante daño, deterioro o uso inadecuado</div>
+    <div class="card">6. Registros de equipos con identificación única</div>
+
+    <!-- 6.5 -->
+    <div class="card" style="margin-top:20px;"><strong>6.5 Trazabilidad Metrológica</strong><br>Cadena de calibración al SI</div>
+    <div class="card">1. Resultados referidos al Sistema Internacional (SI)</div>
+    <div class="card">2. Cadena ininterrumpida de calibraciones documentada</div>
+    <div class="card">3. Patrones de medición con trazabilidad demostrable</div>
+    <div class="card">4. Materiales de referencia certificados (MRC)</div>
+
+    <!-- 6.6 -->
+    <div class="card" style="margin-top:20px;"><strong>6.6 Productos y Servicios Externos</strong><br>Proveedores y subcontratación</div>
+    <div class="card">1. Selección y evaluación de proveedores externos</div>
+    <div class="card">2. Comunicación de requisitos técnicos a proveedores</div>
+    <div class="card">3. Verificación de productos y servicios recibidos</div>
+    <div class="card">4. Lista actualizada de proveedores aprobados</div>
+
   </div>
+
 </div>
 
-<!-- ─────────────────── CLÁUSULA 6 ─────────────────── -->
-<div class="grp" id="grp-g6">
-  <div class="gtitle" style="color:var(--p6d)">🛠️ Cláusula 6 — Requisitos de Recursos</div>
-  <div class="grid">
 
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p6)">👩‍🔬</div>
-        <div style="flex:1"><div class="cn" style="color:var(--p6d)">6.2</div><div class="ct">Personal</div><div class="cs">Competencia y calificación</div></div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">1</div>Competencia demostrada para tareas específicas</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">2</div>Autorización formal para tipos de actividades</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">3</div>Supervisión del personal en período de entrenamiento</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">4</div>Registros de competencia, educación y experiencia</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">5</div>Plan de formación continua documentado</div>
-      </div>
-    </div>
+  <!-- CLÁUSULA 7 -->
+<div class="section">
 
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p6)">🏗️</div>
-        <div style="flex:1"><div class="cn" style="color:var(--p6d)">6.3</div><div class="ct">Instalaciones y Condiciones</div><div class="cs">Ambiente de trabajo controlado</div></div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">1</div>Instalaciones adecuadas para las actividades</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">2</div>Control de condiciones ambientales (T°, humedad, vibración)</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">3</div>Separación eficaz de áreas incompatibles</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">4</div>Registro de condiciones cuando afecten resultados</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">5</div>Control de acceso de personas que afecten actividades</div>
-      </div>
-    </div>
+  <div class="block" style="background:#F5F9FF; border:2px solid #D6EAFF;">
+    <h2>⚗️ Cláusula 7 — Requisitos del Proceso</h2>
 
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p6)">⚙️</div>
-        <div style="flex:1"><div class="cn" style="color:var(--p6d)">6.4</div><div class="ct">Equipos</div><div class="cs">Instrumentos de medición</div></div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">1</div>Acceso a equipos necesarios para las actividades</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">2</div>Calibración y verificación periódica de equipos</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">3</div>Programa de mantenimiento preventivo documentado</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">4</div>Etiquetado con estado de calibración visible</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">5</div>Protección ante daño, deterioro o uso inadecuado</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">6</div>Registros de equipos con identificación única</div>
-      </div>
-    </div>
+    <!-- 7.1 -->
+    <div class="card"><strong>7.1 Revisión de Solicitudes</strong><br>Contratos y licitaciones</div>
+    <div class="card">1. Revisión de solicitudes, licitaciones y contratos</div>
+    <div class="card">2. Requisitos definidos, documentados y entendidos</div>
+    <div class="card">3. Capacidad y recursos disponibles para cumplirlos</div>
+    <div class="card">4. Notificación al cliente de cualquier desviación</div>
 
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p6)">📏</div>
-        <div style="flex:1"><div class="cn" style="color:var(--p6d)">6.5</div><div class="ct">Trazabilidad Metrológica</div><div class="cs">Cadena de calibración al SI</div></div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">1</div>Resultados referidos al Sistema Internacional (SI)</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">2</div>Cadena ininterrumpida de calibraciones documentada</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">3</div>Patrones de medición con trazabilidad demostrable</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">4</div>Materiales de referencia certificados (MRC)</div>
-      </div>
-    </div>
+    <!-- 7.2 -->
+    <div class="card" style="margin-top:20px;"><strong>7.2 Selección y Validación de Métodos</strong><br>Métodos apropiados y validados</div>
+    <div class="card">1. Uso de métodos normalizados (ISO, ASTM, etc.)</div>
+    <div class="card">2. Validación de métodos desarrollados internamente</div>
+    <div class="card">3. Verificación de la aptitud del método</div>
+    <div class="card">4. Características de desempeño: exactitud, precisión, LD, LC</div>
+    <div class="card">5. Registros de validación conservados</div>
 
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p6)">🤝</div>
-        <div style="flex:1"><div class="cn" style="color:var(--p6d)">6.6</div><div class="ct">Productos y Servicios Externos</div><div class="cs">Proveedores y subcontratación</div></div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">1</div>Selección y evaluación de proveedores externos</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">2</div>Comunicación de requisitos técnicos a proveedores</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">3</div>Verificación de productos y servicios recibidos</div>
-        <div class="ri"><div class="rd" style="background:var(--p6);color:var(--p6d)">4</div>Lista actualizada de proveedores aprobados</div>
-      </div>
-    </div>
+    <!-- 7.3 – 7.4 -->
+    <div class="card" style="margin-top:20px;"><strong>7.3 – 7.4 Muestreo y Manipulación</strong><br>Ítems y muestras de ensayo</div>
+    <div class="card">7.3 Plan de muestreo basado en métodos estadísticos</div>
+    <div class="card">7.4 Sistema de identificación única de ítems de ensayo</div>
+    <div class="card">7.4 Registro de recepción: condición, anomalías, desviaciones</div>
+    <div class="card">7.4 Instrucciones para manipulación y almacenamiento</div>
+
+    <!-- 7.6 -->
+    <div class="card" style="margin-top:20px;"><strong>7.6 Incertidumbre de Medición</strong><br>Evaluación y expresión</div>
+    <div class="card">1. Identificación de todas las contribuciones</div>
+    <div class="card">2. Evaluación siguiendo la Guía GUM (ISO/IEC)</div>
+    <div class="card">3. Incertidumbre reportada en los informes de resultados</div>
+    <div class="card">4. Actualización cuando cambien condiciones</div>
+
+    <!-- 7.7 -->
+    <div class="card" style="margin-top:20px;"><strong>7.7 Aseguramiento de la Validez</strong><br>Control de calidad de resultados</div>
+    <div class="card">1. Uso de materiales de referencia certificados (MRC)</div>
+    <div class="card">2. Comparaciones interlaboratorio / ensayos de aptitud</div>
+    <div class="card">3. Réplicas usando el mismo método u otros</div>
+    <div class="card">4. Gráficos de control y análisis de tendencias</div>
+
+    <!-- 7.8 -->
+    <div class="card" style="margin-top:20px;"><strong>7.8 Informes de Resultados</strong><br>Formato y contenido de informes</div>
+    <div class="card">1. Resultados presentados de manera precisa y no ambigua</div>
+    <div class="card">2. Identificación del laboratorio, fecha y número único</div>
+    <div class="card">3. Resultado con unidades SI e incertidumbre incluida</div>
+    <div class="card">4. Declaración de conformidad cuando corresponda</div>
+    <div class="card">5. Firma o aprobación de persona autorizada</div>
 
   </div>
+
 </div>
 
-<!-- ─────────────────── CLÁUSULA 7 ─────────────────── -->
-<div class="grp" id="grp-g7">
-  <div class="gtitle" style="color:var(--p2d)">⚗️ Cláusula 7 — Requisitos del Proceso</div>
-  <div class="grid">
 
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p2)">📝</div>
-        <div style="flex:1"><div class="cn" style="color:var(--p2d)">7.1</div><div class="ct">Revisión de Solicitudes</div><div class="cs">Contratos y licitaciones</div></div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">1</div>Revisión de solicitudes, licitaciones y contratos</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">2</div>Requisitos definidos, documentados y entendidos</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">3</div>Capacidad y recursos disponibles para cumplirlos</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">4</div>Notificación al cliente de cualquier desviación</div>
-      </div>
-    </div>
 
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p2)">🔬</div>
-        <div style="flex:1"><div class="cn" style="color:var(--p2d)">7.2</div><div class="ct">Selección y Validación de Métodos</div><div class="cs">Métodos apropiados y validados</div></div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">1</div>Uso de métodos normalizados (ISO, ASTM, etc.)</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">2</div>Validación de métodos desarrollados internamente</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">3</div>Verificación de la aptitud del método</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">4</div>Características de desempeño: exactitud, precisión, LD, LC</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">5</div>Registros de validación conservados</div>
-      </div>
-    </div>
+  <!-- CLÁUSULA 8 -->
+<div class="section">
 
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p2)">📦</div>
-        <div style="flex:1"><div class="cn" style="color:var(--p2d)">7.3 – 7.4</div><div class="ct">Muestreo y Manipulación</div><div class="cs">Ítems y muestras de ensayo</div></div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">7.3</div>Plan de muestreo basado en métodos estadísticos</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">7.4</div>Sistema de identificación única de ítems de ensayo</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">7.4</div>Registro de recepción: condición, anomalías, desviaciones</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">7.4</div>Instrucciones para manipulación y almacenamiento</div>
-      </div>
-    </div>
+  <div class="block" style="background:#F5FFF9; border:2px solid #D6FFE8;">
+    <h2>📋 Cláusula 8 — Sistema de Gestión</h2>
 
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p2)">📊</div>
-        <div style="flex:1"><div class="cn" style="color:var(--p2d)">7.6</div><div class="ct">Incertidumbre de Medición</div><div class="cs">Evaluación y expresión</div></div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">1</div>Identificación de todas las contribuciones</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">2</div>Evaluación siguiendo la Guía GUM (ISO/IEC)</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">3</div>Incertidumbre reportada en los informes de resultados</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">4</div>Actualización cuando cambien condiciones</div>
-      </div>
-    </div>
+    <!-- 8.2 -->
+    <div class="card"><strong>8.2 Documentación</strong><br>Política, objetivos y manual</div>
+    <div class="card">1. Política de calidad documentada y comunicada</div>
+    <div class="card">2. Objetivos de calidad medibles y revisados</div>
+    <div class="card">3. Manual de calidad con referencia a procedimientos</div>
+    <div class="card">4. Control de documentos internos y externos</div>
 
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p2)">✅</div>
-        <div style="flex:1"><div class="cn" style="color:var(--p2d)">7.7</div><div class="ct">Aseguramiento de la Validez</div><div class="cs">Control de calidad de resultados</div></div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">1</div>Uso de materiales de referencia certificados (MRC)</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">2</div>Comparaciones interlaboratorio / ensayos de aptitud</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">3</div>Réplicas usando el mismo método u otros</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">4</div>Gráficos de control y análisis de tendencias</div>
-      </div>
-    </div>
+    <!-- 8.6 -->
+    <div class="card" style="margin-top:20px;"><strong>8.6 Auditorías Internas</strong><br>Evaluación del sistema</div>
+    <div class="card">1. Programa de auditorías internas periódicas planificado</div>
+    <div class="card">2. Auditores independientes del área auditada</div>
+    <div class="card">3. Hallazgos documentados y comunicados a la dirección</div>
+    <div class="card">4. Acciones correctivas en plazos definidos</div>
 
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p2)">📄</div>
-        <div style="flex:1"><div class="cn" style="color:var(--p2d)">7.8</div><div class="ct">Informes de Resultados</div><div class="cs">Formato y contenido de informes</div></div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">1</div>Resultados presentados de manera precisa y no ambigua</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">2</div>Identificación del laboratorio, fecha y número único</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">3</div>Resultado con unidades SI e incertidumbre incluida</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">4</div>Declaración de conformidad cuando corresponda</div>
-        <div class="ri"><div class="rd" style="background:var(--p2);color:var(--p2d)">5</div>Firma o aprobación de persona autorizada</div>
-      </div>
-    </div>
+    <!-- 8.7 -->
+    <div class="card" style="margin-top:20px;"><strong>8.7 Revisión por la Dirección</strong><br>Revisión gerencial del sistema</div>
+    <div class="card">1. Revisión periódica del sistema de gestión completo</div>
+    <div class="card">2. Resultados de auditorías internas y externas revisados</div>
+    <div class="card">3. Retroalimentación de clientes analizada</div>
+    <div class="card">4. Decisiones sobre mejora continua documentadas</div>
+
+    <!-- 8.4 – 8.5 -->
+    <div class="card" style="margin-top:20px;"><strong>8.4 – 8.5 No Conformidades y Acciones</strong><br>Control y mejora continua</div>
+    <div class="card">8.4 Identificación y control del trabajo no conforme</div>
+    <div class="card">8.4 Autoridad para detener o retener trabajo</div>
+    <div class="card">8.5 Análisis de causas raíz de no conformidades</div>
+    <div class="card">8.5 Seguimiento de la eficacia de las acciones</div>
 
   </div>
+
+  <!-- PHVA -->
+  <div class="block" style="background:#FFFDF5; border:2px solid #FFF0D6;">
+    <h2>🔄 Ciclo PHVA</h2>
+
+    <div class="card"><strong>PLANEAR:</strong> Objetivos, políticas, análisis de riesgos</div>
+    <div class="card"><strong>HACER:</strong> Implementación de procesos y ensayos</div>
+    <div class="card"><strong>VERIFICAR:</strong> Auditorías y revisión por la dirección</div>
+    <div class="card"><strong>ACTUAR:</strong> Mejora continua y acciones correctivas</div>
+
+  </div>
+
 </div>
 
-<!-- ─────────────────── CLÁUSULA 8 ─────────────────── -->
-<div class="grp" id="grp-g8">
-  <div class="gtitle" style="color:var(--p3d)">📋 Cláusula 8 — Sistema de Gestión</div>
-  <div class="grid">
 
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p3)">📁</div>
-        <div style="flex:1"><div class="cn" style="color:var(--p3d)">8.2</div><div class="ct">Documentación</div><div class="cs">Política, objetivos y manual</div></div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p3);color:var(--p3d)">1</div>Política de calidad documentada y comunicada</div>
-        <div class="ri"><div class="rd" style="background:var(--p3);color:var(--p3d)">2</div>Objetivos de calidad medibles y revisados</div>
-        <div class="ri"><div class="rd" style="background:var(--p3);color:var(--p3d)">3</div>Manual de calidad con referencia a procedimientos</div>
-        <div class="ri"><div class="rd" style="background:var(--p3);color:var(--p3d)">4</div>Control de documentos internos y externos</div>
-      </div>
-    </div>
+  <!-- AUDITOR -->
+<div class="section">
 
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p3)">🔎</div>
-        <div style="flex:1"><div class="cn" style="color:var(--p3d)">8.6</div><div class="ct">Auditorías Internas</div><div class="cs">Evaluación del sistema</div></div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p3);color:var(--p3d)">1</div>Programa de auditorías internas periódicas planificado</div>
-        <div class="ri"><div class="rd" style="background:var(--p3);color:var(--p3d)">2</div>Auditores independientes del área auditada</div>
-        <div class="ri"><div class="rd" style="background:var(--p3);color:var(--p3d)">3</div>Hallazgos documentados y comunicados a la dirección</div>
-        <div class="ri"><div class="rd" style="background:var(--p3);color:var(--p3d)">4</div>Acciones correctivas en plazos definidos</div>
-      </div>
-    </div>
+  <div class="block" style="background:#FFFDF5; border:2px solid #FFE8D6;">
+    <h2>🔍 Preguntas Clave del Auditor</h2>
 
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p3)">🔄</div>
-        <div style="flex:1"><div class="cn" style="color:var(--p3d)">8.7</div><div class="ct">Revisión por la Dirección</div><div class="cs">Revisión gerencial del sistema</div></div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p3);color:var(--p3d)">1</div>Revisión periódica del sistema de gestión completo</div>
-        <div class="ri"><div class="rd" style="background:var(--p3);color:var(--p3d)">2</div>Resultados de auditorías internas y externas revisados</div>
-        <div class="ri"><div class="rd" style="background:var(--p3);color:var(--p3d)">3</div>Retroalimentación de clientes analizada</div>
-        <div class="ri"><div class="rd" style="background:var(--p3);color:var(--p3d)">4</div>Decisiones sobre mejora continua documentadas</div>
-      </div>
-    </div>
-
-    <div class="card" onclick="tc(this)">
-      <div class="ch">
-        <div class="ci" style="background:var(--p3)">🚨</div>
-        <div style="flex:1"><div class="cn" style="color:var(--p3d)">8.4 – 8.5</div><div class="ct">No Conformidades y Acciones</div><div class="cs">Control y mejora continua</div></div>
-        <div class="carr">▼</div>
-      </div>
-      <div class="cb">
-        <div class="ri"><div class="rd" style="background:var(--p3);color:var(--p3d)">8.4</div>Identificación y control del trabajo no conforme</div>
-        <div class="ri"><div class="rd" style="background:var(--p3);color:var(--p3d)">8.4</div>Autoridad para detener o retener trabajo</div>
-        <div class="ri"><div class="rd" style="background:var(--p3);color:var(--p3d)">8.5</div>Análisis de causas raíz de no conformidades</div>
-        <div class="ri"><div class="rd" style="background:var(--p3);color:var(--p3d)">8.5</div>Seguimiento de la eficacia de las acciones</div>
-      </div>
-    </div>
+    <div class="card">⚖️ ¿Existe política de imparcialidad y gestión de riesgos?</div>
+    <div class="card">🏛️ ¿Estructura organizacional definida y documentada?</div>
+    <div class="card">👩‍🔬 ¿Evidencia de competencia del personal?</div>
+    <div class="card">⚙️ ¿Equipos calibrados y con mantenimiento?</div>
+    <div class="card">📏 ¿Trazabilidad metrológica al SI demostrable?</div>
+    <div class="card">🔬 ¿Métodos validados o verificados?</div>
+    <div class="card">📊 ¿Incertidumbre evaluada y reportada?</div>
+    <div class="card">📋 ¿Auditorías internas y revisión por la dirección?</div>
 
   </div>
 
-  <!-- CICLO PHVA -->
-  <div class="infobox" style="margin-top:18px;">
-    <div class="ibtitle">🔄 Ciclo PHVA en el Sistema de Gestión</div>
-    <div class="phva-grid">
-      <div class="phva-card" style="background:#FFF5F5;border-color:#FFD6D6">
-        <div class="phva-icon">📌</div>
-        <div class="phva-title">PLANEAR</div>
-        <div class="phva-desc">Objetivos, políticas, análisis de riesgos y planificación</div>
-      </div>
-      <div class="phva-card" style="background:#F5F9FF;border-color:#D6EAFF">
-        <div class="phva-icon">⚡</div>
-        <div class="phva-title">HACER</div>
-        <div class="phva-desc">Implementar procesos, ensayos, calibraciones, informes</div>
-      </div>
-      <div class="phva-card" style="background:#FFFDF5;border-color:#FFF0D6">
-        <div class="phva-icon">🔍</div>
-        <div class="phva-title">VERIFICAR</div>
-        <div class="phva-desc">Auditorías, revisión por la dirección, seguimiento</div>
-      </div>
-      <div class="phva-card" style="background:#F5FFF9;border-color:#D6FFE8">
-        <div class="phva-icon">🚀</div>
-        <div class="phva-title">ACTUAR</div>
-        <div class="phva-desc">Acciones correctivas, mejora continua, prevención</div>
-      </div>
-    </div>
+  <div class="block" style="background:#fff;">
+    <h2>📚 Referencias</h2>
+
+    <div class="card">BIPM — Pesas y Medidas</div>
+    <div class="card">ILAC — Acreditación de laboratorios</div>
+    <div class="card">ISO Guide 99 — VIM</div>
+    <div class="card">GUM — Incertidumbre</div>
+    <div class="card">ISO 17000 — Evaluación de la conformidad</div>
+    <div class="card">ISO 9001 — Sistema de calidad</div>
   </div>
+
 </div>
-
-<!-- ─────────────────── AUDITOR ─────────────────── -->
-<div class="grp" id="grp-gaud">
-  <div class="gtitle" style="color:var(--p4d)">🔍 Preguntas Clave del Auditor</div>
-
-  <!-- Header checklist -->
-  <div style="background:#fff;border:2px solid #e8e8e0;border-radius:var(--r);padding:20px 24px;margin-bottom:20px;box-shadow:var(--sh);">
-    <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;">
-      <div style="width:38px;height:38px;background:#D6FFE8;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">✅</div>
-      <div>
-        <div style="font-weight:800;font-size:15px;color:#111;">Lista de verificación para auditoría</div>
-        <div style="font-size:11px;color:#888;margin-top:2px;">Cada respuesta debe estar respaldada por evidencia documental objetiva</div>
-      </div>
-    </div>
-    <p style="font-size:12px;color:#555;line-height:1.6;">Lista no exhaustiva de preguntas que los auditores utilizan para evaluar el cumplimiento de los requisitos de la <strong>ISO/IEC 17025:2017</strong> en una auditoría de acreditación. Se requiere evidencia objetiva para cada punto.</p>
-  </div>
-
-  <!-- Preguntas grid -->
-  <div class="pgrid">
-    <div class="pcard" style="background:#FFF9F9;border-color:#FFD6D6">
-      <div class="pbadge" style="background:#FFD6D6;color:#c04040">P1</div>
-      <div class="ptxt">⚖️ ¿Tiene el laboratorio una política de imparcialidad documentada y aplica mecanismos para identificar y gestionar riesgos?</div>
-    </div>
-    <div class="pcard" style="background:#F8F5FF;border-color:#EED6FF">
-      <div class="pbadge" style="background:#EED6FF;color:#7030b0">P2</div>
-      <div class="ptxt">🏛️ ¿Cuenta con estructura organizacional definida, con roles, responsabilidades y reemplazos del personal clave documentados?</div>
-    </div>
-    <div class="pcard" style="background:#F5FEFF;border-color:#D6F9FF">
-      <div class="pbadge" style="background:#D6F9FF;color:#0a8eaa">P3</div>
-      <div class="ptxt">👩‍🔬 ¿Existe evidencia de competencia del personal? ¿Se registran educación, formación, habilidades y experiencia?</div>
-    </div>
-    <div class="pcard" style="background:#F5F9FF;border-color:#D6EAFF">
-      <div class="pbadge" style="background:#D6EAFF;color:#1e5aaa">P4</div>
-      <div class="ptxt">⚙️ ¿Los equipos están identificados, calibrados y con registros de mantenimiento y estado de calibración visibles?</div>
-    </div>
-    <div class="pcard" style="background:#FFFDF5;border-color:#FFF0D6">
-      <div class="pbadge" style="background:#FFF0D6;color:#a06800">P5</div>
-      <div class="ptxt">📏 ¿Puede demostrar la trazabilidad metrológica de sus resultados hasta el SI mediante cadena ininterrumpida de calibraciones?</div>
-    </div>
-    <div class="pcard" style="background:#F5FFF9;border-color:#D6FFE8">
-      <div class="pbadge" style="background:#D6FFE8;color:#158040">P6</div>
-      <div class="ptxt">🔬 ¿Los métodos de ensayo están validados o verificados? ¿Existe documentación de las características de desempeño?</div>
-    </div>
-    <div class="pcard" style="background:#FFF9F5;border-color:#FFE8D6">
-      <div class="pbadge" style="background:#FFE8D6;color:#b03808">P7</div>
-      <div class="ptxt">📊 ¿La incertidumbre de medición es evaluada y reportada en los informes conforme a la Guía GUM?</div>
-    </div>
-    <div class="pcard" style="background:#FFF5F9;border-color:#FFD6EE">
-      <div class="pbadge" style="background:#FFD6EE;color:#a01858">P8</div>
-      <div class="ptxt">📋 ¿Se realizan auditorías internas periódicas y revisiones por la dirección con registros de hallazgos y acciones correctivas?</div>
-    </div>
-  </div>
-
-  <!-- Organismos de referencia -->
-  <div style="margin-top:28px;">
-    <div class="sec-label"><span>📚</span><span>Organismos y normas de referencia</span></div>
-    <div style="height:2px;background:linear-gradient(90deg,#D6EAFF,#EED6FF,#FFD6D6);border-radius:2px;margin-bottom:16px;"></div>
-    <div class="pills">
-      <div class="pill" style="border-color:#D6EAFF"><div class="pdot" style="background:#2a6dbf"></div>BIPM — Buró Internacional de Pesas y Medidas</div>
-      <div class="pill" style="border-color:#D6FFE8"><div class="pdot" style="background:#1e9a55"></div>ILAC — Cooperación Internacional de Acreditación de Laboratorios</div>
-      <div class="pill" style="border-color:#FFD6D6"><div class="pdot" style="background:#c94040"></div>ISO/IEC Guide 99 — Vocabulario Internacional de Metrología (VIM)</div>
-      <div class="pill" style="border-color:#EED6FF"><div class="pdot" style="background:#7e30c0"></div>JCGM 100:2008 — Guía GUM para expresión de incertidumbre</div>
-      <div class="pill" style="border-color:#FFF0D6"><div class="pdot" style="background:#b87810"></div>ISO/IEC 17000 — Vocabulario de evaluación de la conformidad</div>
-      <div class="pill" style="border-color:#D6F9FF"><div class="pdot" style="background:#0d9ab8"></div>EA-4/02 — Expresión de la incertidumbre en calibración</div>
-      <div class="pill" style="border-color:#FFD6D6"><div class="pdot" style="background:#c44f10"></div>ISO 9001:2015 — Sistemas de Gestión de la Calidad (compatible)</div>
-      <div class="pill" style="border-color:#D6FFE8"><div class="pdot" style="background:#1e9a55"></div>IAAC / ONAC — Organismos de acreditación regionales</div>
-    </div>
-  </div>
-
-  <div class="nota">
-    Basado en la <strong>Norma Internacional ISO/IEC 17025:2017</strong> — Requisitos generales para la competencia de laboratorios de ensayo y calibración<br>
-    Para uso interno de capacitación y referencia. Consulte siempre la versión oficial vigente.<br>
-    <span style="color:#c0c0c0">Para guardar como PDF: Imprimir → A4 → Vertical → activar "Gráficos de fondo"</span>
-  </div>
-</div>
-
-</div><!-- /main -->
-
-<div class="footer">ISO/IEC 17025:2017 — Infografía Interactiva &nbsp;·&nbsp; Haz clic en cada tarjeta para expandir</div>
-
-<script>
-function tc(card){
-  card.classList.toggle('open');
-  card.querySelector('.carr').textContent = card.classList.contains('open') ? '▲' : '▼';
-}
-function show(id, btn){
-  document.querySelectorAll('.grp').forEach(g=>g.classList.remove('show'));
-  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('on'));
-  const g = document.getElementById('grp-'+id);
-  if(g) g.classList.add('show');
-  if(btn) btn.classList.add('on');
-}
-// Barras de progreso
-const bdata = [
-  {l:'Cl. 4 — Imparcialidad y Confidencialidad', c:'#FFB3B3'},
-  {l:'Cl. 5 — Estructura Organizacional',        c:'#DDB3FF'},
-  {l:'Cl. 6 — Recursos: personal, equipos, trazabilidad', c:'#A3E8F5'},
-  {l:'Cl. 7 — Proceso: métodos, informes, incertidumbre', c:'#A3C4FF'},
-  {l:'Cl. 8 — Sistema de Gestión y mejora continua',      c:'#A3F5C0'},
-];
-const w = document.getElementById('pbars');
-bdata.forEach((b,i)=>{
-  w.innerHTML += `<div class="bwrap"><div class="blbl">${b.l}</div>
-    <div class="bbar"><div class="bfill" id="bf${i}" style="width:0;background:${b.c}"></div></div></div>`;
-});
-setTimeout(()=> bdata.forEach((_,i)=> document.getElementById('bf'+i).style.width='100%'), 300);
-</script>
-</body>
-</html>
