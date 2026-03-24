@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISO 17025 Master — Sesión 1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Salsa&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-pastel: #fdfcf0; /* Crema muy suave */
+            --primary-pastel: #a2d2ff; /* Azul pastel */
+            --secondary-pastel: #ffafcc; /* Rosa pastel */
+            --accent-pastel: #b9fbc0; /* Verde pastel */
+            --warning-pastel: #ffecb3; /* Amarillo pastel */
+            --text-main: #2d3436; /* Gris muy oscuro, casi negro */
+            --text-secondary: #636e72;
+            --white-card: #ffffff;
+            --shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        body {
+            font-family: 'Salsa', cursive;
+            background-color: var(--bg-pastel);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        #quiz-app {
+            background: var(--white-card);
+            max-width: 750px;
+            width: 100%;
+            border-radius: 40px;
+            box-shadow: var(--shadow);
+            padding: 40px;
+            border: 6px solid var(--primary-pastel);
+            position: relative;
+            text-align: center;
+        }
+
+        .header-session {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .badge {
+            background: var(--secondary-pastel);
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        h1 { color: var(--text-main); font-size: 1.8rem; margin: 20px 0; }
+        
+        .question-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .option-btn {
+            background: var(--bg-pastel);
+            border: 2px solid var(--primary-pastel);
+            padding: 18px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Salsa', cursive;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .option-btn:hover {
+            background: var(--primary-pastel);
+            transform: translateY(-3px);
+        }
+
+        /* Feedback Styles */
+        .feedback-area {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 25px;
+            display: none;
+            animation: bounceIn 0.5s;
+        }
+        .correct-box { background: var(--accent-pastel); border: 3px solid #78e08f; }
+        .wrong-box { background: var(--secondary-pastel); border: 3px solid #ff8da1; }
+
+        .btn-next {
+            background: var(--text-main);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-family: 'Salsa', cursive;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 12px;
+            background: #eee;
+            border-radius: 10px;
+            margin-top: 40px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-pastel);
+            width: 0%;
+            transition: width 0.4s;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            70% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="quiz-app">
+    <div class="header-session">
+        <span class="badge" id="session-title">Sesión 1: Cláusulas 4 y 5</span>
+        <span id="question-counter">1/10</span>
+    </div>
+
+    <div id="game-zone">
+        <div id="img-placeholder" style="font-size: 4rem; margin-bottom: 20px;">⚖️</div>
+        <div class="question-text" id="q-text">Cargando pregunta...</div>
+        <div class="options-grid" id="options-container"></div>
+    </div>
+
+    <div id="feedback" class="feedback-area">
+        <h2 id="feedback-title"></h2>
+        <p id="feedback-info" style="font-family: 'Inter', sans-serif;"></p>
+        <button class="btn-next" onclick="nextQuestion()">Continuar ➔</button>
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-fill" id="prog-bar"></div>
+    </div>
+</div>
+
+<script>
+    const sessionData = [
+        {
+            q: "¿Con qué frecuencia debe el laboratorio identificar los riesgos para su imparcialidad?",
+            options: ["Una vez al año", "Solo cuando hay cambios de personal", "De forma continua", "Cada vez que lo solicite el cliente"],
+            correct: 2,
+            icon: "🔄",
+            info: "Según la Cláusula 4.1.4, el laboratorio debe identificar riesgos a la imparcialidad de forma continua, incluyendo riesgos por sus actividades y relaciones."
+        },
+        {
+            q: "Si el laboratorio debe divulgar información confidencial por ley, ¿qué debe hacer?",
+            options: ["Divulgarla sin avisar", "Notificar al cliente por adelantado, a menos que esté prohibido por ley", "Negarse a entregar la información", "Cobrar un recargo por el trámite"],
+            correct: 1,
+            icon: "📜",
+            info: "La norma exige transparencia. Si la ley obliga a revelar datos, el cliente debe ser informado de qué información se proporcionará."
+        },
+        {
+            q: "¿Qué se considera información confidencial por defecto según la norma?",
+            options: ["Solo los resultados de los ensayos", "Toda la información obtenida o creada durante las actividades del laboratorio", "Solo la dirección del cliente", "Únicamente las fórmulas de cálculo"],
+            correct: 1,
+            icon: "🤫",
+            info: "Toda información generada durante la actividad para el cliente es propiedad exclusiva y debe ser tratada como confidencial."
+        },
+        {
+            q: "¿Qué tipo de organización puede ser un laboratorio según la ISO 17025?",
+            options: ["Solo laboratorios independientes", "Solo laboratorios gubernamentales", "Cualquier entidad con personalidad jurídica", "Solo empresas con más de 100 empleados"],
+            correct: 2,
+            icon: "🏢",
+            info: "La Cláusula 5.1 establece que el laboratorio debe ser una entidad legal o una parte definida de una entidad legal responsable de sus actividades."
+        },
+        {
+            q: "¿Está permitida la subcontratación permanente de actividades para las que el laboratorio afirma estar conforme?",
+            options: ["Sí, si el subcontratista es barato", "No, está explícitamente prohibida", "Solo en días feriados", "Sí, sin necesidad de informar al cliente"],
+            correct: 1,
+            icon: "🚫",
+            info: "Se prohíbe la subcontratación permanente para evitar que laboratorios sin competencia técnica actúen como simples intermediarios."
+        },
+        {
+            q: "¿Qué actividad NO forma parte de las 'actividades de laboratorio' definidas en 2017?",
+            options: ["Ensayo", "Calibración", "Muestreo asociado a ensayos/calibraciones", "Venta de reactivos químicos"],
+            correct: 3,
+            icon: "🧪",
+            info: "Las tres actividades de laboratorio reconocidas son ensayo, calibración y muestreo (siempre que esté asociado a un ensayo o calibración posterior)."
+        },
+        {
+            q: "¿Qué debe definir el laboratorio sobre su estructura de gestión?",
+            options: ["Solo el nombre del director", "Su lugar en la organización matriz y las relaciones entre dirección y servicios de soporte", "El color de los uniformes", "Únicamente el horario de almuerzo"],
+            correct: 1,
+            icon: "🖇️",
+            info: "Es vital definir las relaciones jerárquicas y operativas para asegurar que el sistema de gestión funcione correctamente."
+        },
+        {
+            q: "¿Qué responsabilidad tiene el personal encargado del sistema de gestión?",
+            options: ["Solo archivar documentos", "Asegurar que se mantiene la integridad del sistema ante cambios", "Limpiar los equipos de medición", "Atender el teléfono"],
+            correct: 1,
+            icon: "🛡️",
+            info: "El personal de gestión debe garantizar que los cambios no afecten la integridad del sistema y asegurar la efectividad de las actividades."
+        },
+        {
+            q: "El personal que influye en los resultados debe actuar de forma...",
+            options: ["Rápida y eficiente", "Imparcial, competente y de acuerdo al sistema de gestión", "Independiente de las normas", "Autoritaria"],
+            correct: 1,
+            icon: "👩‍🔬",
+            info: "La Cláusula 6.2.1 exige que todo el personal (interno o externo) sea imparcial y competente."
+        },
+        {
+            q: "¿A qué debe tener acceso todo el personal involucrado en actividades de laboratorio?",
+            options: ["A la cuenta bancaria del laboratorio", "A las partes de la documentación del sistema de gestión aplicables a sus responsabilidades", "Solo a los manuales de los equipos", "A la oficina del director general"],
+            correct: 1,
+            icon: "📖",
+            info: "Para trabajar conforme a la norma, el personal debe conocer y tener acceso a los documentos de gestión que regulan su labor."
+        }
+    ];
+
+    let currentIdx = 0;
+
+    function renderQuestion() {
+        const qData = sessionData[currentIdx];
+        document.getElementById('question-counter').innerText = `${currentIdx + 1}/${sessionData.length}`;
+        document.getElementById('prog-bar').style.width = `${((currentIdx) / sessionData.length) * 100}%`;
+        document.getElementById('q-text').innerText = qData.q;
+        document.getElementById('img-placeholder').innerText = qData.icon;
+        
+        const container = document.getElementById('options-container');
+        container.innerHTML = '';
+        qData.options.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = opt;
+            btn.onclick = () => checkAnswer(i);
+            container.appendChild(btn);
+        });
+
+        document.getElementById('feedback').style.display = 'none';
+        document.getElementById('game-zone').style.display = 'block';
+    }
+
+    function checkAnswer(idx) {
+        const qData = sessionData[currentIdx];
+        const feedback = document.getElementById('feedback');
+        document.getElementById('game-zone').style.display = 'none';
+        feedback.style.display = 'block';
+
+        if(idx === qData.correct) {
+            feedback.className = "feedback-area correct-box";
+            document.getElementById('feedback-title').innerText = "🌟 ¡Excelente trabajo!";
+            document.getElementById('feedback-info').innerText = qData.info;
+        } else {
+            feedback.className = "feedback-area wrong-box";
+            document.getElementById('feedback-title').innerText = "❌ Necesitas revisar...";
+            document.getElementById('feedback-info').innerText = "Respuesta incorrecta. Recuerda: " + qData.info;
+        }
+    }
+
+    function nextQuestion() {
+        currentIdx++;
+        if(currentIdx < sessionData.length) {
+            renderQuestion();
+        } else {
+            showFinal();
+        }
+    }
+
+    function showFinal() {
+        document.getElementById('prog-bar').style.width = "100%";
+        document.getElementById('quiz-app').innerHTML = `
+            <div style="font-size: 5rem;">🏆</div>
+            <h1>¡Sesión 1 Completada!</h1>
+            <p style="font-family: 'Inter', sans-serif;">Has dominado los Requisitos Generales y Estructurales de la ISO 17025.</p>
+            <p style="color: var(--text-secondary);">¿Listo para la Sesión 2 (Recursos y Procesos)?</p>
+            <button class="btn-next" onclick="location.reload()">Reiniciar Sesión 1</button>
+        `;
+    }
+
+    renderQuestion();
+</script>
+
+</body>
+</html>
