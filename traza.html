@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Simulador de Trazabilidad Metrológica · ISO/IEC 17025</title>
+<link href="https://fonts.googleapis.com/css2?family=Salsa&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --p900: #1e3a5f; --p800: #2c4e6e; --p700: #3a6b8c; --p600: #4a86a8;
+  --p500: #5f9fc0; --p400: #7fb4d0; --p300: #9fc9e0; --p200: #bfdeef;
+  --p100: #dff0f8; --p50: #eff7fc;
+  --mint: #2ecc71; --mint-l: #d5f5e3; --mint-d: #186a3b;
+  --gold: #f1c40f; --gold-l: #fef9e0; --gold-d: #b77e0a;
+  --red: #e74c3c; --red-l: #fadbd8; --red-d: #943126;
+  --blue: #3498db; --blue-l: #d4e6f1; --blue-d: #1b4f72;
+  --gray: #95a5a6; --gray-l: #ecf0f1; --gray-d: #5d6d6e;
+  --white: #ffffff;
+  --page: #f8fafc;
+  --font-title: 'Salsa', cursive;
+  --font-body: 'Nunito', sans-serif;
+  --shadow: 0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: var(--font-body);
+  background: var(--page);
+  color: #1e293b;
+  line-height: 1.5;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, var(--p800), var(--p600));
+  padding: 24px 32px;
+  color: white;
+  box-shadow: var(--shadow);
+}
+.header h1 {
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.header p { opacity: 0.9; margin-top: 8px; font-size: 0.9rem; }
+
+/* Contenedor principal */
+.container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+
+/* Cards */
+.card {
+  background: var(--white);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 24px;
+  margin-bottom: 24px;
+  border: 1px solid #e2e8f0;
+}
+.card-title {
+  font-family: var(--font-title);
+  font-size: 1.3rem;
+  color: var(--p700);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid var(--p200);
+}
+
+/* Grids */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--p600);
+  margin-bottom: 6px;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+.form-group input:focus, .form-group select:focus {
+  outline: none;
+  border-color: var(--p500);
+  box-shadow: 0 0 0 3px rgba(79, 134, 184, 0.2);
+}
+
+/* Botones */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary {
+  background: var(--p600);
+  color: white;
+}
+.btn-primary:hover { background: var(--p700); transform: translateY(-2px); }
+.btn-success {
+  background: var(--mint);
+  color: white;
+}
+.btn-success:hover { background: var(--mint-d); }
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--p300);
+  color: var(--p700);
+}
+.btn-outline:hover { background: var(--p50); }
+.btn-danger {
+  background: var(--red);
+  color: white;
+}
+.btn-danger:hover { background: var(--red-d); }
+
+/* Tabla equipos */
+.table-wrapper { overflow-x: auto; }
+.equipos-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.equipos-table th, .equipos-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+.equipos-table th {
+  background: var(--p50);
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: var(--p700);
+}
+.equipo-row:hover { background: var(--p50); cursor: pointer; }
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+.badge-success { background: var(--mint-l); color: var(--mint-d); }
+.badge-warning { background: var(--gold-l); color: var(--gold-d); }
+.badge-danger { background: var(--red-l); color: var(--red-d); }
+.badge-info { background: var(--blue-l); color: var(--blue-d); }
+
+/* Cadena de trazabilidad */
+.trace-chain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: var(--p50);
+  padding: 20px;
+  border-radius: 16px;
+  margin: 16px 0;
+}
+.trace-node {
+  flex: 1;
+  text-align: center;
+  background: white;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border-left: 4px solid var(--p500);
+}
+.trace-node .icon { font-size: 2rem; margin-bottom: 8px; }
+.trace-node .title { font-weight: 800; font-size: 0.85rem; color: var(--p700); }
+.trace-node .desc { font-size: 0.75rem; color: #64748b; margin-top: 4px; }
+.trace-arrow { font-size: 1.5rem; color: var(--p400); }
+
+/* Certificado */
+.certificado {
+  background: #fef9e6;
+  border: 2px solid var(--gold);
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 20px;
+}
+.certificado-header {
+  text-align: center;
+  border-bottom: 2px dashed var(--gold);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+.certificado h3 { color: var(--gold-d); }
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  background: white;
+  border-radius: 24px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 24px;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--p200);
+  padding-bottom: 12px;
+}
+.modal-header h2 { font-family: var(--font-title); color: var(--p700); }
+.close-modal {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--gray);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .trace-chain { flex-direction: column; }
+  .trace-arrow { transform: rotate(90deg); }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🔗 Simulador de Trazabilidad Metrológica</h1>
+  <p>ISO/IEC 17025:2017 · Asegure que todos los resultados de medición sean trazables a patrones nacionales e internacionales (SI)</p>
+</div>
+
+<div class="container">
+  <!-- Panel de cadena de trazabilidad visual -->
+  <div class="card">
+    <div class="card-title">
+      <span>📐</span> Cadena de Trazabilidad Metrológica
+    </div>
+    <div class="trace-chain" id="traceChain">
+      <div class="trace-node">
+        <div class="icon">🌍</div>
+        <div class="title">Patrones Internacionales</div>
+        <div class="desc">BIPM · SI (Sistema Internacional)</div>
+      </div>
+      <div class="trace-arrow">→</div>
+      <div class="trace-node">
+        <div class="icon">🏛️</div>
+        <div class="title">Patrones Nacionales</div>
+        <div class="desc" id="nationalBody">ONAC / INMETRO / CENAM</div>
+      </div>
+      <div class="trace-arrow">→</div>
+      <div class="trace-node">
+        <div class="icon">🔬</div>
+        <div class="title">Laboratorios Acreditados</div>
+        <div class="desc">Calibración con incertidumbre documentada</div>
+      </div>
+      <div class="trace-arrow">→</div>
+      <div class="trace-node">
+        <div class="icon">⚙️</div>
+        <div class="title">Equipos del Laboratorio</div>
+        <div class="desc" id="equiposCount">0 equipos registrados</div>
+      </div>
+      <div class="trace-arrow">→</div>
+      <div class="trace-node">
+        <div class="icon">📊</div>
+        <div class="title">Mediciones de Clientes</div>
+        <div class="desc">Resultados con confianza metrológica</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formulario para agregar equipos -->
+  <div class="card">
+    <div class="card-title">
+      <span>➕</span> Registrar Equipo de Medición
+    </div>
+    <div class="grid-3">
+      <div class="form-group">
+        <label>🔧 Nombre del equipo *</label>
+        <input type="text" id="equipoNombre" placeholder="Ej. Micrómetro digital, Balanza analítica, Termómetro">
+      </div>
+      <div class="form-group">
+        <label>🏷️ Código interno</label>
+        <input type="text" id="equipoCodigo" placeholder="Ej. EQ-001, BAL-02">
+      </div>
+      <div class="form-group">
+        <label>🏭 Marca / Modelo</label>
+        <input type="text" id="equipoModelo" placeholder="Marca y modelo">
+      </div>
+      <div class="form-group">
+        <label>🔢 Número de serie</label>
+        <input type="text" id="equipoSerie" placeholder="Número de serie">
+      </div>
+      <div class="form-group">
+        <label>📏 Magnitud / Rango</label>
+        <input type="text" id="equipoMagnitud" placeholder="Ej. 0-25 mm, 0-200 g, -20 a 120°C">
+      </div>
+      <div class="form-group">
+        <label>🏛️ Entidad de calibración *</label>
+        <select id="entidadCalibracion">
+          <option value="">Seleccionar...</option>
+          <option value="ONAC (Colombia) - Laboratorio Acreditado">ONAC (Colombia) - Acreditado</option>
+          <option value="INMETRO (Brasil) - Laboratorio Acreditado">INMETRO (Brasil) - Acreditado</option>
+          <option value="CENAM (México) - Laboratorio Acreditado">CENAM (México) - Acreditado</option>
+          <option value="Laboratorio externo acreditado ILAC">Laboratorio externo acreditado ILAC</option>
+          <option value="Calibración interna con patrón trazable">Calibración interna con patrón trazable</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid-2" style="margin-top: 16px;">
+      <div class="form-group">
+        <label>📅 Última calibración</label>
+        <input type="date" id="ultimaCalibracion">
+      </div>
+      <div class="form-group">
+        <label>📅 Próxima calibración</label>
+        <input type="date" id="proximaCalibracion">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>📄 Incertidumbre de medición (ej. ±0.001 mm / ±0.01 g)</label>
+      <input type="text" id="incertidumbre" placeholder="Ej. U = 0.002 mm (k=2)">
+    </div>
+    <div class="form-group">
+      <label>🔗 Cadena de trazabilidad documentada</label>
+      <textarea id="cadenaDocumentada" rows="2" placeholder="Ej. Patrón nacional ONAC → Laboratorio acreditado LAB-01 → Equipo → Resultados"></textarea>
+    </div>
+    <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 16px;">
+      <button class="btn btn-primary" onclick="agregarEquipo()">➕ Registrar Equipo</button>
+    </div>
+  </div>
+
+  <!-- Matriz de trazabilidad - Lista de equipos -->
+  <div class="card">
+    <div class="card-title">
+      <span>📋</span> Matriz de Trazabilidad Metrológica
+      <span style="font-size: 0.8rem; margin-left: auto;">Formato FT-05</span>
+    </div>
+    <div class="table-wrapper">
+      <table class="equipos-table" id="equiposTable">
+        <thead>
+          <tr><th>Código</th><th>Equipo</th><th>Marca/Modelo</th><th>Magnitud</th><th>Entidad Calibración</th><th>Incertidumbre</th><th>Próxima Calib.</th><th>Trazabilidad</th><th>Acciones</th></tr>
+        </thead>
+        <tbody id="equiposList">
+          <tr><td colspan="9" style="text-align: center; color: #94a3b8;">No hay equipos registrados. Agregue un equipo para iniciar la matriz de trazabilidad.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Certificado de calibración simulado -->
+  <div class="card" id="certificadoPanel" style="display: none;">
+    <div class="card-title">
+      <span>📜</span> Certificado de Calibración Simulado
+    </div>
+    <div id="certificadoContent"></div>
+  </div>
+
+  <!-- Documentos relacionados y requisitos -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title"><span>✅</span> Requisitos de Trazabilidad</div>
+      <ul style="list-style: none; padding: 0;">
+        <li style="padding: 8px 0; display: flex; gap: 10px;">🔹 <span>Calibración en laboratorios acreditados (ILAC / ONAC / INMETRO)</span></li>
+        <li style="padding: 8px 0; display: flex; gap: 10px;">🔹 <span>Certificados con incertidumbre de medición documentada</span></li>
+        <li style="padding: 8px 0; display: flex; gap: 10px;">🔹 <span>Documentación de cadena de calibración ininterrumpida</span></li>
+        <li style="padding: 8px 0; display: flex; gap: 10px;">🔹 <span>Comparaciones periódicas con patrones de referencia</span></li>
+        <li style="padding: 8px 0; display: flex; gap: 10px;">🔹 <span>Evaluación de aptitud entre laboratorios (ensayos de proficiency)</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title"><span>📂</span> Documentos Relacionados</div>
+      <ul style="list-style: none; padding: 0;">
+        <li style="padding: 8px 0; display: flex; gap: 10px;">📄 <strong>Formato FT-05:</strong> Matriz de Trazabilidad</li>
+        <li style="padding: 8px 0; display: flex; gap: 10px;">📄 <strong>Certificados de Calibración:</strong> Historial de equipos</li>
+        <li style="padding: 8px 0; display: flex; gap: 10px;">📄 <strong>Procedimiento P-07:</strong> Aseguramiento de trazabilidad</li>
+        <li style="padding: 8px 0; display: flex; gap: 10px;">📄 <strong>Registro R-12:</strong> Cadena de trazabilidad por equipo</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal para ver certificado detallado -->
+<div id="certificadoModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>📜 Certificado de Calibración</h2>
+      <span class="close-modal" onclick="cerrarModal()">&times;</span>
+    </div>
+    <div id="modalCertificadoContent"></div>
+  </div>
+</div>
+
+<script>
+let equipos = [];
+let nextId = 1;
+
+// Cargar datos guardados
+function cargarDatos() {
+  const saved = localStorage.getItem('trazabilidadEquipos');
+  if(saved) {
+    equipos = JSON.parse(saved);
+    nextId = equipos.length > 0 ? Math.max(...equipos.map(e => e.id)) + 1 : 1;
+    renderizarEquipos();
+    actualizarContador();
+  }
+}
+
+function guardarDatos() {
+  localStorage.setItem('trazabilidadEquipos', JSON.stringify(equipos));
+  actualizarContador();
+}
+
+function actualizarContador() {
+  document.getElementById('equiposCount').innerHTML = `${equipos.length} equipos registrados`;
+  if(equipos.length === 0) {
+    document.getElementById('certificadoPanel').style.display = 'none';
+  }
+}
+
+function agregarEquipo() {
+  const nombre = document.getElementById('equipoNombre').value.trim();
+  if(!nombre) {
+    alert('Por favor ingrese el nombre del equipo');
+    return;
+  }
+  
+  const entidad = document.getElementById('entidadCalibracion').value;
+  if(!entidad) {
+    alert('Seleccione la entidad de calibración');
+    return;
+  }
+  
+  const equipo = {
+    id: nextId++,
+    nombre: nombre,
+    codigo: document.getElementById('equipoCodigo').value.trim() || `EQ-${nextId-1}`,
+    marcaModelo: document.getElementById('equipoModelo').value.trim() || 'No especificado',
+    serie: document.getElementById('equipoSerie').value.trim() || 'N/A',
+    magnitud: document.getElementById('equipoMagnitud').value.trim() || 'No especificado',
+    entidadCalibracion: entidad,
+    ultimaCalibracion: document.getElementById('ultimaCalibracion').value || 'No registrada',
+    proximaCalibracion: document.getElementById('proximaCalibracion').value || 'No registrada',
+    incertidumbre: document.getElementById('incertidumbre').value.trim() || 'No especificada',
+    cadenaDocumentada: document.getElementById('cadenaDocumentada').value.trim() || 'Cadena documentada según ISO/IEC 17025',
+    fechaRegistro: new Date().toLocaleDateString()
+  };
+  
+  equipos.push(equipo);
+  guardarDatos();
+  renderizarEquipos();
+  
+  // Limpiar campos menos el nombre para facilitar ingreso continuo
+  document.getElementById('equipoNombre').value = '';
+  document.getElementById('equipoCodigo').value = '';
+  document.getElementById('equipoModelo').value = '';
+  document.getElementById('equipoSerie').value = '';
+  document.getElementById('equipoMagnitud').value = '';
+  document.getElementById('incertidumbre').value = '';
+  document.getElementById('cadenaDocumentada').value = '';
+  document.getElementById('ultimaCalibracion').value = '';
+  document.getElementById('proximaCalibracion').value = '';
+  document.getElementById('entidadCalibracion').value = '';
+  
+  alert(`✅ Equipo "${nombre}" registrado con trazabilidad metrológica`);
+}
+
+function renderizarEquipos() {
+  const tbody = document.getElementById('equiposList');
+  if(equipos.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align: center; color: #94a3b8;">No hay equipos registrados. Agregue un equipo para iniciar la matriz de trazabilidad.</td></tr>';
+    return;
+  }
+  
+  tbody.innerHTML = equipos.map(equipo => {
+    const trazabilidadValida = equipo.entidadCalibracion.includes('Acreditado') || equipo.entidadCalibracion.includes('acreditado') || equipo.entidadCalibracion.includes('ILAC');
+    const badgeClass = trazabilidadValida ? 'badge-success' : 'badge-warning';
+    const badgeText = trazabilidadValida ? '✅ Trazable' : '⚠️ Verificar trazabilidad';
+    
+    // Verificar si la calibración está próxima a vencer (dentro de 30 días)
+    let fechaBadge = '';
+    if(equipo.proximaCalibracion && equipo.proximaCalibracion !== 'No registrada') {
+      const hoy = new Date();
+      const prox = new Date(equipo.proximaCalibracion);
+      const diffDays = Math.ceil((prox - hoy) / (1000 * 60 * 60 * 24));
+      if(diffDays < 0) fechaBadge = '<span class="badge badge-danger">⚠️ Vencido</span>';
+      else if(diffDays < 30) fechaBadge = `<span class="badge badge-warning">⏰ ${diffDays} días</span>`;
+      else fechaBadge = '<span class="badge badge-success">✅ Vigente</span>';
+    }
+    
+    return `
+      <tr class="equipo-row" onclick="verCertificado(${equipo.id})">
+        <td><strong>${equipo.codigo}</strong></td>
+        <td>${equipo.nombre}</td>
+        <td>${equipo.marcaModelo}</td>
+        <td>${equipo.magnitud}</td>
+        <td><span class="badge ${badgeClass}">${equipo.entidadCalibracion.substring(0, 35)}</span></td>
+        <td><small>${equipo.incertidumbre}</small></td>
+        <td>${equipo.proximaCalibracion !== 'No registrada' ? equipo.proximaCalibracion : '—'}<br>${fechaBadge}</td>
+        <td><span class="badge ${badgeClass}">${badgeText}</span></td>
+        <td><button class="btn btn-outline" style="padding: 4px 12px;" onclick="event.stopPropagation(); eliminarEquipo(${equipo.id})">🗑️</button></td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function eliminarEquipo(id) {
+  if(confirm('¿Eliminar este equipo de la matriz de trazabilidad?')) {
+    equipos = equipos.filter(e => e.id !== id);
+    guardarDatos();
+    renderizarEquipos();
+    if(equipos.length === 0) document.getElementById('certificadoPanel').style.display = 'none';
+  }
+}
+
+function verCertificado(id) {
+  const equipo = equipos.find(e => e.id === id);
+  if(!equipo) return;
+  
+  const trazabilidadValida = equipo.entidadCalibracion.includes('Acreditado') || equipo.entidadCalibracion.includes('acreditado') || equipo.entidadCalibracion.includes('ILAC');
+  const numeroCertificado = `CAL-${equipo.codigo}-${new Date().getFullYear()}-${equipo.id}`;
+  
+  const contenido = `
+    <div class="certificado">
+      <div class="certificado-header">
+        <h3>📜 CERTIFICADO DE CALIBRACIÓN</h3>
+        <p><strong>N° Certificado:</strong> ${numeroCertificado}</p>
+        <p><strong>Fecha de emisión:</strong> ${new Date().toLocaleDateString()}</p>
+      </div>
+      <div style="margin: 16px 0;">
+        <p><strong>🔧 EQUIPO CALIBRADO:</strong> ${equipo.nombre}</p>
+        <p><strong>🏷️ Código:</strong> ${equipo.codigo} | <strong>Serie:</strong> ${equipo.serie}</p>
+        <p><strong>🏭 Marca/Modelo:</strong> ${equipo.marcaModelo}</p>
+        <p><strong>📏 Magnitud / Rango:</strong> ${equipo.magnitud}</p>
+      </div>
+      <div style="background: #f1f5f9; padding: 12px; border-radius: 12px; margin: 12px 0;">
+        <p><strong>🔗 CADENA DE TRAZABILIDAD:</strong></p>
+        <p style="font-size: 0.85rem;">${equipo.cadenaDocumentada || 'Patrón nacional → Laboratorio acreditado → Equipo → Resultados de medición'}</p>
+        <hr style="margin: 8px 0;">
+        <p><strong>🏛️ ENTIDAD DE CALIBRACIÓN:</strong> ${equipo.entidadCalibracion}</p>
+        <p><strong>📊 INCERTIDUMBRE DE MEDICIÓN:</strong> ${equipo.incertidumbre}</p>
+        <p><strong>📅 ÚLTIMA CALIBRACIÓN:</strong> ${equipo.ultimaCalibracion}</p>
+        <p><strong>📅 PRÓXIMA CALIBRACIÓN:</strong> ${equipo.proximaCalibracion}</p>
+      </div>
+      <div style="margin-top: 16px; padding: 12px; border-top: 2px solid #f1c40f;">
+        <p><strong>✅ DECLARACIÓN DE TRAZABILIDAD:</strong></p>
+        <p>Este certificado confirma que el equipo calibrado es <strong>trazable al Sistema Internacional de Unidades (SI)</strong> a través de una cadena ininterrumpida de calibraciones documentadas, con incertidumbre expandida declarada (k=2, nivel de confianza ~95%).</p>
+        <p style="margin-top: 12px; font-size: 0.8rem; color: #2c6e2c;">${trazabilidadValida ? '✓ La trazabilidad está garantizada por laboratorio acreditado bajo ILAC' : '⚠️ Verificar que la entidad de calibración cuente con acreditación vigente para garantizar trazabilidad completa'}</p>
+      </div>
+      <div style="margin-top: 20px; text-align: center; font-size: 0.7rem; color: #7f8c8d;">
+        Este certificado es generado por el Simulador de Trazabilidad Metrológica · ISO/IEC 17025
+      </div>
+    </div>
+  `;
+  
+  document.getElementById('modalCertificadoContent').innerHTML = contenido;
+  document.getElementById('certificadoModal').style.display = 'flex';
+  
+  // También mostrar panel inferior
+  document.getElementById('certificadoContent').innerHTML = contenido;
+  document.getElementById('certificadoPanel').style.display = 'block';
+}
+
+function cerrarModal() {
+  document.getElementById('certificadoModal').style.display = 'none';
+}
+
+// Cerrar modal al hacer clic fuera
+window.onclick = function(event) {
+  const modal = document.getElementById('certificadoModal');
+  if(event.target === modal) cerrarModal();
+}
+
+// Inicializar
+cargarDatos();
+</script>
+</body>
+</html>
