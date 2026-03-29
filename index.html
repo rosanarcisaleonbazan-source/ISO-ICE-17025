@@ -8,35 +8,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Salsa&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* PALETA PASTEL */
   --rosa-pastel: #FFB3D9;
   --rosa-claro: #FFD4E5;
   --rosa-muy-claro: #FFF0F6;
-  
   --azul-pastel: #B3E5FC;
   --azul-claro: #D1F0FF;
   --azul-muy-claro: #F0F8FF;
-  
   --verde-pastel: #B3F5D1;
   --verde-claro: #D4F5E3;
   --verde-muy-claro: #EEF9F5;
-  
   --morado-pastel: #E1BEE7;
   --morado-claro: #F0D9F5;
   --morado-muy-claro: #F9F3FD;
-  
   --naranja-pastel: #FFD4B3;
   --naranja-claro: #FFE5D4;
   --naranja-muy-claro: #FFF5ED;
-  
   --amarillo-pastel: #FFF9C4;
   --amarillo-claro: #FFFDE7;
-  
   --gris-oscuro: #4a5568;
   --gris-medio: #718096;
   --gris-claro: #cbd5e0;
   --gris-muy-claro: #f7fafc;
-  
   --white: #ffffff;
   --font-titulo: 'Salsa', cursive;
   --font-cuerpo: 'Poppins', sans-serif;
@@ -56,7 +48,6 @@ body {
   min-height: 100vh;
 }
 
-/* NAV */
 nav {
   background: linear-gradient(135deg, var(--rosa-pastel) 0%, var(--morado-pastel) 100%);
   backdrop-filter: blur(10px);
@@ -160,7 +151,6 @@ nav {
   box-shadow: var(--sh-md);
 }
 
-/* HERO */
 .hero {
   background: linear-gradient(140deg, var(--azul-pastel) 0%, var(--verde-pastel) 35%, var(--rosa-pastel) 75%, var(--morado-pastel) 100%);
   padding: 100px 40px 90px;
@@ -311,7 +301,6 @@ nav {
   font-weight: 600;
 }
 
-/* TOOLS SECTION */
 .tools-section {
   padding: 90px 40px;
   max-width: 1400px;
@@ -379,12 +368,9 @@ nav {
   box-shadow: var(--sh-lg);
 }
 
-/* CARD COLORS */
 .card-bg-1 { background: linear-gradient(135deg, var(--azul-pastel), var(--azul-claro)); }
 .card-bg-2 { background: linear-gradient(135deg, var(--rosa-pastel), var(--naranja-pastel)); }
 .card-bg-3 { background: linear-gradient(135deg, var(--verde-pastel), var(--morado-pastel)); }
-.card-bg-4 { background: linear-gradient(135deg, var(--lila-pastel), var(--celeste-pastel)); }
-
 
 .card-head {
   padding: 32px 28px;
@@ -521,6 +507,470 @@ nav {
   border-color: var(--verde-pastel);
 }
 
+/* WORKFLOW */
+.workflow {
+  padding: 90px 40px;
+  background: white;
+  text-align: center;
+}
+
+.workflow-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.wf-mini {
+  color: #38a169;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: .15em;
+  margin-bottom: 10px;
+}
+
+.wf-title {
+  font-size: 38px;
+  margin-bottom: 10px;
+}
+
+.wf-sub {
+  color: #718096;
+  margin-bottom: 60px;
+}
+
+.wf-line {
+  height: 3px;
+  background: linear-gradient(to right, #4ade80, #60a5fa, #f59e0b);
+  width: 80%;
+  margin: 0 auto 40px;
+  position: relative;
+  top: 35px;
+  z-index: 1;
+}
+
+.wf-steps {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.wf-step {
+  width: 25%;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.wf-circle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid #38a169;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  margin: 0 auto 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+.wf-step:nth-child(1) .wf-circle { animation-delay: 0s; }
+.wf-step:nth-child(2) .wf-circle { animation-delay: 0.5s; }
+.wf-step:nth-child(3) .wf-circle { animation-delay: 1s; }
+.wf-step:nth-child(4) .wf-circle { animation-delay: 1.5s; }
+
+.wf-step:hover .wf-circle {
+  transform: scale(1.15) translateY(-5px);
+  background: linear-gradient(135deg, #38a169, #63b3ed);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.wf-step:hover h3 {
+  color: #38a169;
+}
+
+.wf-step.active .wf-circle {
+  background: linear-gradient(135deg, #f687b3, #9f7aea);
+  color: white;
+  transform: scale(1.2);
+}
+
+.wf-step.active h3 {
+  color: #f687b3;
+}
+
+.wf-step h3 {
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.wf-step p {
+  font-size: 13px;
+  color: #718096;
+}
+
+@media(max-width: 860px) {
+  .wf-steps {
+    flex-direction: column;
+    align-items: center;
+  }
+  .wf-step {
+    width: 100%;
+    max-width: 300px;
+  }
+  .wf-line {
+    display: none;
+  }
+}
+
+/* REQUISITO SECTION */
+.requisito {
+  padding: 80px 40px;
+  background: #f8fafc;
+}
+
+.req-container {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.req-tag {
+  font-size: 12px;
+  font-weight: 800;
+  color: #38a169;
+  letter-spacing: .1em;
+}
+
+.req-left h2 {
+  font-size: 34px;
+  margin: 10px 0;
+}
+
+.req-left p {
+  color: #718096;
+  margin-bottom: 20px;
+}
+
+.req-item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.req-item .icon {
+  background: #e6fffa;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 18px;
+}
+
+.req-item strong {
+  display: block;
+}
+
+.req-item p {
+  font-size: 13px;
+  margin: 2px 0 0;
+}
+
+.req-card {
+  background: linear-gradient(135deg, #2f855a, #276749);
+  color: white;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.req-card h4 {
+  font-size: 14px;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.card-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.08);
+  padding: 12px 14px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.badge {
+  background: #38a169;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+}
+
+.badge.green {
+  background: #68d391;
+}
+
+@media (max-width: 800px) {
+  .req-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========== NUEVA SECCIÓN: ¿POR QUÉ ELEGIRNOS? ========== */
+.why-us {
+  padding: 80px 40px;
+  background: var(--white);
+}
+
+.why-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.why-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.why-header h2 {
+  font-size: clamp(32px, 5vw, 48px);
+  font-family: var(--font-titulo);
+  color: var(--gris-oscuro);
+  margin-bottom: 16px;
+}
+
+.why-header h2 span {
+  background: linear-gradient(135deg, var(--verde-pastel), var(--azul-pastel));
+  padding: 4px 16px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.why-header p {
+  font-size: 18px;
+  color: var(--gris-medio);
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 80px;
+}
+
+.benefit-card {
+  background: linear-gradient(135deg, var(--gris-muy-claro), var(--white));
+  border-radius: 24px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: all .3s;
+  border: 1px solid var(--gris-claro);
+  box-shadow: var(--sh);
+}
+
+.benefit-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--sh-lg);
+  border-color: var(--verde-pastel);
+}
+
+.benefit-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.benefit-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--gris-oscuro);
+}
+
+.benefit-card p {
+  font-size: 14px;
+  color: var(--gris-medio);
+  line-height: 1.6;
+}
+
+.modules-section {
+  margin-bottom: 80px;
+}
+
+.modules-section h3 {
+  font-size: 28px;
+  font-family: var(--font-titulo);
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.module-item {
+  background: var(--gris-muy-claro);
+  border-radius: 16px;
+  padding: 20px;
+  border-left: 4px solid var(--verde-pastel);
+  transition: all .3s;
+}
+
+.module-item:hover {
+  background: var(--verde-muy-claro);
+  transform: translateX(5px);
+}
+
+.module-number {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--verde-pastel);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.module-item h4 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.module-item p {
+  font-size: 13px;
+  color: var(--gris-medio);
+}
+
+.certs-section {
+  background: linear-gradient(135deg, var(--azul-muy-claro), var(--rosa-muy-claro));
+  border-radius: 32px;
+  padding: 50px 40px;
+  margin-bottom: 60px;
+}
+
+.certs-section h3 {
+  font-size: 28px;
+  font-family: var(--font-titulo);
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.certs-badge {
+  text-align: center;
+  font-size: 14px;
+  color: var(--gris-medio);
+  margin-bottom: 40px;
+}
+
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.cert-item {
+  background: var(--white);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  transition: all .3s;
+  box-shadow: var(--sh);
+}
+
+.cert-item:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--sh-md);
+}
+
+.cert-icon {
+  font-size: 32px;
+}
+
+.cert-item p {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gris-oscuro);
+}
+
+.cta-final {
+  text-align: center;
+  background: linear-gradient(135deg, var(--verde-pastel), var(--azul-pastel));
+  border-radius: 32px;
+  padding: 50px;
+  color: var(--gris-oscuro);
+}
+
+.cta-final h3 {
+  font-size: 32px;
+  font-family: var(--font-titulo);
+  margin-bottom: 16px;
+}
+
+.cta-final .stats {
+  font-size: 48px;
+  font-weight: 800;
+  margin: 20px 0;
+}
+
+.cta-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.btn-primary {
+  background: var(--gris-oscuro);
+  color: var(--white);
+  padding: 14px 32px;
+  border-radius: 40px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all .3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-primary:hover {
+  background: #000;
+  transform: translateY(-2px);
+}
+
+.btn-whatsapp {
+  background: #25D366;
+  color: var(--white);
+  padding: 14px 32px;
+  border-radius: 40px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all .3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-whatsapp:hover {
+  background: #128C7E;
+  transform: translateY(-2px);
+}
+
 /* FOOTER */
 footer {
   background: linear-gradient(135deg, var(--gris-muy-claro) 0%, var(--azul-muy-claro) 100%);
@@ -597,13 +1047,12 @@ footer {
   margin-bottom: 16px;
 }
 
-.fl-col a {
+.fl-col a, .fl-col p {
   display: block;
   font-size: 13px;
   color: var(--gris-medio);
   text-decoration: none;
-  margin-bottom: 10px;
-  transition: color .15s;
+  margin-bottom: 8px;
 }
 
 .fl-col a:hover {
@@ -631,7 +1080,6 @@ footer {
   font-weight: 700;
 }
 
-/* RESPONSIVE */
 @media(max-width: 860px) {
   .tools-grid { grid-template-columns: 1fr; }
   nav { padding: 0 20px; }
@@ -640,6 +1088,11 @@ footer {
   .tools-section { padding: 60px 20px; }
   .footer-inner { padding-left: 20px; padding-right: 20px; }
   .hero-stats { gap: 20px; }
+  .benefits-grid { grid-template-columns: 1fr; }
+  .modules-grid { grid-template-columns: 1fr; }
+  .certs-grid { grid-template-columns: 1fr; }
+  .cta-final { padding: 30px 20px; }
+  .why-us { padding: 50px 20px; }
 }
 </style>
 </head>
@@ -695,9 +1148,7 @@ footer {
     <div class="section-eyebrow">Herramientas</div>
     <h2 class="section-title">Recursos para tu <em>Laboratorio</em></h2>
     <p class="section-sub">Plantillas, guías interactivas y sistemas de auditoría diseñados específicamente para cumplir ISO/IEC 17025:2017.</p>
-
     <div class="tools-grid">
-      <!-- CARD 1 -->
       <a class="tool-card" href="infografia.html">
         <div class="card-head card-bg-1">📚</div>
         <div class="tc-body">
@@ -705,12 +1156,11 @@ footer {
           <h2>Infografía Visual</h2>
           <p style="color: var(--gris-medio); font-size: 13px; margin-bottom: 16px;">Guía visual de requisitos clave de ISO/IEC 17025 para capacitación y consulta rápida.</p>
           <ul class="tc-features">
-          <ul class="tc-features">
-      <li>Conceptos clave de la norma ISO 17025</li>
-      <li>Requisitos de competencia del laboratorio</li>
-      <li>Estructura del sistema de gestión</li>
-      <li>Proceso de aseguramiento de calidad</li>
-      <li>Ciclo de mejora continua (PHVA)</li>
+            <li>Conceptos clave de la norma ISO 17025</li>
+            <li>Requisitos de competencia del laboratorio</li>
+            <li>Estructura del sistema de gestión</li>
+            <li>Proceso de aseguramiento de calidad</li>
+            <li>Ciclo de mejora continua (PHVA)</li>
           </ul>
           <div class="tc-meta">
             <span class="tc-tag">📥 Descargable</span>
@@ -723,8 +1173,6 @@ footer {
           </div>
         </div>
       </a>
-
-      <!-- CARD 2 -->
       <a class="tool-card" href="checklist.html">
         <div class="card-head card-bg-2">🔍</div>
         <div class="tc-body">
@@ -749,8 +1197,6 @@ footer {
           </div>
         </div>
       </a>
-
-      <!-- CARD 3 -->
       <a class="tool-card" href="procedimiento.html">
         <div class="card-head card-bg-3">📝</div>
         <div class="tc-body">
@@ -772,341 +1218,75 @@ footer {
           <div class="tc-cta tc-cta-3">
             <span>Acceder Procedimientos</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </div>
+          </div>
         </div>
       </a>
-
- <!-- CARD 4 -->
-  <a class="tool-card" href="cuestionario.html">
-    <div class="card-head card-bg-1">❓</div>
-    <div class="tc-body">
-      <div class="tc-num">Herramienta 04</div>
-      <h2>Cuestionario de Autoevaluación — Gestión de Equipos</h2>
-      <p style="color: var(--gris-medio); font-size: 13px; margin-bottom: 16px;">
-        Evalúa el cumplimiento del requisito 6.4 de ISO/IEC 17025 sobre gestión de equipos.
-      </p>
-
-      <ul class="tc-features">
-        <li>Evaluación de equipos de medición</li>
-        <li>Control de calibración</li>
-        <li>Verificación de mantenimiento</li>
-        <li>Identificación de no conformidades</li>
-        <li>Resultados automáticos</li>
-      </ul>
-
-      <div class="tc-meta">
-        <span class="tc-tag">📊 Evaluación</span>
-        <span class="tc-tag">⚙️ Equipos</span>
-        <span class="tc-tag">🧠 Autoanálisis</span>
-      </div>
-
-      <div class="tc-cta tc-cta-1">
-        <span>Iniciar Cuestionario</span>
-      </div>
+      <a class="tool-card" href="cuestionario.html">
+        <div class="card-head card-bg-1">❓</div>
+        <div class="tc-body">
+          <div class="tc-num">Herramienta 04</div>
+          <h2>Cuestionario de Autoevaluación — Gestión de Equipos</h2>
+          <p style="color: var(--gris-medio); font-size: 13px; margin-bottom: 16px;">Evalúa el cumplimiento del requisito 6.4 de ISO/IEC 17025 sobre gestión de equipos.</p>
+          <ul class="tc-features">
+            <li>Evaluación de equipos de medición</li>
+            <li>Control de calibración</li>
+            <li>Verificación de mantenimiento</li>
+            <li>Identificación de no conformidades</li>
+            <li>Resultados automáticos</li>
+          </ul>
+          <div class="tc-meta">
+            <span class="tc-tag">📊 Evaluación</span>
+            <span class="tc-tag">⚙️ Equipos</span>
+            <span class="tc-tag">🧠 Autoanálisis</span>
+          </div>
+          <div class="tc-cta tc-cta-1">
+            <span>Iniciar Cuestionario</span>
+          </div>
+        </div>
+      </a>
     </div>
-  </a>
+  </div>
+</section>
 
-</div>
-
-
-
-
-
-  
+<!-- WORKFLOW -->
 <section class="workflow">
-
-  <style>
-  .workflow {
-    padding: 90px 40px;
-    background: white;
-    text-align: center;
-  }
-
-  .workflow-container {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
-
-  .wf-mini {
-    color: #38a169;
-    font-weight: 800;
-    font-size: 12px;
-    letter-spacing: .15em;
-    margin-bottom: 10px;
-  }
-
-  .wf-title {
-    font-size: 38px;
-    margin-bottom: 10px;
-  }
-
-  .wf-sub {
-    color: #718096;
-    margin-bottom: 60px;
-  }
-
-  /* LINEA */
-  .wf-line {
-    height: 3px;
-    background: linear-gradient(to right, #4ade80, #60a5fa, #f59e0b);
-    width: 80%;
-    margin: 0 auto 40px;
-    position: relative;
-    top: 35px;
-    z-index: 1;
-  }
-
-  /* STEPS */
-  .wf-steps {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    position: relative;
-    z-index: 2;
-  }
-
-  .wf-step {
-    width: 25%;
-    transition: all 0.3s ease;
-    cursor: pointer;
-  }
-
-  /* CIRCULOS */
-  .wf-circle {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: white;
-    border: 3px solid #38a169;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 26px;
-    margin: 0 auto 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: all 0.3s ease;
-    animation: float 4s ease-in-out infinite;
-  }
-
-  /* ANIMACION FLOTANTE */
-  @keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-6px); }
-    100% { transform: translateY(0px); }
-  }
-
-  /* RETRASO BONITO */
-  .wf-step:nth-child(1) .wf-circle { animation-delay: 0s; }
-  .wf-step:nth-child(2) .wf-circle { animation-delay: 0.5s; }
-  .wf-step:nth-child(3) .wf-circle { animation-delay: 1s; }
-  .wf-step:nth-child(4) .wf-circle { animation-delay: 1.5s; }
-
-  /* HOVER */
-  .wf-step:hover .wf-circle {
-    transform: scale(1.15) translateY(-5px);
-    background: linear-gradient(135deg, #38a169, #63b3ed);
-    color: white;
-    border-color: transparent;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-  }
-
-  .wf-step:hover h3 {
-    color: #38a169;
-  }
-
-  /* CLICK ACTIVO */
-  .wf-step.active .wf-circle {
-    background: linear-gradient(135deg, #f687b3, #9f7aea);
-    color: white;
-    transform: scale(1.2);
-  }
-
-  .wf-step.active h3 {
-    color: #f687b3;
-  }
-
-  .wf-step h3 {
-    font-size: 15px;
-    margin-bottom: 8px;
-  }
-
-  .wf-step p {
-    font-size: 13px;
-    color: #718096;
-  }
-
-  /* RESPONSIVE */
-  @media(max-width: 860px) {
-    .wf-steps {
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .wf-step {
-      width: 100%;
-      max-width: 300px;
-    }
-
-    .wf-line {
-      display: none;
-    }
-  }
-  </style>
-
   <div class="workflow-container">
-
     <p class="wf-mini">¿CÓMO USARLO?</p>
     <h2 class="wf-title">Flujo de trabajo recomendado</h2>
-    <p class="wf-sub">
-      Sigue estos pasos para implementar ISO/IEC 17025 en tu laboratorio.
-    </p>
-
+    <p class="wf-sub">Sigue estos pasos para implementar ISO/IEC 17025 en tu laboratorio.</p>
     <div class="wf-line"></div>
-
     <div class="wf-steps">
-
       <div class="wf-step" onclick="this.classList.toggle('active')">
         <div class="wf-circle">📊</div>
         <h3>1. Estudia la Infografía</h3>
         <p>Comprende los requisitos clave de la norma y lo que evaluará el auditor.</p>
       </div>
-
       <div class="wf-step" onclick="this.classList.toggle('active')">
         <div class="wf-circle">❓</div>
         <h3>2. Autoevalúa tu sistema</h3>
         <p>Identifica brechas en tu sistema de gestión ISO 17025.</p>
       </div>
-
       <div class="wf-step" onclick="this.classList.toggle('active')">
         <div class="wf-circle">✔️</div>
         <h3>3. Aplica el Checklist</h3>
         <p>Evalúa procesos, equipos y ensayos con listas de verificación.</p>
       </div>
-
       <div class="wf-step" onclick="this.classList.toggle('active')">
         <div class="wf-circle">📄</div>
         <h3>4. Documenta y archiva</h3>
         <p>Genera evidencias para auditorías y acreditación.</p>
       </div>
-
     </div>
-
   </div>
 </section>
 
-
-
-<!-- SECCIÓN SOBRE EL REQUISITO -->
-<style>
-.requisito {
-  padding: 80px 40px;
-  background: #f8fafc;
-}
-
-.req-container {
-  max-width: 1100px;
-  margin: auto;
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 40px;
-  align-items: center;
-}
-
-.req-tag {
-  font-size: 12px;
-  font-weight: 800;
-  color: #38a169;
-  letter-spacing: .1em;
-}
-
-.req-left h2 {
-  font-size: 34px;
-  margin: 10px 0;
-}
-
-.req-left p {
-  color: #718096;
-  margin-bottom: 20px;
-}
-
-.req-item {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 18px;
-}
-
-.req-item .icon {
-  background: #e6fffa;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 18px;
-}
-
-.req-item strong {
-  display: block;
-}
-
-.req-item p {
-  font-size: 13px;
-  margin: 2px 0 0;
-}
-
-/* TARJETA DERECHA */
-.req-card {
-  background: linear-gradient(135deg, #2f855a, #276749);
-  color: white;
-  padding: 30px;
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-.req-card h4 {
-  font-size: 14px;
-  margin-bottom: 20px;
-  opacity: 0.9;
-}
-
-.card-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(255,255,255,0.08);
-  padding: 12px 14px;
-  border-radius: 10px;
-  margin-bottom: 12px;
-}
-
-.badge {
-  background: #38a169;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 11px;
-}
-
-.badge.green {
-  background: #68d391;
-}
-
-/* RESPONSIVE */
-@media (max-width: 800px) {
-  .req-container {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
-
+<!-- REQUISITO SECTION -->
 <section class="requisito">
   <div class="req-container">
-
-    <!-- IZQUIERDA -->
     <div class="req-left">
       <span class="req-tag">SOBRE EL REQUISITO</span>
       <h2>¿Por qué es importante ISO/IEC 17025?</h2>
-      <p>
-        La norma ISO/IEC 17025 garantiza la competencia técnica de los laboratorios,
-        asegurando resultados válidos, confiables y reconocidos internacionalmente.
-      </p>
-
+      <p>La norma ISO/IEC 17025 garantiza la competencia técnica de los laboratorios, asegurando resultados válidos, confiables y reconocidos internacionalmente.</p>
       <div class="req-item">
         <div class="icon">🧪</div>
         <div>
@@ -1114,7 +1294,6 @@ footer {
           <p>Ensayos y calibraciones precisos, reproducibles y técnicamente válidos.</p>
         </div>
       </div>
-
       <div class="req-item">
         <div class="icon">🌍</div>
         <div>
@@ -1122,7 +1301,6 @@ footer {
           <p>Resultados reconocidos a nivel nacional e internacional.</p>
         </div>
       </div>
-
       <div class="req-item">
         <div class="icon">📋</div>
         <div>
@@ -1131,45 +1309,106 @@ footer {
         </div>
       </div>
     </div>
-
-    <!-- DERECHA -->
     <div class="req-card">
       <h4>APLICA A TODAS LAS ÁREAS</h4>
-
-      <div class="card-item">
-        <span>Control de equipos</span>
-        <span class="badge">ISO 6.4</span>
-      </div>
-
-      <div class="card-item">
-        <span>Trazabilidad metrológica</span>
-        <span class="badge">ISO 6.5</span>
-      </div>
-
-      <div class="card-item">
-        <span>Validez de resultados</span>
-        <span class="badge">ISO 7.7</span>
-      </div>
-
-      <div class="card-item">
-        <span>Gestión de calidad</span>
-        <span class="badge">ISO 8</span>
-      </div>
-
-      <div class="card-item">
-        <span>Reconocimiento internacional</span>
-        <span class="badge green">✓</span>
-      </div>
+      <div class="card-item"><span>Control de equipos</span><span class="badge">ISO 6.4</span></div>
+      <div class="card-item"><span>Trazabilidad metrológica</span><span class="badge">ISO 6.5</span></div>
+      <div class="card-item"><span>Validez de resultados</span><span class="badge">ISO 7.7</span></div>
+      <div class="card-item"><span>Gestión de calidad</span><span class="badge">ISO 8</span></div>
+      <div class="card-item"><span>Reconocimiento internacional</span><span class="badge green">✓</span></div>
     </div>
-
   </div>
 </section>
 
+<!-- ========== NUEVA SECCIÓN: ¿POR QUÉ ELEGIRNOS? ========== -->
+<section class="why-us">
+  <div class="why-container">
+    <div class="why-header">
+      <h2>¿Por qué <span>elegirnos?</span></h2>
+      <p>Todo lo que incluye tu diplomado en un solo lugar</p>
+    </div>
 
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">📏</div>
+        <h3>Aseguramiento Metrológico</h3>
+        <p>Trazabilidad, calibración, reglas de decisión y revisión de certificados de calibración aplicada a laboratorios.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📊</div>
+        <h3>Herramientas Estadísticas</h3>
+        <p>ANOVA, pruebas t, repetibilidad, exactitud, linealidad y ensayos de aptitud para laboratorios.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">📐</div>
+        <h3>Estimación de Incertidumbre</h3>
+        <p>Identificación de fuentes, presupuesto completo y aplicación en mediciones directas e indirectas.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">✓</div>
+        <h3>Validación de Métodos</h3>
+        <p>Proceso completo de validación/verificación con diseño estadístico y documentación profesional.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🎓</div>
+        <h3>Certificación de Auditor Interno</h3>
+        <p>Programa de auditorías, redacción de hallazgos, planes de acción y evaluación de eficacia bajo ISO 17025.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">💻</div>
+        <h3>Plataforma 24/7</h3>
+        <p>Acceso ilimitado al contenido por 90 días. Todas las clases quedan grabadas para revisión.</p>
+      </div>
+    </div>
 
+    <div class="modules-section">
+      <h3>📚 Contenido Académico</h3>
+      <p style="text-align: center; margin-bottom: 30px; color: var(--gris-medio);">100 horas de formación especializada con los estándares más exigentes para laboratorios de ensayo y calibración.</p>
+      <div class="modules-grid">
+        <div class="module-item"><div class="module-number">01</div><h4>Fundamentos ISO 17025</h4><p>Interpretación completa de requisitos, organización, sistema de gestión, compras, servicio al cliente, personal e instalaciones.</p></div>
+        <div class="module-item"><div class="module-number">02</div><h4>Gestión de la Mejora</h4><p>Diseño de procedimientos, validación de requisitos normativos, entrenamiento y evaluación de eficacia del personal técnico.</p></div>
+        <div class="module-item"><div class="module-number">03</div><h4>Mejora Integrada</h4><p>Planeación estratégica, gestión de trabajo no conforme, quejas, riesgos, oportunidades, cambio y mejora continua.</p></div>
+        <div class="module-item"><div class="module-number">04</div><h4>Competencia del Personal</h4><p>Definición de funciones críticas, perfiles de cargo, evaluación de competencias, selección y calificación técnica.</p></div>
+        <div class="module-item"><div class="module-number">05</div><h4>Aseguramiento Metrológico</h4><p>Criticidad de mediciones, idoneidad del proceso, frecuencias de calibración, errores máximos y reglas de decisión.</p></div>
+        <div class="module-item"><div class="module-number">06</div><h4>Herramientas Estadísticas</h4><p>Distribuciones estadísticas, normalidad, ANOVA, pruebas t, repetibilidad, linealidad, exactitud y ensayos de aptitud.</p></div>
+        <div class="module-item"><div class="module-number">07</div><h4>Estimación de Incertidumbre</h4><p>Conceptos básicos, fuentes de incertidumbre, proceso de estimación, mediciones directas e indirectas con talleres aplicados.</p></div>
+        <div class="module-item"><div class="module-number">08</div><h4>Validación de Métodos</h4><p>Proceso de validación/verificación, diseño estadístico de pruebas, documentación completa y taller aplicado.</p></div>
+        <div class="module-item"><div class="module-number">09</div><h4>Aseguramiento de Validez</h4><p>Programa de aseguramiento, gráficos de control, análisis de datos, seguimiento e informes técnicos profesionales.</p></div>
+        <div class="module-item"><div class="module-number">10</div><h4>Auditorías ISO 17025</h4><p>Programa de auditorías, selección de auditores, proceso completo, redacción de hallazgos, planes de acción y eficacia.</p></div>
+        <div class="module-item"><div class="module-number">11</div><h4>Conversatorio Final</h4><p>Resolución de dudas generales, aclaraciones técnicas y taller de refuerzo del conocimiento adquirido.</p></div>
+      </div>
+    </div>
 
+    <div class="certs-section">
+      <h3>🎓 Tus Certificaciones</h3>
+      <div class="certs-badge">Egresa con 10 certificados internacionales</div>
+      <div class="certs-grid">
+        <div class="cert-item"><div class="cert-icon">📋</div><p>Gestión Documental en Laboratorios</p></div>
+        <div class="cert-item"><div class="cert-icon">🔄</div><p>Gestión Integral de la Mejora</p></div>
+        <div class="cert-item"><div class="cert-icon">👥</div><p>Competencia Técnica del Personal</p></div>
+        <div class="cert-item"><div class="cert-icon">📏</div><p>Aseguramiento Metrológico Avanzado</p></div>
+        <div class="cert-item"><div class="cert-icon">📊</div><p>Estadística Aplicada a SGC</p></div>
+        <div class="cert-item"><div class="cert-icon">📐</div><p>Estimación de Incertidumbre</p></div>
+        <div class="cert-item"><div class="cert-icon">✓</div><p>Validación y Verificación</p></div>
+        <div class="cert-item"><div class="cert-icon">🎯</div><p>Aseguramiento de Validez</p></div>
+        <div class="cert-item"><div class="cert-icon">🔍</div><p>Auditor Interno ISO 17025</p></div>
+        <div class="cert-item"><div class="cert-icon">🏆</div><p>Diploma de Líder Implementador ISO/IEC 17025:2017</p></div>
+      </div>
+    </div>
 
-  
+    <div class="cta-final">
+      <h3>Tu próximo paso es certificarte hoy</h3>
+      <div class="stats">49,000+</div>
+      <p style="font-size: 18px;">profesionales certificados</p>
+      <p style="margin-top: 20px;">Empieza ahora y recibe 10 certificaciones internacionales en un solo diplomado.</p>
+      <div class="cta-buttons">
+        <a href="#" class="btn-primary">📩 Recibir toda la información →</a>
+        <a href="#" class="btn-whatsapp">📱 Hablar con asesor</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -1195,11 +1434,23 @@ footer {
           <a href="#">Acreditación</a>
           <a href="#">OIA</a>
         </div>
+        <div class="fl-col">
+          <h4>Contacto</h4>
+          <p>📧 info@gelite.org</p>
+          <p>📞 Bogotá: +(571) 390 6686</p>
+          <p>📞 Medellín: +(574) 605 0267</p>
+          <p>📞 Lima: +(511) 642 9084</p>
+        </div>
+        <div class="fl-col">
+          <h4>Oficinas</h4>
+          <p><strong>Colombia:</strong><br>Cra. 15 # 88 – 21 Of. 702<br>Torre Unika Virrey – Bogotá</p>
+          <p><strong>Perú:</strong><br>Calle Alfonso Ugarte Mz R Lte 1<br>Urb. Trebol Azul – Lima</p>
+        </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>Plataforma para <strong>gestión de laboratorios de ensayo y calibración</strong> según ISO/IEC 17025:2017. Desarrollado por Q.F Rosa Narcisa León Bazan.</p>
-      <p style="white-space: nowrap;">© 2025 🔬</p>
+      <p>Todos los derechos reservados por Grupo Elite Organizacional SAS.</p>
+      <p>Diplomado ISO/IEC 17025:2017</p>
     </div>
   </div>
 </footer>
