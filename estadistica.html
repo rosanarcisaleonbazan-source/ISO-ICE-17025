@@ -1,123 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Módulo 6: Herramientas Estadísticas | Diplomado ISO 17025</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-
 :root{
-  --verde:#3ED6B5;
-  --verde-light:#E6FBF6;
-  --verde-dark:#1FAF8C;
-
-  --azul:#5B8CFF;
-  --azul-light:#EEF3FF;
-
-  --coral:#FF7A7A;
-  --coral-light:#FFF2F2;
-
-  --ambar:#FFC857;
-  --ambar-light:#FFF9EC;
-
-  --lila:#6C63FF;
-  --morado-pastel-med:#8A86FF;
-
-  --gris:#4A4F5C;
-  --gris-claro:#F7F8FC;
-  --borde:#E6E9F2;
-
-  --blanco:#FFFFFF;
-
-  --font-h:'Syne',sans-serif;
-  --font-b:'DM Sans',sans-serif;
-
-  --radio:16px;
-  --radio-lg:24px;
-
-  --sh:0 6px 24px rgba(0,0,0,.05);
-  --sh-md:0 12px 48px rgba(0,0,0,.08);
+  --verde:#7ECBB5;--verde-light:#D4F0E8;--verde-dark:#4A9E8A;
+  --azul:#93B8E8;--azul-light:#D6E8F8;
+  --coral:#F4A7B0;--coral-light:#FDE8EB;
+  --ambar:#F6C98A;--ambar-light:#FEF1DC;
+  --lila:#C4B0E8;--lila-light:#EDE8F8;
+  --rosa:#F0B8D4;--rosa-light:#FDE8F2;
+  --gris:#3D3F52;--gris-med:#6B6D82;--gris-claro:#F5F6FA;--borde:#DDE0EE;
+  --negro:#000000;
+  --font-h:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;
+  --radio:16px;--radio-lg:24px;
+  --sh:0 4px 20px rgba(100,110,160,.08);--sh-md:0 8px 40px rgba(100,110,160,.12);
 }
-
-body{
-  font-family:var(--font-b);
-  background:#F8FAFF;
-  color:var(--gris);
-  line-height:1.6;
-}
+body{font-family:var(--font-b);background:linear-gradient(160deg,#EEF2FF 0%,#FFF0F8 50%,#EDFAF5 100%);color:var(--gris);line-height:1.6;min-height:100vh}
 
 /* HEADER */
-.header{
-  background:var(--gris);
-  padding:0 40px;
-  position:sticky;
-  top:0;
-  z-index:200;
-  box-shadow:0 2px 20px rgba(0,0,0,.2)
-}
-
-.header-inner{
-  max-width:1200px;
-  margin:0 auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  height:64px
-}
-
-.logo{
-  font-family:var(--font-h);
-  font-size:18px;
-  font-weight:800;
-  color:var(--blanco);
-  letter-spacing:-0.5px
-}
-
-.logo span{color:var(--verde)}
-
-.btn-back{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  color:rgba(255,255,255,.7);
-  font-size:13px;
-  font-weight:500;
-  text-decoration:none;
-  transition:.2s
-}
-
-.btn-back:hover{color:var(--verde)}
-
-.modulo-badge{
-  background:rgba(62,214,181,.15); /* ajustado al nuevo verde */
-  color:var(--verde);
-  padding:5px 14px;
-  border-radius:40px;
-  font-size:12px;
-  font-weight:600;
-  border:1px solid rgba(62,214,181,.3)
-}
-</style>
-/* HEADER */
-.header{background:var(--gris);padding:0 40px;position:sticky;top:0;z-index:200;box-shadow:0 2px 20px rgba(0,0,0,.2)}
+.header{background:linear-gradient(135deg,#C4B0E8 0%,#93B8E8 50%,#7ECBB5 100%);padding:0 40px;position:sticky;top:0;z-index:200;box-shadow:0 2px 20px rgba(150,160,210,.25)}
 .header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
-.logo{font-family:var(--font-h);font-size:18px;font-weight:800;color:var(--blanco);letter-spacing:-0.5px}
-.logo span{color:var(--verde)}
-.btn-back{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.7);font-size:13px;font-weight:500;text-decoration:none;transition:.2s}
-.btn-back:hover{color:var(--verde)}
-.modulo-badge{background:rgba(0,184,150,.15);color:var(--verde);padding:5px 14px;border-radius:40px;font-size:12px;font-weight:600;border:1px solid rgba(0,184,150,.3)}
+.logo{font-family:var(--font-h);font-size:18px;font-weight:800;color:#fff;letter-spacing:-0.5px}
+.logo span{color:#FEF1DC}
+.btn-back{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.85);font-size:13px;font-weight:500;text-decoration:none;transition:.2s}
+.btn-back:hover{color:#FEF1DC}
+.modulo-badge{background:rgba(255,255,255,.3);color:#fff;padding:5px 14px;border-radius:40px;font-size:12px;font-weight:600;border:1px solid rgba(255,255,255,.5)}
 
 /* HERO */
-.hero{background:linear-gradient(135deg,var(--gris) 0%,#1C1F33 100%);padding:60px 40px 0;position:relative;overflow:hidden}
-.hero::before{content:'';position:absolute;right:-100px;top:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(0,184,150,.12) 0%,transparent 70%);pointer-events:none}
+.hero{background:linear-gradient(135deg,#C4B0E8 0%,#93B8E8 40%,#7ECBB5 100%);padding:60px 40px 0;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-100px;top:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,255,.15) 0%,transparent 70%);pointer-events:none}
 .hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end}
-.hero-text h1{font-family:var(--font-h);font-size:42px;font-weight:800;color:var(--blanco);line-height:1.1;margin-bottom:16px}
-.hero-text h1 span{color:var(--verde)}
-.hero-text p{color:rgba(255,255,255,.6);font-size:15px;margin-bottom:28px;max-width:480px}
+.hero-text h1{font-family:var(--font-h);font-size:42px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:16px}
+.hero-text h1 span{color:#FEF1DC}
+.hero-text p{color:rgba(255,255,255,.85);font-size:15px;margin-bottom:28px;max-width:480px}
 .hero-stats{display:flex;gap:24px;margin-bottom:40px}
 .stat{text-align:center}
-.stat .num{font-family:var(--font-h);font-size:28px;font-weight:800;color:var(--verde)}
-.stat .lbl{font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px}
+.stat .num{font-family:var(--font-h);font-size:28px;font-weight:800;color:#FEF1DC}
+.stat .lbl{font-size:11px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.5px}
 .hero-nav{display:flex;flex-direction:column;gap:8px;padding-bottom:32px}
-.nav-item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 16px;cursor:pointer;transition:.2s;text-decoration:none;color:rgba(255,255,255,.8);font-size:14px}
-.nav-item:hover{background:rgba(0,184,150,.1);border-color:rgba(0,184,150,.3);color:var(--verde)}
-.nav-item .dot{width:8px;height:8px;border-radius:50%;background:var(--verde);flex-shrink:0}
-.nav-item .num{font-family:var(--font-h);font-size:13px;font-weight:700;color:var(--verde);width:20px}
+.nav-item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);border-radius:12px;padding:12px 16px;cursor:pointer;transition:.2s;text-decoration:none;color:rgba(255,255,255,.9);font-size:14px}
+.nav-item:hover{background:rgba(255,255,255,.35);border-color:rgba(255,255,255,.6);color:#fff}
+.nav-item .dot{width:8px;height:8px;border-radius:50%;background:#FEF1DC;flex-shrink:0}
+.nav-item .num{font-family:var(--font-h);font-size:13px;font-weight:700;color:#FEF1DC;width:20px}
 
 /* CONTAINER */
 .container{max-width:1200px;margin:0 auto;padding:40px 20px}
@@ -153,36 +82,36 @@ body{
 .input-g{flex:1;min-width:200px}
 .input-g label{display:block;font-size:12px;font-weight:600;color:var(--gris-med);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}
 .input-g input{width:100%;padding:10px 14px;border:1.5px solid var(--borde);border-radius:10px;font-size:14px;font-family:var(--font-b);background:var(--gris-claro);transition:.2s;color:var(--gris)}
-.input-g input:focus{outline:none;border-color:var(--verde);background:var(--blanco);box-shadow:0 0 0 3px rgba(0,184,150,.1)}
+.input-g input:focus{outline:none;border-color:var(--verde);background:var(--blanco);box-shadow:0 0 0 3px rgba(126,203,181,.2)}
 .btn-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
 .btn{padding:10px 22px;border-radius:40px;border:none;font-family:var(--font-b);font-size:13px;font-weight:600;cursor:pointer;transition:.2s}
-.btn-prim{background:var(--verde);color:var(--blanco)}
-.btn-prim:hover{background:var(--verde-dark);transform:translateY(-1px)}
-.btn-sec{background:var(--gris-claro);color:var(--gris-med);border:1px solid var(--borde)}
-.btn-sec:hover{background:var(--borde)}
-.resultado-box{background:var(--gris-claro);border-radius:12px;padding:20px;border-left:4px solid var(--verde);margin-top:14px}
-.resultado-box.alerta{border-left-color:var(--coral)}
-.resultado-box.aviso{border-left-color:var(--ambar)}
-.resultado-box h4{font-family:var(--font-h);font-size:14px;font-weight:700;margin-bottom:10px}
+.btn-prim{background:linear-gradient(135deg,var(--lila),var(--azul));color:#fff}
+.btn-prim:hover{opacity:.9;transform:translateY(-1px)}
+.btn-sec{background:var(--blanco);color:var(--gris-med);border:1.5px solid var(--borde)}
+.btn-sec:hover{background:var(--gris-claro)}
+.resultado-box{background:var(--verde-light);border-radius:12px;padding:20px;border-left:4px solid var(--verde);margin-top:14px}
+.resultado-box.alerta{background:var(--coral-light);border-left-color:var(--coral)}
+.resultado-box.aviso{background:var(--ambar-light);border-left-color:var(--ambar)}
+.resultado-box h4{font-family:var(--font-h);font-size:14px;font-weight:700;margin-bottom:10px;color:var(--gris)}
 .resultado-box p{font-size:13px;color:var(--gris-med);margin:5px 0}
-.resultado-box .big-num{font-family:var(--font-h);font-size:28px;font-weight:800;color:var(--verde)}
-.resultado-box .big-num.malo{color:var(--coral)}
-.resultado-box .big-num.aviso{color:var(--ambar)}
+.resultado-box .big-num{font-family:var(--font-h);font-size:28px;font-weight:800;color:var(--verde-dark)}
+.resultado-box .big-num.malo{color:#C0506A}
+.resultado-box .big-num.aviso{color:#B87A20}
 .resultado-box table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
-.resultado-box table th{background:rgba(0,184,150,.08);padding:8px 12px;text-align:left;font-weight:600;font-size:12px;color:var(--gris-med);border-bottom:1px solid var(--borde)}
+.resultado-box table th{background:rgba(126,203,181,.2);padding:8px 12px;text-align:left;font-weight:600;font-size:12px;color:var(--gris-med);border-bottom:1px solid var(--borde)}
 .resultado-box table td{padding:8px 12px;border-bottom:1px solid var(--borde)}
 .resultado-box table tr:last-child td{border-bottom:none}
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:12px 0}
 .stat-item{background:var(--blanco);border-radius:10px;padding:12px;text-align:center;border:1px solid var(--borde)}
-.stat-item .sv{font-family:var(--font-h);font-size:20px;font-weight:700;color:var(--verde)}
+.stat-item .sv{font-family:var(--font-h);font-size:20px;font-weight:700;color:var(--verde-dark)}
 .stat-item .sl{font-size:11px;color:var(--gris-med)}
 
 /* CANVAS */
 canvas{max-width:100%;border-radius:10px;background:var(--blanco)}
 
 /* DIAGRAMA DE DECISIÓN */
-.decision-tree{background:var(--gris);border-radius:var(--radio-lg);padding:28px;color:var(--blanco)}
-.decision-tree h3{font-family:var(--font-h);font-size:18px;font-weight:700;margin-bottom:20px;color:var(--verde)}
+.decision-tree{background:linear-gradient(135deg,var(--lila-light),var(--azul-light));border-radius:var(--radio-lg);padding:28px;border:1.5px solid var(--lila)}
+.decision-tree h3{font-family:var(--font-h);font-size:18px;font-weight:700;margin-bottom:20px;color:var(--gris)}
 .dt-container{position:relative;overflow-x:auto}
 .dt-container svg{min-width:700px}
 
@@ -190,30 +119,30 @@ canvas{max-width:100%;border-radius:10px;background:var(--blanco)}
 .control-chart-wrap{background:var(--blanco);border-radius:12px;padding:20px;margin-top:16px}
 
 /* BADGE REQUISITO */
-.req-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(26,110,255,.08);color:var(--azul);font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid rgba(26,110,255,.15)}
+.req-tag{display:inline-flex;align-items:center;gap:4px;background:var(--azul-light);color:#4A7AB8;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid var(--azul)}
 
 /* CASO REAL */
-.caso-real{background:linear-gradient(135deg,var(--verde-light),var(--azul-light));border-radius:14px;padding:18px 20px;margin-bottom:16px;border:1px solid rgba(0,184,150,.2)}
-.caso-real .cr-label{font-size:11px;font-weight:700;color:var(--verde-dark);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.caso-real{background:linear-gradient(135deg,var(--rosa-light),var(--ambar-light));border-radius:14px;padding:18px 20px;margin-bottom:16px;border:1px solid var(--rosa)}
+.caso-real .cr-label{font-size:11px;font-weight:700;color:#A05070;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
 .caso-real p{font-size:13px;color:var(--gris-med)}
 
 /* INTERPRETACIÓN SEMÁFORO */
 .semaforo{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
 .sem-item{flex:1;min-width:120px;border-radius:10px;padding:10px 14px;font-size:12px;font-weight:600;text-align:center}
 .sem-verde{background:var(--verde-light);color:var(--verde-dark)}
-.sem-ambar{background:var(--ambar-light);color:#B8740A}
-.sem-coral{background:var(--coral-light);color:var(--coral)}
+.sem-ambar{background:var(--ambar-light);color:#B87A20}
+.sem-coral{background:var(--coral-light);color:#C0506A}
 
 /* TABS */
 .tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
 .tab{padding:8px 18px;border-radius:40px;border:1.5px solid var(--borde);font-size:13px;font-weight:600;cursor:pointer;transition:.2s;background:var(--blanco);color:var(--gris-med)}
-.tab.active{background:var(--gris);color:var(--blanco);border-color:var(--gris)}
+.tab.active{background:linear-gradient(135deg,var(--lila),var(--azul));color:#fff;border-color:transparent}
 .tab-content{display:none}
 .tab-content.active{display:block}
 
 /* FOOTER */
-footer{background:var(--gris);color:rgba(255,255,255,.5);text-align:center;padding:30px;font-size:13px}
-footer strong{color:var(--verde)}
+footer{background:linear-gradient(135deg,var(--lila),var(--azul),var(--verde));color:#fff;text-align:center;padding:30px;font-size:13px}
+footer strong{color:#FEF1DC}
 
 @media(max-width:768px){
   .hero{padding:40px 20px 0}
@@ -275,76 +204,124 @@ footer strong{color:var(--verde)}
   </div>
   <div class="decision-tree">
     <h3>Flujo de decisión estadística</h3>
-    <div class="dt-container">
-      <svg viewBox="0 0 900 360" width="100%" style="font-family:'DM Sans',sans-serif">
-        <!-- INICIO -->
-        <rect x="370" y="10" width="160" height="40" rx="20" fill="#00B896"/>
-        <text x="450" y="35" text-anchor="middle" fill="white" font-size="13" font-weight="700">Tengo datos</text>
-        <line x1="450" y1="50" x2="450" y2="80" stroke="#00B896" stroke-width="2" marker-end="url(#arrowg)"/>
-        <!-- ¿Normal? -->
-        <polygon points="450,80 560,120 450,160 340,120" fill="#1C1F33" stroke="#444" stroke-width="1.5"/>
-        <text x="450" y="115" text-anchor="middle" fill="white" font-size="12">¿Datos</text>
-        <text x="450" y="132" text-anchor="middle" fill="white" font-size="12">normales?</text>
-        <!-- SÍ -->
-        <text x="540" y="175" text-anchor="middle" fill="#00B896" font-size="11" font-weight="600">SÍ (p&gt;0.05)</text>
-        <line x1="560" y1="160" x2="560" y2="200" stroke="#00B896" stroke-width="1.5" marker-end="url(#arrowg)"/>
-        <!-- NO -->
-        <text x="355" y="175" text-anchor="middle" fill="#FF5C5C" font-size="11" font-weight="600">NO (p≤0.05)</text>
-        <line x1="340" y1="160" x2="340" y2="200" stroke="#FF5C5C" stroke-width="1.5" marker-end="url(#arrowr)"/>
+    <!-- viewBox: 860 ancho x 580 alto. Todo dentro de x=10..850, y=10..560 -->
+    <svg viewBox="0 0 860 580" width="100%" style="font-family:'DM Sans',sans-serif;display:block">
+      <defs>
+        <marker id="arrowg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#7ECBB5" stroke-width="1.5"/>
+        </marker>
+        <marker id="arrowr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#F4A7B0" stroke-width="1.5"/>
+        </marker>
+        <marker id="arrowa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#93B8E8" stroke-width="1.5"/>
+        </marker>
+        <marker id="arrowam" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#F6C98A" stroke-width="1.5"/>
+        </marker>
+      </defs>
 
-        <!-- PARAMÉTRICO ¿Grupos? -->
-        <polygon points="560,200 660,230 560,260 460,230" fill="#1A3A5C" stroke="#1A6EFF" stroke-width="1.5"/>
-        <text x="560" y="225" text-anchor="middle" fill="white" font-size="11">¿Cuántos</text>
-        <text x="560" y="242" text-anchor="middle" fill="white" font-size="11">grupos?</text>
-        <!-- 2 grupos -->
-        <text x="460" y="295" text-anchor="middle" fill="#A0CFFF" font-size="10">2 grupos</text>
-        <line x1="460" y1="260" x2="460" y2="300" stroke="#1A6EFF" stroke-width="1.5" marker-end="url(#arrowa)"/>
-        <!-- 3+ grupos -->
-        <text x="660" y="295" text-anchor="middle" fill="#A0CFFF" font-size="10">3+ grupos</text>
-        <line x1="660" y1="260" x2="660" y2="300" stroke="#1A6EFF" stroke-width="1.5" marker-end="url(#arrowa)"/>
+      <!-- ── FILA 1: INICIO (centro x=430) ── -->
+      <rect x="330" y="20" width="200" height="44" rx="22" fill="#7ECBB5"/>
+      <text x="430" y="47" text-anchor="middle" fill="white" font-size="14" font-weight="700">Tengo datos de medición</text>
 
-        <!-- Prueba t -->
-        <rect x="370" y="300" width="180" height="50" rx="10" fill="#1A6EFF" opacity=".9"/>
-        <text x="460" y="320" text-anchor="middle" fill="white" font-size="12" font-weight="600">Prueba t</text>
-        <text x="460" y="338" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="10">Independiente o Pareada</text>
-        <!-- ANOVA -->
-        <rect x="570" y="300" width="180" height="50" rx="10" fill="#1A6EFF" opacity=".9"/>
-        <text x="660" y="320" text-anchor="middle" fill="white" font-size="12" font-weight="600">ANOVA</text>
-        <text x="660" y="338" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="10">1 o 2 factores</text>
+      <!-- flecha hacia rombo -->
+      <line x1="430" y1="64" x2="430" y2="100" stroke="#7ECBB5" stroke-width="2" marker-end="url(#arrowg)"/>
 
-        <!-- NO PARAMÉTRICO ¿Grupos? -->
-        <polygon points="340,200 230,230 340,260 450,230" fill="#3A1C1C" stroke="#FF5C5C" stroke-width="1.5"/>
-        <text x="340" y="225" text-anchor="middle" fill="white" font-size="11">¿Cuántos</text>
-        <text x="340" y="242" text-anchor="middle" fill="white" font-size="11">grupos?</text>
-        <!-- 2 grupos NP -->
-        <text x="230" y="295" text-anchor="middle" fill="#FFA0A0" font-size="10">2 grupos</text>
-        <line x1="230" y1="260" x2="230" y2="300" stroke="#FF5C5C" stroke-width="1.5" marker-end="url(#arrowr)"/>
-        <!-- 3+ NP -->
-        <text x="450" y="295" text-anchor="middle" fill="#FFA0A0" font-size="10">3+ grupos</text>
-        <line x1="440" y1="260" x2="440" y2="300" stroke="#FF5C5C" stroke-width="1.5" marker-end="url(#arrowr)"/>
-        <!-- Mann-W -->
-        <rect x="140" y="300" width="180" height="50" rx="10" fill="#7A1C1C"/>
-        <text x="230" y="320" text-anchor="middle" fill="white" font-size="12" font-weight="600">Mann-Whitney</text>
-        <text x="230" y="338" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="10">No paramétrico</text>
-        <!-- Kruskal -->
-        <rect x="350" y="300" width="180" height="50" rx="10" fill="#7A1C1C" opacity=".9"/>
-        <text x="440" y="320" text-anchor="middle" fill="white" font-size="12" font-weight="600">Kruskal-Wallis</text>
-        <text x="440" y="338" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="10">No paramétrico</text>
+      <!-- ── FILA 2: ROMBO normalidad (centro x=430, centro y=140) ── -->
+      <!-- rombo: top(430,100) right(550,140) bottom(430,180) left(310,140) -->
+      <polygon points="430,100 550,140 430,180 310,140" fill="#EDE8F8" stroke="#C4B0E8" stroke-width="1.5"/>
+      <text x="430" y="135" text-anchor="middle" fill="#3D3F52" font-size="12" font-weight="600">¿Los datos son</text>
+      <text x="430" y="153" text-anchor="middle" fill="#3D3F52" font-size="12" font-weight="600">normales? (Shapiro-Wilk)</text>
 
-        <defs>
-          <marker id="arrowg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-            <path d="M2 1L8 5L2 9" fill="none" stroke="#00B896" stroke-width="1.5"/>
-          </marker>
-          <marker id="arrowr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-            <path d="M2 1L8 5L2 9" fill="none" stroke="#FF5C5C" stroke-width="1.5"/>
-          </marker>
-          <marker id="arrowa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-            <path d="M2 1L8 5L2 9" fill="none" stroke="#1A6EFF" stroke-width="1.5"/>
-          </marker>
-        </defs>
-      </svg>
-    </div>
-    <p style="font-size:12px;color:rgba(255,255,255,.4);margin-top:12px">* Siempre verificar normalidad (Shapiro-Wilk) antes de elegir prueba paramétrica o no paramétrica</p>
+      <!-- flecha SÍ → derecha hacia paramétrico -->
+      <line x1="550" y1="140" x2="620" y2="140" stroke="#7ECBB5" stroke-width="1.8" marker-end="url(#arrowg)"/>
+      <text x="578" y="133" text-anchor="middle" fill="#4A9E8A" font-size="11" font-weight="700">SÍ p&gt;0.05</text>
+
+      <!-- flecha NO → izquierda hacia no paramétrico -->
+      <line x1="310" y1="140" x2="240" y2="140" stroke="#F4A7B0" stroke-width="1.8" marker-end="url(#arrowr)"/>
+      <text x="272" y="133" text-anchor="middle" fill="#C0506A" font-size="11" font-weight="700">NO p≤0.05</text>
+
+      <!-- ── COLUMNA DERECHA: PARAMÉTRICO ── -->
+      <!-- Etiqueta columna -->
+      <rect x="620" y="116" width="220" height="48" rx="10" fill="#D6E8F8" stroke="#93B8E8" stroke-width="1"/>
+      <text x="730" y="135" text-anchor="middle" fill="#3D3F52" font-size="12" font-weight="700">Pruebas PARAMÉTRICAS</text>
+      <text x="730" y="153" text-anchor="middle" fill="#4A7AB8" font-size="11">t, ANOVA, correlación</text>
+
+      <!-- flecha hacia rombo cuántos grupos -->
+      <line x1="730" y1="164" x2="730" y2="210" stroke="#93B8E8" stroke-width="1.8" marker-end="url(#arrowa)"/>
+
+      <!-- Rombo ¿cuántos grupos? derecha (centro 730, 240) -->
+      <polygon points="730,210 820,240 730,270 640,240" fill="#D6E8F8" stroke="#93B8E8" stroke-width="1.5"/>
+      <text x="730" y="235" text-anchor="middle" fill="#3D3F52" font-size="11" font-weight="600">¿Cuántos</text>
+      <text x="730" y="251" text-anchor="middle" fill="#3D3F52" font-size="11" font-weight="600">grupos?</text>
+
+      <!-- flecha 2 grupos → abajo-izq -->
+      <line x1="670" y1="261" x2="630" y2="310" stroke="#93B8E8" stroke-width="1.5" marker-end="url(#arrowa)"/>
+      <text x="635" y="295" text-anchor="middle" fill="#4A7AB8" font-size="10">2 grupos</text>
+
+      <!-- flecha 3+ grupos → abajo-der -->
+      <line x1="790" y1="261" x2="820" y2="310" stroke="#93B8E8" stroke-width="1.5" marker-end="url(#arrowa)"/>
+      <text x="825" y="295" text-anchor="middle" fill="#4A7AB8" font-size="10">3+ grupos</text>
+
+      <!-- Caja Prueba t (derecha, fila 4) -->
+      <rect x="530" y="310" width="160" height="52" rx="10" fill="#93B8E8"/>
+      <text x="610" y="332" text-anchor="middle" fill="white" font-size="13" font-weight="700">Prueba t</text>
+      <text x="610" y="350" text-anchor="middle" fill="rgba(255,255,255,.9)" font-size="10">Independiente o Pareada</text>
+
+      <!-- Caja ANOVA (derecha, fila 4) -->
+      <rect x="720" y="310" width="130" height="52" rx="10" fill="#C4B0E8"/>
+      <text x="785" y="332" text-anchor="middle" fill="white" font-size="13" font-weight="700">ANOVA</text>
+      <text x="785" y="350" text-anchor="middle" fill="rgba(255,255,255,.9)" font-size="10">1 o 2 factores</text>
+
+      <!-- ── COLUMNA IZQUIERDA: NO PARAMÉTRICO ── -->
+      <rect x="20" y="116" width="220" height="48" rx="10" fill="#FDE8EB" stroke="#F4A7B0" stroke-width="1"/>
+      <text x="130" y="135" text-anchor="middle" fill="#3D3F52" font-size="12" font-weight="700">Pruebas NO PARAMÉTRICAS</text>
+      <text x="130" y="153" text-anchor="middle" fill="#C0506A" font-size="11">Mann-Whitney, Kruskal-Wallis</text>
+
+      <!-- flecha hacia rombo grupos izq -->
+      <line x1="130" y1="164" x2="130" y2="210" stroke="#F4A7B0" stroke-width="1.8" marker-end="url(#arrowr)"/>
+
+      <!-- Rombo ¿cuántos grupos? izquierda (centro 130, 240) -->
+      <polygon points="130,210 220,240 130,270 40,240" fill="#FDE8EB" stroke="#F4A7B0" stroke-width="1.5"/>
+      <text x="130" y="235" text-anchor="middle" fill="#3D3F52" font-size="11" font-weight="600">¿Cuántos</text>
+      <text x="130" y="251" text-anchor="middle" fill="#3D3F52" font-size="11" font-weight="600">grupos?</text>
+
+      <!-- flecha 2 grupos izq → abajo-izq -->
+      <line x1="70" y1="261" x2="50" y2="310" stroke="#F4A7B0" stroke-width="1.5" marker-end="url(#arrowr)"/>
+      <text x="42" y="295" text-anchor="middle" fill="#C0506A" font-size="10">2 grupos</text>
+
+      <!-- flecha 3+ izq → abajo-der -->
+      <line x1="195" y1="261" x2="220" y2="310" stroke="#F6C98A" stroke-width="1.5" marker-end="url(#arrowam)"/>
+      <text x="228" y="295" text-anchor="middle" fill="#B87A20" font-size="10">3+ grupos</text>
+
+      <!-- Caja Mann-Whitney -->
+      <rect x="10" y="310" width="160" height="52" rx="10" fill="#F4A7B0"/>
+      <text x="90" y="332" text-anchor="middle" fill="white" font-size="13" font-weight="700">Mann-Whitney</text>
+      <text x="90" y="350" text-anchor="middle" fill="rgba(255,255,255,.9)" font-size="10">2 muestras independientes</text>
+
+      <!-- Caja Kruskal-Wallis -->
+      <rect x="185" y="310" width="150" height="52" rx="10" fill="#F6C98A"/>
+      <text x="260" y="332" text-anchor="middle" fill="white" font-size="13" font-weight="700">Kruskal-Wallis</text>
+      <text x="260" y="350" text-anchor="middle" fill="rgba(255,255,255,.9)" font-size="10">3+ grupos</text>
+
+      <!-- ── FILA 5: NOTA FINAL ── -->
+      <rect x="10" y="390" width="840" height="38" rx="10" fill="rgba(196,176,232,.15)" stroke="#C4B0E8" stroke-width="1"/>
+      <text x="430" y="414" text-anchor="middle" fill="#6B6D82" font-size="12">💡 Siempre verificar normalidad primero con Shapiro-Wilk antes de elegir la prueba</text>
+
+      <!-- ── LEYENDA ── -->
+      <rect x="10" y="448" width="16" height="16" rx="4" fill="#7ECBB5"/>
+      <text x="32" y="461" fill="#6B6D82" font-size="11">Inicio / proceso</text>
+      <rect x="150" y="448" width="16" height="16" rx="4" fill="#EDE8F8" stroke="#C4B0E8"/>
+      <text x="172" y="461" fill="#6B6D82" font-size="11">Decisión (rombo)</text>
+      <rect x="310" y="448" width="16" height="16" rx="4" fill="#93B8E8"/>
+      <text x="332" y="461" fill="#6B6D82" font-size="11">Pruebas paramétricas</text>
+      <rect x="500" y="448" width="16" height="16" rx="4" fill="#F4A7B0"/>
+      <text x="522" y="461" fill="#6B6D82" font-size="11">Pruebas no paramétricas</text>
+      <rect x="700" y="448" width="16" height="16" rx="4" fill="#F6C98A"/>
+      <text x="722" y="461" fill="#6B6D82" font-size="11">3 o más grupos</text>
+    </svg>
+    <p style="font-size:12px;color:var(--gris-med);margin-top:8px">* Usar p-valor de Shapiro-Wilk: si p &gt; 0.05 → datos normales → prueba paramétrica</p>
   </div>
 </div>
 
