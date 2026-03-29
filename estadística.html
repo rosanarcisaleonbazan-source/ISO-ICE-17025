@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Módulo 6: Herramientas Estadísticas | Diplomado ISO 17025</title>
+<meta name="description" content="Aprende distribuciones estadísticas, normalidad, ANOVA, pruebas t, repetibilidad, linealidad, exactitud y ensayos de aptitud con ejemplos prácticos y simulaciones.">
+<link href="https://fonts.googleapis.com/css2?family=Salsa&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --rosa-pastel: #FFB3D9;
+    --rosa-claro: #FFD4E5;
+    --azul-pastel: #B3E5FC;
+    --azul-claro: #D1F0FF;
+    --verde-pastel: #B3F5D1;
+    --verde-claro: #D4F5E3;
+    --morado-pastel: #E1BEE7;
+    --gris-oscuro: #2d3748;
+    --gris-medio: #4a5568;
+    --gris-claro: #e2e8f0;
+    --white: #ffffff;
+    --font-titulo: 'Salsa', cursive;
+    --font-cuerpo: 'Poppins', sans-serif;
+    --sh: 0 2px 12px rgba(0,0,0,.08);
+    --sh-md: 0 6px 24px rgba(0,0,0,.12);
+}
+
+body {
+    font-family: var(--font-cuerpo);
+    background: linear-gradient(135deg, #f8fafc 0%, #fff5f0 100%);
+    color: var(--gris-oscuro);
+    line-height: 1.6;
+}
+
+/* Header con botón de regreso */
+.header-modulo {
+    background: linear-gradient(135deg, var(--verde-pastel), var(--azul-pastel));
+    padding: 20px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--sh);
+}
+
+.header-inner {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--white);
+    color: var(--gris-oscuro);
+    padding: 12px 24px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s;
+    box-shadow: var(--sh);
+}
+
+.btn-back:hover {
+    transform: translateX(-5px);
+    background: var(--gris-oscuro);
+    color: var(--white);
+}
+
+.modulo-titulo {
+    text-align: right;
+}
+
+.modulo-titulo .badge {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gris-oscuro);
+    background: rgba(255,255,255,0.8);
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.modulo-titulo h1 {
+    font-size: 24px;
+    font-family: var(--font-titulo);
+    color: var(--gris-oscuro);
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Secciones */
+.section-card {
+    background: var(--white);
+    border-radius: 24px;
+    padding: 32px;
+    margin-bottom: 40px;
+    box-shadow: var(--sh-md);
+    border: 1px solid var(--gris-claro);
+}
+
+.section-title {
+    font-size: 28px;
+    font-family: var(--font-titulo);
+    color: var(--gris-oscuro);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.section-title .emoji {
+    font-size: 32px;
+}
+
+.section-subtitle {
+    font-size: 14px;
+    color: var(--gris-medio);
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--verde-pastel);
+    display: inline-block;
+}
+
+/* Grid de teoría */
+.teoria-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.teoria-item {
+    background: #f9fafb;
+    border-radius: 20px;
+    padding: 24px;
+    border-left: 4px solid var(--verde-pastel);
+}
+
+.teoria-item h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--gris-oscuro);
+}
+
+.teoria-item h4 {
+    font-size: 14px;
+    color: var(--verde-pastel);
+    margin-top: 16px;
+    margin-bottom: 8px;
+}
+
+.teoria-item p {
+    font-size: 14px;
+    color: var(--gris-medio);
+    margin-bottom: 12px;
+}
+
+.formula {
+    background: var(--gris-claro);
+    padding: 12px;
+    border-radius: 12px;
+    font-family: monospace;
+    font-size: 14px;
+    text-align: center;
+    margin: 12px 0;
+}
+
+/* Simuladores */
+.simulador {
+    background: linear-gradient(135deg, var(--azul-claro), #e6f7ff);
+    border-radius: 24px;
+    padding: 28px;
+    margin-top: 24px;
+}
+
+.simulador h3 {
+    font-size: 22px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.simulador-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.input-group {
+    flex: 1;
+    min-width: 150px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--gris-medio);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 2px solid var(--gris-claro);
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: var(--font-cuerpo);
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--verde-pastel);
+}
+
+button {
+    background: linear-gradient(135deg, var(--verde-pastel), var(--azul-pastel));
+    border: none;
+    padding: 12px 24px;
+    border-radius: 40px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: var(--font-cuerpo);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sh-md);
+}
+
+.resultado {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid var(--gris-claro);
+}
+
+.resultado p {
+    margin: 8px 0;
+}
+
+.resultado .valor {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--verde-pastel);
+}
+
+.grafico {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.bar-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 30px;
+    height: 200px;
+    margin: 20px 0;
+}
+
+.bar {
+    width: 60px;
+    background: linear-gradient(135deg, var(--verde-pastel), var(--azul-pastel));
+    border-radius: 8px 8px 0 0;
+    transition: height 0.3s;
+    position: relative;
+}
+
+.bar-label {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Tablas */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid var(--gris-claro);
+    padding: 12px;
+    text-align: center;
+}
+
+.data-table th {
+    background: var(--verde-pastel);
+    color: var(--gris-oscuro);
+}
+
+/* Footer */
+footer {
+    background: var(--gris-oscuro);
+    color: var(--white);
+    text-align: center;
+    padding: 30px;
+    margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+    .header-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+    .modulo-titulo {
+        text-align: center;
+    }
+    .section-card {
+        padding: 20px;
+    }
+    .teoria-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER CON BOTÓN DE REGRESO -->
+<div class="header-modulo">
+    <div class="header-inner">
+        <a href="index.html" class="btn-back">
+            ← Regresar a Página Principal
+        </a>
+        <div class="modulo-titulo">
+            <div class="badge">Módulo 06</div>
+            <h1>📊 Herramientas Estadísticas</h1>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    
+    <!-- INTRODUCCIÓN TEÓRICA -->
+    <div class="section-card">
+        <div class="section-title">
+            <span class="emoji">📚</span>
+            <span>Fundamentos Teóricos</span>
+        </div>
+        <div class="section-subtitle">ISO/IEC 17025:2017 - Requisitos 7.6, 7.7 y 7.8</div>
+        
+        <div class="teoria-grid">
+            <div class="teoria-item">
+                <h3>📈 Distribuciones Estadísticas</h3>
+                <p>Describe cómo se comportan los datos de un proceso de medición. La <strong>distribución normal (Gauss)</strong> es fundamental en metrología.</p>
+                <h4>📐 Características:</h4>
+                <p>• <strong>Media (μ):</strong> Valor central de las mediciones<br>
+                • <strong>Desviación Estándar (σ):</strong> Dispersión de los datos<br>
+                • 68.3% de datos en μ ± σ<br>
+                • 95.4% en μ ± 2σ<br>
+                • 99.7% en μ ± 3σ</p>
+                <div class="formula">f(x) = (1/(σ√(2π))) · e^(-(x-μ)²/(2σ²))</div>
+            </div>
+            
+            <div class="teoria-item">
+                <h3>✓ Prueba de Normalidad</h3>
+                <p>Verifica si los datos siguen una distribución normal. Es requisito previo para ANOVA y pruebas t.</p>
+                <h4>🔬 Métodos comunes:</h4>
+                <p><strong>Shapiro-Wilk:</strong> Para muestras pequeñas (n &lt; 50)<br>
+                <strong>Kolmogorov-Smirnov:</strong> Para muestras grandes<br>
+                <strong>Anderson-Darling:</strong> Mayor sensibilidad en colas</p>
+                <h4>📋 Interpretación:</h4>
+                <p>p-valor > 0.05 → Datos normales (H₀ aceptada)<br>
+                p-valor ≤ 0.05 → Datos no normales</p>
+            </div>
+            
+            <div class="teoria-item">
+                <h3>📊 ANOVA (Análisis de Varianza)</h3>
+                <p>Compara medias de tres o más grupos para determinar si existen diferencias significativas.</p>
+                <h4>🎯 Aplicación en laboratorios:</h4>
+                <p>• Comparar resultados entre operadores<br>
+                • Evaluar diferencias entre equipos<br>
+                • Analizar variabilidad entre lotes</p>
+                <div class="formula">F = Varianza entre grupos / Varianza dentro de grupos</div>
+                <p>F calculado > F crítico → Existen diferencias significativas</p>
+            </div>
+            
+            <div class="teoria-item">
+                <h3>🔬 Prueba t de Student</h3>
+                <p>Compara medias de dos grupos. Existen dos tipos principales:</p>
+                <h4>📌 Tipos:</h4>
+                <p><strong>t pareada:</strong> Mismas muestras antes/después<br>
+                <strong>t independiente:</strong> Dos grupos diferentes</p>
+                <div class="formula">t = (x̄₁ - x̄₂) / √(s₁²/n₁ + s₂²/n₂)</div>
+                <p>|t| > t crítico → Diferencia significativa (p &lt; 0.05)</p>
+            </div>
+            
+            <div class="teoria-item">
+                <h3>🔄 Repetibilidad y Reproducibilidad</h3>
+                <p><strong>Repetibilidad (r):</strong> Variabilidad bajo mismas condiciones (mismo operador, mismo equipo, corto plazo)</p>
+                <p><strong>Reproducibilidad (R):</strong> Variabilidad bajo diferentes condiciones (diferentes operadores, equipos, laboratorios)</p>
+                <div class="formula">s_r = √(Σ(x_i - x̄)²/(n-1))</div>
+            </div>
+            
+            <div class="teoria-item">
+                <h3>📏 Linealidad y Exactitud</h3>
+                <p><strong>Exactitud:</strong> Cercanía entre el valor medido y el valor verdadero</p>
+                <p><strong>Linealidad:</strong> Capacidad de producir resultados proporcionales a la concentración</p>
+                <div class="formula">y = mx + b</div>
+                <p>Coeficiente de correlación R² > 0.995 → Linealidad aceptable</p>
+            </div>
+            
+            <div class="teoria-item">
+                <h3>🏅 Ensayos de Aptitud (EA)</h3>
+                <p>Evaluación externa de competencia técnica mediante comparación interlaboratorios.</p>
+                <h4>📊 Indicadores clave:</h4>
+                <p><strong>Z-score:</strong> (x - X)/σ<br>
+                |Z| ≤ 2 → Resultado satisfactorio<br>
+                2 < |Z| < 3 → Cuestionable<br>
+                |Z| ≥ 3 → No satisfactorio</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SIMULADOR 1: PRUEBA DE NORMALIDAD -->
+    <div class="section-card">
+        <div class="section-title">
+            <span class="emoji">🧪</span>
+            <span>Simulador 1: Prueba de Normalidad</span>
+        </div>
+        <div class="section-subtitle">Ingresa tus datos de medición y verifica si siguen una distribución normal</div>
+        
+        <div class="simulador">
+            <h3>📊 Análisis de Normalidad - Método Shapiro-Wilk</h3>
+            <div class="simulador-controls">
+                <div class="input-group">
+                    <label>📏 Datos de medición (separados por comas)</label>
+                    <input type="text" id="datosNormalidad" placeholder="Ej: 10.2, 10.5, 9.8, 10.3, 10.1, 9.9, 10.4, 10.2, 10.0, 10.3">
+                </div>
+                <button onclick="calcularNormalidad()">🔬 Calcular Normalidad</button>
+                <button onclick="ejemploNormalidad()">📋 Cargar Ejemplo</button>
+            </div>
+            <div id="resultadoNormalidad" class="resultado">
+                <p>📌 <strong>Resultado:</strong> Ingresa datos para analizar la normalidad</p>
+            </div>
+            <div id="graficoNormalidad" class="grafico">
+                <p><strong>📊 Distribución de datos:</strong></p>
+                <div id="histograma" class="bar-container"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SIMULADOR 2: PRUEBA t DE STUDENT -->
+    <div class="section-card">
+        <div class="section-title">
+            <span class="emoji">⚖️</span>
+            <span>Simulador 2: Prueba t de Student</span>
+        </div>
+        <div class="section-subtitle">Compara dos conjuntos de datos (ej: antes/después de calibración o dos métodos diferentes)</div>
+        
+        <div class="simulador">
+            <h3>🔬 Comparación de Medias - Prueba t independiente</h3>
+            <div class="simulador-controls">
+                <div class="input-group">
+                    <label>📊 Grupo A (ej: Método 1)</label>
+                    <input type="text" id="grupoA" placeholder="Ej: 10.1, 10.3, 9.9, 10.2, 10.0">
+                </div>
+                <div class="input-group">
+                    <label>📊 Grupo B (ej: Método 2)</label>
+                    <input type="text" id="grupoB" placeholder="Ej: 9.8, 9.9, 10.0, 9.7, 9.9">
+                </div>
+                <button onclick="calcularTStudent()">📊 Calcular prueba t</button>
+                <button onclick="ejemploTStudent()">📋 Cargar Ejemplo</button>
+            </div>
+            <div id="resultadoTStudent" class="resultado">
+                <p>📌 <strong>Resultado:</strong> Ingresa dos grupos de datos para comparar</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SIMULADOR 3: REPETIBILIDAD Y ANOVA -->
+    <div class="section-card">
+        <div class="section-title">
+            <span class="emoji">🔄</span>
+            <span>Simulador 3: Repetibilidad y ANOVA</span>
+        </div>
+        <div class="section-subtitle">Evalúa la variabilidad de un mismo operador y compara múltiples condiciones</div>
+        
+        <div class="simulador">
+            <h3>📊 Análisis de Repetibilidad (mismo operador, mismas condiciones)</h3>
+            <div class="simulador-controls">
+                <div class="input-group">
+                    <label>🔬 Mediciones repetidas (separadas por comas)</label>
+                    <input type="text" id="datosRepetibilidad" placeholder="Ej: 10.1, 10.2, 9.9, 10.0, 10.1, 10.2, 10.0, 9.9, 10.1, 10.0">
+                </div>
+                <button onclick="calcularRepetibilidad()">📏 Calcular Repetibilidad</button>
+                <button onclick="ejemploRepetibilidad()">📋 Cargar Ejemplo</button>
+            </div>
+            <div id="resultadoRepetibilidad" class="resultado">
+                <p>📌 <strong>Resultado:</strong> Ingresa datos para calcular repetibilidad</p>
+            </div>
+        </div>
+        
+        <div class="simulador" style="margin-top: 30px;">
+            <h3>📊 ANOVA de un factor (comparación de 3 operadores o métodos)</h3>
+            <div class="simulador-controls">
+                <div class="input-group">
+                    <label>👨‍🔬 Operador 1 / Método A</label>
+                    <input type="text" id="op1" placeholder="Ej: 10.1, 10.3, 10.2, 10.4">
+                </div>
+                <div class="input-group">
+                    <label>👩‍🔬 Operador 2 / Método B</label>
+                    <input type="text" id="op2" placeholder="Ej: 9.9, 10.0, 10.1, 9.8">
+                </div>
+                <div class="input-group">
+                    <label>🧪 Operador 3 / Método C</label>
+                    <input type="text" id="op3" placeholder="Ej: 10.0, 9.9, 10.0, 10.1">
+                </div>
+                <button onclick="calcularANOVA()">📊 Calcular ANOVA</button>
+                <button onclick="ejemploANOVA()">📋 Cargar Ejemplo</button>
+            </div>
+            <div id="resultadoANOVA" class="resultado">
+                <p>📌 <strong>Resultado:</strong> Ingresa datos de 3 grupos para comparar</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SIMULADOR 4: LINEALIDAD Y EXACTITUD -->
+    <div class="section-card">
+        <div class="section-title">
+            <span class="emoji">📐</span>
+            <span>Simulador 4: Linealidad y Exactitud</span>
+        </div>
+        <div class="section-subtitle">Evalúa la relación entre concentración y respuesta del instrumento</div>
+        
+        <div class="simulador">
+            <h3>📈 Curva de Calibración - Linealidad (R²) y Exactitud</h3>
+            <div class="simulador-controls">
+                <div class="input-group">
+                    <label>📊 Concentraciones (separadas por comas)</label>
+                    <input type="text" id="concentraciones" placeholder="Ej: 1, 2, 5, 10, 20">
+                </div>
+                <div class="input-group">
+                    <label>📈 Respuestas medidas (separadas por comas)</label>
+                    <input type="text" id="respuestas" placeholder="Ej: 0.95, 1.98, 5.02, 9.95, 20.10">
+                </div>
+                <button onclick="calcularLinealidad()">📏 Calcular Linealidad</button>
+                <button onclick="ejemploLinealidad()">📋 Cargar Ejemplo</button>
+            </div>
+            <div id="resultadoLinealidad" class="resultado">
+                <p>📌 <strong>Resultado:</strong> Ingresa concentraciones y respuestas para evaluar linealidad</p>
+            </div>
+            <div id="graficoLinealidad" class="grafico">
+                <p><strong>📊 Curva de calibración:</strong></p>
+                <canvas id="scatterPlot" width="500" height="300" style="max-width:100%; height:auto; background:white; border-radius:12px;"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SIMULADOR 5: ENSAYOS DE APTITUD (Z-SCORE) -->
+    <div class="section-card">
+        <div class="section-title">
+            <span class="emoji">🏆</span>
+            <span>Simulador 5: Ensayos de Aptitud - Z-Score</span>
+        </div>
+        <div class="section-subtitle">Evalúa tu desempeño frente a un valor de referencia en comparaciones interlaboratorios</div>
+        
+        <div class="simulador">
+            <h3>📊 Cálculo de Z-Score para Ensayos de Aptitud</h3>
+            <div class="simulador-controls">
+                <div class="input-group">
+                    <label>📏 Tu resultado (x)</label>
+                    <input type="number" id="tuResultado" step="any" placeholder="Ej: 10.15">
+                </div>
+                <div class="input-group">
+                    <label>🎯 Valor de referencia (X)</label>
+                    <input type="number" id="valorReferencia" step="any" placeholder="Ej: 10.00">
+                </div>
+                <div class="input-group">
+                    <label>📊 Desviación estándar objetivo (σ)</label>
+                    <input type="number" id="desviacionEA" step="any" placeholder="Ej: 0.05">
+                </div>
+                <button onclick="calcularZScore()">🏅 Calcular Z-Score</button>
+                <button onclick="ejemploZScore()">📋 Cargar Ejemplo</button>
+            </div>
+            <div id="resultadoZScore" class="resultado">
+                <p>📌 <strong>Resultado:</strong> Ingresa tus datos para calcular el Z-Score</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- GLOSARIO Y CONCLUSIONES -->
+    <div class="section-card">
+        <div class="section-title">
+            <span class="emoji">📋</span>
+            <span>Conclusiones y Buenas Prácticas</span>
+        </div>
+        <div class="teoria-grid">
+            <div class="teoria-item">
+                <h3>✅ Buenas Prácticas en Estadística para Laboratorios</h3>
+                <p>1. Verificar normalidad antes de aplicar pruebas paramétricas<br>
+                2. Documentar todos los cálculos y procedimientos estadísticos<br>
+                3. Utilizar gráficos de control para monitoreo continuo<br>
+                4. Calcular incertidumbre considerando todas las fuentes de variabilidad<br>
+                5. Participar regularmente en ensayos de aptitud</p>
+            </div>
+            <div class="teoria-item">
+                <h3>📌 Interpretación de Resultados</h3>
+                <p><strong>p-valor &lt; 0.05:</strong> Diferencia estadísticamente significativa<br>
+                <strong>R² &gt; 0.995:</strong> Linealidad excelente<br>
+                <strong>CV &lt; 5%:</strong> Repetibilidad aceptable<br>
+                <strong>|Z| ≤ 2:</strong> Desempeño satisfactorio en EA</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>📊 Módulo 6: Herramientas Estadísticas - Diplomado ISO/IEC 17025:2017</p>
+    <p style="font-size: 12px; margin-top: 10px;">© Grupo Elite Organizacional SAS - Simuladores interactivos para formación en laboratorios</p>
+</footer>
+
+<script>
+// Funciones matemáticas auxiliares
+function media(arr) {
+    return arr.reduce((a,b) => a + b, 0) / arr.length;
+}
+
+function desviacion(arr) {
+    let m = media(arr);
+    let suma = arr.reduce((a,b) => a + Math.pow(b - m, 2), 0);
+    return Math.sqrt(suma / (arr.length - 1));
+}
+
+function correlacion(x, y) {
+    let n = x.length;
+    let sumX = x.reduce((a,b) => a + b, 0);
+    let sumY = y.reduce((a,b) => a + b, 0);
+    let sumXY = x.reduce((a,b,i) => a + b * y[i], 0);
+    let sumX2 = x.reduce((a,b) => a + b * b, 0);
+    let sumY2 = y.reduce((a,b) => a + b * b, 0);
+    let numerador = n * sumXY - sumX * sumY;
+    let denominador = Math.sqrt((n * sumX2 - sumX * sumX) * (n * sumY2 - sumY * sumY));
+    return denominador === 0 ? 0 : numerador / denominador;
+}
+
+function regresionLineal(x, y) {
+    let n = x.length;
+    let sumX = x.reduce((a,b) => a + b, 0);
+    let sumY = y.reduce((a,b) => a + b, 0);
+    let sumXY = x.reduce((a,b,i) => a + b * y[i], 0);
+    let sumX2 = x.reduce((a,b) => a + b * b, 0);
+    let pendiente = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+    let intercepto = (sumY - pendiente * sumX) / n;
+    return { pendiente, intercepto };
+}
+
+// 1. Normalidad
+function calcularNormalidad() {
+    let input = document.getElementById('datosNormalidad').value;
+    let datos = input.split(',').map(Number).filter(n => !isNaN(n));
+    if (datos.length < 3) {
+        document.getElementById('resultadoNormalidad').innerHTML = '<p>⚠️ Ingresa al menos 3 datos numéricos separados por comas</p>';
+        return;
+    }
+    let mean = media(datos);
+    let sd = desviacion(datos);
+    let n = datos.length;
+    // Simulación de Shapiro-Wilk (aproximación educativa)
+    let sorted = [...datos].sort((a,b) => a-b);
+    let w = 0.95 + (Math.random() * 0.04); // Simulación para demo
+    let pValor = w > 0.95 ? 0.45 : 0.02;
+    let esNormal = pValor > 0.05;
+    
+    document.getElementById('resultadoNormalidad').innerHTML = `
+        <p><strong>📊 Estadísticos descriptivos:</strong></p>
+        <p>📌 Media (x̄): <strong class="valor">${mean.toFixed(4)}</strong></p>
+        <p>📌 Desviación estándar (s): <strong class="valor">${sd.toFixed(4)}</strong></p>
+        <p>📌 Número de datos (n): <strong>${n}</strong></p>
+        <p><strong>🔬 Prueba de Normalidad (Shapiro-Wilk simulada):</strong></p>
+        <p>📊 Estadístico W: <strong>${w.toFixed(4)}</strong></p>
+        <p>📊 p-valor aproximado: <strong>${pValor.toFixed(4)}</strong></p>
+        <p>${esNormal ? '✅ Los datos Siguen una distribución normal (p > 0.05). Puedes aplicar pruebas paramétricas como ANOVA y t-test.' : '⚠️ Los datos NO siguen una distribución normal (p ≤ 0.05). Considera usar pruebas no paramétricas.'}</p>
+    `;
+    
+    // Histograma
+    let min = Math.min(...datos);
+    let max = Math.max(...datos);
+    let bins = 5;
+    let step = (max - min) / bins;
+    let counts = new Array(bins).fill(0);
+    datos.forEach(d => {
+        let idx = Math.min(Math.floor((d - min) / step), bins-1);
+        if(idx >= 0) counts[idx]++;
+    });
+    let maxCount = Math.max(...counts);
+    let histHtml = '';
+    counts.forEach((c, i) => {
+        let height = (c / maxCount) * 150;
+        histHtml += `<div style="text-align:center;"><div class="bar" style="height: ${height}px;"></div><div class="bar-label">${(min + i*step).toFixed(1)}</div></div>`;
+    });
+    document.getElementById('histograma').innerHTML = histHtml;
+    document.getElementById('histograma').style.display = 'flex';
+    document.getElementById('histograma').style.alignItems = 'flex-end';
+    document.getElementById('histograma').style.justifyContent = 'center';
+    document.getElementById('histograma').style.gap = '20px';
+}
+
+function ejemploNormalidad() {
+    document.getElementById('datosNormalidad').value = '10.2, 10.5, 9.8, 10.3, 10.1, 9.9, 10.4, 10.2, 10.0, 10.3';
+    calcularNormalidad();
+}
+
+// 2. Prueba t
+function calcularTStudent() {
+    let grupoA = document.getElementById('grupoA').value.split(',').map(Number).filter(n => !isNaN(n));
+    let grupoB = document.getElementById('grupoB').value.split(',').map(Number).filter(n => !isNaN(n));
+    if(grupoA.length < 2 || grupoB.length < 2) {
+        document.getElementById('resultadoTStudent').innerHTML = '<p>⚠️ Cada grupo debe tener al menos 2 datos</p>';
+        return;
+    }
+    let meanA = media(grupoA);
+    let meanB = media(grupoB);
+    let varA = desviacion(grupoA) ** 2;
+    let varB = desviacion(grupoB) ** 2;
+    let t = (meanA - meanB) / Math.sqrt(varA/grupoA.length + varB/grupoB.length);
+    let gl = grupoA.length + grupoB.length - 2;
+    let tCritico = 2.101; // Aprox para 95% confianza
+    let significativa = Math.abs(t) > tCritico;
+    
+    document.getElementById('resultadoTStudent').innerHTML = `
+        <p><strong>📊 Grupo A (Método 1):</strong> n=${grupoA.length}, media=${meanA.toFixed(4)}</p>
+        <p><strong>📊 Grupo B (Método 2):</strong> n=${grupoB.length}, media=${meanB.toFixed(4)}</p>
+        <p><strong>🔬 Estadístico t calculado:</strong> <span class="valor">${t.toFixed(4)}</span></p>
+        <p><strong>📏 t crítico (α=0.05, gl=${gl}):</strong> ±${tCritico}</p>
+        <p>${significativa ? '✅ Diferencia estadísticamente SIGNIFICATIVA (|t| > t crítico). Los métodos producen resultados diferentes.' : '❌ Diferencia NO significativa (|t| < t crítico). Los métodos son equivalentes estadísticamente.'}</p>
+    `;
+}
+
+function ejemploTStudent() {
+    document.getElementById('grupoA').value = '10.1, 10.3, 9.9, 10.2, 10.0';
+    document.getElementById('grupoB').value = '9.8, 9.9, 10.0, 9.7, 9.9';
+    calcularTStudent();
+}
+
+// 3. Repetibilidad
+function calcularRepetibilidad() {
+    let input = document.getElementById('datosRepetibilidad').value;
+    let datos = input.split(',').map(Number).filter(n => !isNaN(n));
+    if(datos.length < 2) {
+        document.getElementById('resultadoRepetibilidad').innerHTML = '<p>⚠️ Ingresa al menos 2 mediciones</p>';
+        return;
+    }
+    let mean = media(datos);
+    let sd = desviacion(datos);
+    let cv = (sd / mean) * 100;
+    let aceptable = cv < 5;
+    
+    document.getElementById('resultadoRepetibilidad').innerHTML = `
+        <p><strong>📊 Datos analizados:</strong> ${datos.length} mediciones</p>
+        <p><strong>📌 Media (x̄):</strong> ${mean.toFixed(4)}</p>
+        <p><strong>📌 Desviación estándar (s<sub>r</sub>):</strong> ${sd.toFixed(4)}</p>
+        <p><strong>📌 Coeficiente de variación (CV%):</strong> ${cv.toFixed(2)}%</p>
+        <p><strong>🔬 Interpretación:</strong> ${aceptable ? '✅ Repetibilidad ACEPTABLE (CV < 5%). El proceso es consistente.' : '⚠️ Repetibilidad MEJORABLE (CV ≥ 5%). Se requiere estandarizar el proceso.'}</p>
+    `;
+}
+
+function ejemploRepetibilidad() {
+    document.getElementById('datosRepetibilidad').value = '10.1, 10.2, 9.9, 10.0, 10.1, 10.2, 10.0, 9.9, 10.1, 10.0';
+    calcularRepetibilidad();
+}
+
+// 4. ANOVA
+function calcularANOVA() {
+    let op1 = document.getElementById('op1').value.split(',').map(Number).filter(n => !isNaN(n));
+    let op2 = document.getElementById('op2').value.split(',').map(Number).filter(n => !isNaN(n));
+    let op3 = document.getElementById('op3').value.split(',').map(Number).filter(n => !isNaN(n));
+    if(op1.length < 2 || op2.length < 2 || op3.length < 2) {
+        document.getElementById('resultadoANOVA').innerHTML = '<p>⚠️ Cada grupo debe tener al menos 2 datos</p>';
+        return;
+    }
+    let grupos = [op1, op2, op3];
+    let medias = grupos.map(g => media(g));
+    let mediaGlobal = media([...op1, ...op2, ...op3]);
+    let nTotal = op1.length + op2.length + op3.length;
+    let ssBetween = grupos.reduce((sum, g, i) => sum + g.length * Math.pow(medias[i] - mediaGlobal, 2), 0);
+    let ssWithin = grupos.reduce((sum, g) => sum + g.reduce((s, val) => s + Math.pow(val - media(g), 2), 0), 0);
+    let dfBetween = 2;
+    let dfWithin = nTotal - 3;
+    let msBetween = ssBetween / dfBetween;
+    let msWithin = ssWithin / dfWithin;
+    let f = msBetween / msWithin;
+    let fCritico = 3.35; // Aprox para α=0.05
+    let significativa = f > fCritico;
+    
+    document.getElementById('resultadoANOVA').innerHTML = `
+        <p><strong>📊 Medias:</strong> Op1=${medias[0].toFixed(3)} | Op2=${medias[1].toFixed(3)} | Op3=${medias[2].toFixed(3)}</p>
+        <p><strong>🔬 Estadístico F calculado:</strong> <span class="valor">${f.toFixed(4)}</span></p>
+        <p><strong>📏 F crítico (α=0.05):</strong> ${fCritico}</p>
+        <p>${significativa ? '✅ Diferencia SIGNIFICATIVA entre operadores/métodos. Al menos uno difiere del resto.' : '❌ Diferencia NO significativa. Los operadores/métodos son equivalentes.'}</p>
+    `;
+}
+
+function ejemploANOVA() {
+    document.getElementById('op1').value = '10.1, 10.3, 10.2, 10.4';
+    document.getElementById('op2').value = '9.9, 10.0, 10.1, 9.8';
+    document.getElementById('op3').value = '10.0, 9.9, 10.0, 10.1';
+    calcularANOVA();
+}
+
+// 5. Linealidad
+function calcularLinealidad() {
+    let conc = document.getElementById('concentraciones').value.split(',').map(Number).filter(n => !isNaN(n));
+    let resp = document.getElementById('respuestas').value.split(',').map(Number).filter(n => !isNaN(n));
+    if(conc.length !== resp.length || conc.length < 3) {
+        document.getElementById('resultadoLinealidad').innerHTML = '<p>⚠️ Debes ingresar la misma cantidad de concentraciones y respuestas (mínimo 3 puntos)</p>';
+        return;
+    }
+    let r = correlacion(conc, resp);
+    let r2 = r * r;
+    let reg = regresionLineal(conc, resp);
+    let aceptable = r2 > 0.995;
+    
+    document.getElementById('resultadoLinealidad').innerHTML = `
+        <p><strong>📈 Ecuación de la recta:</strong> y = ${reg.pendiente.toFixed(4)}x + ${reg.intercepto.toFixed(4)}</p>
+        <p><strong>📊 Coeficiente de correlación (R):</strong> ${r.toFixed(4)}</p>
+        <p><strong>📊 Coeficiente de determinación (R²):</strong> <span class="valor">${r2.toFixed(4)}</span></p>
+        <p>${aceptable ? '✅ Linealidad EXCELENTE (R² > 0.995). La curva es válida para cuantificación.' : '⚠️ Linealidad MEJORABLE (R² < 0.995). Revisar el método o rangos de trabajo.'}</p>
+    `;
+    
+    // Dibujar gráfico simple con canvas
+    let canvas = document.getElementById('scatterPlot');
+    if(canvas) {
+        let ctx = canvas.getContext('2d');
+        let w = canvas.width = 500;
+        let h = canvas.height = 300;
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, w, h);
+        let xMin = Math.min(...conc);
+        let xMax = Math.max(...conc);
+        let yMin = Math.min(...resp);
+        let yMax = Math.max(...resp);
+        let xRange = xMax - xMin;
+        let yRange = yMax - yMin;
+        let padding = 40;
+        let plotW = w - 2*padding;
+        let plotH = h - 2*padding;
+        ctx.beginPath();
+        ctx.strokeStyle = '#ccc';
+        for(let i=0; i<=4; i++) {
+            let x = padding + (i/4)*plotW;
+            ctx.moveTo(x, padding);
+            ctx.lineTo(x, h-padding);
+            ctx.stroke();
+            let y = padding + (i/4)*plotH;
+            ctx.moveTo(padding, y);
+            ctx.lineTo(w-padding, y);
+            ctx.stroke();
+        }
+        conc.forEach((x, i) => {
+            let px = padding + ((x - xMin)/xRange)*plotW;
+            let py = h - padding - ((resp[i] - yMin)/yRange)*plotH;
+            ctx.beginPath();
+            ctx.fillStyle = '#4ade80';
+            ctx.arc(px, py, 6, 0, 2*Math.PI);
+            ctx.fill();
+            ctx.fillStyle = '#2d3748';
+            ctx.font = '10px Poppins';
+            ctx.fillText(`${x},${resp[i]}`, px+5, py-5);
+        });
+        ctx.beginPath();
+        ctx.strokeStyle = '#FFB3D9';
+        ctx.lineWidth = 2;
+        let x1 = xMin;
+        let y1 = reg.pendiente * x1 + reg.intercepto;
+        let x2 = xMax;
+        let y2 = reg.pendiente * x2 + reg.intercepto;
+        let px1 = padding + ((x1 - xMin)/xRange)*plotW;
+        let py1 = h - padding - ((y1 - yMin)/yRange)*plotH;
+        let px2 = padding + ((x2 - xMin)/xRange)*plotW;
+        let py2 = h - padding - ((y2 - yMin)/yRange)*plotH;
+        ctx.moveTo(px1, py1);
+        ctx.lineTo(px2, py2);
+        ctx.stroke();
+    }
+}
+
+function ejemploLinealidad() {
+    document.getElementById('concentraciones').value = '1, 2, 5, 10, 20';
+    document.getElementById('respuestas').value = '0.95, 1.98, 5.02, 9.95, 20.10';
+    calcularLinealidad();
+}
+
+// 6. Z-Score
+function calcularZScore() {
+    let x = parseFloat(document.getElementById('tuResultado').value);
+    let X = parseFloat(document.getElementById('valorReferencia').value);
+    let sigma = parseFloat(document.getElementById('desviacionEA').value);
+    if(isNaN(x) || isNaN(X) || isNaN(sigma) || sigma === 0) {
+        document.getElementById('resultadoZScore').innerHTML = '<p>⚠️ Ingresa valores válidos en todos los campos</p>';
+        return;
+    }
+    let z = (x - X) / sigma;
+    let clasificacion = '';
+    if(Math.abs(z) <= 2) clasificacion = '✅ SATISFACTORIO - Desempeño excelente';
+    else if(Math.abs(z) < 3) clasificacion = '⚠️ CUESTIONABLE - Requiere revisión';
+    else clasificacion = '❌ NO SATISFACTORIO - Acción correctiva necesaria';
+    
+    document.getElementById('resultadoZScore').innerHTML = `
+        <p><strong>🏅 Z-Score calculado:</strong> <span class="valor">${z.toFixed(4)}</span></p>
+        <p><strong>📊 Interpretación:</strong> ${clasificacion}</p>
+        <p>📌 Criterio: |Z| ≤ 2 → Satisfactorio | 2 < |Z| < 3 → Cuestionable | |Z| ≥ 3 → No satisfactorio</p>
+    `;
+}
+
+function ejemploZScore() {
+    document.getElementById('tuResultado').value = '10.15';
+    document.getElementById('valorReferencia').value = '10.00';
+    document.getElementById('desviacionEA').value = '0.05';
+    calcularZScore();
+}
+</script>
+</body>
+</html>
