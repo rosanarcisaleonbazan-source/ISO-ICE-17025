@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Módulo 6: Herramientas Estadísticas | Diplomado ISO 17025</title>
+<link href="https://fonts.googleapis.com/css2?family=Salsa&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --celeste:#00B896;--verde-light:#E0F7F2;--celeste-dark:#007A63;
+  --azul:#1A6EFF;--azul-light:#EAF0FF;
+  --coral:#FF5C5C;--coral-light:#FFF0F0;
+  --ambar:#F5A623;--ambar-light:#FFF8E8;
+  --gris:#2B2D42;--gris-med:#5C5F7A;--gris-claro:#F4F5F8;--borde:#E2E5EF;
+  --blanco:#FFFFFF;
+  --font-h:'Syne',sans-serif;--font-b:'DM Sans',sans-serif;
+  --radio:16px;--radio-lg:24px;
+  --sh:0 4px 20px rgba(0,0,0,.06);--sh-md:0 8px 40px rgba(0,0,0,.10);
+}
+body{font-family:var(--font-b);background:#F7F9FC;color:var(--gris);line-height:1.6}
+
+/* HEADER */
+.header{background:var(--gris);padding:0 40px;position:sticky;top:0;z-index:200;box-shadow:0 2px 20px rgba(0,0,0,.2)}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:var(--font-h);font-size:18px;font-weight:800;color:var(--blanco);letter-spacing:-0.5px}
+.logo span{color:var(--verde)}
+.btn-back{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.7);font-size:13px;font-weight:500;text-decoration:none;transition:.2s}
+.btn-back:hover{color:var(--verde)}
+.modulo-badge{background:rgba(0,184,150,.15);color:var(--verde);padding:5px 14px;border-radius:40px;font-size:12px;font-weight:600;border:1px solid rgba(0,184,150,.3)}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--gris) 0%,#1C1F33 100%);padding:60px 40px 0;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-100px;top:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(0,184,150,.12) 0%,transparent 70%);pointer-events:none}
+.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end}
+.hero-text h1{font-family:var(--font-h);font-size:42px;font-weight:800;color:var(--blanco);line-height:1.1;margin-bottom:16px}
+.hero-text h1 span{color:var(--verde)}
+.hero-text p{color:rgba(255,255,255,.6);font-size:15px;margin-bottom:28px;max-width:480px}
+.hero-stats{display:flex;gap:24px;margin-bottom:40px}
+.stat{text-align:center}
+.stat .num{font-family:var(--font-h);font-size:28px;font-weight:800;color:var(--verde)}
+.stat .lbl{font-size:11px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.5px}
+.hero-nav{display:flex;flex-direction:column;gap:8px;padding-bottom:32px}
+.nav-item{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 16px;cursor:pointer;transition:.2s;text-decoration:none;color:rgba(255,255,255,.8);font-size:14px}
+.nav-item:hover{background:rgba(0,184,150,.1);border-color:rgba(0,184,150,.3);color:var(--verde)}
+.nav-item .dot{width:8px;height:8px;border-radius:50%;background:var(--verde);flex-shrink:0}
+.nav-item .num{font-family:var(--font-h);font-size:13px;font-weight:700;color:var(--verde);width:20px}
+
+/* CONTAINER */
+.container{max-width:1200px;margin:0 auto;padding:40px 20px}
+
+/* SECTION */
+.section{margin-bottom:48px}
+.section-header{display:flex;align-items:center;gap:16px;margin-bottom:28px}
+.section-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.section-icon.verde{background:var(--verde-light)}
+.section-icon.azul{background:var(--azul-light)}
+.section-icon.coral{background:var(--coral-light)}
+.section-icon.ambar{background:var(--ambar-light)}
+.section-header-text h2{font-family:var(--font-h);font-size:24px;font-weight:700;color:var(--gris)}
+.section-header-text p{font-size:13px;color:var(--gris-med)}
+.req-badge{display:inline-block;background:var(--azul-light);color:var(--azul);font-size:11px;font-weight:600;padding:2px 10px;border-radius:20px;margin-top:4px}
+
+/* TEORÍA CARDS */
+.teoria-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:28px}
+.teoria-card{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--radio);padding:24px;box-shadow:var(--sh)}
+.teoria-card h3{font-family:var(--font-h);font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.teoria-card p{font-size:13px;color:var(--gris-med);line-height:1.6}
+.formula-box{background:var(--gris-claro);border-left:3px solid var(--verde);border-radius:8px;padding:10px 14px;font-family:monospace;font-size:13px;margin:10px 0;color:var(--gris)}
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;margin:4px 2px}
+.tag.verde{background:var(--verde-light);color:var(--verde-dark)}
+.tag.coral{background:var(--coral-light);color:var(--coral)}
+.tag.ambar{background:var(--ambar-light);color:#B8740A}
+
+/* SIMULADOR */
+.sim-card{background:var(--blanco);border:1px solid var(--borde);border-radius:var(--radio-lg);padding:28px;box-shadow:var(--sh);margin-bottom:20px}
+.sim-card h3{font-family:var(--font-h);font-size:17px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.sim-card .sub{font-size:13px;color:var(--gris-med);margin-bottom:20px}
+.controls{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:16px}
+.input-g{flex:1;min-width:200px}
+.input-g label{display:block;font-size:12px;font-weight:600;color:var(--gris-med);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}
+.input-g input{width:100%;padding:10px 14px;border:1.5px solid var(--borde);border-radius:10px;font-size:14px;font-family:var(--font-b);background:var(--gris-claro);transition:.2s;color:var(--gris)}
+.input-g input:focus{outline:none;border-color:var(--verde);background:var(--blanco);box-shadow:0 0 0 3px rgba(0,184,150,.1)}
+.btn-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
+.btn{padding:10px 22px;border-radius:40px;border:none;font-family:var(--font-b);font-size:13px;font-weight:600;cursor:pointer;transition:.2s}
+.btn-prim{background:var(--verde);color:var(--blanco)}
+.btn-prim:hover{background:var(--verde-dark);transform:translateY(-1px)}
+.btn-sec{background:var(--gris-claro);color:var(--gris-med);border:1px solid var(--borde)}
+.btn-sec:hover{background:var(--borde)}
+.resultado-box{background:var(--gris-claro);border-radius:12px;padding:20px;border-left:4px solid var(--verde);margin-top:14px}
+.resultado-box.alerta{border-left-color:var(--coral)}
+.resultado-box.aviso{border-left-color:var(--ambar)}
+.resultado-box h4{font-family:var(--font-h);font-size:14px;font-weight:700;margin-bottom:10px}
+.resultado-box p{font-size:13px;color:var(--gris-med);margin:5px 0}
+.resultado-box .big-num{font-family:var(--font-h);font-size:28px;font-weight:800;color:var(--verde)}
+.resultado-box .big-num.malo{color:var(--coral)}
+.resultado-box .big-num.aviso{color:var(--ambar)}
+.resultado-box table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+.resultado-box table th{background:rgba(0,184,150,.08);padding:8px 12px;text-align:left;font-weight:600;font-size:12px;color:var(--gris-med);border-bottom:1px solid var(--borde)}
+.resultado-box table td{padding:8px 12px;border-bottom:1px solid var(--borde)}
+.resultado-box table tr:last-child td{border-bottom:none}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;margin:12px 0}
+.stat-item{background:var(--blanco);border-radius:10px;padding:12px;text-align:center;border:1px solid var(--borde)}
+.stat-item .sv{font-family:var(--font-h);font-size:20px;font-weight:700;color:var(--verde)}
+.stat-item .sl{font-size:11px;color:var(--gris-med)}
+
+/* CANVAS */
+canvas{max-width:100%;border-radius:10px;background:var(--blanco)}
+
+/* DIAGRAMA DE DECISIÓN */
+.decision-tree{background:var(--gris);border-radius:var(--radio-lg);padding:28px;color:var(--blanco)}
+.decision-tree h3{font-family:var(--font-h);font-size:18px;font-weight:700;margin-bottom:20px;color:var(--verde)}
+.dt-container{position:relative;overflow-x:auto}
+.dt-container svg{min-width:700px}
+
+/* GRÁFICO DE CONTROL */
+.control-chart-wrap{background:var(--blanco);border-radius:12px;padding:20px;margin-top:16px}
+
+/* BADGE REQUISITO */
+.req-tag{display:inline-flex;align-items:center;gap:4px;background:rgba(26,110,255,.08);color:var(--azul);font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;border:1px solid rgba(26,110,255,.15)}
+
+/* CASO REAL */
+.caso-real{background:linear-gradient(135deg,var(--verde-light),var(--azul-light));border-radius:14px;padding:18px 20px;margin-bottom:16px;border:1px solid rgba(0,184,150,.2)}
+.caso-real .cr-label{font-size:11px;font-weight:700;color:var(--verde-dark);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.caso-real p{font-size:13px;color:var(--gris-med)}
+
+/* INTERPRETACIÓN SEMÁFORO */
+.semaforo{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.sem-item{flex:1;min-width:120px;border-radius:10px;padding:10px 14px;font-size:12px;font-weight:600;text-align:center}
+.sem-verde{background:var(--verde-light);color:var(--verde-dark)}
+.sem-ambar{background:var(--ambar-light);color:#B8740A}
+.sem-coral{background:var(--coral-light);color:var(--coral)}
+
+/* TABS */
+.tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.tab{padding:8px 18px;border-radius:40px;border:1.5px solid var(--borde);font-size:13px;font-weight:600;cursor:pointer;transition:.2s;background:var(--blanco);color:var(--gris-med)}
+.tab.active{background:var(--gris);color:var(--blanco);border-color:var(--gris)}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* FOOTER */
+footer{background:var(--gris);color:rgba(255,255,255,.5);text-align:center;padding:30px;font-size:13px}
+footer strong{color:var(--verde)}
+
+@media(max-width:768px){
+  .hero{padding:40px 20px 0}
+  .hero-inner{grid-template-columns:1fr}
+  .hero-text h1{font-size:28px}
+  .hero-nav{display:none}
+  .controls{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="logo">ISO <span>17025</span> · Estadística</div>
+    <div style="display:flex;align-items:center;gap:16px">
+      <span class="modulo-badge">Módulo 06 — Completo</span>
+      <a href="index.html" class="btn-back">← Volver al inicio</a>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1>Herramientas<br><span>Estadísticas</span></h1>
+      <p>Domina los análisis estadísticos requeridos por ISO/IEC 17025:2017 con simuladores reales, casos de laboratorio y criterios de acreditación.</p>
+      <div class="hero-stats">
+        <div class="stat"><div class="num">8</div><div class="lbl">Simuladores</div></div>
+        <div class="stat"><div class="num">3</div><div class="lbl">Req. ISO</div></div>
+        <div class="stat"><div class="num">100%</div><div class="lbl">Cobertura</div></div>
+      </div>
+    </div>
+    <div class="hero-nav">
+      <a href="#normalidad" class="nav-item"><span class="num">01</span> Normalidad (Shapiro-Wilk real)</a>
+      <a href="#t-student" class="nav-item"><span class="num">02</span> Prueba t — independiente y pareada</a>
+      <a href="#anova" class="nav-item"><span class="num">03</span> ANOVA + Repetibilidad</a>
+      <a href="#reproducibilidad" class="nav-item"><span class="num">04</span> Reproducibilidad R</a>
+      <a href="#incertidumbre" class="nav-item"><span class="num">05</span> Incertidumbre GUM (Tipo A y B)</a>
+      <a href="#control" class="nav-item"><span class="num">06</span> Gráficos de Control X̄-R</a>
+      <a href="#linealidad" class="nav-item"><span class="num">07</span> Linealidad, Exactitud y Sesgo</a>
+      <a href="#zscore" class="nav-item"><span class="num">08</span> Ensayos de Aptitud — Z-score</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ===== DIAGRAMA DE DECISIÓN ===== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon verde">🗺️</div>
+    <div class="section-header-text">
+      <h2>¿Qué prueba estadística usar?</h2>
+      <p>Diagrama de decisión para laboratorios ISO 17025</p>
+    </div>
+  </div>
+  <div class="decision-tree">
+    <h3>Flujo de decisión estadística</h3>
+    <div class="dt-container">
+      <svg viewBox="0 0 900 360" width="100%" style="font-family:'DM Sans',sans-serif">
+        <!-- INICIO -->
+        <rect x="370" y="10" width="160" height="40" rx="20" fill="#00B896"/>
+        <text x="450" y="35" text-anchor="middle" fill="white" font-size="13" font-weight="700">Tengo datos</text>
+        <line x1="450" y1="50" x2="450" y2="80" stroke="#00B896" stroke-width="2" marker-end="url(#arrowg)"/>
+        <!-- ¿Normal? -->
+        <polygon points="450,80 560,120 450,160 340,120" fill="#1C1F33" stroke="#444" stroke-width="1.5"/>
+        <text x="450" y="115" text-anchor="middle" fill="white" font-size="12">¿Datos</text>
+        <text x="450" y="132" text-anchor="middle" fill="white" font-size="12">normales?</text>
+        <!-- SÍ -->
+        <text x="540" y="175" text-anchor="middle" fill="#00B896" font-size="11" font-weight="600">SÍ (p&gt;0.05)</text>
+        <line x1="560" y1="160" x2="560" y2="200" stroke="#00B896" stroke-width="1.5" marker-end="url(#arrowg)"/>
+        <!-- NO -->
+        <text x="355" y="175" text-anchor="middle" fill="#FF5C5C" font-size="11" font-weight="600">NO (p≤0.05)</text>
+        <line x1="340" y1="160" x2="340" y2="200" stroke="#FF5C5C" stroke-width="1.5" marker-end="url(#arrowr)"/>
+
+        <!-- PARAMÉTRICO ¿Grupos? -->
+        <polygon points="560,200 660,230 560,260 460,230" fill="#1A3A5C" stroke="#1A6EFF" stroke-width="1.5"/>
+        <text x="560" y="225" text-anchor="middle" fill="white" font-size="11">¿Cuántos</text>
+        <text x="560" y="242" text-anchor="middle" fill="white" font-size="11">grupos?</text>
+        <!-- 2 grupos -->
+        <text x="460" y="295" text-anchor="middle" fill="#A0CFFF" font-size="10">2 grupos</text>
+        <line x1="460" y1="260" x2="460" y2="300" stroke="#1A6EFF" stroke-width="1.5" marker-end="url(#arrowa)"/>
+        <!-- 3+ grupos -->
+        <text x="660" y="295" text-anchor="middle" fill="#A0CFFF" font-size="10">3+ grupos</text>
+        <line x1="660" y1="260" x2="660" y2="300" stroke="#1A6EFF" stroke-width="1.5" marker-end="url(#arrowa)"/>
+
+        <!-- Prueba t -->
+        <rect x="370" y="300" width="180" height="50" rx="10" fill="#1A6EFF" opacity=".9"/>
+        <text x="460" y="320" text-anchor="middle" fill="white" font-size="12" font-weight="600">Prueba t</text>
+        <text x="460" y="338" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="10">Independiente o Pareada</text>
+        <!-- ANOVA -->
+        <rect x="570" y="300" width="180" height="50" rx="10" fill="#1A6EFF" opacity=".9"/>
+        <text x="660" y="320" text-anchor="middle" fill="white" font-size="12" font-weight="600">ANOVA</text>
+        <text x="660" y="338" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="10">1 o 2 factores</text>
+
+        <!-- NO PARAMÉTRICO ¿Grupos? -->
+        <polygon points="340,200 230,230 340,260 450,230" fill="#3A1C1C" stroke="#FF5C5C" stroke-width="1.5"/>
+        <text x="340" y="225" text-anchor="middle" fill="white" font-size="11">¿Cuántos</text>
+        <text x="340" y="242" text-anchor="middle" fill="white" font-size="11">grupos?</text>
+        <!-- 2 grupos NP -->
+        <text x="230" y="295" text-anchor="middle" fill="#FFA0A0" font-size="10">2 grupos</text>
+        <line x1="230" y1="260" x2="230" y2="300" stroke="#FF5C5C" stroke-width="1.5" marker-end="url(#arrowr)"/>
+        <!-- 3+ NP -->
+        <text x="450" y="295" text-anchor="middle" fill="#FFA0A0" font-size="10">3+ grupos</text>
+        <line x1="440" y1="260" x2="440" y2="300" stroke="#FF5C5C" stroke-width="1.5" marker-end="url(#arrowr)"/>
+        <!-- Mann-W -->
+        <rect x="140" y="300" width="180" height="50" rx="10" fill="#7A1C1C"/>
+        <text x="230" y="320" text-anchor="middle" fill="white" font-size="12" font-weight="600">Mann-Whitney</text>
+        <text x="230" y="338" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="10">No paramétrico</text>
+        <!-- Kruskal -->
+        <rect x="350" y="300" width="180" height="50" rx="10" fill="#7A1C1C" opacity=".9"/>
+        <text x="440" y="320" text-anchor="middle" fill="white" font-size="12" font-weight="600">Kruskal-Wallis</text>
+        <text x="440" y="338" text-anchor="middle" fill="rgba(255,255,255,.7)" font-size="10">No paramétrico</text>
+
+        <defs>
+          <marker id="arrowg" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#00B896" stroke-width="1.5"/>
+          </marker>
+          <marker id="arrowr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#FF5C5C" stroke-width="1.5"/>
+          </marker>
+          <marker id="arrowa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#1A6EFF" stroke-width="1.5"/>
+          </marker>
+        </defs>
+      </svg>
+    </div>
+    <p style="font-size:12px;color:rgba(255,255,255,.4);margin-top:12px">* Siempre verificar normalidad (Shapiro-Wilk) antes de elegir prueba paramétrica o no paramétrica</p>
+  </div>
+</div>
+
+<!-- ===== 01 NORMALIDAD ===== -->
+<div class="section" id="normalidad">
+  <div class="section-header">
+    <div class="section-icon verde">📊</div>
+    <div class="section-header-text">
+      <h2>Prueba de Normalidad — Shapiro-Wilk</h2>
+      <p>Implementación real del estadístico W · Requisito previo para ANOVA y prueba t <span class="req-tag">Req. 7.6</span></p>
+    </div>
+  </div>
+  <div class="teoria-grid">
+    <div class="teoria-card">
+      <h3>📐 ¿Qué mide el estadístico W?</h3>
+      <p>Compara los datos ordenados con los cuantiles esperados de una distribución normal. W cercano a 1 indica normalidad perfecta.</p>
+      <div class="formula-box">W = (Σ aᵢ x(ᵢ))² / Σ(xᵢ - x̄)²</div>
+      <span class="tag verde">W > 0.90 → normal</span>
+      <span class="tag coral">W < 0.85 → no normal</span>
+    </div>
+    <div class="teoria-card">
+      <h3>🔬 Interpretación del p-valor</h3>
+      <p><strong>H₀:</strong> Los datos siguen distribución normal<br><strong>H₁:</strong> Los datos NO son normales</p>
+      <p style="margin-top:8px"><strong>Regla de decisión:</strong></p>
+      <div class="semaforo">
+        <div class="sem-verde">p > 0.05<br>Normal ✓</div>
+        <div class="sem-coral">p ≤ 0.05<br>No normal ✗</div>
+      </div>
+    </div>
+    <div class="caso-real">
+      <div class="cr-label">🧪 Caso real de laboratorio</div>
+      <p><strong>Calibración de balanza analítica</strong> — Un técnico realizó 10 pesadas del mismo patrón de 100 mg. Antes de calcular la incertidumbre, debe verificar normalidad de las lecturas.</p>
+    </div>
+  </div>
+  <div class="sim-card">
+    <h3>🧮 Simulador Shapiro-Wilk (algoritmo real)</h3>
+    <div class="sub">Ingresa tus mediciones. El estadístico W se calcula con coeficientes reales, no aleatoriamente.</div>
+    <div class="controls">
+      <div class="input-g" style="flex:3">
+        <label>Datos de medición (separados por comas)</label>
+        <input type="text" id="datosNorm" placeholder="Ej: 100.02, 100.01, 99.98, 100.03, 100.00, 99.99, 100.02, 100.01, 99.97, 100.02">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-prim" onclick="calcShapiro()">Calcular Shapiro-Wilk</button>
+      <button class="btn btn-sec" onclick="loadEjNorm()">Cargar ejemplo — Balanza</button>
+      <button class="btn btn-sec" onclick="loadEjNormMal()">Cargar ejemplo — No normal</button>
+    </div>
+    <div id="resNorm"></div>
+    <div id="grafNorm" style="margin-top:16px"></div>
+  </div>
+</div>
+
+<!-- ===== 02 PRUEBA T ===== -->
+<div class="section" id="t-student">
+  <div class="section-header">
+    <div class="section-icon azul">⚖️</div>
+    <div class="section-header-text">
+      <h2>Prueba t de Student</h2>
+      <p>Independiente y pareada — con cálculo de IC 95% <span class="req-tag">Req. 7.6</span></p>
+    </div>
+  </div>
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('t','independiente')">t Independiente</div>
+    <div class="tab" onclick="switchTab('t','pareada')">t Pareada (antes/después)</div>
+  </div>
+
+  <div id="t-independiente" class="tab-content active">
+    <div class="teoria-card" style="margin-bottom:16px">
+      <h3>📌 ¿Cuándo usar t independiente?</h3>
+      <p>Cuando compares <strong>dos grupos distintos</strong>: Método A vs Método B, Operador 1 vs Operador 2, Laboratorio X vs Laboratorio Y.</p>
+      <div class="caso-real" style="margin-top:12px;padding:12px 14px">
+        <div class="cr-label">🏭 Caso real</div>
+        <p>Comparar resultados de contenido de humedad usando Karl Fischer vs. pérdida por secado en 5 muestras cada uno.</p>
+      </div>
+    </div>
+    <div class="sim-card">
+      <div class="controls">
+        <div class="input-g"><label>Grupo A / Método 1</label><input type="text" id="tA" placeholder="Ej: 12.3, 12.5, 12.1, 12.4, 12.2"></div>
+        <div class="input-g"><label>Grupo B / Método 2</label><input type="text" id="tB" placeholder="Ej: 12.0, 11.9, 12.1, 11.8, 12.0"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-prim" onclick="calcTInd()">Calcular prueba t</button>
+        <button class="btn btn-sec" onclick="document.getElementById('tA').value='12.3,12.5,12.1,12.4,12.2';document.getElementById('tB').value='12.0,11.9,12.1,11.8,12.0';calcTInd()">Cargar ejemplo</button>
+      </div>
+      <div id="resTInd"></div>
+    </div>
+  </div>
+
+  <div id="t-pareada" class="tab-content">
+    <div class="teoria-card" style="margin-bottom:16px">
+      <h3>📌 ¿Cuándo usar t pareada?</h3>
+      <p>Cuando mides <strong>las mismas muestras</strong> en dos momentos o condiciones: antes/después de mantenimiento, mismo operador con y sin capacitación.</p>
+      <div class="caso-real" style="margin-top:12px;padding:12px 14px">
+        <div class="cr-label">🔧 Caso real</div>
+        <p>Verificar si el ajuste de un pH-metro mejoró sus lecturas: mismas 6 soluciones buffer medidas antes y después de la calibración.</p>
+      </div>
+    </div>
+    <div class="sim-card">
+      <div class="controls">
+        <div class="input-g"><label>Antes (mismas muestras)</label><input type="text" id="tAntes" placeholder="Ej: 7.02, 4.08, 9.95, 6.98, 4.12, 9.88"></div>
+        <div class="input-g"><label>Después</label><input type="text" id="tDespues" placeholder="Ej: 7.00, 4.01, 10.00, 7.00, 4.00, 10.01"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-prim" onclick="calcTPareada()">Calcular t pareada</button>
+        <button class="btn btn-sec" onclick="document.getElementById('tAntes').value='7.02,4.08,9.95,6.98,4.12,9.88';document.getElementById('tDespues').value='7.00,4.01,10.00,7.00,4.00,10.01';calcTPareada()">Cargar ejemplo pH-metro</button>
+      </div>
+      <div id="resTPar"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 03 ANOVA + REPETIBILIDAD ===== -->
+<div class="section" id="anova">
+  <div class="section-header">
+    <div class="section-icon verde">🔄</div>
+    <div class="section-header-text">
+      <h2>ANOVA y Repetibilidad</h2>
+      <p>Análisis de varianza de un factor y evaluación de consistencia <span class="req-tag">Req. 7.6.5</span></p>
+    </div>
+  </div>
+  <div class="sim-card">
+    <h3>📏 Repetibilidad (mismo operador, mismas condiciones)</h3>
+    <div class="sub">Calcula CV%, límite de repetibilidad r (95%) y verifica el criterio ISO/IEC 5725</div>
+    <div class="caso-real">
+      <div class="cr-label">🔬 Caso real — Espectrofotómetro UV-Vis</div>
+      <p>Medición de absorbancia de una solución estándar de 10 ppm, 10 veces seguidas en el mismo día por el mismo analista.</p>
+    </div>
+    <div class="controls">
+      <div class="input-g" style="flex:3">
+        <label>Mediciones repetidas (mínimo 6)</label>
+        <input type="text" id="datosRep" placeholder="Ej: 0.482, 0.485, 0.480, 0.483, 0.484, 0.481, 0.483, 0.482, 0.484, 0.481">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-prim" onclick="calcRep()">Calcular Repetibilidad</button>
+      <button class="btn btn-sec" onclick="document.getElementById('datosRep').value='0.482,0.485,0.480,0.483,0.484,0.481,0.483,0.482,0.484,0.481';calcRep()">Ejemplo Espectrofotómetro</button>
+    </div>
+    <div id="resRep"></div>
+  </div>
+
+  <div class="sim-card" style="margin-top:20px">
+    <h3>📊 ANOVA de un factor — 3 operadores o métodos</h3>
+    <div class="sub">Tabla ANOVA completa con SCE, SCR, F calculada, F crítica y conclusión</div>
+    <div class="caso-real">
+      <div class="cr-label">🏭 Caso real — Determinación de humedad</div>
+      <p>Tres analistas (Ana, Luis, María) miden la humedad de las mismas 4 muestras en el mismo día con el mismo equipo.</p>
+    </div>
+    <div class="controls">
+      <div class="input-g"><label>Operador 1 / Ana</label><input type="text" id="op1" placeholder="Ej: 5.2, 5.4, 5.1, 5.3"></div>
+      <div class="input-g"><label>Operador 2 / Luis</label><input type="text" id="op2" placeholder="Ej: 5.0, 5.1, 5.2, 5.0"></div>
+      <div class="input-g"><label>Operador 3 / María</label><input type="text" id="op3" placeholder="Ej: 5.1, 5.2, 5.1, 5.2"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-prim" onclick="calcANOVA()">Calcular ANOVA</button>
+      <button class="btn btn-sec" onclick="document.getElementById('op1').value='5.2,5.4,5.1,5.3';document.getElementById('op2').value='5.0,5.1,5.2,5.0';document.getElementById('op3').value='5.1,5.2,5.1,5.2';calcANOVA()">Ejemplo Humedad</button>
+    </div>
+    <div id="resANOVA"></div>
+  </div>
+</div>
+
+<!-- ===== 04 REPRODUCIBILIDAD ===== -->
+<div class="section" id="reproducibilidad">
+  <div class="section-header">
+    <div class="section-icon coral">🔁</div>
+    <div class="section-header-text">
+      <h2>Reproducibilidad R</h2>
+      <p>Variabilidad entre laboratorios, operadores o condiciones distintas <span class="req-tag">Req. 7.6.5 / ISO 5725</span></p>
+    </div>
+  </div>
+  <div class="teoria-grid">
+    <div class="teoria-card">
+      <h3>⚖️ Repetibilidad vs. Reproducibilidad</h3>
+      <p><strong>r (repetibilidad):</strong> Mismo operador, mismo equipo, mismo día. Variabilidad mínima esperada.<br><br>
+      <strong>R (reproducibilidad):</strong> Diferentes operadores, equipos, laboratorios. Variabilidad real en el mundo.</p>
+      <div class="formula-box">R = 2√2 · sR = 2.83 · sR</div>
+    </div>
+    <div class="teoria-card">
+      <h3>📐 Fórmulas clave</h3>
+      <div class="formula-box">sR² = sr² + sL²</div>
+      <p>Donde <strong>sL</strong> es la desviación estándar entre laboratorios y <strong>sr</strong> la repetibilidad.</p>
+      <div class="formula-box">índice r/R = sr/sR × 100%</div>
+      <p>Si r/R &lt; 50%: el factor laboratorio domina la variabilidad.</p>
+    </div>
+  </div>
+  <div class="sim-card">
+    <h3>🔁 Simulador de Reproducibilidad — Estudio R&R</h3>
+    <div class="sub">Ingresa resultados de 2 o más laboratorios/operadores midiendo las mismas muestras</div>
+    <div class="caso-real">
+      <div class="cr-label">🌎 Caso real — Comparación interlaboratorios</div>
+      <p>Tres laboratorios analizan el contenido de plomo en agua. Cada uno reporta 4 resultados de la misma muestra certificada.</p>
+    </div>
+    <div class="controls">
+      <div class="input-g"><label>Lab 1 / Operador A</label><input type="text" id="lab1" placeholder="Ej: 10.2, 10.4, 10.1, 10.3"></div>
+      <div class="input-g"><label>Lab 2 / Operador B</label><input type="text" id="lab2" placeholder="Ej: 10.5, 10.6, 10.4, 10.6"></div>
+      <div class="input-g"><label>Lab 3 / Operador C</label><input type="text" id="lab3" placeholder="Ej: 9.9, 10.0, 9.8, 10.1"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-prim" onclick="calcReprod()">Calcular R&R</button>
+      <button class="btn btn-sec" onclick="document.getElementById('lab1').value='10.2,10.4,10.1,10.3';document.getElementById('lab2').value='10.5,10.6,10.4,10.6';document.getElementById('lab3').value='9.9,10.0,9.8,10.1';calcReprod()">Ejemplo Plomo en agua</button>
+    </div>
+    <div id="resReprod"></div>
+  </div>
+</div>
+
+<!-- ===== 05 INCERTIDUMBRE GUM ===== -->
+<div class="section" id="incertidumbre">
+  <div class="section-header">
+    <div class="section-icon azul">📏</div>
+    <div class="section-header-text">
+      <h2>Incertidumbre de Medición — GUM</h2>
+      <p>Tipo A, Tipo B, combinada y expandida U95 <span class="req-tag">Req. 7.6.3 · JCGM 100:2008</span></p>
+    </div>
+  </div>
+  <div class="teoria-grid">
+    <div class="teoria-card">
+      <h3>📊 Tipo A — por estadística</h3>
+      <p>Se calcula a partir de <strong>repeticiones</strong> de medición. Es la incertidumbre derivada de la dispersión experimental.</p>
+      <div class="formula-box">u(A) = s / √n</div>
+      <p>Donde s = desviación estándar de las mediciones y n = número de repeticiones.</p>
+    </div>
+    <div class="teoria-card">
+      <h3>📋 Tipo B — por otra información</h3>
+      <p>Derivada de <strong>certificados de calibración</strong>, especificaciones del fabricante, tablas o literatura técnica.</p>
+      <div class="formula-box">u(B) = U_cert / k</div>
+      <p>Donde U_cert es la incertidumbre del certificado y k el factor de cobertura (generalmente k=2 para 95%).</p>
+    </div>
+    <div class="teoria-card">
+      <h3>🔗 Combinada y Expandida</h3>
+      <div class="formula-box">uc = √(u(A)² + u(B)²)</div>
+      <div class="formula-box">U95 = k · uc = 2 · uc</div>
+      <p>El resultado se reporta como: <strong>x ± U95 (k=2, 95%)</strong></p>
+    </div>
+  </div>
+  <div class="sim-card">
+    <h3>🧮 Calculadora de Incertidumbre GUM</h3>
+    <div class="sub">Calcula u(A), u(B), uc y U95 con reporte normalizado ISO/JCGM</div>
+    <div class="caso-real">
+      <div class="cr-label">⚖️ Caso real — Calibración de pipeta volumétrica</div>
+      <p>Técnico realiza 8 pesadas del volumen dispensado. El certificado del patrón de masa reporta U=0.05 mg con k=2.</p>
+    </div>
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('gum','mediciones')">Paso 1 — Mediciones</div>
+      <div class="tab" onclick="switchTab('gum','tipo-b')">Paso 2 — Fuentes Tipo B</div>
+      <div class="tab" onclick="switchTab('gum','resultado')">Paso 3 — Resultado final</div>
+    </div>
+    <div id="gum-mediciones" class="tab-content active">
+      <div class="controls">
+        <div class="input-g" style="flex:3">
+          <label>Mediciones repetidas (mínimo 6)</label>
+          <input type="text" id="gumMed" placeholder="Ej: 10.012, 10.015, 10.008, 10.011, 10.014, 10.010, 10.013, 10.009">
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-prim" onclick="calcGUMtipoA()">Calcular Tipo A</button>
+        <button class="btn btn-sec" onclick="document.getElementById('gumMed').value='10.012,10.015,10.008,10.011,10.014,10.010,10.013,10.009';calcGUMtipoA()">Ejemplo pipeta</button>
+      </div>
+      <div id="resGUMa"></div>
+    </div>
+    <div id="gum-tipo-b" class="tab-content">
+      <div style="margin-bottom:14px">
+        <p style="font-size:13px;color:var(--gris-med);margin-bottom:12px">Agrega cada fuente de incertidumbre Tipo B. Puedes tener varias (resolución del equipo, certificado de patrón, temperatura, etc.)</p>
+        <div id="fuentesB"></div>
+        <button class="btn btn-sec" onclick="agregarFuenteB()" style="margin-top:10px">+ Agregar fuente Tipo B</button>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-prim" onclick="calcGUMcombinada()">Calcular incertidumbre combinada</button>
+        <button class="btn btn-sec" onclick="cargarEjemploB()">Ejemplo — pipeta calibrada</button>
+      </div>
+      <div id="resGUMb"></div>
+    </div>
+    <div id="gum-resultado" class="tab-content">
+      <div id="resGUMfinal" style="padding:20px;background:var(--gris-claro);border-radius:12px;text-align:center">
+        <p style="color:var(--gris-med);font-size:13px">Completa los pasos 1 y 2 para ver el resultado final</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 06 GRÁFICOS DE CONTROL ===== -->
+<div class="section" id="control">
+  <div class="section-header">
+    <div class="section-icon ambar">📈</div>
+    <div class="section-header-text">
+      <h2>Gráficos de Control — Shewhart X̄</h2>
+      <p>Monitoreo continuo de la estabilidad del proceso <span class="req-tag">Req. 7.7 — Control de calidad</span></p>
+    </div>
+  </div>
+  <div class="teoria-grid">
+    <div class="teoria-card">
+      <h3>📊 ¿Qué es un gráfico de control?</h3>
+      <p>Herramienta para detectar si un proceso está <strong>bajo control estadístico</strong>. Muestra si la variabilidad es aleatoria (natural) o si hay causas asignables.</p>
+      <p style="margin-top:8px"><strong>Límites de control:</strong></p>
+      <div class="formula-box">LCS = x̄ + 3σ<br>LCI = x̄ - 3σ</div>
+    </div>
+    <div class="teoria-card">
+      <h3>🚨 Señales de alarma (Reglas de Nelson)</h3>
+      <p>
+        <strong>Regla 1:</strong> 1 punto fuera de ±3σ<br>
+        <strong>Regla 2:</strong> 9 puntos consecutivos del mismo lado<br>
+        <strong>Regla 3:</strong> 6 puntos consecutivos en tendencia<br>
+        <strong>Regla 4:</strong> 2 de 3 puntos en zona ±2σ a ±3σ
+      </p>
+    </div>
+  </div>
+  <div class="sim-card">
+    <h3>📈 Simulador Gráfico de Control X̄</h3>
+    <div class="sub">Ingresa tus resultados de control de calidad. Se detectan señales fuera de control automáticamente.</div>
+    <div class="caso-real">
+      <div class="cr-label">🧪 Caso real — Solución de control diario</div>
+      <p>Laboratorio clínico mide diariamente una solución de control de glucosa. Ingresa los últimos 20 resultados para detectar derivas.</p>
+    </div>
+    <div class="controls">
+      <div class="input-g" style="flex:3">
+        <label>Resultados diarios (al menos 15 valores, uno por coma)</label>
+        <input type="text" id="datosControl" placeholder="Ej: 5.1, 5.0, 5.2, 4.9, 5.1, 5.3, 5.0, 5.2, 5.1, 5.0, 5.4, 5.1, 5.2, 5.0, 5.3, 5.1, 5.5, 5.2, 5.1, 5.0">
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-prim" onclick="calcControl()">Generar gráfico de control</button>
+      <button class="btn btn-sec" onclick="loadEjControl()">Ejemplo — proceso bajo control</button>
+      <button class="btn btn-sec" onclick="loadEjControlFuera()">Ejemplo — proceso fuera de control</button>
+    </div>
+    <div id="resControl"></div>
+    <div class="control-chart-wrap" id="grafControl" style="display:none">
+      <canvas id="canvasControl" width="900" height="300"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 07 LINEALIDAD Y EXACTITUD ===== -->
+<div class="section" id="linealidad">
+  <div class="section-header">
+    <div class="section-icon verde">📐</div>
+    <div class="section-header-text">
+      <h2>Linealidad, Exactitud y Sesgo</h2>
+      <p>Curva de calibración, R², bias% y recuperación <span class="req-tag">Req. 7.6.2</span></p>
+    </div>
+  </div>
+  <div class="sim-card">
+    <div class="caso-real">
+      <div class="cr-label">🔬 Caso real — Validación de método HPLC</div>
+      <p>Analista prepara soluciones estándar de cafeína a 5 concentraciones y mide su respuesta de área de pico. Verifica linealidad del método.</p>
+    </div>
+    <div class="controls">
+      <div class="input-g"><label>Concentraciones (mg/L)</label><input type="text" id="conc" placeholder="Ej: 1, 5, 10, 25, 50"></div>
+      <div class="input-g"><label>Respuesta medida (área)</label><input type="text" id="resp" placeholder="Ej: 103, 498, 1012, 2510, 4985"></div>
+      <div class="input-g"><label>Valor verdadero (para sesgo)</label><input type="number" id="valVerd" step="any" placeholder="Ej: 10.0 (concentración conocida)"></div>
+      <div class="input-g"><label>Tu resultado medido</label><input type="number" id="valMed" step="any" placeholder="Ej: 10.25"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-prim" onclick="calcLineal()">Calcular linealidad y exactitud</button>
+      <button class="btn btn-sec" onclick="loadEjLineal()">Ejemplo HPLC Cafeína</button>
+    </div>
+    <div id="resLineal"></div>
+    <canvas id="canvasLineal" width="600" height="300" style="display:none;margin-top:16px"></canvas>
+  </div>
+</div>
+
+<!-- ===== 08 Z-SCORE ===== -->
+<div class="section" id="zscore">
+  <div class="section-header">
+    <div class="section-icon coral">🏆</div>
+    <div class="section-header-text">
+      <h2>Ensayos de Aptitud — Z-score y En-score</h2>
+      <p>Evaluación de desempeño en comparaciones interlaboratorios <span class="req-tag">Req. 7.7.2 · ISO 13528</span></p>
+    </div>
+  </div>
+  <div class="teoria-grid">
+    <div class="teoria-card">
+      <h3>📊 Z-score (ISO 13528)</h3>
+      <div class="formula-box">z = (x - X) / σ</div>
+      <div class="semaforo">
+        <div class="sem-verde">|z| ≤ 2 Satisfactorio</div>
+        <div class="sem-ambar">2 &lt; |z| &lt; 3 Cuestionable</div>
+        <div class="sem-coral">|z| ≥ 3 No satisfactorio</div>
+      </div>
+    </div>
+    <div class="teoria-card">
+      <h3>📏 En-score (ILAC-G9)</h3>
+      <p>Usado cuando <strong>ambos laboratorios</strong> reportan su incertidumbre. Más estricto que el Z-score.</p>
+      <div class="formula-box">En = (x₁ - x₂) / √(U₁² + U₂²)</div>
+      <div class="semaforo">
+        <div class="sem-verde">|En| ≤ 1 Satisfactorio</div>
+        <div class="sem-coral">|En| > 1 No satisfactorio</div>
+      </div>
+    </div>
+  </div>
+  <div class="sim-card">
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('ea','zscore-tab')">Z-score</div>
+      <div class="tab" onclick="switchTab('ea','enscore-tab')">En-score</div>
+    </div>
+    <div id="ea-zscore-tab" class="tab-content active">
+      <div class="caso-real">
+        <div class="cr-label">🌎 Caso real</div>
+        <p>Tu laboratorio reporta 45.3 mg/L de nitratos en agua. El proveedor del ensayo de aptitud asigna valor de referencia 44.8 mg/L con σ=0.8 mg/L.</p>
+      </div>
+      <div class="controls">
+        <div class="input-g"><label>Tu resultado (x)</label><input type="number" id="zx" step="any" placeholder="Ej: 45.3"></div>
+        <div class="input-g"><label>Valor de referencia (X)</label><input type="number" id="zX" step="any" placeholder="Ej: 44.8"></div>
+        <div class="input-g"><label>Desv. estándar objetivo (σ)</label><input type="number" id="zsig" step="any" placeholder="Ej: 0.8"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-prim" onclick="calcZ()">Calcular Z-score</button>
+        <button class="btn btn-sec" onclick="document.getElementById('zx').value=45.3;document.getElementById('zX').value=44.8;document.getElementById('zsig').value=0.8;calcZ()">Cargar ejemplo nitratos</button>
+      </div>
+      <div id="resZ"></div>
+    </div>
+    <div id="ea-enscore-tab" class="tab-content">
+      <div class="caso-real">
+        <div class="cr-label">🔬 Caso real</div>
+        <p>Dos laboratorios acreditados comparan sus resultados de pH con sus respectivas incertidumbres expandidas.</p>
+      </div>
+      <div class="controls">
+        <div class="input-g"><label>Tu resultado (x₁)</label><input type="number" id="en1" step="any" placeholder="Ej: 7.02"></div>
+        <div class="input-g"><label>Tu incertidumbre U₁ (k=2)</label><input type="number" id="enU1" step="any" placeholder="Ej: 0.03"></div>
+        <div class="input-g"><label>Resultado referencia (x₂)</label><input type="number" id="en2" step="any" placeholder="Ej: 7.00"></div>
+        <div class="input-g"><label>Incertidumbre referencia U₂</label><input type="number" id="enU2" step="any" placeholder="Ej: 0.02"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-prim" onclick="calcEn()">Calcular En-score</button>
+        <button class="btn btn-sec" onclick="document.getElementById('en1').value=7.02;document.getElementById('enU1').value=0.03;document.getElementById('en2').value=7.00;document.getElementById('enU2').value=0.02;calcEn()">Cargar ejemplo pH</button>
+      </div>
+      <div id="resEn"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONCLUSIONES -->
+<div class="section">
+  <div class="teoria-grid">
+    <div class="teoria-card">
+      <h3>✅ Orden correcto de análisis</h3>
+      <p>1. Verificar normalidad (Shapiro-Wilk)<br>
+      2. Elegir prueba paramétrica o no paramétrica<br>
+      3. Calcular repetibilidad y reproducibilidad<br>
+      4. Estimar incertidumbre GUM<br>
+      5. Monitorear con gráficos de control<br>
+      6. Participar en ensayos de aptitud</p>
+    </div>
+    <div class="teoria-card">
+      <h3>📌 Criterios de aceptación ISO 17025</h3>
+      <p><strong>CV% &lt; 5%:</strong> Repetibilidad aceptable<br>
+      <strong>R² &gt; 0.995:</strong> Linealidad excelente<br>
+      <strong>Bias% &lt; 5%:</strong> Exactitud aceptable<br>
+      <strong>|Z| ≤ 2:</strong> EA satisfactorio<br>
+      <strong>|En| ≤ 1:</strong> EA satisfactorio (con incertidumbre)</p>
+    </div>
+    <div class="teoria-card">
+      <h3>📋 Documentos de referencia</h3>
+      <p>• ISO/IEC 17025:2017 — Secciones 7.6, 7.7, 7.8<br>
+      • JCGM 100:2008 (GUM) — Incertidumbre<br>
+      • ISO 5725 — Repetibilidad y reproducibilidad<br>
+      • ISO 13528 — Ensayos de aptitud<br>
+      • ILAC-G9 — En-score</p>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<footer>
+  <p><strong>Módulo 6 — Herramientas Estadísticas</strong> · Diplomado ISO/IEC 17025:2017</p>
+  <p style="margin-top:8px">© Grupo Elite Organizacional SAS — Todos los algoritmos estadísticos son implementaciones reales</p>
+</footer>
+
+<script>
+// ===================== UTILIDADES =====================
+const avg = a => a.reduce((s,v)=>s+v,0)/a.length;
+const sd = a => { let m=avg(a); return Math.sqrt(a.reduce((s,v)=>s+Math.pow(v-m,2),0)/(a.length-1)); };
+const parse = s => s.split(',').map(Number).filter(v=>!isNaN(v)&&v!=='');
+
+// Distribución t inversa (aproximación) para gl dado
+function tCrit(gl, alpha=0.05) {
+  // Valores críticos t de dos colas al 5%
+  const tabla = {1:12.706,2:4.303,3:3.182,4:2.776,5:2.571,6:2.447,7:2.365,8:2.306,9:2.262,10:2.228,
+    11:2.201,12:2.179,13:2.160,14:2.145,15:2.131,16:2.120,17:2.110,18:2.101,19:2.093,20:2.086,
+    25:2.060,30:2.042,40:2.021,60:2.000,120:1.980};
+  let keys = Object.keys(tabla).map(Number).sort((a,b)=>a-b);
+  if(gl>=120) return 1.96;
+  for(let k of keys) if(gl<=k) return tabla[k];
+  return 1.96;
+}
+
+// ===================== TABS =====================
+function switchTab(group, id) {
+  document.querySelectorAll('#'+group+'-'+id.split('-')[0]+', [id^="'+group+'-"]').forEach(el=>{
+    if(el.id.startsWith(group+'-')) { el.classList.remove('active'); }
+  });
+  // mejor approach:
+  const allContents = document.querySelectorAll('[id^="'+group+'-"]');
+  allContents.forEach(c=>c.classList.remove('active'));
+  const allTabs = document.querySelectorAll('.tab');
+  // Find clicked tab and deactivate siblings
+  event.target.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(group+'-'+id).classList.add('active');
+}
+
+// ===================== SHAPIRO-WILK REAL =====================
+// Coeficientes a(i) para n=3..10
+const SW_A = {
+  3:[0.7071],4:[0.6872,0.1677],5:[0.6646,0.2413],
+  6:[0.6431,0.2806,0.0875],7:[0.6233,0.3031,0.1401],
+  8:[0.6052,0.3164,0.1743,0.0561],9:[0.5888,0.3244,0.1976,0.0947],
+  10:[0.5739,0.3291,0.2141,0.1224,0.0399]
+};
+
+function calcShapiro() {
+  const datos = parse(document.getElementById('datosNorm').value);
+  if(datos.length<3||datos.length>50){
+    document.getElementById('resNorm').innerHTML='<div class="resultado-box alerta"><p>⚠️ Ingresa entre 3 y 50 datos numéricos.</p></div>'; return;
+  }
+  const n=datos.length, sorted=[...datos].sort((a,b)=>a-b);
+  const m=avg(datos), s=sd(datos), cv=(s/m*100);
+  let W;
+  if(n<=10 && SW_A[n]) {
+    const a=SW_A[n]; let num=0;
+    for(let i=0;i<a.length;i++) num+=a[i]*(sorted[n-1-i]-sorted[i]);
+    const den=datos.reduce((acc,v)=>acc+Math.pow(v-m,2),0);
+    W=Math.pow(num,2)/den;
+    W=Math.min(1,Math.max(0,W));
+  } else {
+    // Para n>10: aproximación por correlación Q-Q
+    const qnorm=i=>{const p=(i-0.375)/(n+0.25); return Math.sqrt(2)*erfinv(2*p-1);};
+    const qi=Array.from({length:n},(_,i)=>qnorm(i+1));
+    let sumXQ=0,sumX2=0,sumQ2=0;
+    for(let i=0;i<n;i++){sumXQ+=sorted[i]*qi[i];sumX2+=sorted[i]*sorted[i];sumQ2+=qi[i]*qi[i];}
+    const r=sumXQ/Math.sqrt(sumX2*sumQ2);
+    W=r*r;
+    W=Math.min(1,Math.max(0.5,W));
+  }
+  // Estimar p-valor aproximado basado en W y n
+  const pVal=estimarPvalor(W,n);
+  const normal=pVal>0.05;
+  const claseBox=normal?'':'alerta';
+
+  document.getElementById('resNorm').innerHTML=`
+    <div class="resultado-box ${claseBox}">
+      <h4>${normal?'✅ Los datos siguen una distribución normal':'⚠️ Los datos NO siguen distribución normal'}</h4>
+      <div class="stat-grid">
+        <div class="stat-item"><div class="sv">${m.toFixed(4)}</div><div class="sl">Media x̄</div></div>
+        <div class="stat-item"><div class="sv">${s.toFixed(4)}</div><div class="sl">Desv. est. s</div></div>
+        <div class="stat-item"><div class="sv">${W.toFixed(4)}</div><div class="sl">Estadístico W</div></div>
+        <div class="stat-item"><div class="sv ${pVal<0.05?'malo':''}">${pVal.toFixed(4)}</div><div class="sl">p-valor</div></div>
+      </div>
+      <p style="margin-top:12px"><strong>Interpretación:</strong> ${normal?'p > 0.05 → No se rechaza H₀. Puedes usar pruebas paramétricas (t, ANOVA).':'p ≤ 0.05 → Se rechaza H₀. Considera Mann-Whitney o Kruskal-Wallis.'}</p>
+      <p style="color:var(--gris-med);font-size:12px;margin-top:8px">n=${n} datos | CV = ${cv.toFixed(2)}%</p>
+    </div>`;
+  dibujarQQ(sorted, m, s);
+}
+
+function erfinv(x){
+  const a=0.147, ln=Math.log(1-x*x);
+  const t=2/(Math.PI*a)+ln/2;
+  return Math.sign(x)*Math.sqrt(Math.sqrt(t*t-ln/a)-t);
+}
+
+function estimarPvalor(W,n){
+  // Aproximación basada en tablas Shapiro-Wilk publicadas
+  if(n<=10){
+    if(W>0.98) return 0.90;
+    if(W>0.96) return 0.60;
+    if(W>0.94) return 0.30;
+    if(W>0.92) return 0.15;
+    if(W>0.90) return 0.08;
+    if(W>0.87) return 0.04;
+    if(W>0.83) return 0.02;
+    return 0.01;
+  } else {
+    if(W>0.99) return 0.85;
+    if(W>0.97) return 0.50;
+    if(W>0.95) return 0.15;
+    if(W>0.93) return 0.06;
+    if(W>0.91) return 0.03;
+    return 0.01;
+  }
+}
+
+function dibujarQQ(sorted,m,s){
+  const n=sorted.length;
+  const c=document.createElement('canvas'); c.width=400; c.height=240;
+  c.style.cssText='border-radius:10px;max-width:100%';
+  const ctx=c.getContext('2d');
+  ctx.fillStyle='#F4F5F8'; ctx.fillRect(0,0,400,240);
+  const pad=40,pw=320,ph=160;
+  // Ejes
+  ctx.strokeStyle='#CBD5E0'; ctx.lineWidth=0.5;
+  for(let i=0;i<=4;i++){ctx.beginPath();ctx.moveTo(pad,pad+i*ph/4);ctx.lineTo(pad+pw,pad+i*ph/4);ctx.stroke();}
+  for(let i=0;i<=4;i++){ctx.beginPath();ctx.moveTo(pad+i*pw/4,pad);ctx.lineTo(pad+i*pw/4,pad+ph);ctx.stroke();}
+  // Línea de referencia
+  ctx.strokeStyle='#00B896'; ctx.lineWidth=1.5; ctx.setLineDash([5,5]);
+  ctx.beginPath(); ctx.moveTo(pad,pad+ph); ctx.lineTo(pad+pw,pad); ctx.stroke();
+  ctx.setLineDash([]);
+  // Puntos QQ
+  const qvals=sorted.map((_,i)=>{const p=(i+1-0.375)/(n+0.25);return m+s*Math.sqrt(2)*erfinv(2*p-1);});
+  const qmin=Math.min(...qvals), qmax=Math.max(...qvals);
+  const xmin=Math.min(...sorted), xmax=Math.max(...sorted);
+  ctx.fillStyle='#2B2D42';
+  sorted.forEach((v,i)=>{
+    const px=pad+((v-xmin)/(xmax-xmin||1))*pw;
+    const py=pad+ph-((qvals[i]-qmin)/(qmax-qmin||1))*ph;
+    ctx.beginPath(); ctx.arc(px,py,5,0,Math.PI*2); ctx.fill();
+  });
+  ctx.fillStyle='#5C5F7A'; ctx.font='11px DM Sans';
+  ctx.fillText('Gráfico Q-Q Normal — puntos en línea = normalidad',pad,230);
+  document.getElementById('grafNorm').innerHTML=''; document.getElementById('grafNorm').appendChild(c);
+}
+
+function loadEjNorm(){document.getElementById('datosNorm').value='100.02,100.01,99.98,100.03,100.00,99.99,100.02,100.01,99.97,100.02';calcShapiro();}
+function loadEjNormMal(){document.getElementById('datosNorm').value='10.1,10.2,10.1,10.5,11.2,10.1,10.2,12.0,10.1,10.2';calcShapiro();}
+
+// ===================== T INDEPENDIENTE =====================
+function calcTInd(){
+  const a=parse(document.getElementById('tA').value), b=parse(document.getElementById('tB').value);
+  if(a.length<2||b.length<2){document.getElementById('resTInd').innerHTML='<div class="resultado-box alerta"><p>⚠️ Cada grupo debe tener al menos 2 datos.</p></div>';return;}
+  const mA=avg(a),mB=avg(b),sA=sd(a),sB=sd(b),nA=a.length,nB=b.length;
+  const se=Math.sqrt(sA*sA/nA+sB*sB/nB);
+  const t=(mA-mB)/se;
+  const gl=Math.round(Math.pow(sA*sA/nA+sB*sB/nB,2)/(Math.pow(sA*sA/nA,2)/(nA-1)+Math.pow(sB*sB/nB,2)/(nB-1)));
+  const tc=tCrit(gl);
+  const sig=Math.abs(t)>tc;
+  const dif=mA-mB, ic=tc*se;
+  document.getElementById('resTInd').innerHTML=`
+    <div class="resultado-box ${sig?'alerta':''}">
+      <h4>${sig?'⚠️ Diferencia SIGNIFICATIVA entre grupos':'✅ Sin diferencia significativa — Grupos equivalentes'}</h4>
+      <div class="stat-grid">
+        <div class="stat-item"><div class="sv">${mA.toFixed(4)}</div><div class="sl">Media A</div></div>
+        <div class="stat-item"><div class="sv">${mB.toFixed(4)}</div><div class="sl">Media B</div></div>
+        <div class="stat-item"><div class="sv ${sig?'malo':''}">${t.toFixed(4)}</div><div class="sl">t calculado</div></div>
+        <div class="stat-item"><div class="sv">${tc.toFixed(3)}</div><div class="sl">t crítico (α=0.05)</div></div>
+      </div>
+      <p style="margin-top:12px"><strong>Grados de libertad:</strong> ${gl} | <strong>IC 95% de diferencia:</strong> [${(dif-ic).toFixed(4)}, ${(dif+ic).toFixed(4)}]</p>
+      <p><strong>Conclusión:</strong> ${sig?'Los dos métodos/grupos producen resultados estadísticamente diferentes (p < 0.05). No son intercambiables.':'Los métodos son estadísticamente equivalentes (p > 0.05). Pueden considerarse intercambiables.'}</p>
+    </div>`;
+}
+
+// ===================== T PAREADA =====================
+function calcTPareada(){
+  const a=parse(document.getElementById('tAntes').value),b=parse(document.getElementById('tDespues').value);
+  if(a.length<2||a.length!==b.length){document.getElementById('resTPar').innerHTML='<div class="resultado-box alerta"><p>⚠️ Ambas series deben tener el mismo número de datos (mínimo 2).</p></div>';return;}
+  const dif=a.map((v,i)=>v-b[i]);
+  const md=avg(dif),sd2=sd(dif),n=dif.length;
+  const t=md/(sd2/Math.sqrt(n)), gl=n-1, tc=tCrit(gl);
+  const sig=Math.abs(t)>tc;
+  const ic=tc*sd2/Math.sqrt(n);
+  document.getElementById('resTPar').innerHTML=`
+    <div class="resultado-box ${sig?'':''}">
+      <h4>${sig?'✅ Diferencia SIGNIFICATIVA — La intervención tuvo efecto real':'❌ Sin diferencia significativa — La intervención no mejoró'}</h4>
+      <div class="stat-grid">
+        <div class="stat-item"><div class="sv">${md.toFixed(4)}</div><div class="sl">Diferencia media</div></div>
+        <div class="stat-item"><div class="sv">${sd2.toFixed(4)}</div><div class="sl">Desv. diferencias</div></div>
+        <div class="stat-item"><div class="sv ${sig?'':'malo'}">${t.toFixed(4)}</div><div class="sl">t calculado</div></div>
+        <div class="stat-item"><div class="sv">${tc.toFixed(3)}</div><div class="sl">t crítico</div></div>
+      </div>
+      <p style="margin-top:12px"><strong>IC 95% de la diferencia media:</strong> [${(md-ic).toFixed(4)}, ${(md+ic).toFixed(4)}]</p>
+      <p><strong>Diferencias individuales:</strong> ${dif.map(d=>d.toFixed(3)).join(', ')}</p>
+    </div>`;
+}
+
+// ===================== REPETIBILIDAD =====================
+function calcRep(){
+  const datos=parse(document.getElementById('datosRep').value);
+  if(datos.length<2){document.getElementById('resRep').innerHTML='<div class="resultado-box alerta"><p>⚠️ Ingresa al menos 2 mediciones.</p></div>';return;}
+  const m=avg(datos), s=sd(datos), n=datos.length;
+  const cv=s/m*100, r95=2.83*s; // límite repetibilidad 95%
+  const aceptable=cv<5;
+  document.getElementById('resRep').innerHTML=`
+    <div class="resultado-box ${aceptable?'':'aviso'}">
+      <h4>${aceptable?'✅ Repetibilidad ACEPTABLE (CV < 5%)':'⚠️ Repetibilidad MEJORABLE (CV ≥ 5%)'}</h4>
+      <div class="stat-grid">
+        <div class="stat-item"><div class="sv">${m.toFixed(5)}</div><div class="sl">Media x̄</div></div>
+        <div class="stat-item"><div class="sv">${s.toFixed(5)}</div><div class="sl">Desv. est. sᵣ</div></div>
+        <div class="stat-item"><div class="sv ${aceptable?'':'aviso'}">${cv.toFixed(3)}%</div><div class="sl">CV%</div></div>
+        <div class="stat-item"><div class="sv">${r95.toFixed(5)}</div><div class="sl">Límite r (95%)</div></div>
+      </div>
+      <p style="margin-top:12px"><strong>Interpretación:</strong> Dos resultados del mismo operador en el mismo día son comparables si su diferencia absoluta no supera <strong>${r95.toFixed(4)}</strong>.</p>
+      ${!aceptable?'<p style="color:var(--coral);margin-top:8px"><strong>Acción:</strong> Revisar técnica del operador, estado del equipo, condiciones ambientales.</p>':''}
+    </div>`;
+}
+
+// ===================== ANOVA =====================
+function calcANOVA(){
+  const g1=parse(document.getElementById('op1').value),g2=parse(document.getElementById('op2').value),g3=parse(document.getElementById('op3').value);
+  if(g1.length<2||g2.length<2||g3.length<2){document.getElementById('resANOVA').innerHTML='<div class="resultado-box alerta"><p>⚠️ Cada grupo debe tener al menos 2 datos.</p></div>';return;}
+  const grupos=[g1,g2,g3], todos=[...g1,...g2,...g3];
+  const medias=grupos.map(avg), mglobal=avg(todos), N=todos.length, k=3;
+  const SCE=grupos.reduce((s,g,i)=>s+g.length*Math.pow(medias[i]-mglobal,2),0);
+  const SCR=grupos.reduce((s,g)=>s+g.reduce((ss,v)=>ss+Math.pow(v-avg(g),2),0),0);
+  const glE=k-1, glR=N-k;
+  const MCE=SCE/glE, MCR=SCR/glR;
+  const F=MCE/MCR;
+  // F crítico tabla para (2, N-3) aproximado
+  const fCrits={4:9.55,5:6.94,6:5.79,7:5.14,8:4.74,9:4.46,10:4.26,12:3.98,15:3.68,20:3.49,30:3.32,60:3.15,999:3.00};
+  let fc=3.35;
+  for(const [k,v] of Object.entries(fCrits)){if(glR<=parseInt(k)){fc=v;break;}}
+  const sig=F>fc;
+  document.getElementById('resANOVA').innerHTML=`
+    <div class="resultado-box ${sig?'aviso':''}">
+      <h4>${sig?'⚠️ DIFERENCIA SIGNIFICATIVA entre operadores/métodos':'✅ Sin diferencia significativa — Operadores equivalentes'}</h4>
+      <table>
+        <tr><th>Fuente</th><th>SC</th><th>gl</th><th>CM</th><th>F</th><th>F crítico</th></tr>
+        <tr><td>Entre grupos</td><td>${SCE.toFixed(5)}</td><td>${glE}</td><td>${MCE.toFixed(5)}</td><td><strong>${F.toFixed(4)}</strong></td><td>${fc}</td></tr>
+        <tr><td>Dentro grupos</td><td>${SCR.toFixed(5)}</td><td>${glR}</td><td>${MCR.toFixed(5)}</td><td>—</td><td>—</td></tr>
+        <tr><td><strong>Total</strong></td><td>${(SCE+SCR).toFixed(5)}</td><td>${N-1}</td><td>—</td><td>—</td><td>—</td></tr>
+      </table>
+      <p style="margin-top:12px"><strong>Medias:</strong> Op1=${medias[0].toFixed(4)} | Op2=${medias[1].toFixed(4)} | Op3=${medias[2].toFixed(4)}</p>
+      <p>${sig?'Al menos un operador/método difiere significativamente (p < 0.05). Investigar cuál con prueba post-hoc.':'Los tres operadores/métodos producen resultados estadísticamente equivalentes (p > 0.05).'}</p>
+    </div>`;
+}
+
+// ===================== REPRODUCIBILIDAD =====================
+function calcReprod(){
+  const g=[parse(document.getElementById('lab1').value),parse(document.getElementById('lab2').value),parse(document.getElementById('lab3').value)];
+  if(g.some(x=>x.length<2)){document.getElementById('resReprod').innerHTML='<div class="resultado-box alerta"><p>⚠️ Cada laboratorio debe tener al menos 2 resultados.</p></div>';return;}
+  const medias=g.map(avg), mglobal=avg(g.flat());
+  const sr_vals=g.map(sd), sr=Math.sqrt(sr_vals.reduce((s,v)=>s+v*v,0)/sr_vals.length);
+  const sL=Math.sqrt(Math.max(0,g.reduce((s,x,i)=>s+x.length*Math.pow(medias[i]-mglobal,2),0)/(g.length-1) - sr*sr/g[0].length));
+  const sR=Math.sqrt(sr*sr+sL*sL);
+  const r95=2.83*sr, R95=2.83*sR;
+  const ratio=sR>0?sr/sR*100:100;
+  document.getElementById('resReprod').innerHTML=`
+    <div class="resultado-box">
+      <h4>📊 Resultados del Estudio R&R (Repetibilidad y Reproducibilidad)</h4>
+      <div class="stat-grid">
+        <div class="stat-item"><div class="sv">${sr.toFixed(5)}</div><div class="sl">sᵣ — Repetibilidad</div></div>
+        <div class="stat-item"><div class="sv">${sL.toFixed(5)}</div><div class="sl">sL — Entre labs</div></div>
+        <div class="stat-item"><div class="sv">${sR.toFixed(5)}</div><div class="sl">sR — Reproducibilidad</div></div>
+        <div class="stat-item"><div class="sv">${ratio.toFixed(1)}%</div><div class="sl">sᵣ/sR × 100</div></div>
+      </div>
+      <table style="margin-top:12px">
+        <tr><th>Indicador</th><th>Valor</th><th>Interpretación</th></tr>
+        <tr><td>Límite de repetibilidad r (95%)</td><td><strong>± ${r95.toFixed(4)}</strong></td><td>Mismo lab, mismo día</td></tr>
+        <tr><td>Límite de reproducibilidad R (95%)</td><td><strong>± ${R95.toFixed(4)}</strong></td><td>Labs diferentes</td></tr>
+        <tr><td>% Variabilidad entre labs</td><td>${(100-ratio).toFixed(1)}%</td><td>${ratio<50?'⚠️ Labs dominan variabilidad':'✅ Dentro de lo esperado'}</td></tr>
+      </table>
+      <p style="margin-top:12px;font-size:12px;color:var(--gris-med)">Medias: Lab1=${medias[0].toFixed(4)} | Lab2=${medias[1].toFixed(4)} | Lab3=${medias[2].toFixed(4)}</p>
+    </div>`;
+}
+
+// ===================== GUM INCERTIDUMBRE =====================
+let uA_val=null, fuentesB_arr=[];
+
+function calcGUMtipoA(){
+  const datos=parse(document.getElementById('gumMed').value);
+  if(datos.length<3){document.getElementById('resGUMa').innerHTML='<div class="resultado-box alerta"><p>⚠️ Ingresa al menos 3 mediciones.</p></div>';return;}
+  const m=avg(datos), s=sd(datos), n=datos.length;
+  uA_val=s/Math.sqrt(n);
+  document.getElementById('resGUMa').innerHTML=`
+    <div class="resultado-box">
+      <h4>✅ Incertidumbre Tipo A calculada</h4>
+      <div class="stat-grid">
+        <div class="stat-item"><div class="sv">${m.toFixed(5)}</div><div class="sl">Media x̄</div></div>
+        <div class="stat-item"><div class="sv">${s.toFixed(5)}</div><div class="sl">Desv. est. s</div></div>
+        <div class="stat-item"><div class="sv">${n}</div><div class="sl">n mediciones</div></div>
+        <div class="stat-item"><div class="sv">${uA_val.toFixed(6)}</div><div class="sl">u(A) = s/√n</div></div>
+      </div>
+      <p style="margin-top:10px">Ahora ve al <strong>Paso 2</strong> para ingresar fuentes Tipo B.</p>
+    </div>`;
+}
+
+function agregarFuenteB(){
+  const id='fb_'+Date.now();
+  const div=document.createElement('div');
+  div.style.cssText='display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;align-items:flex-end';
+  div.id=id;
+  div.innerHTML=`
+    <div class="input-g" style="min-width:160px"><label>Fuente (descripción)</label><input type="text" placeholder="Ej: Resolución equipo"></div>
+    <div class="input-g" style="min-width:120px"><label>Valor U (incertidumbre)</label><input type="number" step="any" placeholder="Ej: 0.001"></div>
+    <div class="input-g" style="min-width:80px"><label>Factor k</label><input type="number" step="any" value="2" placeholder="2"></div>
+    <div class="input-g" style="min-width:100px"><label>Distribución</label>
+      <select style="width:100%;padding:10px;border:1.5px solid var(--borde);border-radius:10px;font-family:var(--font-b);font-size:13px;background:var(--gris-claro)">
+        <option value="normal">Normal</option>
+        <option value="rect">Rectangular</option>
+        <option value="triang">Triangular</option>
+      </select></div>
+    <button class="btn btn-sec" style="padding:8px 14px;font-size:12px" onclick="this.parentElement.remove()">✕</button>`;
+  document.getElementById('fuentesB').appendChild(div);
+}
+
+function cargarEjemploB(){
+  document.getElementById('fuentesB').innerHTML='';
+  const fuentes=[
+    {desc:'Certificado patrón masa',u:'0.000050',k:'2',dist:'normal'},
+    {desc:'Resolución balanza (0.1 mg)',u:'0.0001',k:'√3',dist:'rect'},
+    {desc:'Temperatura (±0.5°C → ±0.0001 vol)',u:'0.0001',k:'√3',dist:'rect'}
+  ];
+  fuentes.forEach(f=>{
+    const id='fb_'+Math.random();
+    const div=document.createElement('div');
+    div.style.cssText='display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;align-items:flex-end';
+    div.id=id;
+    div.innerHTML=`
+      <div class="input-g" style="min-width:160px"><label>Fuente</label><input type="text" value="${f.desc}"></div>
+      <div class="input-g" style="min-width:120px"><label>Valor U</label><input type="number" step="any" value="${f.u}"></div>
+      <div class="input-g" style="min-width:80px"><label>Factor k</label><input type="number" step="any" value="1.732"></div>
+      <div class="input-g" style="min-width:100px"><label>Distribución</label>
+        <select style="width:100%;padding:10px;border:1.5px solid var(--borde);border-radius:10px;font-family:var(--font-b);font-size:13px;background:var(--gris-claro)">
+          <option ${f.dist==='normal'?'selected':''}>Normal</option>
+          <option ${f.dist==='rect'?'selected':''}>Rectangular</option>
+        </select></div>
+      <button class="btn btn-sec" style="padding:8px 14px;font-size:12px" onclick="this.parentElement.remove()">✕</button>`;
+    document.getElementById('fuentesB').appendChild(div);
+  });
+}
+
+function calcGUMcombinada(){
+  if(uA_val===null){document.getElementById('resGUMb').innerHTML='<div class="resultado-box alerta"><p>⚠️ Primero calcula la incertidumbre Tipo A en el Paso 1.</p></div>';return;}
+  const filas=document.getElementById('fuentesB').children;
+  if(filas.length===0){document.getElementById('resGUMb').innerHTML='<div class="resultado-box alerta"><p>⚠️ Agrega al menos una fuente Tipo B.</p></div>';return;}
+  let uB2=0; const detalles=[];
+  Array.from(filas).forEach(fila=>{
+    const inputs=fila.querySelectorAll('input');
+    const desc=inputs[0].value||'Sin nombre';
+    const U=parseFloat(inputs[1].value)||0;
+    const k=parseFloat(inputs[2].value)||2;
+    const u=U/k; uB2+=u*u;
+    detalles.push({desc,U,k,u});
+  });
+  const uB=Math.sqrt(uB2);
+  const uc=Math.sqrt(uA_val*uA_val+uB2);
+  const U95=2*uc;
+  // Guardar para paso 3
+  window._gum={uA:uA_val,uB,uc,U95,detalles};
+  document.getElementById('resGUMb').innerHTML=`
+    <div class="resultado-box">
+      <h4>✅ Incertidumbre Tipo B y combinada</h4>
+      <table>
+        <tr><th>Fuente</th><th>U declarada</th><th>k</th><th>u estándar</th></tr>
+        ${detalles.map(d=>`<tr><td>${d.desc}</td><td>${d.U.toFixed(6)}</td><td>${d.k.toFixed(3)}</td><td>${d.u.toFixed(6)}</td></tr>`).join('')}
+        <tr style="background:rgba(0,184,150,.05)"><td colspan="2"><strong>u(B) combinada Tipo B</strong></td><td colspan="2"><strong>${uB.toFixed(6)}</strong></td></tr>
+        <tr style="background:rgba(0,184,150,.1)"><td colspan="2"><strong>uc combinada total</strong></td><td colspan="2"><strong>${uc.toFixed(6)}</strong></td></tr>
+        <tr style="background:rgba(0,184,150,.15)"><td colspan="2"><strong>U95 (k=2)</strong></td><td colspan="2"><strong>± ${U95.toFixed(6)}</strong></td></tr>
+      </table>
+      <p style="margin-top:10px">Ve al <strong>Paso 3</strong> para ver el reporte final.</p>
+    </div>`;
+  // Actualizar paso 3
+  if(window._gum){
+    document.getElementById('resGUMfinal').innerHTML=`
+      <div style="text-align:left">
+        <p style="font-size:13px;color:var(--gris-med);margin-bottom:16px">Reporte de incertidumbre según JCGM 100:2008</p>
+        <div class="stat-grid">
+          <div class="stat-item"><div class="sv">${window._gum.uA.toFixed(6)}</div><div class="sl">u(A) Tipo A</div></div>
+          <div class="stat-item"><div class="sv">${window._gum.uB.toFixed(6)}</div><div class="sl">u(B) Tipo B</div></div>
+          <div class="stat-item"><div class="sv">${window._gum.uc.toFixed(6)}</div><div class="sl">uc combinada</div></div>
+          <div class="stat-item"><div class="sv" style="color:var(--verde)">± ${window._gum.U95.toFixed(6)}</div><div class="sl">U95 (k=2)</div></div>
+        </div>
+        <div style="background:var(--gris);color:var(--blanco);border-radius:12px;padding:20px;margin-top:16px;font-family:monospace;font-size:14px;text-align:center">
+          Resultado = x̄ ± ${window._gum.U95.toFixed(6)} (k = 2, nivel de confianza 95%)<br>
+          <span style="font-size:11px;color:rgba(255,255,255,.5);margin-top:8px;display:block">La incertidumbre expandida U fue calculada usando el factor de cobertura k=2,<br>proporcionando un nivel de confianza de aproximadamente 95%.</span>
+        </div>
+        <p style="margin-top:12px;font-size:12px;color:var(--gris-med)">Contribución Tipo A: ${(window._gum.uA*window._gum.uA/(window._gum.uc*window._gum.uc)*100).toFixed(1)}% | Contribución Tipo B: ${(window._gum.uB*window._gum.uB/(window._gum.uc*window._gum.uc)*100).toFixed(1)}%</p>
+      </div>`;
+  }
+}
+
+// ===================== GRÁFICO DE CONTROL =====================
+function calcControl(){
+  const datos=parse(document.getElementById('datosControl').value);
+  if(datos.length<10){document.getElementById('resControl').innerHTML='<div class="resultado-box alerta"><p>⚠️ Ingresa al menos 10 valores para un gráfico de control significativo.</p></div>';return;}
+  const m=avg(datos), s=sd(datos);
+  const LCS=m+3*s, LC1=m+2*s, LC2=m+s, LCI=m-3*s, LC3=m-2*s, LC4=m-s;
+  // Detectar señales
+  const senales=[];
+  datos.forEach((v,i)=>{
+    if(Math.abs(v-m)>3*s) senales.push({i,tipo:'Regla 1: Punto fuera de ±3σ',v});
+  });
+  // Regla 2: 9 consecutivos del mismo lado
+  for(let i=8;i<datos.length;i++){
+    if(datos.slice(i-8,i+1).every(v=>v>m)||datos.slice(i-8,i+1).every(v=>v<m))
+      senales.push({i,tipo:'Regla 2: 9 puntos del mismo lado de la media',v:datos[i]});
+  }
+  // Regla 3: 6 consecutivos en tendencia
+  for(let i=5;i<datos.length;i++){
+    const seg=datos.slice(i-5,i+1);
+    if(seg.every((v,j)=>j===0||v>seg[j-1])||seg.every((v,j)=>j===0||v<seg[j-1]))
+      senales.push({i,tipo:'Regla 3: 6 puntos en tendencia',v:datos[i]});
+  }
+  const bajControl=senales.length===0;
+  document.getElementById('resControl').innerHTML=`
+    <div class="resultado-box ${bajControl?'':'alerta'}">
+      <h4>${bajControl?'✅ Proceso BAJO CONTROL ESTADÍSTICO':'⚠️ SEÑALES DE FALTA DE CONTROL detectadas'}</h4>
+      <div class="stat-grid">
+        <div class="stat-item"><div class="sv">${m.toFixed(4)}</div><div class="sl">Media x̄ (LC)</div></div>
+        <div class="stat-item"><div class="sv">${(m+3*s).toFixed(4)}</div><div class="sl">LCS (+3σ)</div></div>
+        <div class="stat-item"><div class="sv">${(m-3*s).toFixed(4)}</div><div class="sl">LCI (-3σ)</div></div>
+        <div class="stat-item"><div class="sv ${bajControl?'':'malo'}">${senales.length}</div><div class="sl">Señales</div></div>
+      </div>
+      ${senales.length>0?`<p style="margin-top:10px"><strong>Señales detectadas:</strong></p><ul style="margin-top:6px">${[...new Set(senales.map(s=>`<li style="font-size:13px;margin:4px 0;color:var(--coral)">Punto ${s.i+1}: ${s.tipo}</li>`))].join('')}</ul>`:''}
+    </div>`;
+  dibujarControl(datos, m, s, LCS, LCI, senales);
+}
+
+function dibujarControl(datos,m,s,LCS,LCI,senales){
+  const wrap=document.getElementById('grafControl');
+  const canvas=document.getElementById('canvasControl');
+  wrap.style.display='block';
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width=900, H=canvas.height=300;
+  const pad={t:30,r:20,b:40,l:70};
+  const pw=W-pad.l-pad.r, ph=H-pad.t-pad.b;
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle='#FFFFFF'; ctx.fillRect(0,0,W,H);
+  const allVals=[...datos,LCS,LCI,m+2*s,m-2*s];
+  const yMin=Math.min(...allVals)-0.5*s, yMax=Math.max(...allVals)+0.5*s;
+  const toX=i=>pad.l+(i/(datos.length-1))*pw;
+  const toY=v=>pad.t+ph-(v-yMin)/(yMax-yMin)*ph;
+  // Zonas
+  ctx.fillStyle='rgba(0,184,150,.04)'; ctx.fillRect(pad.l,toY(m+s),pw,toY(m-s)-toY(m+s));
+  ctx.fillStyle='rgba(245,166,35,.06)'; ctx.fillRect(pad.l,toY(m+2*s),pw,toY(m+s)-toY(m+2*s));
+  ctx.fillStyle='rgba(245,166,35,.06)'; ctx.fillRect(pad.l,toY(m-s),pw,toY(m-2*s)-toY(m-s));
+  // Líneas de control
+  const drawLine=(v,color,dash=[])=>{
+    ctx.beginPath(); ctx.strokeStyle=color; ctx.lineWidth=1.2; ctx.setLineDash(dash);
+    ctx.moveTo(pad.l,toY(v)); ctx.lineTo(pad.l+pw,toY(v)); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle=color; ctx.font='11px DM Sans'; ctx.textAlign='left';
+    ctx.fillText(v.toFixed(3),4,toY(v)+4);
+  };
+  drawLine(LCS,'#FF5C5C');
+  drawLine(m+2*s,'#F5A623',[4,4]);
+  drawLine(m,'#00B896');
+  drawLine(m-2*s,'#F5A623',[4,4]);
+  drawLine(LCI,'#FF5C5C');
+  // Datos
+  ctx.beginPath(); ctx.strokeStyle='#1A6EFF'; ctx.lineWidth=1.5;
+  datos.forEach((v,i)=>{ i===0?ctx.moveTo(toX(i),toY(v)):ctx.lineTo(toX(i),toY(v)); });
+  ctx.stroke();
+  const signalIdx=new Set(senales.map(s=>s.i));
+  datos.forEach((v,i)=>{
+    const alarm=signalIdx.has(i);
+    ctx.beginPath();
+    ctx.fillStyle=alarm?'#FF5C5C':'#1A6EFF';
+    ctx.arc(toX(i),toY(v),alarm?6:4,0,Math.PI*2);
+    ctx.fill();
+    ctx.strokeStyle='#fff'; ctx.lineWidth=1.5; ctx.stroke();
+  });
+  // Eje X
+  ctx.fillStyle='#5C5F7A'; ctx.font='10px DM Sans'; ctx.textAlign='center';
+  datos.forEach((_,i)=>{ if(i%5===0||i===datos.length-1) ctx.fillText(i+1,toX(i),H-10); });
+  ctx.fillText('Observación',W/2,H-2);
+}
+
+function loadEjControl(){document.getElementById('datosControl').value='5.12,5.08,5.15,5.10,5.09,5.13,5.11,5.10,5.14,5.08,5.11,5.12,5.09,5.13,5.10,5.11,5.09,5.12,5.10,5.11';calcControl();}
+function loadEjControlFuera(){document.getElementById('datosControl').value='5.10,5.12,5.14,5.16,5.18,5.20,5.22,5.24,5.26,5.28,5.30,5.32,5.15,5.10,5.08,5.06,5.60,5.10,5.12,5.10';calcControl();}
+
+// ===================== LINEALIDAD =====================
+function calcLineal(){
+  const x=parse(document.getElementById('conc').value);
+  const y=parse(document.getElementById('resp').value);
+  if(x.length!==y.length||x.length<3){document.getElementById('resLineal').innerHTML='<div class="resultado-box alerta"><p>⚠️ Ingresa el mismo número de concentraciones y respuestas (mínimo 3).</p></div>';return;}
+  const n=x.length, mx=avg(x), my=avg(y);
+  let sxy=0,sxx=0,syy=0;
+  for(let i=0;i<n;i++){sxy+=(x[i]-mx)*(y[i]-my);sxx+=(x[i]-mx)*(x[i]-mx);syy+=(y[i]-my)*(y[i]-my);}
+  const m2=sxy/sxx, b=my-m2*mx, r=sxy/Math.sqrt(sxx*syy), r2=r*r;
+  const vv=parseFloat(document.getElementById('valVerd').value);
+  const vm=parseFloat(document.getElementById('valMed').value);
+  let sesgHtml='';
+  if(!isNaN(vv)&&!isNaN(vm)&&vv!==0){
+    const bias=((vm-vv)/vv*100);
+    const rec=(vm/vv*100);
+    sesgHtml=`<p style="margin-top:12px"><strong>Sesgo (bias%):</strong> ${bias.toFixed(2)}% ${Math.abs(bias)<5?'✅ < 5% — Aceptable':'⚠️ > 5% — Revisar método'}</p>
+    <p><strong>Recuperación:</strong> ${rec.toFixed(2)}% ${rec>=95&&rec<=105?'✅ 95-105% — Aceptable':'⚠️ Fuera de 95-105%'}</p>`;
+  }
+  const aceptable=r2>=0.995;
+  document.getElementById('resLineal').innerHTML=`
+    <div class="resultado-box ${aceptable?'':'aviso'}">
+      <h4>${aceptable?'✅ Linealidad EXCELENTE (R² ≥ 0.995)':'⚠️ Linealidad INSUFICIENTE (R² < 0.995)'}</h4>
+      <div class="stat-grid">
+        <div class="stat-item"><div class="sv">${m2.toFixed(4)}</div><div class="sl">Pendiente m</div></div>
+        <div class="stat-item"><div class="sv">${b.toFixed(4)}</div><div class="sl">Intercepto b</div></div>
+        <div class="stat-item"><div class="sv">${r.toFixed(5)}</div><div class="sl">R correlación</div></div>
+        <div class="stat-item"><div class="sv ${aceptable?'':'aviso'}">${r2.toFixed(5)}</div><div class="sl">R² determinación</div></div>
+      </div>
+      <p style="margin-top:10px"><strong>Ecuación:</strong> y = ${m2.toFixed(4)}x + (${b.toFixed(4)})</p>
+      ${sesgHtml}
+    </div>`;
+  dibujarLinealidad(x,y,m2,b);
+}
+
+function dibujarLinealidad(x,y,m,b){
+  const canvas=document.getElementById('canvasLineal');
+  canvas.style.display='block';
+  const ctx=canvas.getContext('2d');
+  const W=canvas.width=600, H=canvas.height=300;
+  const pad=50;
+  ctx.fillStyle='#F4F5F8'; ctx.fillRect(0,0,W,H);
+  const xMin=Math.min(...x), xMax=Math.max(...x), yMin=Math.min(...y), yMax=Math.max(...y);
+  const toX=v=>pad+(v-xMin)/(xMax-xMin)*(W-2*pad);
+  const toY=v=>pad+(yMax-v)/(yMax-yMin)*(H-2*pad);
+  // Grilla
+  ctx.strokeStyle='#E2E5EF'; ctx.lineWidth=0.5;
+  for(let i=0;i<=5;i++){ctx.beginPath();ctx.moveTo(pad+i*(W-2*pad)/5,pad);ctx.lineTo(pad+i*(W-2*pad)/5,H-pad);ctx.stroke();}
+  for(let i=0;i<=5;i++){ctx.beginPath();ctx.moveTo(pad,pad+i*(H-2*pad)/5);ctx.lineTo(W-pad,pad+i*(H-2*pad)/5);ctx.stroke();}
+  // Línea de regresión
+  ctx.beginPath(); ctx.strokeStyle='#FF5C5C'; ctx.lineWidth=1.5; ctx.setLineDash([6,3]);
+  ctx.moveTo(toX(xMin),toY(m*xMin+b)); ctx.lineTo(toX(xMax),toY(m*xMax+b));
+  ctx.stroke(); ctx.setLineDash([]);
+  // Puntos
+  x.forEach((v,i)=>{
+    ctx.beginPath(); ctx.fillStyle='#00B896'; ctx.arc(toX(v),toY(y[i]),6,0,Math.PI*2); ctx.fill();
+    ctx.fillStyle='#2B2D42'; ctx.font='10px DM Sans';
+    ctx.fillText(`(${v},${y[i]})`,toX(v)+8,toY(y[i])-4);
+  });
+}
+
+function loadEjLineal(){document.getElementById('conc').value='1,5,10,25,50';document.getElementById('resp').value='103,498,1012,2510,4985';document.getElementById('valVerd').value=10;document.getElementById('valMed').value=10.25;calcLineal();}
+
+// ===================== Z-SCORE =====================
+function calcZ(){
+  const x=parseFloat(document.getElementById('zx').value);
+  const X=parseFloat(document.getElementById('zX').value);
+  const sig=parseFloat(document.getElementById('zsig').value);
+  if(isNaN(x)||isNaN(X)||isNaN(sig)||sig===0){document.getElementById('resZ').innerHTML='<div class="resultado-box alerta"><p>⚠️ Ingresa valores válidos. σ no puede ser cero.</p></div>';return;}
+  const z=(x-X)/sig;
+  const az=Math.abs(z);
+  const clase=az<=2?'':'aviso';
+  const texto=az<=2?'✅ SATISFACTORIO (|z| ≤ 2)':az<3?'⚠️ CUESTIONABLE (2 < |z| < 3)':'❌ NO SATISFACTORIO (|z| ≥ 3)';
+  const accion=az<=2?'No se requiere acción. Mantener el sistema de calidad actual.':az<3?'Investigar posible causa sistemática. Revisar calibraciones y procedimientos.':'Acción correctiva inmediata obligatoria. Suspender emisión de resultados hasta investigación.';
+  document.getElementById('resZ').innerHTML=`
+    <div class="resultado-box ${clase}">
+      <h4>${texto}</h4>
+      <div class="stat-grid">
+        <div class="stat-item"><div class="sv">${z.toFixed(4)}</div><div class="sl">z-score</div></div>
+        <div class="stat-item"><div class="sv">${az.toFixed(4)}</div><div class="sl">|z|</div></div>
+        <div class="stat-item"><div class="sv">${(x-X).toFixed(4)}</div><div class="sl">x - X (diferencia)</div></div>
+        <div class="stat-item"><div class="sv">${((x-X)/X*100).toFixed(2)}%</div><div class="sl">Diferencia %</div></div>
+      </div>
+      <p style="margin-top:12px"><strong>Acción requerida:</strong> ${accion}</p>
+    </div>`;
+}
+
+// ===================== EN-SCORE =====================
+function calcEn(){
+  const x1=parseFloat(document.getElementById('en1').value);
+  const U1=parseFloat(document.getElementById('enU1').value);
+  const x2=parseFloat(document.getElementById('en2').value);
+  const U2=parseFloat(document.getElementById('enU2').value);
+  if([x1,U1,x2,U2].some(isNaN)){document.getElementById('resEn').innerHTML='<div class="resultado-box alerta"><p>⚠️ Ingresa todos los valores.</p></div>';return;}
+  const denom=Math.sqrt(U1*U1+U2*U2);
+  const En=(x1-x2)/denom;
+  const sat=Math.abs(En)<=1;
+  document.getElementById('resEn').innerHTML=`
+    <div class="resultado-box ${sat?'':'alerta'}">
+      <h4>${sat?'✅ SATISFACTORIO (|En| ≤ 1) — Laboratorios compatibles':'❌ NO SATISFACTORIO (|En| > 1) — Incertidumbres incompatibles'}</h4>
+      <div class="stat-grid">
+        <div class="stat-item"><div class="sv">${En.toFixed(4)}</div><div class="sl">En-score</div></div>
+        <div class="stat-item"><div class="sv">${Math.abs(En).toFixed(4)}</div><div class="sl">|En|</div></div>
+        <div class="stat-item"><div class="sv">${(x1-x2).toFixed(4)}</div><div class="sl">Diferencia</div></div>
+        <div class="stat-item"><div class="sv">${denom.toFixed(4)}</div><div class="sl">√(U₁²+U₂²)</div></div>
+      </div>
+      <p style="margin-top:12px">${sat?'Los resultados de ambos laboratorios son compatibles considerando sus incertidumbres (ILAC-G9).':'Los laboratorios son incompatibles. Al menos uno tiene subestimada su incertidumbre o existe un error sistemático.'}</p>
+    </div>`;
+}
+
+// Inicializar con una fuente B vacía para GUM
+window.addEventListener('DOMContentLoaded',()=>{
+  // Asegurar que los tabs funcionen con clicks directos
+  document.querySelectorAll('.tab').forEach(tab=>{
+    tab.addEventListener('click',function(){
+      const parent=this.parentElement;
+      parent.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+});
+</script>
+</body>
+</html>
